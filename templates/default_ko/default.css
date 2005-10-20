@@ -1,0 +1,205 @@
+@charset "euc-kr";
+
+body, input, textarea {
+	font-family: verdana, sans-serif;
+	font-size: 13px;
+	line-height: 1.5em;
+}
+
+p {
+	margin: 5px 0;
+}
+
+form {
+	margin: 0;
+}
+
+#rubybbs {
+}
+
+#rubybbs a {
+	color: #336699;
+}
+#rubybbs a:hover {
+	color: #336699;
+	background-color: #f7f7f7;
+}
+
+#info {
+	padding: 5px 5px 10px 5px;
+}
+
+#page-list {
+	float: right;
+	clear: right;
+}
+#nav {
+	float: left;
+	clear: left;
+}
+
+#page-list, #nav {
+	list-style: none;
+	margin: 0;
+	padding: 5px 10px;
+}
+#page-list li, #nav li {
+	display: inline;
+	margin-right: 5px;
+}
+li.page-current {
+	font-weight: bold;
+}
+
+#list {
+	width: 100%;
+	clear: both;
+	table-layout: fixed;
+	border-collapse: collapse; /* cellspacing=0 */
+}
+#list th {
+	font-size: 1.4em;
+	font-family: helvetica, verdana, sans-serif;
+	font-weight: normal;
+	border-bottom: 2px solid #336699;
+	padding: 5px;
+}
+#list td {
+	padding: 5px;
+	overflow: hidden;
+	border-bottom: 1px solid #dddddd;
+}
+
+#post {
+	width: 100%;
+	table-layout: fixed;
+}
+#post th {
+	width: 100px;
+	padding: 3px 0;
+}
+#post textarea, #post td.subject input.text {
+	width: 99%;
+}
+
+.name {
+	width: 100px;
+}
+.date {
+	width: 130px;
+}
+td.name, td.date {
+	text-align: center;
+}
+td.date {
+	font-size: 10px;
+}
+
+#rubybbs h2 {
+	font-size: 1.4em;
+	font-family: helvetica, verdana, sans-serif;
+	font-weight: normal;
+	border-bottom: 1px solid #336699;
+	height: 1.4em;
+}
+
+#article-info {
+	float: right;
+	font-size: 12px;
+	padding: 0 5px;
+	background-color: #fff;
+}
+div.text {
+	clear: left;
+	float: left;
+	margin: 5px 120px 20px 10px;
+}
+
+input.text, textarea {
+	border: 1px solid #ccc;
+}
+input.checkbox {
+	margin: 0 3px 0 0;
+	padding: 0;
+	vertical-align: middle;
+}
+textarea {
+	padding: 2px;
+}
+input.submit {
+	line-height: 1em; /* for IE */
+	padding: 0 3px;
+}
+
+#cmt-form {
+	margin: 5px;
+}
+
+#rubybbs h3 {
+	border-top: 1px solid #ccc;
+	padding: 5px;
+	font-size: 1.2em;
+	margin: 0;
+	clear: both;
+}
+
+#comments {
+	list-style: none;
+	padding: 0;
+	margin: 10px 0;
+}
+#comments li {
+	margin: 5px;
+}
+.cname {
+	font-weight: bold;
+}
+.cdate {
+	font-size: 0.8em;
+}
+.ctext {
+	margin: 5px;
+}
+.total-comments {
+	font-size: 0.8em;
+	margin-left: 5px;
+}
+
+#attachments {
+	float: right;
+	clear: right;
+	width: 150px;
+	border: 1px solid #ccc;
+	background-color: #fffff7;
+	margin-bottom: 10px;
+}
+#attachments ul {
+	margin: 10px 20px;
+	padding: 0;
+}
+#attachments ul li {
+	margin-bottom: 5px;
+}
+.img, .img_hover {
+	overflow: hidden;
+	background-color: #000;
+	cursor: pointer;
+	width: 100px;
+	height: 100px;
+	vertical-align: middle;
+}
+.img {
+	border: 2px solid #666;
+	opacity: 0.5;
+}
+.img_hover {
+	border: 2px solid #ff6633;
+}
+.img img, .img_hover img {
+	vertical-align: middle;
+	display: block;
+	margin: auto;
+}
+
+.left { float: left; }
+.right { float: right; }

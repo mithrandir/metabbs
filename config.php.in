@@ -1,0 +1,12 @@
+<?php
+
+$page_factor = 5;
+$admin_passwd = '##adminpw##';
+
+define('PREFIX', 'rb_'); // Table Prefix
+$db_host = '##host##'; // MySQL Hostname
+$db_user = '##user##'; // MySQL Username
+$db_passwd = '##passwd##'; // MySQL Password
+$db_name = '##dbname##'; // MySQL DB name
+
+?>
