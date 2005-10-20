@@ -3,12 +3,12 @@
 // $Header: /cvsroot/rubybbs/rubybbs/libs/MySQL.php,v 1.6 2005/01/22 00:14:57 ditto Exp $
 
 function _get_conn() {
-	global $conn, $db_host, $db_user, $db_passwd, $db_name;
+	static $conn;
+    global $db_host, $db_user, $db_passwd, $db_name;
 	if (!isset($conn)) {
 		$conn = new MySQL;
 		$conn->connect($db_host, $db_user, $db_passwd);
 		$conn->select_db($db_name);
-		register_shutdown_function(array($conn, 'disconnect'));
 	}
 	return $conn;
 }
@@ -18,6 +18,7 @@ class MySQL {
 	function connect($host, $id, $pass, $pconn = false) {
 		if ($pconn) $this->conn = mysql_pconnect($host, $id, $pass);
 		else $this->conn = mysql_connect($host, $id, $pass);
+		register_shutdown_function(array($this, 'disconnect'));
 	}
 	function select_db($db) {
 		mysql_select_db($db, $this->conn);
