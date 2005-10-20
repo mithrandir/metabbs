@@ -1,21 +1,19 @@
 <?php
 
-// $Header: /cvsroot/rubybbs/rubybbs/libs/BBS.php,v 1.12 2005/01/22 00:16:04 ditto Exp $
-
 require_once 'libs/MySQL.php';
 require_once 'libs/Article.php';
-require_once 'libs/BBSManager.php';
+require_once 'libs/BoardManager.php';
 
-class BBS {
+class Board {
 	var $bid, $db;
-	function BBS($bid) {
+	function Board($bid) {
 		$this->bid = $bid;
-		$this->table = PREFIX.'bbs_'.$bid;
+		$this->table = PREFIX.'boards';
+		$this->posts_table = PREFIX.'posts';
 		$this->db = _get_conn();
-		$this->cfg = $this->readSetting();
 	}
 	function readSetting() {
-		return $this->db->getRow("SELECT * FROM ".PREFIX."config WHERE bid='$this->bid'");
+		return $this->db->getRow("SELECT * FROM $this->table WHERE bid='$this->bid'");
 	}
 	function saveSetting() {
 		$q = '';
@@ -25,7 +23,7 @@ class BBS {
 		$q = substr($q, 0, strlen($q)-1);
 		$this->db->query("UPDATE ".PREFIX."config SET $q WHERE bid='$this->bid'");
 	}
-	function getList($start, $factor) {
+	function getPosts($start, $factor) {
 		$list = array();
 		$result = $this->db->query('SELECT idx as id, sort_id, name, subject, date, total_cmts FROM '.$this->table.' ORDER BY sort_id LIMIT '.$start.','.$factor);
 		while ($data = $result->fetchRow()) {
