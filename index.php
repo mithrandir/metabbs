@@ -1,41 +1,82 @@
 <?php
+require_once 'metabbs.php';
 
-require_once 'libs/Core.php';
-require_once 'libs/BBS.php';
-require_once 'libs/Template.php';
-
-if (!isset($bid)) Core::Error('No bid');
-if (!isset($page)) $page = 1;
-
-$bbs = new BBS($bid);
-$tpl = new Template($bbs->cfg['style']);
-
-$tpl->assign('page', $page);
-if (!isset($id)) {
-	$factor = $bbs->cfg['factor'];
-	$list = $bbs->getList(($page - 1) * $factor, $factor);
-	$total = $bbs->getTotal();
-	$total_pages = ceil($total / $factor);
-	$start = $page - ($page % $page_factor) + 1;
-	if (($end = $start + $page_factor - 1) > $total_pages)
-		$end = $total_pages;
-	
-	$tpl->assign(array(
-		'list' => $list,
-		'total' => $total,
-		'total_pages' => $total_pages,
-		'prev' => $page - 1,
-		'next' => $page + 1,
-		'pages' => range($start, $end),
-	));
-	$tpl->display('list.tpl');
-} else {
-	$article = $bbs->getArticle($id);
-	$tpl->assign('article', $article);
-	$tpl->assign('comments', $article->getComments());
-	if ($bbs->cfg['use_attachment']) $tpl->assign('attachments', $article->getAttachments());
-	if (isset($cache_name)) $tpl->assign('cache_name', $cache_name);
-	$tpl->display('read.tpl');
+class MetaBBS extends Controller {
+    function MetaBBS() {
+        if (!isset($_GET['bid']) && isset($_GET['id'])) {
+            $this->post = Post::find($_GET['id']);
+            $this->board = $this->post->get_board();
+            $this->bid = $this->board->name;
+        }
+        else if (isset($_GET['bid'])) {
+            $this->bid = $_GET['bid'];
+            $this->board = Board::find_by_name($this->bid);
+        }
+        else {
+            die("no board name or id");
+        }
+        $this->skin = $this->board->skin;
+    }
+    function action_list() {
+        $posts_per_page = $this->board->posts_per_page;
+        if (isset($_GET['page'])) {
+            $this->page = $_GET['page'];
+        } else {
+            $this->page = 1;
+        }
+        $this->posts = $this->board->get_posts(($this->page - 1) * $posts_per_page, $posts_per_page);
+    }
+    function action_show() {
+    }
+    function action_new() {
+    }
+    function action_edit() {
+    }
+    function action_delete() {
+        if (isset($_POST['password']) && $this->post->password == md5($_POST['password'])) {
+            $this->post->delete();
+            redirect_to_board($this->board->name);
+        }
+        $this->render('ask_password');
+    }
+    function action_save() {
+        global $flash;
+        $post = $_POST['post'];
+        if (!$this->post) {
+            $this->post = new Post($post);
+            $this->post->board_id = $this->board->id;
+        } else {
+            $p = $this->post->password;
+            $this->post->import($post);
+            if ($p != md5($post['password'])) {
+                $flash = "Wrong password";
+                $this->render("edit");
+                return;
+            }
+        }
+        $this->post->save();
+        $id = $this->post->id;
+        redirect_to("?id=$id&action=show");
+    }
+    function action_comment() {
+        $comment = new Comment($_POST['comment']);
+        $comment->post_id = $this->post->id;
+        $comment->save();
+        redirect_to("?id=$comment->post_id&action=show");
+    }
 }
 
+if (!isset($_GET['action'])) {
+    if (isset($_GET['id'])) {
+        $action = 'show';
+    }
+    else if (isset($_GET['bid'])) {
+        $action = 'list';
+    }
+} else {
+    $action = $_GET['action'];
+}
+
+$metabbs = new MetaBBS();
+$metabbs->execute($action);
 ?>

@@ -1,0 +1,87 @@
+body {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.5em;
+    font-family: verdana, sans-serif;
+}
+#meta {
+    width: 600px;
+}
+
+a {
+    color: #000;
+}
+a:hover {
+    color: #fff;
+    background-color: #000;
+    text-decoration: none;
+}
+
+.flash {
+    background-color: #eee;
+    padding: 10px;
+}
+.flash p {
+    margin: 0;
+}
+
+#list {
+    width: 100%;
+    border-collapse: collapse;
+}
+#list th {
+    font-size: 20px;
+    font-family: georgia, serif;
+    font-weight: normal;
+    border-bottom: 1px solid #bbb;
+    padding: 10px;
+}
+#list td {
+    padding: 5px;
+    height: 30px;
+    border-bottom: 1px solid #e2e2e2;
+}
+.name, .date {
+    text-align: center;
+}
+td.name {
+    width: 100px;
+}
+td.date {
+    width: 120px;
+    font-size: 11px;
+}
+span.comment_count {
+    font-size: 11px;
+}
+
+#post label {
+    display: block;
+    margin: 10px 0;
+}
+
+#comments h3 {
+    background: url(comment.png) no-repeat;
+    padding-left: 25px;
+    height: 22px;
+}
+#comments ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+#comments li {
+    display: block;
+    border: 1px solid #ddd;
+    background-color: #f4f4f4;
+    padding: 0 10px;
+    margin-bottom: 15px;
+    width: 600px;
+}
+#comments .info {
+    font-size: 11px;
+}
+#comments label {
+    display: block;
+    margin: 10px 0;
+}
