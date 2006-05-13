@@ -12,7 +12,12 @@ class User extends Model {
 		}
 	}
 	function find($id) {
-		return model_find('user', $id);
+		if ($id) {
+			return model_find('user', $id);
+		}
+		else {
+			return new Guest;
+		}
 	}
 	function find_by_user($user) {
 		return model_find('user', null, "user='$user'");
