@@ -4,18 +4,18 @@ function admin() {
 }
 
 function login() {
-	return link_text(url_with_referer_for('user', 'login'), 'Login');
+	return link_text(url_with_referer_for('account', 'login'), 'Login');
 }
 
 function logout() {
-	return link_text(url_with_referer_for('user', 'logout'), 'Logout');
+	return link_text(url_with_referer_for('account', 'logout'), 'Logout');
 }
 
 function signup() {
-	return link_text(url_with_referer_for('user', 'signup'), 'Sign Up');
+	return link_text(url_with_referer_for('account', 'signup'), 'Sign Up');
 }
 
 function editinfo() {
-	return link_text(url_with_referer_for('user', 'edit'), 'Edit Info');
+	return link_text(url_with_referer_for('account', 'edit'), 'Edit Info');
 }
 ?>
