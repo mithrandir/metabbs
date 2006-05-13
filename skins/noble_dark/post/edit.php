@@ -1,5 +1,5 @@
 <form method="post" enctype="multipart/form-data" onsubmit="return checkForm(this) && sendingRequest()">
-<? $name = $post->name; include($_skin_dir . '_form.php'); ?>
+<? $name = $post->name; include($_skin_dir . '/_form.php'); ?>
 <p><input type="submit" value="Edit" accesskey="s" />  <span id="sending"><img src="<?=$skin_dir?>/spin.gif" alt="Sending" /> Sending...</span></p>
 </form>
 

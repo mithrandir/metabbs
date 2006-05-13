@@ -24,7 +24,7 @@
 <div id="trackbacks">
 <h3>Trackbacks</h3>
 <p>Trackback URL: <a href="<?=full_url_for($post, 'trackback')?>"><?=full_url_for($post, 'trackback')?></a></p>
-<? include($_skin_dir . 'trackback/_rdf.php'); ?>
+<? include($_skin_dir . '/trackback/_rdf.php'); ?>
 <ul>
 <? foreach ($trackbacks as $trackback) { ?>
 	<li><a href="<?=$trackback->url?>"><?=$trackback->title?></a> from <?=$trackback->blog_name?></li>
@@ -36,7 +36,7 @@
 <h3>Comments</h3>
 <ul id="comment-list">
 <? foreach ($comments as $comment) {
-	include($_skin_dir . 'comment/_comment.php');
+	include($_skin_dir . '/comment/_comment.php');
 } ?>
 </ul>
 </div>
