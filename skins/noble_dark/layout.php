@@ -3,41 +3,46 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title><?php echo $title?></title>
-	<link rel="stylesheet" href="<?php echo $skin_dir?>/style.css" type="text/css" />
-<?php if (isset($board)) { ?>
-	<link rel="alternate" href="<?php echo url_for($board, 'rss')?>" type="application/rss+xml" title="RSS" />
-<?php } ?>
-	<script type="text/javascript" src="<?php echo $skin_dir?>/script.js"></script>
+	<title><?=$title?></title>
+	<link rel="stylesheet" href="<?=$skin_dir?>/style.css" type="text/css" />
+<? if (isset($board)) { ?>
+	<link rel="alternate" href="<?=url_for($board, 'rss')?>" type="application/rss+xml" title="RSS" />
+<? } ?>
+	<script type="text/javascript" src="<?=$skin_dir?>/script.js"></script>
 	<script type="text/javascript">
 	<!--
-	var skin_dir = '<?php echo $skin_dir?>';
+	var skin_dir = '<?=$skin_dir?>';
 	function init() {
-<?php if (isset($_GET['search'])) { ?>
-<?php if ($controller == 'post') { ?>
-		highlight('h2', '<?php echo $_GET['search']?>');
-		highlight('#body', '<?php echo $_GET['search']?>');
-<?php } else if ($controller == 'board') { ?>
-		highlight('td.title a', '<?php echo $_GET['search']?>');
-<?php } ?>
-<?php } ?>
+<? if (isset($_GET['search'])) { ?>
+<? if ($controller == 'post') { ?>
+		highlight('h2', '<?=$_GET['search']?>');
+		highlight('#body', '<?=$_GET['search']?>');
+<? } else if ($controller == 'board') { ?>
+		highlight('td.title a', '<?=$_GET['search']?>');
+<? } ?>
+<? } ?>
 	}
 	//-->
 	</script>
 </head>
 <body onload="init()">
-<div id="meta_control">
-<?php if (!$user->is_guest()) { ?>
-		Hello, <?php echo $user->name?>! :) <a href="<?php echo url_with_referer_for('user', 'logout')?>">Logout</a>
-<?php if ($user->level == 255) { ?>
-| <a href="<?php echo get_base_path()?>admin.php">Admin</a>
-<?php } ?>
-<?php } else { ?>
-	<a href="<?php echo url_with_referer_for('user', 'login')?>">Login</a> | <a href="<?php echo url_with_referer_for('user', 'signup')?>">Sign Up</a>
-<?php } ?>
-</div>
 <div id="meta">
-<?php echo $content; ?>
+	<div id="meta-control">
+<? if (!$user->is_guest()) { ?>
+		Hello, <?=$user->name?>! :) <a href="<?=url_with_referer_for('user', 'logout')?>">Logout</a>
+<? if ($user->level == 255) { ?>
+| <a href="<?=get_base_path()?>admin.php">Admin</a>
+<? } ?>
+<? } else { ?>
+		<a href="<?=url_with_referer_for('user', 'login')?>">Login</a> | <a href="<?=url_with_referer_for('user', 'signup')?>">Sign Up</a>
+<? } ?>
+	</div>
+	<div id="meta-content">
+<?=$content?>
+	</div>
+	<div id="meta-tail">
+		<p>Powered by <a href="http://metabbs.org">MetaBBS</a></p>
+	</div>
 </div>
 </body>
 </html>

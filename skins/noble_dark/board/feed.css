@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+body {
+	background: #222;
+	color: #ddd;
+	font-size: 13px;
+	font-family: Verdana, sans-serif;
+}
+
+h1 {
+	text-align: center;
+}
+
+h2 {
+	font-size: 15px;
+	margin: 5px;
+}
+
+a:link, a:visited {
+	color: white;
+	text-decoration: underline;
+	background: none;
+}
+
+a:hover {
+	color: #fc0;
+	text-decoration: none;
+	background: #333;
+}
+
+h1 a:link, h1 a:visited {
+	text-decoration: none;
+}
+
+#decsription {
+	margin-left: 2em;
+	font-style: italic;
+}
+
+.post {
+	margin: 0.5em;
+	padding: 5px;
+	background: #333;
+}

@@ -1,3 +1,5 @@
+@charset "utf-8";
+
 body {
 	background: #222;
 	color: #ddd;
@@ -5,19 +7,46 @@ body {
     font-family: Verdana, sans-serif;
 }
 
+a:link, a:visited {
+    color: white;
+}
+
+a:hover {
+    background-color: #333;
+    color: #fc0;
+    text-decoration: none;
+}
+
 #meta {
     width: 90%;
 	margin: 0px auto;
 }
 
-#meta_control {
-	width: 90%;
+#meta-control {
 	margin: 0.8em auto;
 	color: #aaa;
 }
 
+#meta-tail p {
+	text-align: right;
+	font-size: 8pt;
+	color: #666;
+}
+
+#meta-tail a {
+	color: #999;
+	background: none;
+	text-decoration: underline;
+}
+
+#meta-tail a:hover {
+	background: #333;
+	text-decoration: none;
+}
+
 p, li {
     line-height: 1.5em;
+	margin: 0.2em;
 }
 
 img {
@@ -25,14 +54,6 @@ img {
     vertical-align: middle;
 }
 
-a:link, a:visited {
-    color: white;
-}
-a:hover:link, a:visited:hover {
-    background-color: #333;
-    color: #fc0;
-    text-decoration: none;
-}
 .feed {
 	padding: 3px;
 }
@@ -122,11 +143,11 @@ h1 a, h2 a {
     font-size: 12px;
 }
 
-#list {
+#meta-list {
     border-collapse: collapse;
     width: 100%;
 }
-#list th {
+#meta-list th {
     border-bottom: 1px solid #555;
     text-align: center;
     font-weight: normal;
@@ -134,12 +155,12 @@ h1 a, h2 a {
     font-size: 16px;
     padding: 3px;
 }
-#list tbody tr:hover { background-color: #333; }
-#list td {
+#meta-list tbody tr:hover { background-color: #333; }
+#meta-list td {
     padding: 0.3em;
     border-bottom: 1px solid #555;
 }
-#list a:link, #list a:visited {
+#meta-list a:link, #meta-list a:visited {
 	text-decoration: none;
 }
 td.name, td.date {
@@ -235,6 +256,11 @@ textarea {
 #sending img {
 	margin: 0 5px;
 }
+
+#powered {
+	text-align: right;
+}
+
 .star {
     color: #f99;
 }

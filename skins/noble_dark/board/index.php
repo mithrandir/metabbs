@@ -1,4 +1,4 @@
-<table id="list">
+<table id="meta-list">
 	<caption>Total <?=$board->get_post_count()?> posts <a href="<?=url_for($board, 'rss')?>" class="feed" title="RSS Feed"><img src="<?=$skin_dir?>/feed.png" alt="Syndication" /></a></caption>
 	<thead>
 		<tr>
@@ -18,32 +18,32 @@
 	</tbody>
 </table>
 
-<div id="nav">
-<ul id="pages">
+<div id="meta-nav">
+	<ul id="pages">
 <? if (!$page->is_first()) { ?>
-	<li class="first"><a href="<?=get_href($page->first())?>">&laquo;</a></li>
+		<li class="first"><a href="<?=get_href($page->first())?>">&laquo;</a></li>
 <? } ?>
 <? if ($page->has_prev()) { ?>
-	<li class="next"><a href="<?=get_href($page->prev())?>">&lsaquo;</a></li>
+		<li class="next"><a href="<?=get_href($page->prev())?>">&lsaquo;</a></li>
 <? } ?>
 <? foreach ($pages as $p) { ?>
 <? if (!$p->here()) { ?>
-	<li><a href="<?=get_href($p)?>"><?=$p->page?></a></li>
+		<li><a href="<?=get_href($p)?>"><?=$p->page?></a></li>
 <? } else { ?>	
-	<li class="here"><a href="<?=get_href($p)?>"><?=$p->page?></a></li>
+		<li class="here"><a href="<?=get_href($p)?>"><?=$p->page?></a></li>
 <? } ?>
 <? } ?>
 <? if ($page->has_next()) { ?>
-	<li class="next"><a href="<?=get_href($page->next())?>">&rsaquo;</a></li>
+		<li class="next"><a href="<?=get_href($page->next())?>">&rsaquo;</a></li>
 <? } ?>
 <? if (!$page->is_last()) { ?>
-	<li class="last"><a href="<?=get_href($page->last())?>">&raquo;</a></li>
+		<li class="last"><a href="<?=get_href($page->last())?>">&raquo;</a></li>
 <? } ?>
-</ul>
-<form method="get">
-<p><input type="text" name="search" value="<?=$board->search?>" /> <input type="submit" value="Search" /> <a href="?">return</a></p>
-</form>
+	</ul>
+	<form method="get" action="<?=$PHP_SELF?>">
+		<p><input type="text" name="search" value="<?=$board->search?>" /> <input type="submit" value="Search" /> <a href="?">return</a></p>
+	</form>
 <? if ($user->level >= $board->perm_write) { ?>
-<p><a href="<?=url_for($board, 'post')?>">New Post</a></p>
+	<p><a href="<?=url_for($board, 'post')?>">New Post</a></p>
 <? } ?>
 </div>
