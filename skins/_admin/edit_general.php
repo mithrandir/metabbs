@@ -18,15 +18,21 @@
 </p>
 <p>
 	<label for="board_skin">Skin</label>
-	<select name="board[skin]" id="board_skin">
+	<div style="padding-left:10em;">
 <? foreach ($skins as $skin) { ?>
-<? if ($skin == $board->skin) { ?>
-		<option selected="selected"><?=$skin?></option>
+<? if(file_exists("./skins/$skin/screenshot.jpg")) { ?>
+		<img src="./skins/<?=$skin?>/screenshot.jpg" style="width:320px;border:1px solid black;vertical-align:middle;" />
 <? } else { ?>
-		<option><?=$skin?></option>
+		<div style="width:320px;border:1px solid black;float:left;">No Screen Shot</div>
 <? } ?>
+<? if ($skin == $board->skin) { ?>
+		<input type="radio" name="board[skin]" value="<?=$skin?>" selected="selected"><?=$skin?></input>
+<? } else { ?>
+		<input type="radio" name="board[skin]" value="<?=$skin?>"><?=$skin?></input>
 <? } ?>
-	</select>
+		<br />
+<? } ?>
+	</div>
 </p>
 <p>
 	<label>Use attachment</label>
