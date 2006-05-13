@@ -106,3 +106,12 @@ label {
 #edit_section li {
     display: inline;
 }
+
+#skins-current h3, #skins-available h3 {
+	border-bottom: 1px solid #ddd;
+}
+
+.skins-item {
+	float: left;
+	margin: 5px;
+}
