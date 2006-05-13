@@ -66,9 +66,6 @@ function redirect_back() {
 }
 
 function link_text($link, $text) {
-	if (link)
-		return '<a href="' . $link . '">' . $text . '</a>';
-	else
-		return $text;
+	return block_tag('a', $text, array('href' => $link));
 }
 ?>
