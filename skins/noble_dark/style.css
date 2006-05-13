@@ -235,7 +235,7 @@ caption {
     margin-bottom: 1em;
 }
 
-input {
+input, select {
 	background: #111;
 	color: #ddd;
 	border: 1px solid #666;
