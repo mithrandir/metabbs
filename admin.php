@@ -87,8 +87,8 @@ else if ($action == 'save') {
 	} else {
 		$board = new Board;
 	}
-	if (isset($_GET['skin'])) {
-		$board->skin = $_GET['skin'];
+	if (isset($_POST['skin'])) {
+		$board->skin = $_POST['skin'];
 		// TODO check skin exist
 		$board->save();
 		go_back();

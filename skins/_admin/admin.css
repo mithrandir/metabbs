@@ -125,23 +125,15 @@ label {
 	padding: 3px;
 }
 
-#skins-current h3, #skins-available h3 {
-	border-bottom: 1px solid #ddd;
-}
-
 #skins-current img, #skins-available img {
 	border: 3px solid #ccc;
 }
 
-#skins-current h4, #skins-available h4 {
-	margin: 8px;
+.skins-item h3 {
+	font-size: 1.1em;
 }
 
-#skins-current .selected {
-	margin: 5px;
-}
-
-#skins-available .skins-item {
+.skins-item {
 	float: left;
 	margin: 5px;
 }
