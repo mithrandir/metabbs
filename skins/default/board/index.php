@@ -37,7 +37,14 @@
 <? } ?>
 </ul>
 <form method="get">
-<p><input type="text" name="search" value="<?=$board->search?>" /> <input type="submit" value="Search" /> <a href="?">return</a></p>
+<select name="searchtype" id="searchtype">
+<option value="tb">제목과 내용</option>
+<option value="t">제목</option>
+<option value="b">내용</option>
+</select>
+<input type="text" name="search" value="<?=$board->search?>" />
+<input type="submit" value="Search" />
+<a href="?">return</a>
 </form>
 <? if ($user->level >= $board->perm_write) { ?>
 <p><a href="<?=url_for($board, 'post')?>">New Post</a></p>

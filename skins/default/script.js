@@ -1,3 +1,8 @@
+function $(id)
+{
+    return document.getElementById(id);
+}
+
 function checkForm(form)
 {
     elements = form.elements ? form.elements : form;

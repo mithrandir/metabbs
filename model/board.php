@@ -7,6 +7,7 @@ class Board extends Model {
 	var $name, $title;
 	var $skin = 'default';
 	var $posts_per_page = 10;
+	var $searchtype = '';
 	var $search = '';
 
 	function get_id_for_href() {
@@ -21,10 +22,28 @@ class Board extends Model {
 	function find_all() {
 		return model_find_all('board');
 	}
+	function get_where() {
+        	if ($this->searchtype) {
+			$searchtype = $this->searchtype;
+		}
+		else {
+			$searchtype = 'tb';
+		}
+		$search = '%' . $this->search . '%';
+		if ($searchtype == 'tb') {
+			return "(title LIKE '$search' OR body LIKE '$search')";
+		}
+		else if ($searchtype == 't') {
+			return "title LIKE '$search'";
+		}
+		else if ($searchtype == 'b') {
+			return "body LIKE '$search'";
+		}
+	}
 	function get_posts($offset, $limit) {
 		$where = "board_id=$this->id";
 		if ($this->search) {
-			$where .= " AND (title LIKE '%$this->search%' OR body LIKE '%$this->search%')";
+			$where .= " AND " . $this->get_where();
 		}
 		return model_find_all('post', $where, 'id DESC', $offset, $limit);
 	}
