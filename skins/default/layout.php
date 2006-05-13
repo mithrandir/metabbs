@@ -39,7 +39,6 @@
 <p><a href="<?=url_with_referer_for('user', 'login')?>">Login</a> | <a href="<?=url_with_referer_for('user', 'signup')?>">Sign Up</a></p>
 <? } ?>
 <div id="meta">
-<h1><?=$board->title?></h1>
 <?=$content?>
 </div>
 </body>
