@@ -13,7 +13,7 @@
 <? } else if ($attachment->is_image()) { ?>
 	<li><img src="<?=url_for($attachment)?>" alt="<?=$attachment->filename?>" /></li>
 <? } else { ?>
-	<li>Attachment: <a href="<?=url_for($attachment)?>"><?=$attachment->filename?></a> (<?=$attachment->get_size()/1024?>kb)</li>
+	<li>Attachment: <a href="<?=url_for($attachment)?>"><?=$attachment->filename?></a> (<?=human_readable_size($attachment->get_size())?>)</li>
 <? } ?>
 <? } ?>
 </ul>

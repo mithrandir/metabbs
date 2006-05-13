@@ -45,4 +45,13 @@ function addslashes_deep(&$array) {
 		@array_walk($array, '_addslashes');
 	}
 }
+function human_readable_size($size) {
+	$units = array(' bytes', 'KB', 'MB', 'GB', 'TB');
+	$i = 0;
+	while ($size > 1024) {
+		$size /= 1024;
+		$i++;
+	}
+	return round($size, 1) . $units[$i];
+}
 ?>
