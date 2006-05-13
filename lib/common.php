@@ -1,6 +1,8 @@
 <?php
 header("Content-Type: text/html; charset=utf-8");
 
+set_magic_quotes_runtime(0);
+
 if (@ini_get('register_globals')) {
 	foreach ($_REQUEST as $k => $v) {
 		unset($$k);
@@ -23,11 +25,9 @@ function is_admin() {
 	return ($user->level == 255);
 }
 
-function addslashes_deep($v) {
-	return is_array($v) ? array_map('addslashes_deep', $v) : addslashes($v);
-}
-
-function stripslashes_deep($v) {
-	return is_array($v) ? array_map('stripslashes_deep', $v) : stripslashes($v);
+function addslashes_deep(&$array) {
+	if (is_array($array)) {
+		@array_walk($array, 'addslashes');
+	}
 }
 ?>

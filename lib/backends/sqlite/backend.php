@@ -51,23 +51,17 @@ class SQLiteAdapter
         $results = array();
         $result = $this->query($query);
         while ($data = sqlite_fetch_array($result, SQLITE_ASSOC)) {
-            if (get_magic_quotes_runtime()) {
-                $data = array_map('stripslashes', $data);
-            }
             $results[] = new $model($data);
         }
         return $results;
     }
     function fetchrow($query, $model = 'Model') {
         $data = sqlite_fetch_array($this->query($query), SQLITE_ASSOC);
-        if (get_magic_quotes_runtime()) {
-            $data = array_map('stripslashes', $data);
-        }
         return new $model($data);
     }
     function fetchone($query) {
         $value = sqlite_fetch_single($this->query($query));
-        return (get_magic_quotes_runtime()) ? stripslashes($value) : $value;
+        return $value;
     }
     function insertid() {
         return sqlite_last_insert_rowid($this->conn);
@@ -120,7 +114,7 @@ function model_delete($model, $condition = '1') {
 function model_insert($model, $data) {
     $db = get_conn();
     if (!get_magic_quotes_gpc()) {
-        $data = array_map('addslashes', $data);
+        addslashes_deep($data);
     }
     $query = 'INSERT INTO ';
     $query .= get_table_name($model);
@@ -136,7 +130,7 @@ function model_insert($model, $data) {
 function model_update($model, $data, $condition = '1') {
     $db = get_conn();
     if (!get_magic_quotes_gpc()) {
-        $data = array_map('addslashes', $data);
+        addslashes_deep($data);
     }
     $query = 'UPDATE ';
     $query .= get_table_name($model);

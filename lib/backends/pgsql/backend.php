@@ -49,23 +49,17 @@ class PgSQLAdapter
         $results = array();
         $result = $this->query($query);
         while ($data = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-            if (get_magic_quotes_runtime()) {
-                $data = array_map('stripslashes', $data);
-            }
             $results[] = new $model($data);
         }
         return $results;
     }
     function fetchrow($query, $model = 'Model') {
         $data = mysql_fetch_assoc($this->query($query));
-        if (get_magic_quotes_runtime()) {
-            $data = array_map('stripslashes', $data);
-        }
         return new $model(pg_fetch_array($this->query($query), null, PGSQL_ASSOC));
     }
     function fetchone($query) {
         $result = pg_fetch_row($this->query($query));
-        return (get_magic_quotes_runtime()) ? stripslashes($result[0]) : $result[0];
+    	return $result[0];
     }
     function insertid($table) {
         return $this->fetchone('SELECT max(id) from '.$table); // XXX
@@ -116,7 +110,7 @@ function model_delete($model, $condition) {
 function model_insert($model, $data) {
     $db = get_conn();
     if (!get_magic_quotes_gpc()) {
-        $data = array_map('addslashes', $data);
+        addslashes_deep($data);
     }
     $query = 'INSERT INTO ';
     $query .= ($table=get_table_name($model));
@@ -132,7 +126,7 @@ function model_insert($model, $data) {
 function model_update($model, $data, $condition = '1') {
     $db = get_conn();
     if (!get_magic_quotes_gpc()) {
-        $data = array_map('addslashes', $data);
+        addslashes_deep($data);
     }
     $query = 'UPDATE ';
     $query .= get_table_name($model);
