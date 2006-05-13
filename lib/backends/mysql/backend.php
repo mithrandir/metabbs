@@ -24,14 +24,14 @@ class MySQLAdapter
     var $conn;
 
     function connect($host, $user, $password) {
-        $this->conn = mysql_connect($host, $user, $password);
+        $this->conn = @mysql_connect($host, $user, $password) or trigger_error("mysql - Can't connect database",E_USER_ERROR);
         register_shutdown_function(array(&$this, 'disconnect'));
     }
     function disconnect() {
         @mysql_close($this->conn);
     }
     function selectdb($dbname) {
-        mysql_select_db($dbname, $this->conn);
+        @mysql_select_db($dbname, $this->conn) or trigger_error("mysql - Can't select database",E_USER_ERROR);
     }
 
     function query($query, $check_error = true) {

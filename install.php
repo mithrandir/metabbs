@@ -49,12 +49,12 @@ db_info_form();
 	<h2>Admin Information</h2>
 	<p>
 		<label for="admin_id">Admin ID</label>
-		<input type="text" name="admin_id" value="admin" />
+		<input type="text" name="admin_id" id="admin_id" value="admin" />
                 <span class="desc">관리자로 사용할 아이디를 입력합니다.</span>
 	</p>
 	<p>
 		<label for="admin_password">Admin Password</label>
-		<input type="password" name="admin_password" />
+		<input type="password" name="admin_password" id="admin_password" />
                 <span class="desc">관리자 아이디의 비밀번호를 입력합니다.</span>
 	</p>
         <p>
@@ -64,18 +64,29 @@ db_info_form();
         </p>
 	<p>
 		<label for="admin_name">Admin Name</label>
-		<input type="text" name="admin_name" />
+		<input type="text" name="admin_name" id="admin_name" />
                 <span class="desc">관리자 아이디의 이름을 입력합니다.</span>
 	</p>
 	<p><input type="submit" value="Install" /></p>
 	</form>
 <?php
 } else {
-        if ($_POST['admin_password'] != $_POST['admin_password_verify']) {
-                fail('Password Verify Fail');
+        // TODO : clearing var. need policy
+        $_POST['admin_id'] = trim($_POST['admin_id']);
+        $_POST['admin_password'] = trim($_POST['admin_password']);
+        $_POST['admin_password_verify'] = trim($_POST['admin_password_verify']);
+
+        if ($_POST['admin_id'] == '') {
+                fail('Admin ID Is Empty');
         } else {
-                pass('Password Verify Success');
+                pass('Admin ID Is Clear');
         }
+        if ($_POST['admin_password'] != $_POST['admin_password_verify']) {
+                fail('Password Verify');
+        } else {
+                pass('Password Verify');
+        }
+
 	$dirs = array('data', 'data/uploads');
 	set_error_handler('capture_errors');
 	foreach ($dirs as $dir) {
