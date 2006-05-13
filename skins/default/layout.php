@@ -30,9 +30,9 @@
 </head>
 <body onload="init()">
 <? if (!$user->is_guest()) { ?>
-<p>Hello, <?=$user->name?>! :) <a href="<?=url_with_referer_for('user', 'logout')?>">Logout</a> | <a href="<?=url_with_referer_for('user', 'edit')?>">Edit Info</a>
+<p>Hello, <?=$user->name?>! :) <?=link_text(url_with_referer_for('user', 'logout'), 'Logout')?> | <?=link_text(url_with_referer_for('user', 'edit'),'Edit Info')?>
 <? if ($user->level == 255) { ?>
-| <a href="<?=get_base_path()?>admin.php">Admin</a>
+| <?=link_text(get_base_path(). 'admin.php', 'Admin')?>
 <? } ?>
 </p>
 <? } else { ?>

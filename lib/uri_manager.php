@@ -9,6 +9,7 @@ function get_base_uri() {
 	}
 	return $uri;
 }
+
 function get_base_path() {
 	return dirname($_SERVER['SCRIPT_NAME']) . '/';
 }
@@ -16,6 +17,7 @@ function get_base_path() {
 function chomp(&$str) {
 	$str = substr($str, 0, -1);
 }
+
 function get_href($model) {
 	if (is_string($model)) {
 		return $model;
@@ -23,6 +25,7 @@ function get_href($model) {
 		return $model->get_href();
 	}
 }
+
 function _url_for($controller, $action = null, $params = array()) {
 	$url = get_base_uri() . get_href($controller);
 
@@ -38,9 +41,11 @@ function _url_for($controller, $action = null, $params = array()) {
 
 	return $url;
 }
+
 function full_url_for($controller, $action = '') {
 	return 'http://'.$_SERVER['HTTP_HOST']._url_for($controller, $action);
 }
+
 function url_for($controller, $action = null, $params = array()) {
 	if (isset($_GET['search']) && $_SERVER['REQUEST_METHOD'] != 'POST')
 		$params['search'] = urlencode($_GET['search']);
@@ -55,7 +60,15 @@ function redirect_to($url) {
 	header('Location: ' . $url);
 	exit;
 }
+
 function redirect_back() {
 	redirect_to($_GET['url']);
+}
+
+function link_text($link, $text) {
+	if (link)
+		return '<a href="' . $link . '">' . $text . '</a>';
+	else
+		return $text;
 }
 ?>
