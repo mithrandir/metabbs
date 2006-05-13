@@ -14,15 +14,15 @@ function print_skin_screenshot($skin, $class = '') {
 </div>
 <? } ?>
 
-<ul id="edit_section">
+<ul id="edit-section">
     <li><a href="?action=edit_general<? if ($board->exists()) { ?>&amp;board_id=<?=$board->id?><? } ?>">General</a></li>
     <li><a href="?action=edit_permission<? if ($board->exists()) { ?>&amp;board_id=<?=$board->id?><? } ?>">Permission</a></li>
-    <li>Skin</li>
+    <li class="selected">Skin</li>
 </ul>
 <h2>Skin</h2>
 <div id="skins-current">
 <h3>Current Skin</h3>
-<? print_skin_screenshot($board->skin);?>
+<? print_skin_screenshot($board->skin, 'selected');?>
 </div>
 <div id="skins-available">
 <h3>Available Skins</h3>

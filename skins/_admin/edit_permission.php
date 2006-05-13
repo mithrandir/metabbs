@@ -1,8 +1,8 @@
 <form method="post" action="?action=save<? if ($board->exists()) { ?>&amp;board_id=<?=$board->id?><? } ?>">
 <input type="hidden" name="board[name]" value="<?=$board->name?>" />
-<ul id="edit_section">
+<ul id="edit-section">
     <li><a href="?action=edit_general<? if ($board->exists()) { ?>&amp;board_id=<?=$board->id?><? } ?>">General</a></li>
-    <li>Permission</li>
+    <li class="selected">Permission</li>
     <li><a href="?action=edit_skin<? if ($board->exists()) { ?>&amp;board_id=<?=$board->id?><? } ?>">Skin</a></li>
 </ul>
 <h2>Permission</h2>

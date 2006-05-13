@@ -1,6 +1,6 @@
 <form method="post" action="?action=save<? if ($board->exists()) { ?>&amp;board_id=<?=$board->id?><? } ?>">
-<ul id="edit_section">
-    <li>General</li>
+<ul id="edit-section">
+    <li class="selected">General</li>
     <li><a href="?action=edit_permission<? if ($board->exists()) { ?>&amp;board_id=<?=$board->id?><? } ?>">Permission</a></li>
     <li><a href="?action=edit_skin<? if ($board->exists()) { ?>&amp;board_id=<?=$board->id?><? } ?>">Skin</a></li>
 </ul>
