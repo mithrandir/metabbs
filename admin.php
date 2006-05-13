@@ -44,6 +44,10 @@ function get_skins() {
 	return $skins;
 }
 
+function find_skin($action) {
+	return 'skins/_admin/' . $action . '.php';
+}
+
 $base_uri = '.';
 
 if (!is_admin()) {
@@ -60,7 +64,12 @@ else if ($action == 'new') {
 	$skins = get_skins();
 	$board = new Board;
 }
-else if ($action == 'edit') {
+else if ($action == 'edit' || $action == 'edit_general') {
+	$action = 'edit_general';
+	$board = Board::find($_GET['board_id']);
+	$skins = get_skins();
+}
+else if ($action == 'edit_permission') {
 	$board = Board::find($_GET['board_id']);
 	$skins = get_skins();
 }
