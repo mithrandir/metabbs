@@ -1,4 +1,8 @@
 <form method="post" action="?action=save<? if ($board->exists()) { ?>&amp;board_id=<?=$board->id?><? } ?>">
+<ul id="edit_section">
+    <li>General</li>
+    <li><a href="?action=edit_permission<? if ($board->exists()) { ?>&amp;board_id=<?=$board->id?><? } ?>">Permission</a></li>
+</ul>
 <h2>General</h2>
 <p>
 	<label for="board_name">Name</label>
