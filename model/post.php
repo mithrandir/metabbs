@@ -9,8 +9,15 @@ class Post extends Model {
 	var $user_id = 0;
 	var $tb_count;
 	
+	function get_user() {
+		return User::find($this->user_id);
+	}
 	function get_board() {
 		return Board::find($this->board_id);
+	}
+	function get_board_name() {
+		$board = $this->get_board();
+		return $board->name;
 	}
 	function find($id) {
 		return model_find('post', $id);

@@ -2,6 +2,7 @@
 class User extends Model {
 	var $email, $url;
 	var $level = 1;
+	var $posts_per_page = 10;
 	function auth($user, $password) {
 		$user = model_find('user', null, "user='$user' AND password='$password'");
 		if ($user->exists()) {
@@ -18,6 +19,14 @@ class User extends Model {
 	}
 	function find_all() {
 		return model_find_all('user');
+	}
+	function get_posts($offset, $limit) {
+		$where = "user_id=$this->id";
+		return model_find_all('post', $where, 'id DESC', $offset, $limit);
+	}
+	function get_post_count() {
+		$where = "user_id=$this->id";
+		return model_count('post', $where);
 	}
 	function create() {
 		model_insert('user', array(
