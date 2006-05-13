@@ -73,6 +73,10 @@ else if ($action == 'edit_permission') {
 	$board = Board::find($_GET['board_id']);
 	$skins = get_skins();
 }
+else if ($action == 'edit_skin') {
+	$board = Board::find($_GET['board_id']);
+	$skins = get_skins();
+}
 else if ($action == 'save') {
 	$validate = true;
 	if (isset($_GET['board_id'])) {
@@ -83,14 +87,23 @@ else if ($action == 'save') {
 	} else {
 		$board = new Board;
 	}
-	$board->import($_POST['board']);
-	if (!$validate || $board->validate()) {
+	if (isset($_GET['skin'])) {
+		$board->skin = $_GET['skin'];
+		// TODO check skin exist
 		$board->save();
 		go_back();
-	} else {
-		$action = 'edit';
-		$skins = get_skins();
-		$flash = "Board '$board->name' already exists.";
+	}
+	else
+	{
+		$board->import($_POST['board']);
+		if (!$validate || $board->validate()) {
+			$board->save();
+			go_back();
+		} else {
+			$action = 'edit';
+			$skins = get_skins();
+			$flash = "Board '$board->name' already exists.";
+		}
 	}
 }
 else if ($action == 'delete') {
