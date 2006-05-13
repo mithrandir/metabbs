@@ -63,7 +63,7 @@ if (!isset($_POST['config'])) {
         </p>
 	<p>
 		<label for="admin_name">Admin Name</label>
-		<input type="text" name="admin_name" id="admin_name" />
+		<input type="text" name="admin_name" id="admin_name" value="admin" />
                 <span class="desc">관리자 아이디의 이름을 입력합니다.</span>
 	</p>
 	<p><input type="submit" value="Install" /></p>
@@ -80,6 +80,11 @@ if (!isset($_POST['config'])) {
 		fail('Admin ID Is Empty');
 	} else {
 		pass('Admin ID Is Clear');
+	}
+	if ($_POST['admin_name'] == '') {
+		fail('Admin name Is Empty');
+	} else {
+		pass('Admin name Is Clear');
 	}
 	if ($_POST['admin_password'] != $_POST['admin_password_verify']) {
 		fail('Password Verify');

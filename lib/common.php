@@ -1,6 +1,11 @@
 <?php
 header("Content-Type: text/html; charset=utf-8");
 
+if (!file_exists('metabbs.conf.php')) {
+	echo '<h1>Config file not found.</h1><p>Did you install metaBBS? :) <a href="install.php">Go to install page &raquo;</a></p>';
+	exit;
+}
+
 set_magic_quotes_runtime(0);
 
 if (@ini_get('register_globals')) {
@@ -23,6 +28,13 @@ if (cookie_is_registered('user') && cookie_is_registered('password')) {
 function is_admin() {
 	global $user;
 	return ($user->level == 255);
+}
+
+function check_is_installed() {
+	if (!file_exists('metabbs.conf.php')) {
+		echo '<h1>Config file not found.</h1><p>Did you install metaBBS? :) <a href="install.php">Go to install page &raquo;</a></p>';
+		exit;
+	}
 }
 
 function _addslashes(&$str) {

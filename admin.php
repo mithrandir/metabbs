@@ -1,10 +1,10 @@
 <?php
-
 require_once 'lib/common.php';
 
 function go_back($action = '') {
 	header('Location: admin.php' . ($action?'?action='.$action:''));
 } 
+
 function text_field($model, $name, $value = '', $size = 15) {
 	$data = @$GLOBALS[$model];
 	if (is_object($data) && isset($data->name)) {
