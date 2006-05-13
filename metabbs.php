@@ -10,8 +10,10 @@ function is_post() {
 }
 
 @list(, $controller, $id, $action) = explode('/', $_SERVER['PATH_INFO']);
-if (!is_numeric($id) && $controller != 'board')
+if (!is_numeric($id) && $controller != 'board') {
 	$action = $id;
+	unset($id);
+}
 
 if (!$action) $action = 'index';
 if (!$controller) $controller = 'notice';
