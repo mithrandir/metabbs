@@ -25,6 +25,8 @@ $skin_dir = get_base_path() . $_skin_dir;
 @include($action_dir . '/' . $action . '.php');
 if (isset($board) && is_a($board, 'Board')) {
 	$title = $board->title;
+} else if (isset($user_) && is_a($user_, 'User')) {
+	$title = $user_->name;
 } else {
 	$title = "MetaBBS: $controller $action";
 }

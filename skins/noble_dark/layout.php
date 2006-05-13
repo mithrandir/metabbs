@@ -30,7 +30,7 @@
 </head>
 <body onload="init()">
 <div id="meta">
-	<h1><?=$board->title?></h1>
+	<h1><?=$title?></h1>
 	<div id="meta-control">
 <? if (!$user->is_guest()) { ?>
 		Hello, <?=$user->name?>! :) <?=logout()?> | <?=editinfo()?>

@@ -1,4 +1,4 @@
-<h1>User: <?=$user_->name?></h1>
+<h1>User: <?=$title?></h1>
 <table id="list">
 	<caption>Total <?=$board->get_post_count()?> posts <a href="<?=url_for($board, 'rss')?>" class="feed" title="RSS Feed"><img src="<?=$skin_dir?>/feed.png" alt="Syndication" /></a></caption>
 	<tr>
