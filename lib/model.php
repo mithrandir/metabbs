@@ -1,7 +1,7 @@
 <?php
 function model($name) {
-	global $lib_dir;
-	require_once "$lib_dir/$name.php";
+	global $model_dir;
+	require_once "$model_dir/$name.php";
 }
 
 class Model
