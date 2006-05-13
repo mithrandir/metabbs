@@ -25,9 +25,12 @@ function is_admin() {
 	return ($user->level == 255);
 }
 
+function _addslashes(&$str) {
+	$str = addslashes($str);
+}
 function addslashes_deep(&$array) {
 	if (is_array($array)) {
-		@array_walk($array, 'addslashes');
+		@array_walk($array, '_addslashes');
 	}
 }
 ?>
