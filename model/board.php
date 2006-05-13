@@ -51,7 +51,7 @@ class Board extends Model {
 		if (!$this->count) {
 			$where = "board_id=$this->id";
 			if ($this->search) {
-				$where .= " AND (title LIKE '%$this->search%' OR body LIKE '%$this->search%')";
+				$where .= " AND " . $this->get_where();
 			}
 			$this->count = model_count('post', $where);
 		}
