@@ -1,5 +1,5 @@
 <?php
 if ($id) {
-	$user = User::find($id);
+	$user_ = User::find($id);
 }
 ?>
