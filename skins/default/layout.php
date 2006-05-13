@@ -30,13 +30,13 @@
 </head>
 <body onload="init()">
 <? if (!$user->is_guest()) { ?>
-<p>Hello, <?=$user->name?>! :) <?=link_text(url_with_referer_for('user', 'logout'), 'Logout')?> | <?=link_text(url_with_referer_for('user', 'edit'),'Edit Info')?>
+<p>Hello, <?=$user->name?>! :) <?=logout()?> | <?=editinfo()?>
 <? if ($user->level == 255) { ?>
-| <?=link_text(get_base_path(). 'admin.php', 'Admin')?>
+| <?=admin()?>
 <? } ?>
 </p>
 <? } else { ?>
-<p><a href="<?=url_with_referer_for('user', 'login')?>">Login</a> | <a href="<?=url_with_referer_for('user', 'signup')?>">Sign Up</a></p>
+<p><?=login()?> | <?=signup()?></p>
 <? } ?>
 <div id="meta">
 <?=$content?>
