@@ -29,9 +29,12 @@
 		<xsl:value-of select="title" />
 	</a>
 	</h2>
-	<p><xsl:value-of select="description" /></p>
+	<div class="content"><xsl:value-of select="description" /></div>
 </div>
 </xsl:for-each>
+<div id="powered">
+	<p>Powered by <a href="http://metabbs.org">MetaBBS</a></p>
+</div>
 </body>
 </html>
 </xsl:template>

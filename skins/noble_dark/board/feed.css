@@ -5,6 +5,8 @@ body {
 	color: #ddd;
 	font-size: 13px;
 	font-family: Verdana, sans-serif;
+	margin: 0px;
+	padding: 20px 0px 10px 0px;
 }
 
 h1 {
@@ -50,6 +52,10 @@ h1 a:link, h1 a:visited {
 	text-decoration: none;
 }
 
+p {
+	margin: 0.5em;
+}
+
 #decsription {
 	margin-left: 2em;
 	font-style: italic;
@@ -60,4 +66,30 @@ h1 a:link, h1 a:visited {
 	margin: 0.5em;
 	padding: 5px;
 	background: #333 url(feed-post-bg.gif) repeat-x top left;
+}
+
+.content {
+	margin-top: 1.0em;
+	margin-bottom: 0.6em;
+}
+.content p {
+	margin: 0.2em;
+}
+
+#powered {
+	text-align: right;
+	font-size: 8pt;
+	color: #666;
+	margin-right: 10px;
+}
+
+#powered a {
+	color: #999;
+	background: none;
+	text-decoration: underline;
+}
+
+#powered a:hover {
+	background: #333;
+	text-decoration: none;
 }

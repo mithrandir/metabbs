@@ -5,6 +5,32 @@ body {
 	color: #ddd;
     font-size: 13px;
     font-family: Verdana, sans-serif;
+    margin: 0px;
+    padding: 20px 0px 10px 0px;
+}
+
+h1 {
+	margin-left: -25px;
+	font-size: 30px;
+	font-family: Verdana, sans-serif !important;
+	text-align: center;
+	color: white;
+}
+
+h1:before {
+	color: #666;
+	margin-right: 10px;
+	font-size: 30px;
+	font-family: Arial, sans-serif;
+	content: "board: [";
+}
+
+h1:after {
+	color: #666;
+	margin-left: 10px;
+	font-size: 30px;
+	font-family: Arial, sans-serif;
+	content: "]";
 }
 
 a:link, a:visited {
@@ -255,10 +281,6 @@ textarea {
 }
 #sending img {
 	margin: 0 5px;
-}
-
-#powered {
-	text-align: right;
 }
 
 .star {

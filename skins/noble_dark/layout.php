@@ -27,6 +27,7 @@
 </head>
 <body onload="init()">
 <div id="meta">
+	<h1><?=$board->title?></h1>
 	<div id="meta-control">
 <? if (!$user->is_guest()) { ?>
 		Hello, <?=$user->name?>! :) <a href="<?=url_with_referer_for('user', 'logout')?>">Logout</a>
