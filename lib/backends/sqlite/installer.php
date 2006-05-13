@@ -43,7 +43,7 @@ class Table
 	}
 }
 function db_info_form() {
-	field('dbfile', 'DB file', 'data/sqlite.db');
+	field('dbfile', 'DB file', 'data/sqlite.db', 'text', 'Database로 사용할 파일을 입력합니다. 특별한 경우가 아니면 그대로 사용하셔도 됩니다');
 }
 function is_supported() {
 	return function_exists('sqlite_open');

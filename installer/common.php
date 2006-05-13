@@ -13,8 +13,8 @@ function fail($msg) {
 	print_footer();
 	exit;
 }
-function field($name, $display_name, $value = '', $type = 'text') {
-	echo "<p><label>$display_name</label> <input type=\"$type\" name=\"config[$name]\" value=\"$value\" /></p>";
+function field($name, $display_name, $value = '', $type = 'text', $desc = '') {
+	echo "<p><label>$display_name</label> <input type=\"$type\" name=\"config[$name]\" value=\"$value\" />\n<span class='desc'>$desc</span></p>";
 }
 function get_backends() {
 	$backends = array();
