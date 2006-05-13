@@ -98,6 +98,11 @@ label {
 #users .name {
     width: 200px;
 }
+
 #users .level {
     text-align: center;
+}
+
+#edit_section li {
+    display: inline;
 }
