@@ -33,12 +33,12 @@
 	<h1><?=$board->title?></h1>
 	<div id="meta-control">
 <? if (!$user->is_guest()) { ?>
-		Hello, <?=$user->name?>! :) <a href="<?=url_with_referer_for('user', 'logout')?>">Logout</a>
+		Hello, <?=$user->name?>! :) <?=logout()?> | <?=editinfo()?>
 <? if ($user->level == 255) { ?>
-| <a href="<?=get_base_path()?>admin.php">Admin</a>
+| <?=admin()?>
 <? } ?>
 <? } else { ?>
-		<a href="<?=url_with_referer_for('user', 'login')?>">Login</a> | <a href="<?=url_with_referer_for('user', 'signup')?>">Sign Up</a>
+		<?=login()?> | <?=signup()?>
 <? } ?>
 	</div>
 	<div id="meta-content">
