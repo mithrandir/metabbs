@@ -7,7 +7,7 @@ $page = new Page($board, 1);
 $posts = $page->get_posts();
 header("Content-Type: text/xml; charset=UTF-8");
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-echo "<?xml-stylesheet type=\"text/xsl\" href=\"".get_base_path()."skins/".$board->skin."/board/atom.xsl\"?>\n";
+echo "<?xml-stylesheet type=\"text/xsl\" href=\"$skin_dir/board/atom.xsl\"?>\n";
 ?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 	<title><![CDATA[<?=$board->title?>]]></title>

@@ -7,7 +7,7 @@ $page = new Page($board, 1);
 $posts = $page->get_posts();
 header("Content-Type: text/xml; charset=UTF-8");
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-echo "<?xml-stylesheet type=\"text/xsl\" href=\"".get_base_path()."skins/".$board->skin."/board/rss.xsl\"?>\n";
+echo "<?xml-stylesheet type=\"text/xsl\" href=\"$skin_dir/board/rss.xsl\"?>\n";
 ?>
 <rss version="2.0">
 	<channel>
