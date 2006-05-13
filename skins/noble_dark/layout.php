@@ -13,6 +13,9 @@
 	<!--
 	var skin_dir = '<?=$skin_dir?>';
 	function init() {
+<? if (isset($_GET['searchtype'])) { ?>
+		$('searchtype').value = '<?=$_GET['searchtype']?>';
+<? } ?>
 <? if (isset($_GET['search'])) { ?>
 <? if ($controller == 'post') { ?>
 		highlight('h2', '<?=$_GET['search']?>');
