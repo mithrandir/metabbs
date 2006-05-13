@@ -8,7 +8,25 @@ body {
 }
 
 h1 {
+	margin-left: -25px;
+	font-size: 30px;
 	text-align: center;
+}
+
+h1:before {
+	color: #666;
+	margin-right: 10px;
+	font-size: 30px;
+	font-family: Arial, sans-serif;
+	content: "feed: [";
+}
+
+h1:after {
+	color: #666;
+	margin-left: 10px;
+	font-size: 30px;
+	font-family: Arial, sans-serif;
+	content: "]";
 }
 
 h2 {
@@ -25,7 +43,7 @@ a:link, a:visited {
 a:hover {
 	color: #fc0;
 	text-decoration: none;
-	background: #333;
+	background: none;
 }
 
 h1 a:link, h1 a:visited {
@@ -35,10 +53,11 @@ h1 a:link, h1 a:visited {
 #decsription {
 	margin-left: 2em;
 	font-style: italic;
+	color: #aaa;
 }
 
 .post {
 	margin: 0.5em;
 	padding: 5px;
-	background: #333;
+	background: #333 url(feed-post-bg.gif) repeat-x top left;
 }
