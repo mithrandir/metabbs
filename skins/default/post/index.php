@@ -42,7 +42,7 @@
 </div>
 
 <? if ($board->perm_comment <= $user->level) { ?>
-<form method="post" action="<?=url_for($post, 'comment')?>" onsubmit="return sendForm(this, 'comment-list', function (f) { document.getElementById('comment_body').value='' })">
+<form method="post" action="<?=url_for($post, 'comment')?>" onsubmit="return sendForm(this, 'comment-list', function (f) { $('comment_body').value='' })">
 <? if ($user->is_guest()) { ?>
 <p><label>Name:</label> <input type="text" name="comment[name]" value="<?=$name?>" /></p>
 <p><label>Password:</label> <input type="password" name="comment[password]" /></p>

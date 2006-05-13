@@ -82,7 +82,7 @@ function serialize(form) {
 }
 
 function sendDone(r, id) {
-    el = document.getElementById(id);
+    el = $(id);
     el.innerHTML += r.responseText;
     items = el.getElementsByTagName('LI');
     sendingDone();
@@ -102,17 +102,15 @@ function sendForm(form, id, func) {
 }
 
 function sendingRequest() {
-    el = document.getElementById('sending');
-    el.style.display = 'inline';
+    $('sending').style.display = 'inline';
 }
 
 function sendingDone() {
-    el = document.getElementById('sending');
-    el.style.display = 'none';
+    $('sending').style.display = 'none';
 }
 
 function addFileEntry() {
-    upload_list = document.getElementById('uploads');
+    upload_list = $('uploads');
     list_item = document.createElement("LI");
     file_field = document.createElement("INPUT");
     file_field.type = "file";
