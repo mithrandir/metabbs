@@ -63,7 +63,8 @@ class MySQLAdapter
     function fetchrow($query, $model = 'Model') {
         $data = mysql_fetch_assoc($this->query($query));
         if (get_magic_quotes_runtime()) {
-            stripslashes_deep($data);
+            $data = stripslashes_deep($data);
+		}
         return new $model($data);
     }
     function fetchone($query) {
