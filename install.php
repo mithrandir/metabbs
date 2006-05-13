@@ -50,19 +50,32 @@ db_info_form();
 	<p>
 		<label for="admin_id">Admin ID</label>
 		<input type="text" name="admin_id" value="admin" />
+                <span class="desc">관리자로 사용할 아이디를 입력합니다.</span>
 	</p>
 	<p>
 		<label for="admin_password">Admin Password</label>
 		<input type="password" name="admin_password" />
+                <span class="desc">관리자 아이디의 비밀번호를 입력합니다.</span>
 	</p>
+        <p>
+                <label for="admin_password_verify">Admin Password (Again)</label>
+                <input type="password" name="admin_password_verify" id="admin_password_verify" />
+                <span class="desc">확인을 위해 관리자 아이디의 비밀번호를 한번 더 입력합니다.</span>
+        </p>
 	<p>
 		<label for="admin_name">Admin Name</label>
 		<input type="text" name="admin_name" />
+                <span class="desc">관리자 아이디의 이름을 입력합니다.</span>
 	</p>
 	<p><input type="submit" value="Install" /></p>
 	</form>
 <?php
 } else {
+        if ($_POST['admin_password'] != $_POST['admin_password_verify']) {
+                fail('Password Verify Fail');
+        } else {
+                pass('Password Verify Success');
+        }
 	$dirs = array('data', 'data/uploads');
 	set_error_handler('capture_errors');
 	foreach ($dirs as $dir) {
