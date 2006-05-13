@@ -1,4 +1,8 @@
 <?php
+if (!file_exists('metabbs.conf.php')) {
+	echo '<h1>Config file not found. Did you install metaBBS? :)</h1>';
+	exit;
+}
 require_once 'lib/common.php';
 
 function is_post() {
