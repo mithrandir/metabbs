@@ -3,55 +3,54 @@ header("Content-Type: text/html; charset=UTF-8");
 
 require_once 'installer/common.php';
 
-function check_perm() {
-	if (is_writable('.')) {
-		pass('Permission check');
-	} else {
-		$path = realpath('.');
-		fail("Please change permission of $path to 0777");
-	}
+$backend = isset($_GET['backend']) ? $_GET['backend'] : 'mysql';
+require "lib/backends/$backend/installer.php";
+
+print_header(1);
+
+if (is_writable('.')) {
+	pass('Permission check');
+} else {
+	$path = realpath('.');
+	fail("Please change permission of $path to 0777");
 }
+
 if (file_exists('metabbs.conf.php')) {
-	print_header(1);
 	echo '<div class="flash fail">MetaBBS is already installed. Please remove metabbs.conf.php and database.</div>';
 	print_footer();
 	exit;
 }
 
-$backend = isset($_GET['backend']) ? $_GET['backend'] : 'mysql';
-require "lib/backends/$backend/installer.php";
-print_header(1);
-check_perm();
 if (!isset($_POST['config'])) {
 ?>
 	<h2>Database Information</h2>
 	<form id="dbinfo" method="post" action="install.php?backend=<?=$backend?>">
 	<p>
-	  <label for="backend">Backend</label>
-	  <select name="backend" id="backend" onchange="location.replace('?backend='+this.value)">
+		<label for="backend">Backend</label>
+		<select name="backend" id="backend" onchange="location.replace('?backend='+this.value)">
 <?php
-foreach (get_backends() as $b) {
-	$sel = ($b == $backend) ? ' selected="selected"' : '';
-	echo "<option value=\"$b\"$sel>$b</option>";
-}
+        foreach (get_backends() as $b) {
+                $sel = ($b == $backend) ? ' selected="selected"' : '';
+                echo "<option value=\"$b\"$sel>$b</option>";
+        }
 ?>
-	  </select>
-	  <span class="desc">어떤 방식으로 데이터를 저장할 것인지 선택합니다.</span>
+                </select>
+                <span class="desc">어떤 방식으로 데이터를 저장할 것인지 선택합니다.</span>
 	</p>
 <?php
-if (!is_supported()) {
-	fail('Your server doesn\'t support <em>' . $backend . '</em>');
-}
+	if (!is_supported()) {
+		fail('Your server doesn\'t support <em>' . $backend . '</em>');
+	}
 ?>
 <?php
-db_info_form();
+        db_info_form();
 ?>
 	<h2>Admin Information</h2>
 	<p>
 		<label for="admin_id">Admin ID</label>
 		<input type="text" name="admin_id" id="admin_id" value="admin" />
                 <span class="desc">관리자로 사용할 아이디를 입력합니다.</span>
-	</p>
+        </p>
 	<p>
 		<label for="admin_password">Admin Password</label>
 		<input type="password" name="admin_password" id="admin_password" />
@@ -71,27 +70,28 @@ db_info_form();
 	</form>
 <?php
 } else {
-        // TODO : clearing var. need policy
-        $_POST['admin_id'] = trim($_POST['admin_id']);
-        $_POST['admin_password'] = trim($_POST['admin_password']);
-        $_POST['admin_password_verify'] = trim($_POST['admin_password_verify']);
+	set_error_handler('capture_errors');
 
-        if ($_POST['admin_id'] == '') {
-                fail('Admin ID Is Empty');
-        } else {
-                pass('Admin ID Is Clear');
-        }
-        if ($_POST['admin_password'] != $_POST['admin_password_verify']) {
-                fail('Password Verify');
-        } else {
-                pass('Password Verify');
-        }
+	// TODO : clearing var. need policy
+	$_POST['admin_id'] = trim($_POST['admin_id']);
+	$_POST['admin_password'] = trim($_POST['admin_password']);
+	$_POST['admin_password_verify'] = trim($_POST['admin_password_verify']);
+	if ($_POST['admin_id'] == '') {
+		fail('Admin ID Is Empty');
+	} else {
+		pass('Admin ID Is Clear');
+	}
+	if ($_POST['admin_password'] != $_POST['admin_password_verify']) {
+		fail('Password Verify');
+	} else {
+		pass('Password Verify');
+	}
 
 	$dirs = array('data', 'data/uploads');
-	set_error_handler('capture_errors');
 	foreach ($dirs as $dir) {
 		mkdir($dir, 0777);
 	}
+
 	pass("Creating directories");
 	require_once 'lib/config.php';
 	$config = new Config('metabbs.conf.php');
