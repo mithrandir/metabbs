@@ -29,5 +29,5 @@ function print_skin_screenshot($skin, $class = '') {
 <? foreach ($skins as $skin) { ?>
 <? print_skin_screenshot($skin, 'skins-item');?>
 <? } ?>
+<p style="clear: left"></p>
 </div>
-<div style=""></div>
