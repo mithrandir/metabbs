@@ -1,0 +1,16 @@
+<?php
+$trackback = new Trackback($_POST);
+$trackback->post_id = $post->id;
+header("Content-type: text/xml");
+echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+echo "<?xml-stylesheet type=\"text/xsl\" href=\"".get_base_path()."skins/".$board->skin."/post/trackback.xsl\"?>\n";
+echo "<response>\n";
+if ($trackback->validate() && $trackback->save()) {
+	echo "<error>0</error>\n";
+} else {
+	echo "<error>1</error>\n";
+	echo "<message>Unable to create trackback</message>\n";
+}
+echo '</response>';
+exit;
+?>

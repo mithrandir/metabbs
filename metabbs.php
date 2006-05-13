@@ -1,35 +1,40 @@
 <?php
-header("Content-Type: text/html; charset=UTF-8");
+require_once 'lib/common.php';
 
-require_once 'config.php';
-
-$lib_dir = dirname(__FILE__) . "/backends/$backend";
-require_once $lib_dir.'/'.$backend.'.php';
-require_once $lib_dir.'/Board.php';
-require_once 'controller.php';
-require_once 'url_helper.php';
-
-function print_flash() {
-    global $flash;
-    if ($flash) {
-        print("<div class='flash'><p>$flash</p></div>");
-    }
+function is_post() {
+	return $_SERVER['REQUEST_METHOD'] == 'POST';
 }
 
-function now() {
-    $t = split(' ', microtime());
-    return $t[0]+$t[1];
+@list(, $controller, $id, $action) = explode('/', $_SERVER['PATH_INFO']);
+if (!is_numeric($id) && $controller != 'board')
+	$action = $id;
+
+if (!$action) $action = 'index';
+if (!$controller) $controller = 'notice';
+
+$name = cookie_get('name');
+
+@include("actions/$controller.php");
+$action_dir = 'actions/' . $controller;
+$skin = isset($board->skin) ? $board->skin : 'default';
+$_skin_dir = 'skins/' . $skin . '/';
+$skin_dir = get_base_path() . $_skin_dir;
+
+@include($action_dir . '/' . $action . '.php');
+if (isset($board)) {
+	$title = $board->title;
+} else {
+	$title = "MetaBBS: $controller $action";
 }
 
-function benchmark() {
-    static $start;
-    if (isset($start)) {
-        echo now() - $start;
-    } else {
-        $start = now();
-    }
+ob_start();
+include($_skin_dir . $controller . '/' . $action . '.php');
+$content = ob_get_contents();
+ob_end_clean();
+
+if ($layout = $config->get('global_layout')) {
+	include($layout);
+} else {
+	include($_skin_dir . '/layout.php');
 }
-
-benchmark();
-
 ?>

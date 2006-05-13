@@ -1,44 +1,48 @@
-BODY {
+body {
+	background: #222;
+	color: #ddd;
     font-size: 13px;
     font-family: Verdana, sans-serif;
 }
 
 #meta {
-    width: 600px;
+    width: 90%;
+	margin: 0px auto;
 }
 
-/*
-DIV DIV { border: 1px solid red; }
-DIV { border: 1px solid blue; }
-*/
+#meta_control {
+	width: 90%;
+	margin: 0.8em auto;
+	color: #aaa;
+}
 
-P, LI {
+p, li {
     line-height: 1.5em;
 }
 
-IMG {
+img {
     border: none;
     vertical-align: middle;
 }
 
-A {
-    color: #000;
+a:link, a:visited {
+    color: white;
 }
-A:hover {
-    background-color: #000;
-    color: #fff;
+a:hover:link, a:visited:hover {
+    background-color: #333;
+    color: #fc0;
     text-decoration: none;
 }
 .feed {
-	padding-left: 0.5em;
+	padding: 3px;
 }
-A.feed:hover {
-	background-color: #fff;
+a.feed:hover {
+	background-color: #333;
 }
-SMALL {
+small {
     font-size: 10px;
 }
-P LABEL {
+p label {
     width: 100px;
     display: block;
     float: left;
@@ -52,12 +56,12 @@ P LABEL {
     border-bottom: 1px solid #ccc;
 }
 
-H1 {
+h1 {
     font-size: 2em;
     font-family: georgia, serif;
     margin: 0.3em 0;
 }
-#header H1 {
+#header h1 {
     text-align: center;
 }
 #description {
@@ -65,15 +69,15 @@ H1 {
     margin: 0;
 }
 
-H2, H3 {
+h2, h3 {
     font-family: Helvetica, Verdana, sans-serif;
     font-weight: normal;
 }
-H2 {
+h2 {
     font-size: 20px;
     margin: 0;
 }
-DIV.title {
+div.title {
     border-bottom: 1px solid #666;
     float: left;
     clear: both;
@@ -81,24 +85,24 @@ DIV.title {
     padding: 3px;
     width: 100%;
 }
-DIV.title H2 {
+div.title h2 {
     float: left;
 }
-DIV.title .info {
+div.title .info {
     float: right;
 }
-DIV.title .info P {
+div.title .info P {
     margin: 0;
 }
-P.body {
+p.body {
     clear: both;
 }
-H3 {
+h3 {
     font-size: 16px;
     border-bottom: 1px solid #ccc;
     padding: 3px;
 }
-H1 A, H2 A {
+h1 a, h2 a {
     text-decoration: none;
     color: inherit;
 }
@@ -123,18 +127,20 @@ H1 A, H2 A {
     width: 100%;
 }
 #list th {
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid #555;
     text-align: center;
     font-weight: normal;
     font-family: Helvetica, Verdana, sans-serif;
-    font-size: 20px;
-    padding: 5px;
+    font-size: 16px;
+    padding: 3px;
 }
+#list tbody tr:hover { background-color: #333; }
 #list td {
-    padding: 0.5em;
+    padding: 0.3em;
+    border-bottom: 1px solid #555;
 }
-#list td {
-    border-bottom: 1px solid #ddd;
+#list a:link, #list a:visited {
+	text-decoration: none;
 }
 td.name, td.date {
     text-align: center;
@@ -182,7 +188,16 @@ caption {
     margin-bottom: 1em;
 }
 
+input {
+	background: #111;
+	color: #ddd;
+	border: 1px solid #666;
+}
+
 textarea {
+	background: #111;
+	color: #ddd;
+	border: 1px solid #666;
     line-height: 1.5;
     font-size: 13px;
     font-family: verdana, sans-serif;
@@ -201,16 +216,16 @@ textarea {
 #pages li.here {
     font-weight: bold;
 }
-.first a, .last a, .next a, .prev a {
-    border: 1px solid #ccc;
+#pages .first a, #pages .last a, #pages  .next a, #pages .prev a {
+    border: 1px solid #666;
     padding: 0 4px;
-    background-color: #eee;
+    background-color: #111;
     text-decoration: none;
 }
-.prev a, .next a {
+#pages .prev a, #pages .next a {
     padding: 0 5px;
 }
-.first a:hover, .last a:hover, .next a:hover, .prev a:hover {
+#pages .first a:hover, #pages .last a:hover, #pages .next a:hover, #pages .prev a:hover {
     background-color: #333;
 }
 
@@ -221,10 +236,10 @@ textarea {
 	margin: 0 5px;
 }
 .star {
-    color: red;
+    color: #f99;
 }
 .flash {
-    background-color: #ffffee;
+    background-color: #ffe;
     border: 1px solid #ddd;
     padding: 0.5em;
 }
@@ -239,4 +254,5 @@ textarea {
 
 .highlight {
     background-color: yellow;
+	color: purple;
 }
