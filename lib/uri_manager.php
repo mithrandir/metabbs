@@ -62,7 +62,11 @@ function redirect_to($url) {
 }
 
 function redirect_back() {
-	redirect_to($_GET['url']);
+	if (isset($_GET['url'])) {
+		redirect_to($_GET['url']);
+	} else {
+		redirect_to(url_for(""));
+	}
 }
 
 function link_text($link, $text) {
