@@ -10,5 +10,7 @@ function fixHTML()
 }
 window.onload = function ()
 {
-	fixHTML();
+	if (navigator.userAgent.indexOf("Gecko") != -1) {
+		fixHTML();
+	}
 }
