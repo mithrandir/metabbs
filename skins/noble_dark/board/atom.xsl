@@ -9,6 +9,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><xsl:value-of select="atom:title" /> - MetaBBS Atom Feeds</title>
 	<link rel="stylesheet" type="text/css" href="/metabbs/skins/noble_dark/board/feed.css" />
+	<script type="text/javascript" src="/metabbs/skins/noble_dark/fix_html.js"></script>
 </head>
 <body>
 <h1>
@@ -19,7 +20,7 @@
 		<xsl:value-of select="atom:title" />
 	</a>
 </h1>
-<p id="description"><xsl:value-of select="atom:subtitle" disable-output-escaping="yes" /></p>
+<p id="description" class="content"><xsl:value-of select="atom:subtitle" disable-output-escaping="yes" /></p>
 <xsl:for-each select="atom:entry">
 <div class="post">
 	<h2>
