@@ -31,7 +31,7 @@
 <body onload="init()">
 <? if (!$user->is_guest()) { ?>
 <p>Hello, <?=$user->name?>! :) <?=logout()?> | <?=editinfo()?>
-<? if ($user->level == 255) { ?>
+<? if ($user->is_admin()) { ?>
 | <?=admin()?>
 <? } ?>
 </p>

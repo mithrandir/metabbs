@@ -50,8 +50,8 @@ function find_skin($action) {
 
 $base_uri = '.';
 
-if (!is_admin()) {
-	redirect_to('metabbs.php/user/login?url='.get_base_path().'admin.php');
+if (!$user->is_admin()) {
+	redirect_to('account/login?url='.get_base_path().'admin.php');
 }
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'index';

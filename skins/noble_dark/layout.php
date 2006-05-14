@@ -34,7 +34,7 @@
 	<div id="meta-control">
 <? if (!$user->is_guest()) { ?>
 		Hello, <?=$user->name?>! :) <?=logout()?> | <?=editinfo()?>
-<? if ($user->level == 255) { ?>
+<? if ($user->is_admin()) { ?>
 | <?=admin()?>
 <? } ?>
 <? } else { ?>

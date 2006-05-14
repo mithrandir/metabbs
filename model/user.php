@@ -57,6 +57,9 @@ class User extends Model {
 	function is_guest() {
 		return false;
 	}
+	function is_admin() {
+		return $this->level == 255;
+	}
 	function valid() {
 		$user = User::find_by_user($this->user);
 		return !$user->exists();
@@ -70,6 +73,9 @@ class Guest extends Model
 	var $name, $email, $url;
 	function is_guest() {
 		return true;
+	}
+	function is_admin() {
+		return false;
 	}
 }
 ?>
