@@ -42,7 +42,8 @@
 	<li class="last"><a href="<?=get_href($page->last())?>">&raquo;</a></li>
 <? } ?>
 </ul>
-<form method="get">
+<form method="get" action="">
+<p>
 <select name="searchtype" id="searchtype">
 <option value="tb">제목과 내용</option>
 <option value="t">제목</option>
@@ -51,6 +52,7 @@
 <input type="text" name="search" value="<?=$board->search?>" />
 <input type="submit" value="Search" />
 <a href="<?=url_for($board)?>">Return</a>
+</p>
 </form>
 <? if ($user->level >= $board->perm_write) { ?>
 <p><a href="<?=url_for($board, 'post')?>">New Post</a></p>
