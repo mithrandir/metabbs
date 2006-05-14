@@ -1,7 +1,5 @@
 <?php
-if (isset($user)) {
-	cookie_unregister('user');
-	cookie_unregister('password');
+if (UserManager::logout()) {
 	redirect_back();
 }
 ?>

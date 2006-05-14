@@ -19,10 +19,10 @@ if (@ini_get('register_globals')) {
 require_once("core.php");
 require_once("cookie.php");
 require_once("tag_helper.php");
+require_once("user_manager.php");
 
-if (cookie_is_registered('user') && cookie_is_registered('password')) {
-	$user = User::auth(cookie_get('user'), cookie_get('password'));
-} else {
+$user = UserManager::get_user();
+if (!$user) { 
 	$user = new Guest;
 }
 
