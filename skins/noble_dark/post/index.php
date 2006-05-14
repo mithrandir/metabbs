@@ -48,7 +48,7 @@
 <p><label>Password:</label> <input type="password" name="comment[password]" /></p>
 <? } ?>
 <p><textarea name="comment[body]" cols="50" rows="5" id="comment_body"></textarea></p>
-<p><input type="submit" value="Save" /> <span id="sending"><img src="<?=$skin_dir?>/spin.gif" alt="Sending" /> Sending...</span></p></p>
+<p><input type="submit" value="Save" /> <span id="sending"><img src="<?=$skin_dir?>/spin.gif" alt="Sending" /> Sending...</span></p>
 </form>
 <? } ?>
 
