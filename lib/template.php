@@ -32,6 +32,6 @@ function is_image($path) {
 	return ($ext == '.png' || $ext == '.gif' || $ext == '.jpg');
 }
 function format($str) {
-	return nl2br(autolink(htmlspecialchars($str)));
+	return preg_replace(array("/ {2}/", "/\n /", "/\r?\n/", "/<br \/><br \/>/"), array("&nbsp;&nbsp;", "\n&nbsp;", "<br />", "</p><p>"), autolink(htmlspecialchars($str)));
 }
 ?>
