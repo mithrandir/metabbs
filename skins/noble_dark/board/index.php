@@ -47,7 +47,8 @@
 			<option value="t">제목</option>
 			<option value="b">내용</option>
 		</select>
-		&nbsp;<input type="text" name="search" value="<?=$board->search?>" /> <input type="submit" value="Search" /> <a href="?">return</a>
+		&nbsp;<input type="text" name="search" value="<?=$board->search?>" /> <input type="submit" value="Search" />
+		&nbsp;<a href="<?=url_for($board)?>">Return</a>
 		</p>
 	</form>
 <? if ($user->level >= $board->perm_write) { ?>

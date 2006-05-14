@@ -50,7 +50,7 @@
 </select>
 <input type="text" name="search" value="<?=$board->search?>" />
 <input type="submit" value="Search" />
-<a href="?">return</a>
+<a href="<?=url_for($board)?>">Return</a>
 </form>
 <? if ($user->level >= $board->perm_write) { ?>
 <p><a href="<?=url_for($board, 'post')?>">New Post</a></p>
