@@ -8,8 +8,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><xsl:value-of select="channel/title" /> - MetaBBS RSS Feeds</title>
-	<link rel="stylesheet" type="text/css" href="/metabbs/skins/noble_dark/board/feed.css" />
-	<script type="text/javascript" src="/metabbs/skins/noble_dark/fix_html.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../skins/noble_dark/board/feed.css" />
+	<script type="text/javascript" src="../../skins/noble_dark/fix_html.js"></script>
 </head>
 <body>
 <h1>
