@@ -2,6 +2,7 @@
 <!-- <?xml-stylesheet type="text/xsl" href="feed.xsl"?> -->
 <xsl:stylesheet version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:output method="html" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN" />
 <xsl:template match="rss">
 <html>
 <head>
@@ -18,7 +19,7 @@
 		<xsl:value-of select="channel/title" />
 	</a>
 </h1>
-<p id="description"><xsl:value-of select="channel/description" /></p>
+<p id="description"><xsl:value-of select="channel/description" disable-output-escaping="yes" /></p>
 <xsl:for-each select="channel/item">
 <div class="post">
 	<h2>
@@ -29,7 +30,7 @@
 		<xsl:value-of select="title" />
 	</a>
 	</h2>
-	<div class="content"><xsl:value-of select="description" /></div>
+	<div class="content"><xsl:value-of select="description" disable-output-escaping="yes" /></div>
 </div>
 </xsl:for-each>
 <div id="powered">
