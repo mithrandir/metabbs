@@ -18,7 +18,7 @@
 		<xsl:value-of select="channel/title" />
 	</a>
 </h1>
-<p id="description"><xsl:value-of select="channel/description" /></p>
+<p id="description"><xsl:value-of select="channel/description" disable-output-escaping="yes" /></p>
 <xsl:for-each select="channel/item">
 <div class="post">
 	<h2>
@@ -29,7 +29,7 @@
 		<xsl:value-of select="title" />
 	</a>
 	</h2>
-	<div class="content"><xsl:value-of select="description" /></div>
+	<div class="content"><xsl:value-of select="description" disable-output-escaping="yes" /></div>
 </div>
 </xsl:for-each>
 <div id="powered">
