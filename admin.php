@@ -60,7 +60,7 @@ if ($action == 'index') {
 	$boards = Board::find_all();
 }
 else if ($action == 'new') {
-	$action = 'edit';
+	$action = 'edit_general';
 	$skins = get_skins();
 	$board = new Board;
 }
