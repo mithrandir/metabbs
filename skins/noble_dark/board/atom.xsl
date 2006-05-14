@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title><xsl:value-of select="channel/title" /> - MetaBBS RSS Feeds</title>
+	<title><xsl:value-of select="atom:title" /> - MetaBBS Atom Feeds</title>
 	<link rel="stylesheet" type="text/css" href="/metabbs/skins/noble_dark/board/feed.css" />
 </head>
 <body>
@@ -18,7 +18,7 @@
 		<xsl:value-of select="atom:title" />
 	</a>
 </h1>
-<p><xsl:value-of select="atom:subtitle" /></p>
+<p id="description"><xsl:value-of select="atom:subtitle" /></p>
 <xsl:for-each select="atom:entry">
 <div class="post">
 	<h2>
