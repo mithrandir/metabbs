@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title><xsl:value-of select="channel/title" /> - MetaBBS Atom Feeds</title>
+	<title><xsl:value-of select="atom:title" /> - MetaBBS Atom Feeds</title>
 	<link rel="stylesheet" type="text/css" href="/metabbs/skins/default/board/feed.css" />
 </head>
 <body>
