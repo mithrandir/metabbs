@@ -4,6 +4,11 @@
 	xmlns:atom="http://www.w3.org/2005/Atom">
 <xsl:template match="atom:feed">
 <html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><xsl:value-of select="channel/title" /> - MetaBBS Atom Feeds</title>
+	<link rel="stylesheet" type="text/css" href="/metabbs/skins/default/board/feed.css" />
+</head>
 <body>
 <h1>
 	<a>
@@ -13,8 +18,9 @@
 		<xsl:value-of select="atom:title" />
 	</a>
 </h1>
-<p><xsl:value-of select="atom:subtitle" /></p>
+<p id="description"><xsl:value-of select="atom:subtitle" /></p>
 <xsl:for-each select="atom:entry">
+<div class="post">
 	<h2>
 	<a>
 		<xsl:attribute name="href">
@@ -23,8 +29,12 @@
 		<xsl:value-of select="atom:title" />
 	</a>
 	</h2>
-	<p><xsl:value-of select="atom:content" /></p>
+	<div class="content"><xsl:value-of select="atom:content" /></div>
+</div>
 </xsl:for-each>
+<div id="powered">
+	<p>Powered by <a href="http://metabbs.org">MetaBBS</a></p>
+</div>
 </body>
 </html>
 </xsl:template>

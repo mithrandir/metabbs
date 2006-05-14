@@ -1,0 +1,96 @@
+@charset "utf-8";
+
+body {
+	background: white;
+	color: black;
+	font-size: 13px;
+	font-family: Verdana, sans-serif;
+	margin: 0px;
+	padding: 20px 0px 10px 0px;
+}
+
+h1 {
+	margin-left: -25px;
+	font-size: 30px;
+	font-family: Georgia, serif;
+	text-align: center;
+}
+
+h1:before {
+	color: #ddd;
+	margin-right: 10px;
+	font-size: 30px;
+	font-family: Arial, sans-serif;
+	content: "feed: [";
+}
+
+h1:after {
+	color: #ddd;
+	margin-left: 10px;
+	font-size: 30px;
+	font-family: Arial, sans-serif;
+	content: "]";
+}
+
+h2 {
+	font-size: 15px;
+	margin: 5px;
+}
+
+a:link, a:visited {
+	color: blue;
+	text-decoration: underline;
+	background: none;
+}
+
+a:hover {
+	color: #fc0;
+	text-decoration: none;
+	background: none;
+}
+
+h1 a:link, h1 a:visited {
+	text-decoration: none;
+}
+
+p {
+	margin: 0.5em;
+}
+
+#description {
+	margin-left: 2em;
+	font-style: italic;
+	color: #aaa;
+}
+
+.post {
+	margin: 0.5em;
+	padding: 5px;
+	background: #f8f8f8;
+}
+
+.content {
+	margin-top: 1.0em;
+	margin-bottom: 0.6em;
+}
+.content p {
+	margin: 0.2em;
+}
+
+#powered {
+	text-align: right;
+	font-size: 8pt;
+	color: #666;
+	margin-right: 10px;
+}
+
+#powered a {
+	color: #999;
+	background: none;
+	text-decoration: underline;
+}
+
+#powered a:hover {
+	background: #f2f2f2;
+	text-decoration: none;
+}
