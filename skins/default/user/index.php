@@ -9,7 +9,7 @@
 <? foreach ($posts as $post) { ?>
 	<tr>
 		<td class="name"><a href="<?=url_for($post->get_board())?>"><?=$post->get_board_name()?></a></td>
-		<td class="title"><a href="<?=url_for($post, '', array('page' => Page::get_requested_page()))?>"><?=$post->title?></a> <? if ($post->get_comment_count()>0) { ?><a href="<?=url_for($post)?>#comments"><small>[<?=$post->get_comment_count()?>]</small></a><? } ?></td>
+		<td class="title"><a href="<?=url_for($post, '', array('page' => Page::get_requested_page()))?>"><?=$post->title?></a><? if ($post->get_comment_count()>0) { ?> <a href="<?=url_for($post)?>#comments"><small>[<?=$post->get_comment_count()?>]</small></a><? } ?></td>
 		<td class="date"><?=date_format("%Y-%m-%d", $post->created_at)?></td>
 	</tr>
 <? } ?>
