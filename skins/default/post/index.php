@@ -2,7 +2,12 @@
 <div class="title">
 <h2 id="title"><?=$post->title?></h2>
 <div class="info">
+<? $postuser = $post->get_user(); ?>
+<? if ($postuser->is_guest()) { ?>
 <p>Posted by <?=$post->name?> at <?=date_format("%Y-%m-%d %H:%M:%S", $post->created_at)?></p>
+<? } else { ?>
+<p>Posted by <a href="<?=url_for($postuser)?>"><?=$post->name?></a> at <?=date_format("%Y-%m-%d %H:%M:%S", $post->created_at)?></p>
+<? } ?>
 </div>
 </div>
 <div id="attachments" style="clear: both">

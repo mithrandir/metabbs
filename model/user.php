@@ -30,8 +30,10 @@ class User extends Model {
 		return model_find_all('post', $where, 'id DESC', $offset, $limit);
 	}
 	function get_post_count() {
-		$where = "user_id=$this->id";
-		return model_count('post', $where);
+		return model_count('post', "user_id=$this->id");
+	}
+	function get_comment_count() {
+		return model_count('comment', "user_id=$this->id");
 	}
 	function create() {
 		model_insert('user', array(

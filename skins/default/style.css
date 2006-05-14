@@ -240,3 +240,13 @@ textarea {
 .highlight {
     background-color: yellow;
 }
+
+#profile {
+	background-color: lightyellow;
+	border: 1px solid #ccc;
+	padding: 0 1em;
+	margin-bottom: 10px;
+}
+#profile big {
+	font-weight: bold;
+}

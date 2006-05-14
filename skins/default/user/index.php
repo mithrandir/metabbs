@@ -1,6 +1,20 @@
-<h1>User: <?=$title?></h1>
+<h1>User Information</h1>
+<div id="profile">
+<p><big><?=$user->name?></big> (<?=$user->user?>)</p>
+<p>
+<? if ($user->email) { ?>
+E-mail: <a href="mailto:<?=$user->email?>"><?=str_replace("@", " at ", $user->email)?></a><br />
+<? } ?>
+<? if ($user->url) {
+	if (strpos($user->url, "http://") !== 0)
+		$user->url = 'http://' . $user->url;
+?>
+Homepage: <a href="<?=$user->url?>"><?=$user->url?></a><br />
+<? } ?>
+</p>
+<p><?=$board->get_post_count()?> posts, <?=$board->get_comment_count()?> comments</p>
+</div>
 <table id="list">
-	<caption>Total <?=$board->get_post_count()?> posts <a href="<?=url_for($board, 'rss')?>" class="feed" title="RSS Feed"><img src="<?=$skin_dir?>/feed.png" alt="Syndication" /></a></caption>
 	<tr>
 		<th class="name">Board</th>
 		<th class="title">Title</th>

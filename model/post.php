@@ -17,7 +17,11 @@ class Post extends Model {
 	}
 	function get_board_name() {
 		$board = $this->get_board();
-		return $board->name;
+		if ($board->title) {
+			return $board->title;
+		} else {
+			return $board->name;
+		}
 	}
 	function find($id) {
 		return model_find('post', $id);

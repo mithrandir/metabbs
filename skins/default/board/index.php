@@ -12,7 +12,7 @@
 <? if ($postuser->is_guest()) { ?>
 		<td class="name"><?=$post->name?></td>
 <? } else { ?>
-		<td class="name"><a href="<?=url_for($post->get_user())?>"><?=$post->name?></a></td>
+		<td class="name"><a href="<?=url_for($postuser)?>"><?=$post->name?></a></td>
 <? } ?>
 		<td class="title"><a href="<?=url_for($post, '', array('page' => Page::get_requested_page()))?>"><?=$post->title?></a><? if ($post->get_comment_count()>0) { ?> <a href="<?=url_for($post)?>#comments"><small>[<?=$post->get_comment_count()?>]</small></a><? } ?></td>
 		<td class="date"><?=date_format("%Y-%m-%d", $post->created_at)?></td>
@@ -51,7 +51,7 @@
 </select>
 <input type="text" name="search" value="<?=$board->search?>" />
 <input type="submit" value="Search" />
-<a href="<?=url_for($board)?>">Return</a>
+<a href="?">Return</a>
 </p>
 </form>
 <? if ($user->level >= $board->perm_write) { ?>
