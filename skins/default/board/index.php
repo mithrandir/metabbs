@@ -12,9 +12,12 @@
 <? if ($postuser->is_guest()) { ?>
 		<td class="name"><?=$post->name?></td>
 <? } else { ?>
-		<td class="name"><a href="<?=url_for($postuser)?>"><?=$post->name?></a></td>
+		<td class="name"><?=link_to($post->name, $postuser)?></td>
 <? } ?>
-		<td class="title"><a href="<?=url_for($post, '', array('page' => Page::get_requested_page()))?>"><?=$post->title?></a><? if ($post->get_comment_count()>0) { ?> <a href="<?=url_for($post)?>#comments"><small>[<?=$post->get_comment_count()?>]</small></a><? } ?></td>
+		<td class="title">
+			<?=link_to($post->title, $post, '', array('page' => Page::get_requested_page()))?>
+			<?=link_to_if($post->get_comment_count() > 0, "<small>[".$post->get_comment_count()."]</small>", $post) ?>
+		</td>
 		<td class="date"><?=date_format("%Y-%m-%d", $post->created_at)?></td>
 	</tr>
 <? } ?>
@@ -54,7 +57,5 @@
 <a href="?">Return</a>
 </p>
 </form>
-<? if ($user->level >= $board->perm_write) { ?>
-<p><a href="<?=url_for($board, 'post')?>">New Post</a></p>
-<? } ?>
+<p><?=link_to_if($user->level >= $board->perm_write, "New Post", $board, 'post')?></p>
 </div>

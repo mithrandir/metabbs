@@ -6,7 +6,7 @@
 <? if ($postuser->is_guest()) { ?>
 <p>Posted by <?=$post->name?> at <?=date_format("%Y-%m-%d %H:%M:%S", $post->created_at)?></p>
 <? } else { ?>
-<p>Posted by <a href="<?=url_for($postuser)?>"><?=$post->name?></a> at <?=date_format("%Y-%m-%d %H:%M:%S", $post->created_at)?></p>
+<p>Posted by <?=link_to($post->name, $postuser)?> at <?=date_format("%Y-%m-%d %H:%M:%S", $post->created_at)?></p>
 <? } ?>
 </div>
 </div>
@@ -18,7 +18,7 @@
 <? } else if ($attachment->is_image()) { ?>
 	<li><img src="<?=url_for($attachment)?>" alt="<?=$attachment->filename?>" /></li>
 <? } else { ?>
-	<li>Attachment: <a href="<?=url_for($attachment)?>"><?=$attachment->filename?></a> (<?=human_readable_size($attachment->get_size())?>kb)</li>
+	<li>Attachment: <?=link_to($attachment->filename, $attachment)?> (<?=human_readable_size($attachment->get_size())?>)</li>
 <? } ?>
 <? } ?>
 </ul>
@@ -58,9 +58,9 @@
 <? } ?>
 
 <div id="nav">
-<p><a href="<?=url_for($board, '', array('page' => Page::get_requested_page()))?>">List</a>
+<p><?=link_to("List", $board, '', array('page' => Page::get_requested_page()))?>
 <? if ($user->level >= $board->perm_write) { ?>
-| <a href="<?=url_for($board, 'post')?>">New Post</a>
+ | <a href="<?=url_for($board, 'post')?>">New Post</a>
 <? } ?>
 <? if ($post->user_id == 0 || $user->id == $post->user_id || $user->level >= $board->perm_delete) { ?>
 | <a href="<?=url_for($post, 'edit')?>">Edit</a> or <a href="<?=url_for($post, 'delete')?>">Delete</a>
