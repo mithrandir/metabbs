@@ -32,14 +32,8 @@
 <div id="meta">
 	<h1><?=$title?></h1>
 	<div id="meta-control">
-<? if (!$user->is_guest()) { ?>
-		Hello, <?=$user->name?>! :) <?=logout()?> | <?=editinfo()?>
-<? if ($user->is_admin()) { ?>
-| <?=admin()?>
-<? } ?>
-<? } else { ?>
-		<?=login()?> | <?=signup()?>
-<? } ?>
+		Hello, <?=$user->name?>! :)
+		<?=implode(' | ', get_account_control($user))?>
 	</div>
 	<div id="meta-content">
 <?=$content?>

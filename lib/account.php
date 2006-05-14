@@ -1,4 +1,14 @@
 <?php
+function get_account_control($account) {
+	if ($account->is_guest()) {
+		return array(login(), signup());
+	} else if ($account->is_admin()) {
+		return array(logout(), editinfo(), admin());
+	} else {
+		return array(logout(), editinfo());
+	}
+}
+
 function admin() {
 	return link_text(get_base_path(). 'admin.php', 'Admin');
 }

@@ -29,15 +29,9 @@
 	</script>
 </head>
 <body onload="init()">
-<? if (!$user->is_guest()) { ?>
-<p>Hello, <?=$user->name?>! :) <?=logout()?> | <?=editinfo()?>
-<? if ($user->is_admin()) { ?>
-| <?=admin()?>
-<? } ?>
+<p>Hello, <?=$user->name?>! :)
+<?=implode(' | ', get_account_control($user))?>
 </p>
-<? } else { ?>
-<p><?=login()?> | <?=signup()?></p>
-<? } ?>
 <div id="meta">
 <?=$content?>
 </div>
