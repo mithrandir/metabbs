@@ -18,7 +18,7 @@
 		<xsl:value-of select="channel/title" />
 	</a>
 </h1>
-<p id="decsription"><xsl:value-of select="channel/description" /></p>
+<p id="description"><xsl:value-of select="channel/description" /></p>
 <xsl:for-each select="channel/item">
 <div class="post">
 	<h2>
