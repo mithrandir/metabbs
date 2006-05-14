@@ -38,15 +38,15 @@ h2 {
 }
 
 a:link, a:visited {
-	color: blue;
+	color: black;
 	text-decoration: underline;
 	background: none;
 }
 
 a:hover {
-	color: #fc0;
+	color: white;
 	text-decoration: none;
-	background: none;
+	background: black;
 }
 
 h1 a:link, h1 a:visited {
