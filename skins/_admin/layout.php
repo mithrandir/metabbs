@@ -10,7 +10,7 @@
 <div id="meta">
 	<h1>MetaBBS Administration</h1>
 <div id="header">
-	<p><a href="?action=index">Boards</a> | <a href="?action=users">Users</a> | <a href="?action=settings">Settings</a> | <a href="?action=uninstall">Uninstall</a> | <a href="metabbs.php/user/logout?url=<?=get_base_path()?>admin.php">Logout &raquo;</a></p>
+	<p><a href="?action=index">Boards</a> | <a href="?action=users">Users</a> | <a href="?action=settings">Settings</a> | <a href="?action=uninstall">Uninstall</a> | <a href="account/logout?url=<?=get_base_path()?>admin.php">Logout &raquo;</a></p>
 </div>
 <div id="body">
 <? if (isset($flash)) { ?>
