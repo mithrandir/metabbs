@@ -288,6 +288,7 @@ document.getElementsBySelector = function(selector) {
 
 function highlight(id, keyword)
 {
+    if (!keyword) return;
     el_list = document.getElementsBySelector(id);
     len = el_list.length;
     for (i = 0; i < len; i++) {
