@@ -72,11 +72,11 @@ function text_field($model, $field, $value = '', $size = 20) {
 function password_field($model, $field, $value = '', $size = 20) {
     return input_tag("${model}[${field}]", $value, 'password', array("id" => "${model}_${field}", "size" => $size));
 }
-function text_area($model, $field, $rows = 10, $cols = 50, $options) {
+function text_area($model, $field, $rows = 10, $cols = 50, $value='', $options=array()) {
     $options['name'] = "${model}[${field}]";
     $options['rows'] = $rows;
     $options['cols'] = $cols;
-    return block_tag("textarea", "", $options);
+    return block_tag("textarea", htmlspecialchars($value), $options);
 }
 function submit_tag($label) {
     return inline_tag("input", array("type" => "submit", "value" => $label));
