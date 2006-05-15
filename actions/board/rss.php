@@ -6,18 +6,19 @@ $posts = $page->get_posts();
 header("Content-Type: text/xml; charset=UTF-8");
 echo '<?xml version="1.0" encoding="utf-8"?>';
 echo '<?xml-stylesheet type="text/xsl" href="'.get_base_path().'skins/'.$board->skin.'/board/rss.xsl"?>';
+$host = 'http://' . $_SERVER['HTTP_HOST'];
 ?>
 <rss version="2.0">
 	<channel>
-		<title><?=$board->title?></title>
-		<link><?=url_for($board)?></link>
+		<title><![CDATA[<?=$board->title?>]]></title>
+		<link><?=$host.url_for($board)?></link>
 		<description>The latest posts from <?=$board->title?></description>
 <? foreach ($posts as $post) { ?>
 		<item>
-			<title><?=$post->title?></title>
-			<link><?=url_for($post)?></link>
-			<description><?=$post->body?></description>
-			<author><?=$post->name?></author>
+			<title><![CDATA[<?=$post->title?>]]></title>
+			<link><?=$host.url_for($post)?></link>
+			<description><![CDATA[<?=$post->body?>]]></description>
+			<author><![CDATA[<?=$post->name?>]]></author>
 			<pubDate><?=date_format("%d %b %Y %H:%M:%S", $post->created_at)?></pubDate>
 		</item>
 <? } ?>
