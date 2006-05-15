@@ -69,7 +69,4 @@ function redirect_back() {
 	}
 }
 
-function link_text($link, $text) {
-	return block_tag('a', $text, array('href' => $link));
-}
 ?>

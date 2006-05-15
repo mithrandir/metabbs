@@ -7,15 +7,15 @@
 <h2>General</h2>
 <p>
 	<label for="board_name">Name</label>
-	<?=text_field('board', 'name')?>
+	<?=text_field('board', 'name', $board->name)?>
 </p>
 <p>
 	<label for="board_title">Title</label>
-	<?=text_field('board', 'title')?>
+	<?=text_field('board', 'title', $board->title)?>
 </p>
 <p>
 	<label for="board_posts_per_page">Posts per page</label>
-	<?=text_field('board', 'posts_per_page', 10)?>
+	<?=text_field('board', 'posts_per_page', 10, $board->posts_per_page)?>
 </p>
 <p>
 	<label>Use attachment</label>

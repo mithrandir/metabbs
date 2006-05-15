@@ -10,7 +10,11 @@ class Post extends Model {
 	var $tb_count;
 	
 	function get_user() {
-		return User::find($this->user_id);
+		$user = User::find($this->user_id);
+        if ($user->is_guest()) {
+            $user->name = $this->name;
+        }
+        return $user;
 	}
 	function get_board() {
 		return Board::find($this->board_id);

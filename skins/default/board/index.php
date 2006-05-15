@@ -1,6 +1,9 @@
 <h1>Board: <?=$title?></h1>
-<table id="list">
-	<caption>Total <?=$board->get_post_count()?> posts <a href="<?=url_for($board, 'rss')?>" class="feed" title="RSS Feed"><img src="<?=$skin_dir?>/feed.png" alt="Syndication" /></a></caption>
+<table id="posts">
+	<caption>
+        Total <?=$board->get_post_count()?> posts
+        <?=link_with_id_to("rss-feed", image_tag("$skin_dir/feed.png", "RSS Feed"), $board, 'rss')?>
+    </caption>
 	<tr>
 		<th class="name">Name</th>
 		<th class="title">Title</th>
@@ -8,15 +11,10 @@
 	</tr>
 <? foreach ($posts as $post) { ?>
 	<tr>
-<? $postuser = $post->get_user(); ?>
-<? if ($postuser->is_guest()) { ?>
-		<td class="name"><?=$post->name?></td>
-<? } else { ?>
-		<td class="name"><?=link_to($post->name, $postuser)?></td>
-<? } ?>
+		<td class="name"><?=link_to_user($post->get_user())?></td>
 		<td class="title">
-			<?=link_to($post->title, $post, '', array('page' => Page::get_requested_page()))?>
-			<?=link_to_if($post->get_comment_count() > 0, "<small>[".$post->get_comment_count()."]</small>", $post) ?>
+			<?=link_to_post($post)?>
+			<span class="comment-count"><?=link_to_comments($post)?></span>
 		</td>
 		<td class="date"><?=date_format("%Y-%m-%d", $post->created_at)?></td>
 	</tr>
@@ -45,17 +43,21 @@
 	<li class="last"><a href="<?=get_href($page->last())?>">&raquo;</a></li>
 <? } ?>
 </ul>
-<form method="get" action="">
+
+<form method="get">
 <p>
 <select name="searchtype" id="searchtype">
-<option value="tb">제목과 내용</option>
-<option value="t">제목</option>
-<option value="b">내용</option>
+<? $types = array('tb' => 'Title+Body', 't' => 'Title', 'b' => 'Body'); foreach ($types as $type => $text) { ?>
+<option value="<?=$type?>"<? if (isset($_GET['searchtype']) && $_GET['searchtype'] == $type) { ?> selected="selected"<? } ?>><?=$text?></option>
+<? } ?>
 </select>
-<input type="text" name="search" value="<?=$board->search?>" />
-<input type="submit" value="Search" />
-<a href="?">Return</a>
+<?=input_tag("search", $board->search)?> <?=submit_tag("Search")?> <?=link_text("?", "Return")?>
 </p>
 </form>
-<p><?=link_to_if($user->level >= $board->perm_write, "New Post", $board, 'post')?></p>
+
+<p>
+<? if ($user->level >= $board->perm_write) { ?>
+    <?=link_to("New Post", $board, 'post')?>
+<? } ?>
+</p>
 </div>

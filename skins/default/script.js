@@ -289,7 +289,11 @@ document.getElementsBySelector = function(selector) {
 function highlight(id, keyword)
 {
     if (!keyword) return;
-    el_list = document.getElementsBySelector(id);
+    if (id[0] == '#') {
+        el_list = new Array(document.getElementById(id.substr(1)));
+    } else {
+        el_list = document.getElementsBySelector(id);
+    }
     len = el_list.length;
     for (i = 0; i < len; i++) {
         el = el_list[i];

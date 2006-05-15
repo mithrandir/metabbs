@@ -14,7 +14,7 @@ Homepage: <a href="<?=$user->url?>"><?=$user->url?></a><br />
 </p>
 <p><?=$board->get_post_count()?> posts, <?=$board->get_comment_count()?> comments</p>
 </div>
-<table id="list">
+<table id="posts">
 	<tr>
 		<th class="name">Board</th>
 		<th class="title">Title</th>

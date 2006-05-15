@@ -12,13 +12,10 @@
 	<script type="text/javascript">
 	<!--
 	var skin_dir = '<?=$skin_dir?>';
-	function init() {
-<? if (isset($_GET['searchtype'])) { ?>
-		$('searchtype').value = '<?=$_GET['searchtype']?>';
-<? } ?>
+	window.onload = function () {
 <? if (isset($_GET['search'])) { ?>
 <? if ($controller == 'post') { ?>
-		highlight('h2', '<?=$_GET['search']?>');
+		highlight('#title', '<?=$_GET['search']?>');
 		highlight('#body', '<?=$_GET['search']?>');
 <? } else if ($controller == 'board') { ?>
 		highlight('td.title a', '<?=$_GET['search']?>');
@@ -28,10 +25,9 @@
 	//-->
 	</script>
 </head>
-<body onload="init()">
-<p>Hello, <?=$user->name?>! :)
-<?=implode(' | ', get_account_control($user))?>
-</p>
+<body>
+<p>Hello, <?=link_to_user($user)?>! :) <?=implode(' | ', get_account_control($user))?></p>
+
 <div id="meta">
 <?=$content?>
 </div>

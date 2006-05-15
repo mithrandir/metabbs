@@ -90,7 +90,7 @@ DIV.title .info {
 DIV.title .info P {
     margin: 0;
 }
-P.body {
+#body {
     clear: both;
 }
 H3 {
@@ -118,11 +118,11 @@ H1 A, H2 A {
     font-size: 12px;
 }
 
-#list {
+#posts {
     border-collapse: collapse;
     width: 100%;
 }
-#list th {
+#posts th {
     border-bottom: 1px solid #666;
     text-align: center;
     font-weight: normal;
@@ -130,10 +130,10 @@ H1 A, H2 A {
     font-size: 20px;
     padding: 5px;
 }
-#list td {
+#posts td {
     padding: 0.5em;
 }
-#list td {
+#posts td {
     border-bottom: 1px solid #ddd;
 }
 td.name, td.date {
@@ -249,4 +249,8 @@ textarea {
 }
 #profile big {
 	font-weight: bold;
+}
+
+.comment-count {
+    font-size: x-small;
 }

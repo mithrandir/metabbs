@@ -5,23 +5,6 @@ function go_back($action = '') {
 	header('Location: admin.php' . ($action?'?action='.$action:''));
 } 
 
-function text_field($model, $name, $value = '', $size = 15) {
-	$data = @$GLOBALS[$model];
-	if (is_object($data) && isset($data->name)) {
-		$value = $data->$name;
-	}
-	else if (is_array($data) && isset($data[$name])) {
-		$value = $data[$name];
-	}
-	$value = htmlspecialchars($value);
-	return sprintf('<input type="text" name="%s[%s]" value="%s" size="%d" />',
-			$model, $name, $value, $size);
-}
-
-function password_field($model, $name, $value = '', $size = 15) {
-	return sprintf('<input type="password" name="%s[%s]" />', $model, $name);
-}
-
 function check_box($model, $name) {
 	$data = @$GLOBALS[$model];
 	$checked = '';
