@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    background-color: #333;
+    font-family: verdana, sans-serif;
+    font-size: 14px;
+}
+
+#meta {
+    border: 5px solid #ccc;
+    margin: 20px;
+    background: url(bg.png) repeat-x #fff;
+}
+
+a {
+    color: #4E9A06;
+}
+a:hover {
+    background-color: #efc;
+}
+
+h1 {
+    font-family: "trebuchet ms", verdana, sans-serif;
+    font-size: 2.2em;
+    margin: 20px 20px 0 20px;
+}
+
+h2 {
+    font-family: "trebuchet ms", verdana, sans-serif;
+    font-size: 1.8em;
+    margin-bottom: 0.5em;
+}
+
+table {
+    border-collapse: collapse;
+}
+table th {
+    text-align: left;
+    background-color: #eee;
+    border: 1px solid #ccc;
+}
+table td {
+    border: 1px solid #ccc;
+}
+table th, table td {
+    padding: 0.5em;
+}
+
+div.left {
+    float: left;
+}
+div.right {
+    float: right;
+}
+
+.flash {
+    padding: 0.5em;
+    width: 50%;
+}
+.flash p {
+    margin: 0;
+}
+.fail {
+    border: 1px solid red;
+    background-color: pink;
+}
+
+#header {
+    padding: 10px 20px 20px 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+}
+#header p {
+    margin: 0;
+}
+
+#body {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+#boards .name {
+    width: 120px;
+}
+#boards td.actions {
+    color: #999;
+}
+
+label {
+    width: 120px;
+    margin-right: 10px;
+    float: left;
+}
+
+#header, #body {
+    clear: both;
+}
+
+#users .name {
+    width: 200px;
+}
+#users .level {
+    text-align: center;
+}
