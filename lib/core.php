@@ -14,4 +14,13 @@ require_once 'template.php';
 require_once 'uri_manager.php';
 require_once 'page.php';
 require_once 'account.php';
+
+function _addslashes(&$str) {
+	$str = addslashes($str);
+}
+function addslashes_deep(&$array) {
+	if (is_array($array)) {
+		@array_walk($array, '_addslashes');
+	}
+}
 ?>

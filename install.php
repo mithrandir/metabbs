@@ -72,24 +72,27 @@ if (!isset($_POST['config'])) {
 } else {
 	set_error_handler('capture_errors');
 
+    $safe = false;
+    function check_unexcepted_exit() {
+        global $safe;
+        if (!$safe) {
+            unlink(dirname(__FILE__).'/metabbs.conf.php');
+        }
+    }
+    register_shutdown_function('check_unexcepted_exit');
+
 	// TODO : clearing var. need policy
 	$_POST['admin_id'] = trim($_POST['admin_id']);
 	$_POST['admin_password'] = trim($_POST['admin_password']);
 	$_POST['admin_password_verify'] = trim($_POST['admin_password_verify']);
 	if ($_POST['admin_id'] == '') {
 		fail('Admin ID Is Empty');
-	} else {
-		pass('Admin ID Is Clear');
 	}
 	if ($_POST['admin_name'] == '') {
 		fail('Admin name Is Empty');
-	} else {
-		pass('Admin name Is Clear');
 	}
 	if ($_POST['admin_password'] != $_POST['admin_password_verify']) {
 		fail('Password Verify');
-	} else {
-		pass('Password Verify');
 	}
 
 	$dirs = array('data', 'data/uploads');
@@ -115,15 +118,16 @@ if (!isset($_POST['config'])) {
 
 	pass("Creating admin user");
 	$backend = $config->get('backend');
-	require_once 'lib/model.php';
-	require_once "lib/backends/$backend/backend.php";
-	require_once 'model/user.php';
+	require_once 'lib/core.php';
+	require_once 'lib/user_manager.php';
 	$user = new User;
 	$user->user = $_POST['admin_id'];
 	$user->name = $_POST['admin_name'];
 	$user->password = md5($_POST['admin_password']);
 	$user->level = 255;
 	$user->save();
+
+    $safe = true;
 	
 	echo "<h2>Installation Finished</h2>";
 	echo "<p>Thank you for installing MetaBBS. :-)</p>";

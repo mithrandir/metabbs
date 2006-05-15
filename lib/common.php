@@ -33,14 +33,6 @@ function check_is_installed() {
 	}
 }
 
-function _addslashes(&$str) {
-	$str = addslashes($str);
-}
-function addslashes_deep(&$array) {
-	if (is_array($array)) {
-		@array_walk($array, '_addslashes');
-	}
-}
 function human_readable_size($size) {
 	$units = array(' bytes', 'KB', 'MB', 'GB', 'TB');
 	$i = 0;

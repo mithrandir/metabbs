@@ -27,7 +27,7 @@ function get_backends() {
 	return $backends;
 }
 function capture_errors($errno, $errstr, $errfile, $errline) {
-	if ($errno & E_USER_ERROR) {
+	if ($errno & (E_ERROR | E_USER_ERROR)) {
 		fail($errstr);
 	} else {
 		warn($errstr);
