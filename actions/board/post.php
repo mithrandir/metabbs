@@ -9,5 +9,6 @@ if (is_post()) {
 	include 'actions/post/save.php';
 } else {
 	$post = new Post;
+	render('new');
 }
 ?>

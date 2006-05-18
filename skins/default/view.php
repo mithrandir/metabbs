@@ -27,7 +27,17 @@
 <div id="trackbacks">
 <h3>Trackbacks</h3>
 <p>Trackback URL: <?=link_text(full_url_for($post, 'trackback'))?></p>
-<? include($_skin_dir . '/trackback/_rdf.php'); ?>
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	 xmlns:dc="http://purl.org/dc/elements/1.1/"
+	 xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+	 rdf:about="<?=full_url_for($post)?>"
+	 dc:title="<?=$post->title?>"
+	 dc:identifier="<?=full_url_for($post)?>"
+	 trackback:ping="<?=full_url_for($post, 'trackback')?>" />
+</rdf:RDF>
+-->
 <ul>
 <? foreach ($trackbacks as $trackback) { ?>
 	<li><?=link_text($trackback->url, $trackback->title)?> from <?=$trackback->blog_name?></li>
@@ -39,7 +49,7 @@
 <h3>Comments</h3>
 <ul id="comment-list">
 <? foreach ($comments as $comment) { ?>
-	<? include($_skin_dir . '/comment/_comment.php'); ?>
+	<? include($_skin_dir . '/_comment.php'); ?>
 <? } ?>
 </ul>
 </div>

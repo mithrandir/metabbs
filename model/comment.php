@@ -16,7 +16,7 @@ class Comment extends Model {
 		return Post::find($this->post_id);
 	}
 	function create() {
-		$this->created_at = time(); //XXX
+		$this->created_at = model_datetime();
 		$this->id = model_insert('comment', array(
 			'post_id'  => $this->post_id,
 			'user_id'  => $this->user_id,

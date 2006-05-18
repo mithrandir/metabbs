@@ -25,4 +25,3 @@ echo "<?xml-stylesheet type=\"text/xsl\" href=\"$skin_dir/board/rss.xsl\"?>\n";
 <? } ?>
 	</channel>
 </rss>
-<?php exit; ?>

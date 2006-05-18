@@ -21,4 +21,5 @@ if (is_post()) {
 	define('SECURITY', 1);
 	include 'actions/post/save.php';
 }
+render('edit');
 ?>

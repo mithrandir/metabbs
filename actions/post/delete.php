@@ -5,6 +5,8 @@ if (is_post() && ($user->level >= $board->perm_delete ||
 	redirect_to(url_for($board));
 } else if ($post->user_id != 0 && $post->user_id == $user->id ||
 		$user->level >= $board->perm_delete) {
-	$action = 'admindelete';
+	render('admindelete');
+} else if ($post->user_id == 0) {
+	render('delete');
 }
 ?>

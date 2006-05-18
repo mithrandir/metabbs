@@ -24,4 +24,3 @@ echo "<?xml-stylesheet type=\"text/xsl\" href=\"$skin_dir/board/atom.xsl\"?>\n";
 	</entry>
 <? } ?>
 </feed>
-<?php exit; ?>

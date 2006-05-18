@@ -5,6 +5,11 @@ function is_post() {
 	return $_SERVER['REQUEST_METHOD'] == 'POST';
 }
 
+function render($template) {
+	global $render;
+	$render = $template;
+}
+
 @list(, $controller, $id, $action) = explode('/', $_SERVER['PATH_INFO']);
 if (!is_numeric($id) && $controller != 'board') {
 	$action = $id;
@@ -31,14 +36,16 @@ if (isset($board) && is_a($board, 'Board')) {
 	$title = "MetaBBS: $controller $action";
 }
 
-ob_start();
-include($_skin_dir . '/' . $controller . '/' . $action . '.php');
-$content = ob_get_contents();
-ob_end_clean();
-
-if ($layout = $config->get('global_layout')) {
-	include($layout);
-} else {
-	include($_skin_dir . '/layout.php');
+if (isset($render)) {
+	ob_start();
+	include($_skin_dir . '/' . $render . '.php');
+	$content = ob_get_contents();
+	ob_end_clean();
+	if ($layout = $config->get('global_layout')) {
+		include($layout);
+	} else {
+		include($_skin_dir . '/layout.php');
+	}
 }
+
 ?>

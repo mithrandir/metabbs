@@ -1,5 +1,5 @@
-<h2>Delete Post</h2>
-<form method="post" action="<?=url_for($post, 'delete')?>">
+<h2>Delete</h2>
+<form method="post">
 <p><input type="submit" value="Delete" /></p>
 </form>
 
