@@ -1,6 +1,6 @@
 <?php
 if ($board->perm_write > $user->level) {
-	redirect_to(url_for('user', 'login', true));
+	redirect_to(url_with_referrer_for('account', 'login'));
 }
 if (is_post()) {
 	$post = new Post($_POST['post']);
@@ -9,6 +9,7 @@ if (is_post()) {
 	include 'actions/post/save.php';
 } else {
 	$post = new Post;
-	render('new');
+	$post->name = $name;
+	render('write');
 }
 ?>
