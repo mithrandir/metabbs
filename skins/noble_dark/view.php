@@ -2,7 +2,7 @@
 <div class="title">
 <h2 id="title"><?=$post->title?></h2>
 <div class="info">
-<p>Posted by <?=$post->name?> at <?=date_format("%Y-%m-%d %H:%M:%S", $post->created_at)?></p>
+<p>Posted by <?=link_to_user($post->get_user())?> at <?=date_format("%Y-%m-%d %H:%M:%S", $post->created_at)?></p>
 </div>
 </div>
 <div id="attachments" style="clear: both">
@@ -13,21 +13,21 @@
 <? } else if ($attachment->is_image()) { ?>
 	<li><img src="<?=url_for($attachment)?>" alt="<?=$attachment->filename?>" /></li>
 <? } else { ?>
-	<li>Attachment: <a href="<?=url_for($attachment)?>"><?=$attachment->filename?></a> (<?=human_readable_size($attachment->get_size())?>)</li>
+	<li>Attachment: <?=link_to($attachment->filename, $attachment)?> (<?=human_readable_size($attachment->get_size())?>)</li>
 <? } ?>
 <? } ?>
 </ul>
 </div>
-<p id="body" class="body"><?=$post->get_body()?></p>
+<p id="body"><?=$post->get_body()?></p>
 </div>
 
 <div id="trackbacks">
 <h3>Trackbacks</h3>
-<p>Trackback URL: <a href="<?=full_url_for($post, 'trackback')?>"><?=full_url_for($post, 'trackback')?></a></p>
-<? include($_skin_dir . '/trackback/_rdf.php'); ?>
+<p>Trackback URL: <?=link_text(full_url_for($post, 'trackback'))?></p>
+<? //include($_skin_dir . '/trackback/_rdf.php'); ?>
 <ul>
 <? foreach ($trackbacks as $trackback) { ?>
-	<li><a href="<?=$trackback->url?>"><?=$trackback->title?></a> from <?=$trackback->blog_name?></li>
+	<li><?=link_text($trackback->url, $trackback->title)?> from <?=$trackback->blog_name?></li>
 <? } ?>
 </ul>
 </div>
@@ -36,7 +36,7 @@
 <h3>Comments</h3>
 <ul id="comment-list">
 <? foreach ($comments as $comment) {
-	include($_skin_dir . '/comment/_comment.php');
+	include($_skin_dir . '/_comment.php');
 } ?>
 </ul>
 </div>

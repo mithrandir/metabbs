@@ -1,3 +1,4 @@
+<form method="post" enctype="multipart/form-data" onsubmit="return checkForm(this) && sendingRequest()">
 <? if ($user->is_guest() || $post->exists() && $post->user_id == 0 && $user->level < $board->perm_delete) { ?>
 <p><label>Name:</label> <input type="text" name="post[name]" value="<?=$name?>" /></p>
 <p><label>Password:</label> <input type="password" name="post[password]" /></p>
@@ -17,3 +18,14 @@
 	<li><input type="file" name="upload[]" size="50" class="ignore" /></li>
 </ol>
 <? } ?>
+<p><?=submit_tag($action == 'post' ? "Post" : "Edit")?> <span id="sending"><?=image_tag("$skin_dir/spin.gif", 'Sending')?> Sending...</span></p>
+</form>
+
+<div id="meta-nav">
+<p>
+<?=link_to("Back to List", $board)?>
+<? if ($action == 'edit') { ?>
+ | <?=link_to("Back", $post)?>
+<? } ?>
+</p>
+</div>
