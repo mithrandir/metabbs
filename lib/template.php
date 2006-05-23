@@ -28,7 +28,7 @@ function link_url($match) {
 	}
 }
 function is_image($path) {
-	$ext = strrchr($path, '.');
+	$ext = strtolower(strrchr($path, '.'));
 	return ($ext == '.png' || $ext == '.gif' || $ext == '.jpg');
 }
 function format($str) {

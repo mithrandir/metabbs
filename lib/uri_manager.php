@@ -15,9 +15,9 @@ function chomp(&$str) {
 }
 
 function get_base_path() {
-	$path = dirname($_SERVER['SCRIPT_NAME']) . '/';
-	if ($path == '//') {
-		chomp($path);
+	$path = dirname($_SERVER['SCRIPT_NAME']);
+	if ($path{0} != '/' && $path{0} != '\\') {
+		$path .= '/';
 	}
 	return $path;
 }
