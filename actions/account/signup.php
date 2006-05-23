@@ -10,4 +10,5 @@ if (is_post()) {
 		redirect_back();
 	}
 }
+render('account/signup');
 ?>

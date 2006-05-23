@@ -1,6 +1,6 @@
 <?php
 if ($board->perm_write > $user->level) {
-	redirect_to(url_with_referrer_for('account', 'login'));
+	access_denied();
 }
 if (is_post()) {
 	$post = new Post($_POST['post']);

@@ -1,7 +1,7 @@
 <?php
 if ($post->user_id != 0 && $user->id != $post->user_id
 		&& $board->perm_delete > $user->level) {
-	redirect_to(url_with_referer_for('user', 'login'));
+	access_denied();
 }
 if (is_post()) {
 	if ($post->user_id == 0 && $board->perm_delete > $user->level) {

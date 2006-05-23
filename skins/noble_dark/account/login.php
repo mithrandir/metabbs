@@ -10,5 +10,5 @@
 	<label>Password:</label>
 	<input type="password" name="password" />
 </p>
-<p><input type="submit" value="Login" /> <a href="<?=url_for('user', 'signup')?>">Sign up</a></p>
+<p><input type="submit" value="Login" /> <?=signup()?></p>
 </form>

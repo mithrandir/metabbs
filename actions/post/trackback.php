@@ -5,6 +5,7 @@ header("Content-type: text/xml");
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 echo "<?xml-stylesheet type=\"text/xsl\" href=\"$skin_dir/trackback.xsl\"?>\n";
 echo "<response>\n";
+// TODO: spam filtering
 if ($trackback->validate() && $trackback->save()) {
 	echo "<error>0</error>\n";
 } else {

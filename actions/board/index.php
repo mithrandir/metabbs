@@ -1,6 +1,6 @@
 <?php
 if ($board->perm_read > $user->level) {
-	redirect_to(url_for('user', 'login', true));
+	access_denied();
 }
 if (isset($_GET['searchtype'])) {
 	$board->searchtype = $_GET['searchtype'];

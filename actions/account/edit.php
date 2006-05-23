@@ -13,4 +13,5 @@ if (is_post()) {
 	$user->save();
 	redirect_back();
 }
+render('account/edit');
 ?>

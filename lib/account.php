@@ -28,4 +28,8 @@ function signup() {
 function editinfo() {
 	return link_text(url_with_referer_for('account', 'edit'), 'Edit Info');
 }
+
+function access_denied() {
+	redirect_to(url_with_referer_for('account', 'login'));
+}
 ?>
