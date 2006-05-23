@@ -10,12 +10,16 @@ function get_base_uri() {
 	return $uri;
 }
 
-function get_base_path() {
-	return dirname($_SERVER['SCRIPT_NAME']) . '/';
-}
-
 function chomp(&$str) {
 	$str = substr($str, 0, -1);
+}
+
+function get_base_path() {
+	$path = dirname($_SERVER['SCRIPT_NAME']) . '/';
+	if ($path == '//') {
+		chomp($path);
+	}
+	return $path;
 }
 
 function get_href($model) {
