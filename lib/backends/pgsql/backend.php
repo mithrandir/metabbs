@@ -109,9 +109,6 @@ function model_delete($model, $condition) {
 }
 function model_insert($model, $data) {
     $db = get_conn();
-    if (!get_magic_quotes_gpc()) {
-        addslashes_deep($data);
-    }
     $query = 'INSERT INTO ';
     $query .= ($table=get_table_name($model));
     $query .= ' ("'.implode('","', array_keys($data)).'") VALUES(';
@@ -125,9 +122,6 @@ function model_insert($model, $data) {
 }
 function model_update($model, $data, $condition = '1') {
     $db = get_conn();
-    if (!get_magic_quotes_gpc()) {
-        addslashes_deep($data);
-    }
     $query = 'UPDATE ';
     $query .= get_table_name($model);
     $query .= ' SET ';
