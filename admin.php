@@ -24,7 +24,7 @@ function get_skins() {
 		}
 	}
 	closedir($dir);
-	return $skins;
+return $skins;
 }
 
 function find_skin($action) {
@@ -43,20 +43,11 @@ if ($action == 'index') {
 	$boards = Board::find_all();
 }
 else if ($action == 'new') {
-	$action = 'edit_general';
+	$action = 'edit';
 	$skins = get_skins();
 	$board = new Board;
 }
-else if ($action == 'edit' || $action == 'edit_general') {
-	$action = 'edit_general';
-	$board = Board::find($_GET['board_id']);
-	$skins = get_skins();
-}
-else if ($action == 'edit_permission') {
-	$board = Board::find($_GET['board_id']);
-	$skins = get_skins();
-}
-else if ($action == 'edit_skin') {
+else if ($action == 'edit') {
 	$board = Board::find($_GET['board_id']);
 	$skins = get_skins();
 }
