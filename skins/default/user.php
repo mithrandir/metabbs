@@ -1,15 +1,15 @@
 <h1>User Information</h1>
 <div id="profile">
-<p><big><?=$user->name?></big> (<?=$user->user?>)</p>
+<p><big><?=$user_->name?></big> (<?=$user_->user?>)</p>
 <p>
-<? if ($user->email) { ?>
-E-mail: <a href="mailto:<?=$user->email?>"><?=str_replace("@", " at ", $user->email)?></a><br />
+<? if ($user_->email) { ?>
+E-mail: <a href="mailto:<?=$user_->email?>"><?=str_replace("@", " at ", $user_->email)?></a><br />
 <? } ?>
-<? if ($user->url) {
-	if (strpos($user->url, "http://") !== 0)
-		$user->url = 'http://' . $user->url;
+<? if ($user_->url) {
+	if (strpos($user_->url, "http://") !== 0)
+		$user_->url = 'http://' . $user_->url;
 ?>
-Homepage: <a href="<?=$user->url?>"><?=$user->url?></a><br />
+Homepage: <a href="<?=$user_->url?>"><?=$user_->url?></a><br />
 <? } ?>
 </p>
 <p><?=$board->get_post_count()?> posts, <?=$board->get_comment_count()?> comments</p>

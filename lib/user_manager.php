@@ -27,9 +27,9 @@ class UserManager
 			return false;
 		}
 	}
-	function signup($user, $password, $name, $email, $url) {
+	function signup($user_id, $password, $name, $email, $url) {
 		$user = new User;
-		$user->user = $user;
+		$user->user = $user_id;
 		$user->password = md5($password);
 		$user->name = $name;
 		$user->email = $email;
