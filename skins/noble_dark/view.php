@@ -1,10 +1,12 @@
 <div id="post">
+
 <div class="title">
-<h2 id="title"><?=$post->title?></h2>
-<div class="info">
-<p>Posted by <?=link_to_user($post->get_user())?> at <?=date_format("%Y-%m-%d %H:%M:%S", $post->created_at)?></p>
+    <h2 id="title"><?=$post->title?></h2>
+    <div class="info">
+    <p>Posted by <?=link_to_user($post->get_user())?> at <?=date_format("%Y-%m-%d %H:%M:%S", $post->created_at)?></p>
+    </div>
 </div>
-</div>
+
 <div id="attachments" style="clear: both">
 <ul>
 <? foreach ($attachments as $attachment) { ?>
@@ -18,13 +20,24 @@
 <? } ?>
 </ul>
 </div>
+
 <p id="body"><?=$post->get_body()?></p>
 </div>
 
 <div id="trackbacks">
 <h3>Trackbacks</h3>
 <p>Trackback URL: <?=link_text(full_url_for($post, 'trackback'))?></p>
-<? //include($_skin_dir . '/trackback/_rdf.php'); ?>
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	 xmlns:dc="http://purl.org/dc/elements/1.1/"
+	 xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+	 rdf:about="<?=full_url_for($post)?>"
+	 dc:title="<?=$post->title?>"
+	 dc:identifier="<?=full_url_for($post)?>"
+	 trackback:ping="<?=full_url_for($post, 'trackback')?>" />
+</rdf:RDF>
+-->
 <ul>
 <? foreach ($trackbacks as $trackback) { ?>
 	<li><?=link_text($trackback->url, $trackback->title)?> from <?=$trackback->blog_name?></li>
@@ -35,29 +48,29 @@
 <div id="comments">
 <h3>Comments</h3>
 <ul id="comment-list">
-<? foreach ($comments as $comment) {
-	include($_skin_dir . '/_comment.php');
-} ?>
+<? foreach ($comments as $comment) { ?>
+	<? include($_skin_dir . '/_comment.php'); ?>
+<? } ?>
 </ul>
 </div>
 
 <? if ($board->perm_comment <= $user->level) { ?>
 <form method="post" action="<?=url_for($post, 'comment')?>" onsubmit="return sendForm(this, 'comment-list', function (f) { $('comment_body').value='' })">
 <? if ($user->is_guest()) { ?>
-<p><label>Name:</label> <input type="text" name="comment[name]" value="<?=$name?>" /></p>
-<p><label>Password:</label> <input type="password" name="comment[password]" /></p>
+<p><?=label_tag("Name:", "comment", "name")?> <?=text_field("comment", "name", $name)?></p>
+<p><?=label_tag("Password:", "comment", "password")?> <?=password_field("comment", "password")?></p>
 <? } ?>
-<p><textarea name="comment[body]" cols="50" rows="5" id="comment_body"></textarea></p>
-<p><input type="submit" value="Save" /> <span id="sending"><img src="<?=$skin_dir?>/spin.gif" alt="Sending" /> Sending...</span></p>
+<p><?=text_area("comment", "body", 5, 50, "", array("id" => "comment_body"))?></p>
+<p><?=submit_tag("Save")?> <span id="sending"><?=image_tag("$skin_dir/spin.gif", "Sending")?> Sending...</span></p>
 </form>
 <? } ?>
 
-<div id="nav">
-<p><a href="<?=url_for($board, '', array('page' => Page::get_requested_page()))?>">List</a>
+<div id="meta-nav">
+<p><?=link_to("List", $board, '', array('page' => Page::get_requested_page()))?>
 <? if ($user->level >= $board->perm_write) { ?>
-| <a href="<?=url_for($board, 'post')?>">New Post</a>
+ | <?=link_to("New Post", $board, 'post')?>
 <? } ?>
 <? if ($post->user_id == 0 || $user->id == $post->user_id || $user->level >= $board->perm_delete) { ?>
-| <a href="<?=url_for($post, 'edit')?>">Edit</a> or <a href="<?=url_for($post, 'delete')?>">Delete</a>
+ | <?=link_to("Edit", $post, 'edit')?> or <?=link_to("Delete", $post, 'delete')?>
 <? } ?></p>
 </div>
