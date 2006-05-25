@@ -10,7 +10,11 @@
 		<th class="date">Date</th>
 	</tr>
 <? foreach ($posts as $post) { ?>
+<? if ($post->is_notice()) { ?>
+	<tr class="notice">
+<? } else { ?>
 	<tr>
+<? } ?>
 		<td class="name"><?=link_to_user($post->get_user())?></td>
 		<td class="title">
 			<?=link_to_post($post)?>

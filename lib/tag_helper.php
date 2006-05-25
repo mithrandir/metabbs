@@ -72,6 +72,13 @@ function text_field($model, $field, $value = '', $size = 20) {
 function password_field($model, $field, $value = '', $size = 20) {
     return input_tag("${model}[${field}]", $value, 'password', array("id" => "${model}_${field}", "size" => $size));
 }
+function check_box($model, $field, $checked, $options = array()) {
+	if ($checked) {
+		$options['checked'] = 'checked';
+	}
+	$options['id'] = "${model}_${field}";
+	return input_tag("${model}[$field]", 0, 'hidden') . input_tag("${model}[$field]", 1, 'checkbox', $options);
+}
 function text_area($model, $field, $rows = 10, $cols = 50, $value='', $options=array()) {
     $options['name'] = "${model}[${field}]";
     $options['rows'] = $rows;

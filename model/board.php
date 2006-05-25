@@ -45,7 +45,7 @@ class Board extends Model {
 		if ($this->search) {
 			$where .= " AND " . $this->get_where();
 		}
-		return model_find_all('post', $where, 'id DESC', $offset, $limit);
+		return model_find_all('post', $where, 'type DESC, id DESC', $offset, $limit);
 	}
 	function get_post_count() {
 		if (!$this->count) {

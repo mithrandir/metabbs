@@ -5,16 +5,6 @@ function go_back($action = '') {
 	header('Location: admin.php' . ($action?'?action='.$action:''));
 } 
 
-function check_box($model, $name) {
-	$data = @$GLOBALS[$model];
-	$checked = '';
-	if (@$data->$name) {
-		$checked = ' checked="checked"';
-	}
-	$key = $model . '[' . $name . ']';
-	return "<input name=\"$key\" type=\"hidden\" value=\"0\" /><input type=\"checkbox\" name=\"$key\" value=\"1\"$checked />";
-}
-
 function get_skins() {
 	$skins = array();
 	$dir = opendir('skins');
@@ -34,7 +24,7 @@ function find_skin($action) {
 $base_uri = '.';
 
 if (!$user->is_admin()) {
-	redirect_to('account/login?url='.get_base_path().'admin.php');
+	redirect_to('metabbs.php/account/login?url='.get_base_path().'admin.php');
 }
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'index';

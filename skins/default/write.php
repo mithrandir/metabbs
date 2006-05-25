@@ -4,6 +4,9 @@
 <p><?=label_tag("Password:", "post", "password")?> <?=password_field("post", "password")?></p>
 <? } ?>
 <p><?=label_tag("Title:", "post", "title")?> <?=text_field("post", "title", $post->title, 50)?></p>
+<? if ($user->is_admin()) { ?>
+<p><?=label_tag("Notice", "post", "type")?> <?=check_box("post", "type", $post->type)?></p>
+<? } ?>
 <p><?=text_area("post", "body", 12, 60, $post->body)?></p>
 
 <? if ($board->use_attachment) { ?>

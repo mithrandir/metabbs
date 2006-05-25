@@ -77,6 +77,10 @@ class MySQLAdapter
     function drop_table($t) {
         $this->query("DROP TABLE meta_$t");
     }
+    function add_field($t, $name, $type, $length = null) {
+    	$table = new Table($t);
+    	$this->query("ALTER TABLE meta_$t ADD " . $table->_column($name, $type, $length));
+	}
 }
 
 function get_table_name($model) {

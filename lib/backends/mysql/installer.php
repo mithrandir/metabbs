@@ -14,8 +14,11 @@ class Table
 	function Table($name) {
 		$this->name = $name;
 	}
-	function column($name, $type, $length = null) {
+	function _column($name, $type, $length = null) {
 		$_type = $this->types[$type];
+		if ($_type == 'integer' && $length == 1) {
+			$_type = 'tinyint';
+		}
 		if ($length) {
 			$column = "`$name` $_type[0]($length) NOT NULL";
 		} else {
@@ -28,7 +31,10 @@ class Table
 		if ($_type[2] !== null) {
 			$column .= " default '$_type[2]'";
 		}
-		$this->columns[] = $column;
+		return $column;
+	}
+	function column($name, $type, $length = null) {
+		$this->columns[] = $this->_column($name, $type, $length);
 	}
 	function add_index($name) {
 		$this->columns[] = "KEY `{$this->name}_${name}_index` (`$name`)";

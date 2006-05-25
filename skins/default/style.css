@@ -254,3 +254,7 @@ textarea {
 .comment-count {
     font-size: x-small;
 }
+
+tr.notice {
+	background-color: #ffffee;
+}

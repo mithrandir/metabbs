@@ -7,6 +7,7 @@ class Post extends Model {
 	var $id, $count;
 	var $title, $body;
 	var $user_id = 0;
+	var $type = 0;
 	var $tb_count;
 	
 	function get_user() {
@@ -37,6 +38,7 @@ class Post extends Model {
 			'name'	 => $this->name,
 			'title'	=> $this->title,
 			'body'	 => $this->body,
+			'type' => $this->type,
 			'password' => md5($this->password),
 			'created_at' => model_datetime()));
 	}
@@ -44,6 +46,7 @@ class Post extends Model {
 		model_update('post', array(
 			'name'	   => $this->name,
 			'title'	  => $this->title,
+			'type' => $this->type,
 			'body'	   => $this->body,
 			'created_at' => model_datetime()), 'id='.$this->id);
 	}
@@ -72,6 +75,9 @@ class Post extends Model {
 	}
 	function get_trackbacks() {
 		return model_find_all('trackback', 'post_id='.$this->id);
+	}
+	function is_notice() {
+		return ($this->type == 1);
 	}
 }
 ?>
