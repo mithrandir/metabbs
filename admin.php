@@ -61,23 +61,14 @@ else if ($action == 'save') {
 	} else {
 		$board = new Board;
 	}
-	if (isset($_POST['skin'])) {
-		$board->skin = $_POST['skin'];
-		// TODO check skin exist
+	$board->import($_POST['board']);
+	if (!$validate || $board->validate()) {
 		$board->save();
 		go_back();
-	}
-	else
-	{
-		$board->import($_POST['board']);
-		if (!$validate || $board->validate()) {
-			$board->save();
-			go_back();
-		} else {
-			$action = 'edit';
-			$skins = get_skins();
-			$flash = "Board '$board->name' already exists.";
-		}
+	} else {
+		$action = 'edit';
+		$skins = get_skins();
+		$flash = "Board '$board->name' already exists.";
 	}
 }
 else if ($action == 'delete') {
@@ -91,9 +82,12 @@ else if ($action == 'logout') {
 }
 else if ($action == 'settings') {
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		$user->password = md5($_POST['settings']['admin_password']);
-		cookie_register('password', $user->password);
-		$user->update();
+		$new_password = md5($_POST['settings']['admin_password']);
+		if ($new_password != $user->password) {
+			$user->password = $new_password;
+			cookie_register('password', $user->password);
+			$user->update();
+		}
 		$config->set('global_layout', $_POST['settings']['global_layout']);
 		$config->write_to_file();
 		go_back();

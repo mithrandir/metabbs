@@ -49,7 +49,7 @@
 <div id="skins-available">
 <? foreach ($skins as $skin) { ?>
 <div class="skins-item">
-<h3><input type="radio" name="skin" value="<?=$skin?>" <? if ($board->skin == $skin) { ?>checked="checked"<? } ?> /> <?=$skin?></h3>
+<h3><input type="radio" name="board[skin]" value="<?=$skin?>" <? if ($board->skin == $skin) { ?>checked="checked"<? } ?> /> <?=$skin?></h3>
 <? if(file_exists("./skins/$skin/screenshot.jpg")) { ?>
 	<img src="./skins/<?=$skin?>/screenshot.jpg" width="320" alt="skin screenshot" />
 <? } else { ?>
