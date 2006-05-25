@@ -47,6 +47,9 @@ class Board extends Model {
 		}
 		return model_find_all('post', $where, 'type DESC, id DESC', $offset, $limit);
 	}
+	function get_feed_posts($count) {
+		return model_find_all('post', 'board_id='.$this->id, 'id DESC', 0, $count);
+	}
 	function get_post_count() {
 		if (!$this->count) {
 			$where = "board_id=$this->id";

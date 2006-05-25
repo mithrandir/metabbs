@@ -3,8 +3,7 @@ setlocale(LC_TIME, "en_US");
 if ($board->perm_read > $user->level) {
 	exit;
 }
-$page = new Page($board, 1);
-$posts = $page->get_posts();
+$posts = $board->get_feed_posts($board->posts_per_page);
 header("Content-Type: text/xml; charset=UTF-8");
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 echo "<?xml-stylesheet type=\"text/xsl\" href=\"$skin_dir/board/atom.xsl\"?>\n";
