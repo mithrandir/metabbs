@@ -16,7 +16,7 @@
 </p>
 <p>
 	<?=label_tag("Posts per page", "board", "posts_per_page")?>
-	<?=text_field('board', 'posts_per_page', 10, $board->posts_per_page)?>
+	<?=text_field('board', 'posts_per_page', $board->posts_per_page)?>
 </p>
 <p>
 	<?=label_tag("Use attachment", "board", "use_attachment")?>

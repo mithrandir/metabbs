@@ -1,4 +1,4 @@
-<h2>Boards</h2>
+<h2><?=i('Boards')?></h2>
 <table id="boards">
 <tr>
 	<th class="name">Name</th>
