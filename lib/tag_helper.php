@@ -58,7 +58,7 @@ function image_tag($src, $alt = "") {
 }
 
 function label_tag($label, $model, $field) {
-    return block_tag("label", $label, array("for" => "${model}_${field}"));
+    return block_tag("label", i($label), array("for" => "${model}_${field}"));
 }
 function input_tag($name, $value, $type='text', $options=array()) {
     $options['name'] = $name;

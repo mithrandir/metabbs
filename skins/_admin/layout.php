@@ -8,9 +8,9 @@
 </head>
 <body>
 <div id="meta">
-	<h1>MetaBBS Administration</h1>
+	<h1><?=i('MetaBBS Administration')?></h1>
 <div id="header">
-	<p><a href="?action=index">Boards</a> | <a href="?action=users">Users</a> | <a href="?action=settings">Settings</a> | <a href="?action=uninstall">Uninstall</a> | <a href="account/logout?url=<?=get_base_path()?>admin.php">Logout &raquo;</a></p>
+	<p><a href="?action=index"><?=i('Boards')?></a> | <a href="?action=users"><?=i('Users')?></a> | <a href="?action=settings"><?=i('Settings')?></a> | <a href="?action=uninstall"><?=i('Uninstall')?></a> | <a href="account/logout?url=<?=get_base_path()?>admin.php"><?=i('Logout')?> &raquo;</a></p>
 </div>
 <div id="body">
 <? if (isset($flash)) { ?>

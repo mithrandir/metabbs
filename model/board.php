@@ -7,6 +7,7 @@ class Board extends Model {
 	var $name, $title;
 	var $skin = 'default';
 	var $posts_per_page = 10;
+	var $use_attachment = 0;
 	var $searchtype = '';
 	var $search = '';
 

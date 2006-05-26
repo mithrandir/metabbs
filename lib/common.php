@@ -29,6 +29,7 @@ if (!get_magic_quotes_gpc()) {
 //$metabbs_dir = dirname(__FILE__) . '/../';
 
 require_once("core.php");
+require_once("i18n.php");
 require_once("cookie.php");
 require_once("tag_helper.php");
 require_once("user_manager.php");

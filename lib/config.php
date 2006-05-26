@@ -24,11 +24,11 @@ class Config
 	function set($key, $value) {
 		$this->config[$key] = $value;
 	}
-	function get($key) {
+	function get($key, $default = "") {
 		if (array_key_exists($key, $this->config)) {
 			return $this->config[$key];
 		} else {
-			return "";
+			return $default;
 		}
 	}
 	function to_string() {
