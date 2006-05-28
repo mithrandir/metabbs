@@ -1,4 +1,7 @@
 <?php
+function is_post() {
+	return $_SERVER['REQUEST_METHOD'] == 'POST';
+}
 function get_base_uri() {
 	static $uri;
 	if (!isset($uri)) {
@@ -51,7 +54,7 @@ function full_url_for($controller, $action = '') {
 }
 
 function url_for($controller, $action = null, $params = array()) {
-	if (isset($_GET['search']) && $_GET['search'] && $_SERVER['REQUEST_METHOD'] != 'POST')
+	if (isset($_GET['search']) && $_GET['search'] && is_post())
 		$params['search'] = urlencode($_GET['search']);
 	return _url_for($controller, $action, $params);
 }

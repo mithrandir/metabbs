@@ -1,10 +1,6 @@
 <?php
 require_once 'lib/common.php';
 
-function is_post() {
-	return $_SERVER['REQUEST_METHOD'] == 'POST';
-}
-
 function render($template) {
 	global $render;
 	$render = $template;

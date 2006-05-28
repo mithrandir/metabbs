@@ -18,7 +18,7 @@ class Trackback extends Model {
 		return true;
 	}
 	function validate() {
-		return $_SERVER['REQUEST_METHOD'] == 'POST' && $this->url;
+		return $this->url && $this->blog_name;
 	}
 }
 ?>
