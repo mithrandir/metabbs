@@ -125,7 +125,7 @@ if (!isset($_POST['config'])) {
 	$user->name = $_POST['admin_name'];
 	$user->password = md5($_POST['admin_password']);
 	$user->level = 255;
-	$user->save();
+	$user->create();
 
     $safe = true;
 	

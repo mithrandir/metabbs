@@ -36,7 +36,7 @@ class UserManager
 		$user->url = $url;
 
 		if ($user->valid()) {
-			$user->save();
+			$user->create();
 			return $user;
 		} else {
 			return null;

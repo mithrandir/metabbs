@@ -53,7 +53,11 @@ else if ($action == 'save') {
 	}
 	$board->import($_POST['board']);
 	if (!$validate || $board->validate()) {
-		$board->save();
+		if ($board->exists()) {
+			$board->update();
+		} else {
+			$board->create();
+		}
 		go_back();
 	} else {
 		$action = 'edit';
@@ -92,7 +96,7 @@ else if ($action == 'user_edit') {
 	foreach ($_POST['user_id'] as $id => $check) {
 		$user = User::find($id);
 		$user->level = $level;
-		$user->save();
+		$user->update();
 	}
 	go_back('users');
 }

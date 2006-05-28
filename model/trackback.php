@@ -15,7 +15,6 @@ class Trackback extends Model {
 			'title'	 => $this->title,
 			'excerpt'   => $this->excerpt,
 			'url'	   => $this->url));
-		return true;
 	}
 	function validate() {
 		return $this->url && $this->blog_name;

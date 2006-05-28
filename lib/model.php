@@ -28,11 +28,6 @@ class Model
 	function exists() {
 		return $this->id;
 	}
-	function save() {
-		return (!$this->exists()) ? $this->create() : $this->update();
-	}
-	function create() { }
-	function update() { }
 	function get_body() {
 		return format($this->body);
 	}

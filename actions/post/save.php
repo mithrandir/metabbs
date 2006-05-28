@@ -8,7 +8,11 @@ if (!$user->is_guest()) {
 } else {
 	cookie_register('name', $post->name);
 }
-$post->save();
+if ($post->exists()) {
+	$post->update();
+} else {
+	$post->create();
+}
 if (isset($_FILES['upload'])) {
 	$upload = $_FILES['upload'];
 	if (!file_exists('data/uploads')) {
@@ -21,7 +25,7 @@ if (isset($_FILES['upload'])) {
 		$attachment = new Attachment;
 		$attachment->post_id = $post->id;
 		$attachment->filename = $filename;
-		$attachment->save();
+		$attachment->create();
 		move_uploaded_file($upload['tmp_name'][$key], 'data/uploads/' . $attachment->id);
 	}
 }

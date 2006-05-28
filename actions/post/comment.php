@@ -10,7 +10,7 @@ if ($user->is_guest()) {
 } else {
 	$comment->name = $user->name;
 }
-$comment->save();
+$comment->create();
 if (isset($_POST['ajax'])) {
 	include($_skin_dir . '/_comment.php');
 	exit;

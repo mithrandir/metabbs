@@ -10,7 +10,7 @@ if (is_post()) {
 	else {
 		$user->password = $old_password;
 	}
-	$user->save();
+	$user->update();
 	redirect_back();
 }
 render('account/edit');
