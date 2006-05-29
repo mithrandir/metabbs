@@ -7,8 +7,8 @@
 <? foreach ($boards as $board) { ?>
 <tr>
 	<td class="name"><?=$board->name?></td>
-	<td class="actions"><a href="?action=edit&amp;board_id=<?=$board->id?>"><?=i('Edit Settings')?></a> | <a href="metabbs.php/board/<?=$board->name?>"><?=i('Preview')?></a> | <a href="?action=delete&amp;board_id=<?=$board->id?>" onclick="return window.confirm('Really?')"><?=i('Delete')?></a></td>
+	<td class="actions"><?=link_to(i('Edit Settings'), $board, 'edit')?> | <?=link_to(i('Preview'), $board)?> | <a href="<?=url_for($board, 'delete')?>" onclick="return window.confirm('<?=i('Are you sure?')?>')"><?=i('Delete')?></a></td>
 </tr>
 <? } ?>
 </table>
-<p><a href="?action=new"><?=i('New Board')?></a></p>
+<p><?=link_to(i('New Board'), 'admin', 'new')?></p>

@@ -10,7 +10,7 @@ function get_account_control($account) {
 }
 
 function admin() {
-	return link_text(get_base_path(). 'admin.php', 'Admin');
+	return link_text(url_for('admini'), 'Admin');
 }
 
 function login() {

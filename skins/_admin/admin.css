@@ -55,13 +55,15 @@ div.right {
 .flash {
     padding: 0.5em;
     width: 50%;
+    border: 1px solid red;
+    background-color: pink;
 }
 .flash p {
     margin: 0;
 }
-.fail {
-    border: 1px solid red;
-    background-color: pink;
+.pass {
+    border: 1px solid green;
+    background-color: lightgreen;
 }
 
 #header {

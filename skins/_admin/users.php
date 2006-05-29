@@ -1,5 +1,5 @@
 <h2><?=i('Users')?></h2>
-<form method="post" action="?action=user_edit">
+<form method="post" action="<?=url_for('user', 'edit')?>">
 <table id="users">
 <tr>
 	<th><input type="checkbox" value="1" onchange="checkAll(this.form, this.checked)" /></th>

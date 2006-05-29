@@ -131,7 +131,7 @@ if (!isset($_POST['config'])) {
 	
 	echo "<h2>Installation Finished</h2>";
 	echo "<p>Thank you for installing MetaBBS. :-)</p>";
-	echo "<p><a href='admin.php'>Go to administration page &raquo;</a></p>";
+	echo "<p><a href='metabbs.php/admin'>Go to administration page &raquo;</a></p>";
 }
 print_footer();
 ?>

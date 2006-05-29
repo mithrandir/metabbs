@@ -1,4 +1,4 @@
-<form method="post" action="?action=save<? if ($board->exists()) { ?>&amp;board_id=<?=$board->id?><? } ?>">
+<form method="post">
 <ul id="edit-section">
     <li class="selected"><a href="#general"><?=i('General')?></a></li>
     <li><a href="#permission"><?=i('Permission')?></a></li>
@@ -51,7 +51,7 @@
 <div class="skins-item">
 <h3><input type="radio" name="board[skin]" value="<?=$skin?>" <? if ($board->skin == $skin) { ?>checked="checked"<? } ?> /> <?=$skin?></h3>
 <? if(file_exists("./skins/$skin/screenshot.jpg")) { ?>
-	<img src="./skins/<?=$skin?>/screenshot.jpg" width="320" alt="skin screenshot" />
+	<img src="<?=_url_for("skins/$skin/screenshot.jpg")?>" width="320" alt="skin screenshot" />
 <? } else { ?>
 	<div class="skins-noscreenshot"><?=i('No Screenshot')?></div>
 <? } ?>

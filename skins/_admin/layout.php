@@ -10,11 +10,11 @@
 <div id="meta">
 	<h1><?=i('MetaBBS Administration')?></h1>
 <div id="header">
-	<p><a href="?action=index"><?=i('Boards')?></a> | <a href="?action=users"><?=i('Users')?></a> | <a href="?action=settings"><?=i('Settings')?></a> | <a href="?action=uninstall"><?=i('Uninstall')?></a> | <a href="account/logout?url=<?=get_base_path()?>admin.php"><?=i('Logout')?> &raquo;</a></p>
+	<p><?=link_to(i('Boards'), 'admin')?> | <?=link_to(i('Users'), 'admin', 'users')?> | <?=link_to(i('Settings'), 'admin', 'settings')?></a> | <?=link_to(i('Uninstall'), 'admin', 'uninstall')?> | <a href="<?=url_with_referer_for('account', 'logout')?>"><?=i('Logout')?> &raquo;</a></p>
 </div>
 <div id="body">
 <? if (isset($flash)) { ?>
-<div class="flash fail">
+<div class="flash <?=$flash_class?>">
 <p><?=$flash?></p>
 </div>
 <? } ?>

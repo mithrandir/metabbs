@@ -5,6 +5,17 @@ function render($template) {
 	global $render;
 	$render = $template;
 }
+function get_skins() {
+	$skins = array();
+	$dir = opendir('skins');
+	while ($file = readdir($dir)) {
+		if ($file{0} != '_' && $file{0} != '.' && is_dir("skins/$file")) {
+			$skins[] = $file;
+		}
+	}
+	closedir($dir);
+	return $skins;
+}
 
 @list(, $controller, $id, $action) = explode('/', $_SERVER['PATH_INFO']);
 if (!is_numeric($id) && $controller != 'board') {
@@ -19,11 +30,12 @@ $name = cookie_get('name');
 
 @include("actions/$controller.php");
 $action_dir = 'actions/' . $controller;
-$skin = isset($board->skin) ? $board->skin : 'default';
+@include($action_dir . '/' . $action . '.php');
+if (!isset($skin)) {
+	$skin = isset($board->skin) ? $board->skin : 'default';
+}
 $_skin_dir = 'skins/' . $skin;
 $skin_dir = get_base_path() . $_skin_dir;
-
-@include($action_dir . '/' . $action . '.php');
 if (isset($board) && is_a($board, 'Board')) {
 	$title = $board->title;
 } else if (isset($user_) && is_a($user_, 'User')) {
@@ -37,7 +49,7 @@ if (isset($render)) {
 	include($_skin_dir . '/' . $render . '.php');
 	$content = ob_get_contents();
 	ob_end_clean();
-	if ($layout = $config->get('global_layout')) {
+	if ($layout = $config->get('global_layout') && $controller != 'admin') {
 		include($layout);
 	} else {
 		include($_skin_dir . '/layout.php');

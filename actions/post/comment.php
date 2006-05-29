@@ -12,7 +12,7 @@ if ($user->is_guest()) {
 }
 $comment->create();
 if (isset($_POST['ajax'])) {
-	include($_skin_dir . '/_comment.php');
+	include("skins/$board->skin/_comment.php");
 	exit;
 } else {
 	redirect_to(url_for($post));
