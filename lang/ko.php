@@ -31,3 +31,5 @@ Admin password=관리자 암호
 Global layout=공통 레이아웃
 Are you sure?=정말로 하시겠습니까?
 Cancel=취소
+Password=암호
+Notice=공지사항

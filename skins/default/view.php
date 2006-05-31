@@ -57,11 +57,11 @@
 <? if ($board->perm_comment <= $user->level) { ?>
 <form method="post" action="<?=url_for($post, 'comment')?>" onsubmit="return sendForm(this, 'comment-list', function (f) { $('comment_body').value='' })">
 <? if ($user->is_guest()) { ?>
-<p><?=label_tag("Name:", "comment", "name")?> <?=text_field("comment", "name", $name)?></p>
-<p><?=label_tag("Password:", "comment", "password")?> <?=password_field("comment", "password")?></p>
+<p><?=label_tag("Name", "comment", "name")?> <?=text_field("comment", "name", $name)?></p>
+<p><?=label_tag("Password", "comment", "password")?> <?=password_field("comment", "password")?></p>
 <? } ?>
 <p><?=text_area("comment", "body", 5, 50, "", array("id" => "comment_body"))?></p>
-<p><?=submit_tag("Save")?> <span id="sending"><?=image_tag("$skin_dir/spin.gif", "Sending")?> Sending...</span></p>
+<p><?=submit_tag("Save")?> <span id="sending"><?=image_tag("$skin_dir/spin.gif", "Sending...")?></span></p>
 </form>
 <? } ?>
 
