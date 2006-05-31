@@ -17,7 +17,7 @@ function date_format($format, $date) {
 	return strftime($format, $time);
 }
 function autolink($string) {
-	return preg_replace_callback("#http://(?:[-0-9a-z_.@:~\\#%=+?/]|&amp;)+#i", 'link_url', $string);
+	return preg_replace_callback("#([a-z]+)://(?:[-0-9a-z_.@:~\\#%=+?/]|&amp;)+#i", 'link_url', $string);
 }
 function link_url($match) {
 	$url = $match[0];
