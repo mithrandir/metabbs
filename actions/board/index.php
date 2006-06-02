@@ -2,15 +2,15 @@
 if ($board->perm_read > $user->level) {
 	access_denied();
 }
-if (isset($_GET['searchtype'])) {
+if (isset($_GET['searchtype']) && isset($_GET['search'])) {
 	$board->searchtype = $_GET['searchtype'];
-}
-if (isset($_GET['search'])) {
 	$board->search = $_GET['search'];
 }
 $page = new Page($board, Page::get_requested_page());
 $posts = $page->get_posts();
 $pages = $page->get_page_group();
+
+$nav[] = link_to(i("New Post"), $board, 'post');
 
 render('list');
 ?>

@@ -28,6 +28,8 @@ if (!$controller) $controller = 'notice';
 
 $name = cookie_get('name');
 
+$nav = array();
+
 @include("actions/$controller.php");
 $action_dir = 'actions/' . $controller;
 @include($action_dir . '/' . $action . '.php');

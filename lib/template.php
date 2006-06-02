@@ -34,4 +34,10 @@ function is_image($path) {
 function format($str) {
 	return preg_replace(array("/ {2}/", "/\n /", "/\r?\n/", "/<br \/><br \/>/"), array("&nbsp;&nbsp;", "\n&nbsp;", "<br />", "</p><p>"), autolink(htmlspecialchars($str)));
 }
+function print_nav($nav = null) {
+	if (!$nav) {
+		$nav = $GLOBALS['nav'];
+	}
+	echo implode(' | ', $nav);
+}
 ?>

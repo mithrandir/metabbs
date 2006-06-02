@@ -111,5 +111,12 @@ class User extends Model {
 		$user = User::find_by_user($this->user);
 		return !$user->exists();
 	}
+	function get_url() {
+		if (strpos($this->url, "http://") !== 0) {
+			return 'http://' . $this->url;
+		} else {
+			return $this->url;
+		}
+	}
 }
 ?>

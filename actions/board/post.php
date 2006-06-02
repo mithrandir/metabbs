@@ -10,6 +10,7 @@ if (is_post()) {
 } else {
 	$post = new Post;
 	$post->name = $name;
+	$nav[] = link_to(i("List"), $board);
 	render('write');
 }
 ?>

@@ -33,3 +33,7 @@ Are you sure?=정말로 하시겠습니까?
 Cancel=취소
 Password=암호
 Notice=공지사항
+List=목록
+New Post=글쓰기
+Edit=고치기
+Back=돌아가기

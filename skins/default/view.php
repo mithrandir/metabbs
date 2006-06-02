@@ -64,13 +64,3 @@
 <p><?=submit_tag("Save")?> <span id="sending"><?=image_tag("$skin_dir/spin.gif", "Sending...")?></span></p>
 </form>
 <? } ?>
-
-<div id="nav">
-<p><?=link_to("List", $board, '', array('page' => Page::get_requested_page()))?>
-<? if ($user->level >= $board->perm_write) { ?>
- | <?=link_to("New Post", $board, 'post')?>
-<? } ?>
-<? if ($post->user_id == 0 || $user->id == $post->user_id || $user->level >= $board->perm_delete) { ?>
- | <?=link_to("Edit", $post, 'edit')?> or <?=link_to("Delete", $post, 'delete')?>
-<? } ?></p>
-</div>

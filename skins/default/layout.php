@@ -30,6 +30,10 @@
 
 <div id="meta">
 <?=$content?>
+
+<div id="nav">
+<p><? print_nav(); ?></p>
+</div>
 </div>
 </body>
 </html>

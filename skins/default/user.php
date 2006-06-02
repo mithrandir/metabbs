@@ -5,11 +5,8 @@
 <? if ($user_->email) { ?>
 E-mail: <a href="mailto:<?=$user_->email?>"><?=str_replace("@", " at ", $user_->email)?></a><br />
 <? } ?>
-<? if ($user_->url) {
-	if (strpos($user_->url, "http://") !== 0)
-		$user_->url = 'http://' . $user_->url;
-?>
-Homepage: <a href="<?=$user_->url?>"><?=$user_->url?></a><br />
+<? if ($user_->url) { ?>
+Homepage: <?=link_text($user_->get_url())?><br />
 <? } ?>
 </p>
 <p><?=$board->get_post_count()?> posts, <?=$board->get_comment_count()?> comments</p>
@@ -23,7 +20,7 @@ Homepage: <a href="<?=$user_->url?>"><?=$user_->url?></a><br />
 <? foreach ($posts as $post) { ?>
 	<tr>
 		<td class="name"><a href="<?=url_for($post->get_board())?>"><?=$post->get_board_name()?></a></td>
-		<td class="title"><a href="<?=url_for($post, '', array('page' => Page::get_requested_page()))?>"><?=$post->title?></a><? if ($post->get_comment_count()>0) { ?> <a href="<?=url_for($post)?>#comments"><small>[<?=$post->get_comment_count()?>]</small></a><? } ?></td>
+		<td class="title"><?=link_to_post($post)?> <span class="comment-count"><?=link_to_comments($post)?></span></td>
 		<td class="date"><?=date_format("%Y-%m-%d", $post->created_at)?></td>
 	</tr>
 <? } ?>

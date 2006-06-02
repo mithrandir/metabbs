@@ -58,10 +58,3 @@
 <?=input_tag("search", $board->search)?> <?=submit_tag("Search")?> <?=link_text("?", "Return")?>
 </p>
 </form>
-
-<p>
-<? if ($user->level >= $board->perm_write) { ?>
-    <?=link_to("New Post", $board, 'post')?>
-<? } ?>
-</p>
-</div>
