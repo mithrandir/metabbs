@@ -26,26 +26,4 @@ Homepage: <?=link_text($user_->get_url())?><br />
 <? } ?>
 </table>
 
-<div id="nav">
-<ul id="pages">
-<? if (!$page->is_first()) { ?>
-	<li class="first"><a href="<?=get_href($page->first())?>">&laquo;</a></li>
-<? } ?>
-<? if ($page->has_prev()) { ?>
-	<li class="next"><a href="<?=get_href($page->prev())?>">&lsaquo;</a></li>
-<? } ?>
-<? foreach ($pages as $p) { ?>
-<? if (!$p->here()) { ?>
-	<li><a href="<?=get_href($p)?>"><?=$p->page?></a></li>
-<? } else { ?>	
-	<li class="here"><a href="<?=get_href($p)?>"><?=$p->page?></a></li>
-<? } ?>
-<? } ?>
-<? if ($page->has_next()) { ?>
-	<li class="next"><a href="<?=get_href($page->next())?>">&rsaquo;</a></li>
-<? } ?>
-<? if (!$page->is_last()) { ?>
-	<li class="last"><a href="<?=get_href($page->last())?>">&raquo;</a></li>
-<? } ?>
-</ul>
-</div>
+<? print_pages($page); ?>

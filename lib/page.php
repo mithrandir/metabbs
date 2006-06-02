@@ -67,4 +67,23 @@ class Page
 		return (isset($_GET['page']) ? $_GET['page'] : 1);
 	}
 }
+function print_pages($page) {
+	echo '<ul id="pages">';
+	if (!$page->is_first()) {
+		echo block_tag('li', link_text(get_href($page->first()), '&laquo;'), array('class' => 'first'));
+	}
+	if ($page->has_prev()) {
+		echo block_tag('li', link_text(get_href($page->prev()), '&lsaquo;'), array('class' => 'prev'));
+	}
+	foreach ($page->get_page_group() as $p) {
+		echo block_tag('li', link_text(get_href($p), $p->page), $p->here() ? array('class' => 'here') : array());
+	}
+	if ($page->has_next()) {
+		echo block_tag('li', link_text(get_href($page->next()), '&rsaquo;'), array('class' => 'next'));
+	}
+	if (!$page->is_last()) {
+		echo block_tag('li', link_text(get_href($page->first()), '&raquo;'), array('class' => 'last'));
+	}
+	echo "</ul>";
+}
 ?>
