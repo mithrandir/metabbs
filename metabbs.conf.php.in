@@ -4,3 +4,4 @@ host=localhost
 user=root
 password=
 dbname=metabbs
+revision=348

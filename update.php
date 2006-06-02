@@ -2,8 +2,25 @@
 require_once("lib/core.php");
 require_once("lib/backends/$backend/installer.php");
 $conn = get_conn();
-if (isset($_GET['rev']) && is_numeric($_GET['rev'])) {
-	include("db/update_$_GET[rev].php");
-	echo "updated to revision $_GET[rev]";
+include('db/revision.php');
+$current = $config->get('revision', 347);
+
+if ($current < $revision) {
+	// find updates
+	$dh = opendir('db');
+	while ($f = readdir($dh)) {
+		if (preg_match('/^update_([0-9]+)\.php$/', $f, $matches)) {
+			if ($matches[1] > $current) {
+				echo "applying patch r$matches[1]...<br />";
+				include("db/$f");
+			}
+		}
+	}
+	closedir($dh);
+	$config->set('revision', $revision);
+	$config->write_to_file();
+	echo 'done.';
+} else {
+	echo 'schema is up to date';
 }
 ?>

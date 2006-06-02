@@ -26,7 +26,7 @@
 	</script>
 </head>
 <body>
-<p>Hello, <?=link_to_user($user)?>! :) <?=implode(' | ', get_account_control($user))?></p>
+<p>Hello, <?=link_to_user($user)?>! :) <? print_nav(get_account_control($user)); ?></p>
 
 <div id="meta">
 <?=$content?>
