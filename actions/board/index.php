@@ -8,7 +8,6 @@ if (isset($_GET['searchtype']) && isset($_GET['search'])) {
 }
 $page = new Page($board, Page::get_requested_page());
 $posts = $page->get_posts();
-$pages = $page->get_page_group();
 
 $nav[] = link_to(i("New Post"), $board, 'post');
 

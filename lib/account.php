@@ -10,23 +10,23 @@ function get_account_control($account) {
 }
 
 function admin() {
-	return link_text(url_for('admin'), 'Admin');
+	return link_text(url_for('admin'), i('Admin'));
 }
 
 function login() {
-	return link_text(url_with_referer_for('account', 'login'), 'Login');
+	return link_text(url_with_referer_for('account', 'login'), i('Login'));
 }
 
 function logout() {
-	return link_text(url_with_referer_for('account', 'logout'), 'Logout');
+	return link_text(url_with_referer_for('account', 'logout'), i('Logout'));
 }
 
 function signup() {
-	return link_text(url_with_referer_for('account', 'signup'), 'Sign Up');
+	return link_text(url_with_referer_for('account', 'signup'), i('Sign Up'));
 }
 
 function editinfo() {
-	return link_text(url_with_referer_for('account', 'edit'), 'Edit Info');
+	return link_text(url_with_referer_for('account', 'edit'), i('Edit Info'));
 }
 
 function access_denied() {

@@ -16,11 +16,5 @@ class Blog extends Board
 
 $board = Blog::find_by_name("blog"); //XXX
 
-if (!isset($id)) {
-	if ($action != 'rss')
-		$controller = 'board';
-} else {
-	$post = Post::find($id);
-	$controller = 'post';
-}
+$controller = 'board';
 ?>

@@ -10,3 +10,5 @@
 	</div>
 </div>
 <?php } ?>
+
+<? print_pages($page); ?>
