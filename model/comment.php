@@ -25,5 +25,8 @@ class Comment extends Model {
 			'password' => md5($this->password),
 			'created_at' => model_datetime()));
 	}
+	function get_user() {
+		return User::find($this->user_id);
+	}
 }
 ?>

@@ -86,6 +86,6 @@ function text_area($model, $field, $rows = 10, $cols = 50, $value='', $options=a
     return block_tag("textarea", htmlspecialchars($value), $options);
 }
 function submit_tag($label) {
-    return inline_tag("input", array("type" => "submit", "value" => $label));
+    return inline_tag("input", array("type" => "submit", "value" => i($label)));
 }
 ?>
