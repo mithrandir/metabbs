@@ -2,6 +2,9 @@
 header("Content-Type: text/html; charset=UTF-8");
 
 require_once 'installer/common.php';
+require_once 'lib/config.php';
+require_once 'lib/i18n.php';
+require_once 'lib/tag_helper.php';
 
 $backend = isset($_GET['backend']) ? $_GET['backend'] : 'mysql';
 require "lib/backends/$backend/installer.php";
@@ -47,26 +50,26 @@ if (!isset($_POST['config'])) {
 ?>
 	<h2>Admin Information</h2>
 	<p>
-		<label for="admin_id">Admin ID</label>
+		<?=label_tag("Admin ID", 'admin', 'id')?>
 		<input type="text" name="admin_id" id="admin_id" value="admin" />
-                <span class="desc">관리자로 사용할 아이디를 입력합니다.</span>
-        </p>
+		<span class="desc">관리자로 사용할 아이디를 입력합니다.</span>
+	</p>
 	<p>
-		<label for="admin_password">Admin Password</label>
+		<?=label_tag("Admin Password", 'admin', 'password')?>
 		<input type="password" name="admin_password" id="admin_password" />
-                <span class="desc">관리자 아이디의 비밀번호를 입력합니다.</span>
+		<span class="desc">관리자 아이디의 비밀번호를 입력합니다.</span>
 	</p>
-        <p>
-                <label for="admin_password_verify">Admin Password (Again)</label>
-                <input type="password" name="admin_password_verify" id="admin_password_verify" />
-                <span class="desc">확인을 위해 관리자 아이디의 비밀번호를 한번 더 입력합니다.</span>
-        </p>
 	<p>
-		<label for="admin_name">Admin Name</label>
-		<input type="text" name="admin_name" id="admin_name" value="admin" />
-                <span class="desc">관리자 아이디의 이름을 입력합니다.</span>
+		<?=label_tag("Admin Password (Again)", 'admin', 'password_verify')?>
+		<input type="password" name="admin_password_verify" id="admin_password_verify" />
+		<span class="desc">확인을 위해 관리자 아이디의 비밀번호를 한번 더 입력합니다.</span>
 	</p>
-	<p><input type="submit" value="Install" /></p>
+	<p>
+		<?=label_tag("Admin Name", 'admin', 'name')?>
+		<input type="text" name="admin_name" id="admin_name" value="admin" />
+		<span class="desc">관리자 아이디의 이름을 입력합니다.</span>
+	</p>
+	<p><?=submit_tag("Install")?></p>
 	</form>
 <?php
 } else {
@@ -76,6 +79,10 @@ if (!isset($_POST['config'])) {
     function check_unexcepted_exit() {
         global $safe;
         if (!$safe) {
+        	if (isset($GLOBALS['config'])) {
+		        	$conn = get_conn();
+		        	@include("db/uninstall.php");
+			}
             unlink(dirname(__FILE__).'/metabbs.conf.php');
         }
     }
@@ -86,13 +93,13 @@ if (!isset($_POST['config'])) {
 	$_POST['admin_password'] = trim($_POST['admin_password']);
 	$_POST['admin_password_verify'] = trim($_POST['admin_password_verify']);
 	if ($_POST['admin_id'] == '') {
-		fail('Admin ID Is Empty');
+		fail('Admin ID is empty');
 	}
 	if ($_POST['admin_name'] == '') {
-		fail('Admin name Is Empty');
+		fail('Admin name is empty');
 	}
 	if ($_POST['admin_password'] != $_POST['admin_password_verify']) {
-		fail('Password Verify');
+		fail('Please verify password');
 	}
 
 	$dirs = array('data', 'data/uploads');

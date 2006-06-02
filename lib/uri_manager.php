@@ -17,14 +17,6 @@ function chomp(&$str) {
 	$str = substr($str, 0, -1);
 }
 
-function get_base_path() {
-	$path = dirname($_SERVER['SCRIPT_NAME']);
-	if ($path != '/' && $path != '\\') {
-		$path .= '/';
-	}
-	return $path;
-}
-
 function get_href($model) {
 	if (is_string($model)) {
 		return $model;
