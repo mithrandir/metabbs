@@ -3,7 +3,11 @@ require_once("lib/core.php");
 require_once("lib/backends/$backend/installer.php");
 $conn = get_conn();
 include('db/revision.php');
-$current = $config->get('revision', 347);
+if (isset($_GET['rev'])) {
+	$current = $_GET['rev'];
+} else {
+	$current = $config->get('revision', 347);
+}
 
 if ($current < $revision) {
 	// find updates
