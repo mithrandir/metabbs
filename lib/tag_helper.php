@@ -19,7 +19,7 @@ function inline_tag($name, $options = array()) {
 function link_text($link, $text = '', $options = array()) {
     if (!$text) $text = $link;
     $options['href'] = $link;
-	return block_tag('a', htmlspecialchars($text), $options);
+	return block_tag('a', $text, $options);
 }
 function link_to($text, $controller, $action = null, $params = array()) {
 	return link_text(url_for($controller, $action, $params), $text);
@@ -43,10 +43,11 @@ function link_to_comments($post) {
     }
 }
 function link_to_user($user) {
+	$name = htmlspecialchars($user->name);
     if ($user->is_guest()) {
-        return $user->name;
+        return $name;
     } else {
-        return link_to($user->name, $user);
+        return link_to($name, $user);
     }
 }
 function link_to_post($post) {
