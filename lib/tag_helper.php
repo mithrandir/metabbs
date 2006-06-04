@@ -19,7 +19,7 @@ function inline_tag($name, $options = array()) {
 function link_text($link, $text = '', $options = array()) {
     if (!$text) $text = $link;
     $options['href'] = $link;
-	return block_tag('a', $text, $options);
+	return block_tag('a', htmlspecialchars($text), $options);
 }
 function link_to($text, $controller, $action = null, $params = array()) {
 	return link_text(url_for($controller, $action, $params), $text);

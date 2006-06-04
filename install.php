@@ -109,9 +109,11 @@ if (!isset($_POST['config'])) {
 
 	pass("Creating directories");
 	require_once 'lib/config.php';
+	require_once 'db/revision.php';
 	$config = new Config('metabbs.conf.php');
 	$config->config = $_POST['config'];
 	$config->set('backend', $backend);
+    $config->set('revision', $revision);
 	$config->write_to_file();
 	
 	pass("Writing configuration to file");
