@@ -1,7 +1,7 @@
 <div id="post">
 
 <div class="title">
-    <h2 id="title"><?=$post->title?></h2>
+    <h2 id="title"><?=htmlspecialchars($post->title)?></h2>
     <div class="info">
     <p>Posted by <?=link_to_user($post->get_user())?> at <?=date_format("%Y-%m-%d %H:%M:%S", $post->created_at)?></p>
     </div>
