@@ -26,7 +26,7 @@
 
 <div id="trackbacks">
 <h3>Trackbacks</h3>
-<p>Trackback URL: <?=link_text(full_url_for($post, 'trackback'))?></p>
+<p>Trackback URL: <?=link_text(full_url_for($post, 'trackback'), '', array('onclick' => 'return false'))?></p>
 <!--
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	 xmlns:dc="http://purl.org/dc/elements/1.1/"
