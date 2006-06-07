@@ -1,7 +1,4 @@
 <?php
-function is_post() {
-	return $_SERVER['REQUEST_METHOD'] == 'POST';
-}
 function get_base_uri() {
 	static $uri;
 	if (!isset($uri)) {

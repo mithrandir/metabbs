@@ -40,4 +40,13 @@ function print_nav($nav = null) {
 	}
 	echo implode(' | ', $nav);
 }
+function human_readable_size($size) {
+	$units = array(' bytes', 'KB', 'MB', 'GB', 'TB');
+	$i = 0;
+	while ($size > 1024) {
+		$size /= 1024;
+		$i++;
+	}
+	return round($size, 1) . $units[$i];
+}
 ?>
