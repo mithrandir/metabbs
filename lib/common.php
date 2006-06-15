@@ -15,6 +15,7 @@ if (!file_exists('metabbs.conf.php')) {
 }
 
 require_once("core.php");
+require_once("request.php");
 require_once("i18n.php");
 require_once("cookie.php");
 require_once("tag_helper.php");
