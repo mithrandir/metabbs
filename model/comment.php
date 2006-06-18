@@ -26,7 +26,11 @@ class Comment extends Model {
 			'created_at' => model_datetime()));
 	}
 	function get_user() {
-		return User::find($this->user_id);
+		if ($this->user_id) {
+			return User::find($this->user_id);
+		} else {
+			return new Guest(array('name' => $this->name));
+		}
 	}
 }
 ?>
