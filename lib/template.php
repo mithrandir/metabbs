@@ -49,4 +49,15 @@ function human_readable_size($size) {
 	}
 	return round($size, 1) . $units[$i];
 }
+function print_notice($text, $description) {
+	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+	echo '<html>';
+	echo '<body>';
+	echo '<h2>' . $text . '</h2>';
+	echo '<p>' . $description . '</p>';
+	echo '</body>';
+	echo '</html>';
+	exit;
+}
 ?>

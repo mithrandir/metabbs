@@ -1,9 +1,7 @@
 <?php
 $attachment = Attachment::find($id);
 if (!$attachment->exists() || !$attachment->exist()) {
-	$controller = 'notice';
-	$action = 'attachment';
-	return;
+	print_notice('Attachment not found', "Attachment #$id is not exist or broken.<br />Please check the attachment id.");
 }
 $filename = 'data/uploads/' .$attachment->id;
 header('Content-Type: application/octet-stream');
