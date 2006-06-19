@@ -5,6 +5,10 @@ header("Content-type: text/xml");
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 echo "<response>\n";
 // TODO: spam filtering
+$url = parse_url($trackback->url);
+if ($url['path'] == '/') {
+	exit;
+}
 if (is_post() && $trackback->validate()) {
 	$trackback->create();
 	echo "<error>0</error>\n";
