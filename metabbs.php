@@ -38,8 +38,12 @@ if (!isset($skin)) {
 }
 $_skin_dir = 'skins/' . $skin;
 $skin_dir = get_base_path() . $_skin_dir;
+
 if (isset($board) && is_a($board, 'Board')) {
 	$title = $board->title;
+	if (isset($post) && $post->title) {
+		$title .= ' - ' . $post->title;
+	}
 } else if (isset($user_) && is_a($user_, 'User')) {
 	$title = $user_->name;
 } else {
@@ -57,5 +61,4 @@ if (isset($render)) {
 		include($_skin_dir . '/layout.php');
 	}
 }
-
 ?>
