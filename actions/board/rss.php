@@ -6,8 +6,9 @@ if ($board->perm_read > $user->level) {
 $posts = $board->get_feed_posts($board->posts_per_page);
 header("Content-Type: text/xml; charset=UTF-8");
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-if (file_exists("$_skin_dir/board/rss.xsl")) {
-	echo "<?xml-stylesheet type=\"text/xsl\" href=\"$skin_dir/board/rss.xsl\"?>\n";
+if (file_exists("skins/$board->skin/board/rss.xsl")) {
+	$path = get_base_path();
+	echo "<?xml-stylesheet type=\"text/xsl\" href=\"$path/skins/$board->skin/board/rss.xsl\"?>\n";
 }
 ?>
 <rss version="2.0">
