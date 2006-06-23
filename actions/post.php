@@ -1,5 +1,5 @@
 <?php
-if (!$id) {
+if (!isset($id)) {
 	print_notice('No post id', 'Please append the post id.');
 }
 $post = Post::find($id);
