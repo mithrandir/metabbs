@@ -20,7 +20,7 @@ if (file_exists("skins/$board->skin/board/atom.xsl")) {
 	<entry>
 		<title><![CDATA[<?=$post->title?>]]></title>
 		<id><?=full_url_for($post)?></id>
-		<content><![CDATA[<?=$post->get_body()?>]]></content>
+		<content><![CDATA[<?=format($post->body)?>]]></content>
 		<author><name><![CDATA[<?=$post->name?>]]></name></author>
 		<updated><?=date_format("%Y-%m-%d"."T%H:%M:%SZ", $post->created_at)?></updated>
 	</entry>

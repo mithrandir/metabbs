@@ -8,7 +8,7 @@ class Model
 {
 	var $id;
 
-	function Model($attributes = array()) {
+	function Model($attributes = null) {
 		$this->import($attributes);
 	}
 	function get_model_name() {
@@ -18,27 +18,20 @@ class Model
 		return $this->model;
 	}
 	function import($attributes) {
-		if (!is_array($attributes)) {
-			return;
-		}
-		foreach ($attributes as $key => $value) {
-			$this->$key = $value;
+		if (is_array($attributes)) {
+			foreach ($attributes as $key => $value) {
+				$this->$key = $value;
+			}
 		}
 	}
 	function exists() {
 		return $this->id;
-	}
-	function get_body() {
-		return format($this->body);
 	}
 	function get_id_for_href() {
 		return $this->id;
 	}
 	function get_href() {
 		return $this->get_model_name() . '/' . $this->get_id_for_href();
-	}
-	function validate() {
-		return true;
 	}
 }
 

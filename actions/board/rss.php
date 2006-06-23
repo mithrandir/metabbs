@@ -20,7 +20,7 @@ if (file_exists("skins/$board->skin/board/rss.xsl")) {
 		<item>
 			<title><![CDATA[<?=$post->title?>]]></title>
 			<link><?=full_url_for($post)?></link>
-			<description><![CDATA[<?=$post->get_body()?>]]></description>
+			<description><![CDATA[<?=format($post->body)?>]]></description>
 			<author><![CDATA[<?=$post->name?>]]></author>
 			<pubDate><?=date_format("%d %b %Y %H:%M:%S", $post->created_at)?></pubDate>
 		</item>

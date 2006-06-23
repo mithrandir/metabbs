@@ -2,7 +2,7 @@
 	<h2><?php echo $post->title; ?></h2>
 	<div class="date"><?php echo $post->created_at; ?></div>
 	
-	<p><?php echo $post->get_body(); ?></p>
+	<p><?php echo format($post->body); ?></p>
 </div>
 
 <div id="trackbacks">
@@ -32,7 +32,7 @@
 <?php foreach ($comments as $comment) { ?>
 	<li class="comment">
 		<div class="comment-info"><strong><?=$comment->name?></strong> <small><?=$comment->created_at?></small></div>
-		<div class="comment-body"><p><?=$comment->get_body()?></p></div>
+		<div class="comment-body"><p><?=format($comment->body)?></p></div>
 	</li>
 <?php } ?>
 </ul>

@@ -21,7 +21,7 @@
 </ul>
 </div>
 
-<p id="body"><?=$post->get_body()?></p>
+<p id="body"><?=format($post->body)?></p>
 </div>
 
 <div id="trackbacks">

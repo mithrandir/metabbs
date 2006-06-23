@@ -2,7 +2,7 @@
 <div class="post">
 	<h2><?php echo link_to_post($post); ?></h2>
 	<div class="date"><?php echo $post->created_at; ?></div>
-	<p><?php echo $post->get_body(); ?></p>
+	<p><?php echo format($post->body); ?></p>
 
 	<div class="info">
 		<?php echo link_text(url_for($post) . "#comments", $post->get_comment_count() . " Comments"); ?> |
