@@ -51,6 +51,9 @@ function url_for($controller, $action = null, $params = array()) {
 }
 function url_with_referer_for($controller, $action = null, $params = array()) {
 	$params['url'] = urlencode($_SERVER['REQUEST_URI']);
+	if (isset($GLOBALS['board'])) {
+		$params['board_id'] = $GLOBALS['board']->id;
+	}
 	return url_for($controller, $action, $params);
 }
 
