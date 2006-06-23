@@ -12,6 +12,5 @@ require_once 'model/board.php';
 
 require_once 'template.php';
 require_once 'uri_manager.php';
-require_once 'page.php';
 require_once 'account.php';
 ?>

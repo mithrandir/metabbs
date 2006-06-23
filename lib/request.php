@@ -2,6 +2,9 @@
 function is_post() {
 	return $_SERVER['REQUEST_METHOD'] == 'POST';
 }
+function get_requested_page() {
+	return (isset($_GET['page']) ? $_GET['page'] : 1);
+}
 
 set_magic_quotes_runtime(0);
 

@@ -11,7 +11,7 @@ class Board extends Model {
 	var $searchtype = '';
 	var $search = '';
 
-	function get_id_for_href() {
+	function get_id() {
 		return $this->name;
 	}
 	function find_by_name($name) {

@@ -18,7 +18,7 @@ function get_href($model) {
 	if (is_string($model)) {
 		return $model;
 	} else {
-		return $model->get_href();
+		return $model->get_model_name() . '/' . $model->get_id();
 	}
 }
 
@@ -43,8 +43,10 @@ function full_url_for($controller, $action = '') {
 }
 
 function url_for($controller, $action = null, $params = array()) {
-	if (isset($_GET['search']) && $_GET['search'] && is_post())
+	if (isset($_GET['search']) && $_GET['search']) {
 		$params['search'] = urlencode($_GET['search']);
+		$params['searchtype'] = $_GET['searchtype'];
+	}
 	return _url_for($controller, $action, $params);
 }
 function url_with_referer_for($controller, $action = null, $params = array()) {

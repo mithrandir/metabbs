@@ -32,9 +32,9 @@ $name = cookie_get('name');
 
 $nav = array();
 
-@include("actions/$controller.php");
+include("actions/$controller.php");
 $action_dir = 'actions/' . $controller;
-@include($action_dir . '/' . $action . '.php');
+include($action_dir . '/' . $action . '.php');
 if (!isset($skin)) {
 	$skin = isset($board->skin) ? $board->skin : 'default';
 }

@@ -27,11 +27,8 @@ class Model
 	function exists() {
 		return $this->id;
 	}
-	function get_id_for_href() {
+	function get_id() {
 		return $this->id;
-	}
-	function get_href() {
-		return $this->get_model_name() . '/' . $this->get_id_for_href();
 	}
 }
 

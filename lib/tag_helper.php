@@ -51,7 +51,7 @@ function link_to_user($user) {
     }
 }
 function link_to_post($post) {
-    return link_to(htmlspecialchars($post->title), $post, '', array('page' => Page::get_requested_page()));
+    return link_to(htmlspecialchars($post->title), $post, '', array('page' => get_requested_page()));
 }
 
 function image_tag($src, $alt = "") {

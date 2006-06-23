@@ -66,7 +66,7 @@
 <? } ?>
 
 <div id="meta-nav">
-<p><?=link_to("List", $board, '', array('page' => Page::get_requested_page()))?>
+<p><?=link_to("List", $board, '', array('page' => get_requested_page()))?>
 <? if ($user->level >= $board->perm_write) { ?>
  | <?=link_to("New Post", $board, 'post')?>
 <? } ?>

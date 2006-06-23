@@ -16,5 +16,6 @@ class Blog extends Board
 
 $board = Blog::find_by_name("blog"); //XXX
 
+require_once 'lib/page.php';
 $controller = 'board';
 ?>

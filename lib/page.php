@@ -34,9 +34,6 @@ class Page
 		}
 		return $pages;
 	}
-	function get_href() {
-		return url_for($this->board, '', array('page' => $this->page));
-	}
 	function start() {
 		$start = $this->page - $this->padding;
 		return ($start < 1) ? 1 : $start;
@@ -49,7 +46,7 @@ class Page
 		return $this->board->get_posts(($this->page - 1) * $this->board->posts_per_page, $this->board->posts_per_page);
 	}
 	function here() {
-		return (Page::get_requested_page() == $this->page);
+		return (get_requested_page() == $this->page);
 	}
 	function is_first() {
 		return $this->page == 1;
@@ -63,26 +60,29 @@ class Page
 	function last() {
 		return new Page($this->board, $this->page_count, true);
 	}
-	/*static*/ function get_requested_page() {
-		return (isset($_GET['page']) ? $_GET['page'] : 1);
+}
+function link_to_page($page, $text = null) {
+	if (!$text) {
+		$text = $page->page;
 	}
+	return link_to($text, $page->board, '', array('page' => $page->page));
 }
 function print_pages($page) {
 	echo '<ul id="pages">';
 	if (!$page->is_first()) {
-		echo block_tag('li', link_text(get_href($page->first()), '&laquo;'), array('class' => 'first'));
+		echo block_tag('li', link_to_page($page->first(), '&laquo;'), array('class' => 'first'));
 	}
 	if ($page->has_prev()) {
-		echo block_tag('li', link_text(get_href($page->prev()), '&lsaquo;'), array('class' => 'prev'));
+		echo block_tag('li', link_to_page($page->prev(), '&lsaquo;'), array('class' => 'prev'));
 	}
 	foreach ($page->get_page_group() as $p) {
-		echo block_tag('li', link_text(get_href($p), $p->page), $p->here() ? array('class' => 'here') : array());
+		echo block_tag('li', link_to_page($p), $p->here() ? array('class' => 'here') : array());
 	}
 	if ($page->has_next()) {
-		echo block_tag('li', link_text(get_href($page->next()), '&rsaquo;'), array('class' => 'next'));
+		echo block_tag('li', link_to_page($page->next(), '&rsaquo;'), array('class' => 'next'));
 	}
 	if (!$page->is_last()) {
-		echo block_tag('li', link_text(get_href($page->first()), '&raquo;'), array('class' => 'last'));
+		echo block_tag('li', link_to_page($page->last(), '&raquo;'), array('class' => 'last'));
 	}
 	echo "</ul>";
 }
