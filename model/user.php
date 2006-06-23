@@ -1,6 +1,7 @@
 <?php
 class Guest extends Model
 {
+	var $user;
 	var $id = 0;
 	var $level = 0;
 	var $name = 'guest';

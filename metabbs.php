@@ -41,15 +41,14 @@ if (!isset($skin)) {
 $_skin_dir = 'skins/' . $skin;
 $skin_dir = get_base_path() . $_skin_dir;
 
-if (isset($board) && is_a($board, 'Board')) {
+if ($controller == 'board') {
 	$title = $board->title;
-	if (isset($post) && $post->title) {
-		$title .= ' - ' . $post->title;
-	}
-} else if (isset($user_) && is_a($user_, 'User')) {
+} else if ($controller == 'post') {
+	$title = "$board->title - $post->title";
+} else if ($controller == 'user') {
 	$title = $user_->name;
 } else {
-	$title = "MetaBBS: $controller $action";
+	$title = "MetaBBS";
 }
 
 if (isset($render)) {

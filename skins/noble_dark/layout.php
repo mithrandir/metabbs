@@ -30,7 +30,9 @@
 </head>
 <body onload="init()">
 <div id="meta">
+<? if ($title != "MetaBBS") { ?>
 	<h1><?=$title?></h1>
+<? } ?>
 	<div id="meta-control">
 		Hello, <?=$user->name?>! :)
 		<?=implode(' | ', get_account_control($user))?>
