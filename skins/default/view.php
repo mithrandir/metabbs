@@ -1,13 +1,11 @@
 <div id="post">
 
-<div class="title">
-    <h2 id="title"><?=htmlspecialchars($post->title)?></h2>
-    <div class="info">
-    <p>Posted by <?=link_to_user($post->get_user())?> at <?=date_format("%Y-%m-%d %H:%M:%S", $post->created_at)?></p>
-    </div>
+<div class="post-title">
+    <div class="info">Posted by <?=link_to_user($post->get_user())?> at <?=date_format("%Y-%m-%d %H:%M:%S", $post->created_at)?></div>
+    <h2><?=htmlspecialchars($post->title)?></h2>
 </div>
 
-<div id="attachments" style="clear: both">
+<div id="attachments">
 <ul>
 <? foreach ($attachments as $attachment) { ?>
 <? if (!$attachment->exist()) { ?>

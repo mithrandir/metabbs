@@ -1,6 +1,6 @@
 <h1>User Information</h1>
 <div id="profile">
-<p><big><?=$user_->name?></big> (<?=$user_->user?>)</p>
+<p><span class="name"><?=$user_->name?></span> (<?=$user_->user?>)</p>
 <p>
 <? if ($user_->email) { ?>
 E-mail: <a href="mailto:<?=$user_->email?>"><?=str_replace("@", " at ", $user_->email)?></a><br />
