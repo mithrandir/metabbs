@@ -1,12 +1,14 @@
 <?php
 if (is_post()) {
-	$new_password = md5($_POST['settings']['admin_password']);
+	$settings = $_POST['settings'];
+	$new_password = md5($settings['admin_password']);
 	if ($new_password != $user->password) {
 		$user->password = $new_password;
 		cookie_register('password', $user->password);
 		$user->update();
 	}
-	$config->set('global_layout', $_POST['settings']['global_layout']);
+	$config->set('global_header', $settings['global_header']);
+	$config->set('global_header', $settings['global_header']);
 	$config->write_to_file();
 	$flash = 'Setting saved.';
 	$flash_class = 'pass';
