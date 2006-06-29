@@ -18,7 +18,7 @@ if (!file_exists($metabbs_dir . '/metabbs.conf.php')) {
 	exit;
 }
 
-ini_set("include_path", ini_get("include_path") . PATH_SEPERATOR . $metabbs_dir);
+ini_set("include_path", ini_get("include_path") . PATH_SEPARATOR . $metabbs_dir);
 
 require_once("core.php");
 require_once("request.php");
