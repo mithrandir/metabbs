@@ -10,7 +10,7 @@ class MetaBBS
 		$this->user = UserManager::get_user();
 	}
 	function isGuest() {
-		return $this->user == null;
+		return $this->user == null || $this->user->is_guest();
 	}
 	function printLoginForm() {
 ?>
