@@ -1,12 +1,14 @@
 <?php
 header("Content-Type: text/html; charset=utf-8");
 
-function get_base_path() {
-	$path = dirname($_SERVER['SCRIPT_NAME']);
-	if ($path != '/' && $path != '\\') {
-		$path .= '/';
+if (!isset($base_path)) {
+	$base_path = dirname($_SERVER['SCRIPT_NAME']);
+	if ($base_path != '/' && $base_path != '\\') {
+		$base_path .= '/';
 	}
-	return $path;
+}
+function get_base_path() {
+	return $GLOBALS['base_path'];
 }
 
 $metabbs_dir = realpath(dirname(__FILE__) . '/..');

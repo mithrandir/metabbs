@@ -9,7 +9,7 @@ function block_tag($name, $content, $options = array()) {
 	} else {
 		$s .= " />";
 	}
-	return $s . "\n";
+	return $s;
 }
 
 function inline_tag($name, $options = array()) {

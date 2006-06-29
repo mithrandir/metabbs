@@ -2,10 +2,11 @@
 class Config
 {
 	function Config($name) {
+		global $metabbs_dir;
 		$this->config = array();
-		$this->filename = $name;
-		if (file_exists($name)) {
-			$file = file($name);
+		$this->filename = $metabbs_dir . '/' . $name;
+		if (file_exists($this->filename)) {
+			$file = file($this->filename);
 		} else {
 			return;
 		}

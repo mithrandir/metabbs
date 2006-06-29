@@ -16,6 +16,26 @@ function get_skins() {
 	closedir($dir);
 	return $skins;
 }
+function print_header() {
+	global $config;
+	$header = $config->get('global_header');
+	if ($header) {
+		include($header);
+		return true;
+	} else {
+		return false;
+	}
+}
+function print_footer() {
+	global $config;
+	$footer = $config->get('global_footer');
+	if ($footer) {
+		include($footer);
+		return true;
+	} else {
+		return false;
+	}
+}
 
 @list(, $controller, $id, $action) = explode('/', $_SERVER['PATH_INFO']);
 if (!is_numeric($id) && $controller != 'board') {
