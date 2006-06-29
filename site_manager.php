@@ -39,10 +39,10 @@ class MetaBBS
 		$board = Board::find_by_name($board_name);
 ?>
 <div id="latest-<?=$board_name?>" class="latest-posts">
-<div class="board-title"><?=link_to($board->title, $board)?> <span class="feed"><?=link_to($this->feed_link, $board, 'rss')?></span></div>
+<div class="board-title"><?=link_to(htmlspecialchars($board->title), $board)?> <span class="feed"><?=link_to($this->feed_link, $board, 'rss')?></span></div>
 <ul>
 <? foreach ($board->get_posts(0, $count) as $post) { ?>
-	<li>[<?=$post->name?>] <?=link_to_post($post)?> <span class="comment-count"><?=link_to_comments($post)?></span></li>
+	<li>[<?=htmlspecialchars($post->name)?>] <?=link_to_post($post)?> <span class="comment-count"><?=link_to_comments($post)?></span></li>
 <? } ?>
 </ul>
 </div>
