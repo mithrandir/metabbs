@@ -28,11 +28,15 @@ class MetaBBS
 		@list($post) = $this->getLatestPosts($board_name, 1);
 		return $post;
 	}
-	function printHeader() {
+	function printHead() {
 		global $skin_dir;
 		if (isset($skin_dir)) {
 			echo "<link rel=\"stylesheet\" href=\"$skin_dir/style.css\" />";
 		}
+	}
+	function getFeed($name) {
+		$board = new Board(array('name' => $name));
+		return url_for($board, 'rss');
 	}
 }
 $metabbs = new MetaBBS;
