@@ -26,4 +26,4 @@ Homepage: <?=link_text($user_->get_url())?><br />
 <? } ?>
 </table>
 
-<? print_pages($page); ?>
+<? print_pages($user_); ?>

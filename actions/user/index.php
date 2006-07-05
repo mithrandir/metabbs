@@ -1,7 +1,6 @@
 <?php
-$page = new Page($user_, get_requested_page());
 $board = $user_; // XXX
-$posts = $page->get_posts();
+$posts = $user_->get_posts((get_requested_page() - 1) * 10, 10);
 
 render('user');
 ?>
