@@ -6,6 +6,7 @@ require_once 'lib/config.php';
 require_once 'lib/i18n.php';
 require_once 'lib/tag_helper.php';
 
+$metabbs_dir = dirname(__FILE__);
 $backend = isset($_GET['backend']) ? $_GET['backend'] : 'mysql';
 require "lib/backends/$backend/installer.php";
 
