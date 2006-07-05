@@ -66,7 +66,7 @@ if ($controller == 'board') {
 } else if ($controller == 'post') {
 	$title = "$board->title - $post->title";
 } else if ($controller == 'user') {
-	$title = $user_->name;
+	$title = $user->name;
 } else {
 	$title = "MetaBBS";
 }

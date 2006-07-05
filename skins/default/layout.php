@@ -8,7 +8,7 @@
 	<? include($_skin_dir . '/_head.php'); ?>
 </head>
 <body>
-<p>Hello, <?=link_to_user($user)?>! :) <? print_nav(get_account_control($user)); ?></p>
+<p>Hello, <?=link_to_user($account)?>! :) <? print_nav(get_account_control($account)); ?></p>
 <? } ?>
 <div id="meta">
 <?=$content?>

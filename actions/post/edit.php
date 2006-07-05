@@ -1,10 +1,10 @@
 <?php
-if ($post->user_id != 0 && $user->id != $post->user_id
-		&& $board->perm_delete > $user->level) {
+if ($post->user_id != 0 && $account->id != $post->user_id
+		&& $board->perm_delete > $account->level) {
 	access_denied();
 }
 if (is_post()) {
-	if ($post->user_id == 0 && $board->perm_delete > $user->level) {
+	if ($post->user_id == 0 && $board->perm_delete > $account->level) {
 		if ($post->password != md5($_POST['post']['password'])) {
 			redirect_to(url_for($post, 'edit'));
 		}

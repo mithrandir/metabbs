@@ -38,7 +38,7 @@
 </ul>
 
 <form method="post" action="<?=url_for($post, 'comment')?>">
-<? if ($user->is_guest()) { ?>
+<? if ($account->is_guest()) { ?>
 <p><?=label_tag("Name", "comment", "name")?> <?=text_field("comment", "name", $name)?></p>
 <p><?=label_tag("Password", "comment", "password")?> <?=password_field("comment", "password")?></p>
 <? } ?>

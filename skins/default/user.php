@@ -1,15 +1,15 @@
 <h1>User Information</h1>
 <div id="profile">
-<p><span class="name"><?=$user_->name?></span> (<?=$user_->user?>)</p>
+<p><span class="name"><?=$user->name?></span> (<?=$user->user?>)</p>
 <p>
-<? if ($user_->email) { ?>
-E-mail: <a href="mailto:<?=$user_->email?>"><?=str_replace("@", " at ", $user_->email)?></a><br />
+<? if ($user->email) { ?>
+E-mail: <a href="mailto:<?=$user->email?>"><?=str_replace("@", " at ", $user->email)?></a><br />
 <? } ?>
-<? if ($user_->url) { ?>
-Homepage: <?=link_text($user_->get_url())?><br />
+<? if ($user->url) { ?>
+Homepage: <?=link_text($user->get_url())?><br />
 <? } ?>
 </p>
-<p><?=$board->get_post_count()?> posts, <?=$board->get_comment_count()?> comments</p>
+<p><?=$user->get_post_count()?> posts, <?=$user->get_comment_count()?> comments</p>
 </div>
 <table id="posts">
 	<tr>
@@ -26,4 +26,4 @@ Homepage: <?=link_text($user_->get_url())?><br />
 <? } ?>
 </table>
 
-<? print_pages($user_); ?>
+<? print_pages($user); ?>

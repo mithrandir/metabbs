@@ -1,14 +1,14 @@
 <?php
 $comment = new Comment($_POST['comment']);
 $comment->post_id = $post->id;
-if ($user->level < $board->perm_comment) {
+if ($account->level < $board->perm_comment) {
 	redirect_to(url_for($post));
 }
-$comment->user_id = $user->id;
-if ($user->is_guest()) {
+$comment->user_id = $account->id;
+if ($account->is_guest()) {
 	cookie_register('name', $comment->name);
 } else {
-	$comment->name = $user->name;
+	$comment->name = $account->name;
 }
 $comment->create();
 if (isset($_POST['ajax'])) {

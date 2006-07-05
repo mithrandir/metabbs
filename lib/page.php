@@ -1,6 +1,6 @@
 <?php
-function link_to_page($page, $text = null) {
-	return link_to(!$text ? $page : $text, $GLOBALS['board'], '', array('page' => $page));
+function link_to_page($board, $page, $text = null) {
+	return link_to(!$text ? $page : $text, $board, '', array('page' => $page));
 }
 function print_pages($board, $padding = 2) {
 	$page = get_requested_page();
@@ -18,19 +18,19 @@ function print_pages($board, $padding = 2) {
 	
 	echo '<ul id="pages">';
 	if ($page != $first_page) {
-		echo block_tag('li', link_to_page($first_page, '&laquo;'), array('class' => 'first'));
+		echo block_tag('li', link_to_page($board, $first_page, '&laquo;'), array('class' => 'first'));
 	}
 	if ($prev_page > 0) {
-		echo block_tag('li', link_to_page($prev_page, '&lsaquo;'), array('class' => 'prev'));
+		echo block_tag('li', link_to_page($board, $prev_page, '&lsaquo;'), array('class' => 'prev'));
 	}
 	for ($p = $page_group_start; $p <= $page_group_end; $p++) {
-		echo block_tag('li', link_to_page($p), $p == $page ? array('class' => 'here') : array());
+		echo block_tag('li', link_to_page($board, $p), $p == $page ? array('class' => 'here') : array());
 	}
 	if ($next_page <= $page_count) {
-		echo block_tag('li', link_to_page($next_page, '&rsaquo;'), array('class' => 'next'));
+		echo block_tag('li', link_to_page($board, $next_page, '&rsaquo;'), array('class' => 'next'));
 	}
 	if ($page != $last_page) {
-		echo block_tag('li', link_to_page($last_page, '&raquo;'), array('class' => 'last'));
+		echo block_tag('li', link_to_page($board, $last_page, '&raquo;'), array('class' => 'last'));
 	}
 	echo "</ul>";
 }

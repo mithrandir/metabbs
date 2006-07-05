@@ -7,7 +7,7 @@
 	<script type="text/javascript" src="<?php echo $skin_dir; ?>/script.js"></script>
 </head>
 <body>
-<p><small><?php print_nav(get_account_control($user)); if (!$user->is_guest()) { echo ' | ' . link_to(i('New Post'), $board, 'post'); } ?></small></p>
+<p><small><?php print_nav(get_account_control($account)); if (!$account->is_guest()) { echo ' | ' . link_to(i('New Post'), $board, 'post'); } ?></small></p>
 
 <div id="head">
 	<h1><? echo link_to($board->title, 'blog'); ?> <?php echo link_to(image_tag("$skin_dir/feed.png"), 'blog', 'rss'); ?></h1>

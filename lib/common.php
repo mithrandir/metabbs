@@ -31,8 +31,8 @@ require_once("cookie.php");
 require_once("tag_helper.php");
 require_once("user_manager.php");
 
-$user = UserManager::get_user();
-if (!$user) { 
-	$user = new Guest;
+$account = UserManager::get_user();
+if (!$account) { 
+	$account = new Guest;
 }
 ?>

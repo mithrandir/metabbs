@@ -1,6 +1,6 @@
 <?php
 setlocale(LC_TIME, "en_US");
-if ($board->perm_read > $user->level) {
+if ($board->perm_read > $account->level) {
 	exit;
 }
 $posts = $board->get_feed_posts($board->posts_per_page);

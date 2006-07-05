@@ -1,5 +1,5 @@
 <?php
-if ($board->perm_read > $user->level) {
+if ($board->perm_read > $account->level) {
 	access_denied();
 }
 if (isset($_GET['searchtype']) && isset($_GET['search'])) {

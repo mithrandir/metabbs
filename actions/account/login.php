@@ -1,8 +1,8 @@
 <?php
 if (is_post()) {
-	$user = UserManager::login($_POST['user'], $_POST['password']);
-	if (!$user) {
-		$user = new Guest;
+	$account = UserManager::login($_POST['user'], $_POST['password']);
+	if (!$account) {
+		$account = new Guest;
 		$flash = 'Login failed.';
 	} else {
 		redirect_back();

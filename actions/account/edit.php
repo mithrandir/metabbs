@@ -1,16 +1,16 @@
 <?php
 if (is_post()) {
-	$old_password = $user->password;	
-	$user->import($_POST['user']);
-	$new_password = $user->password;
+	$old_password = $account->password;	
+	$account->import($_POST['user']);
+	$new_password = $account->password;
 	if ($new_password) {
 		cookie_register('password', md5($new_password));
-		$user->password = md5($new_password);
+		$account->password = md5($new_password);
 	}
 	else {
-		$user->password = $old_password;
+		$account->password = $old_password;
 	}
-	$user->update();
+	$account->update();
 	redirect_back();
 }
 render('account/edit');

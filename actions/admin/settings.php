@@ -3,10 +3,10 @@ if (is_post()) {
 	$settings = $_POST['settings'];
     if ($settings['admin_password']) { 
         $new_password = md5($settings['admin_password']);
-        if ($new_password != $user->password) {
+        if ($new_password != $account->password) {
             $user->password = $new_password;
-            cookie_register('password', $user->password);
-            $user->update();
+            cookie_register('password', $account->password);
+            $account->update();
         }
     }
 	$config->set('global_header', $settings['global_header']);

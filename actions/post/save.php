@@ -2,8 +2,8 @@
 if (!defined('SECURITY')) {
 	return;
 }
-if (!$user->is_guest()) {
-	$post->user_id = $user->id;
+if (!$account->is_guest()) {
+	$post->user_id = $account->id;
 	$post->name = $user->name;
 } else {
 	cookie_register('name', $post->name);

@@ -1,5 +1,5 @@
 <?php
-if (!$user->is_admin()) {
+if (!$account->is_admin()) {
 	access_denied();
 }
 if (is_post()) {
