@@ -25,7 +25,7 @@
 <? } ?>
 </table>
 
-<? print_pages($page); ?>
+<? print_pages($board); ?>
 
 <form method="get">
 <p>

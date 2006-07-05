@@ -6,8 +6,7 @@ if (isset($_GET['searchtype']) && isset($_GET['search'])) {
 	$board->searchtype = $_GET['searchtype'];
 	$board->search = $_GET['search'];
 }
-$page = new Page($board, get_requested_page());
-$posts = $page->get_posts();
+$posts = $board->get_posts((get_requested_page() - 1) * $board->posts_per_page, $board->posts_per_page);
 
 $nav[] = link_to(i("New Post"), $board, 'post');
 
