@@ -3,6 +3,9 @@
     <li class="selected"><a href="#general"><?=i('General')?></a></li>
     <li><a href="#permission"><?=i('Permission')?></a></li>
     <li><a href="#skin"><?=i('Skin')?></a></li>
+<? if ($board->use_category) { ?>
+    <li><a href="#category"><?=i('Category')?></a></li>
+<? } ?>
 </ul>
 <div id="general">
 <h2><?=i('General')?></h2>
@@ -21,6 +24,10 @@
 <p>
 	<?=label_tag("Use attachment", "board", "use_attachment")?>
 	<?=check_box('board', 'use_attachment', $board->use_attachment)?>
+</p>
+<p>
+	<?=label_tag("Use category", "board", "use_category")?>
+	<?=check_box('board', 'use_category', $board->use_category)?>
 </p>
 </div>
 
@@ -60,6 +67,17 @@
 <p style="clear: left"></p>
 </div>
 </div>
+
+<? if ($board->use_category) { ?>
+<div id="category">
+<ul>
+<? foreach ($board->get_categories() as $category) { ?>
+	<li><?=$category->name?></li>
+<? } ?>
+	<li><input type="text" name="categories[]" /></li>
+</ul>
+</div>
+<? } ?>
 
 <p><input type="submit" value="OK" /></p>
 </form>

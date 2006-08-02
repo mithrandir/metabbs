@@ -11,4 +11,4 @@
 </div>
 <?php } ?>
 
-<? print_pages($page); ?>
+<? print_pages($board); ?>

@@ -1,6 +1,7 @@
 <?php
 model('post');
 model('user');
+model('category');
 
 class Board extends Model {
 	var $count;
@@ -8,8 +9,10 @@ class Board extends Model {
 	var $skin = 'default';
 	var $posts_per_page = 10;
 	var $use_attachment = 0;
+	var $use_category = 0;
 	var $searchtype = '';
 	var $search = '';
+	var $category = null;
 
 	function get_id() {
 		return $this->name;
@@ -46,10 +49,16 @@ class Board extends Model {
 		if ($this->search) {
 			$where .= " AND " . $this->get_where();
 		}
+		if ($this->category) {
+			$where .= " AND category_id=" . $this->category;
+		}
 		return model_find_all('post', $where, 'type DESC, id DESC', $offset, $limit);
 	}
 	function get_feed_posts($count) {
 		return model_find_all('post', 'board_id='.$this->id, 'id DESC', 0, $count);
+	}
+	function get_categories() {
+		return model_find_all('category', 'board_id=' . $this->id);
 	}
 	function get_post_count() {
 		if (!$this->count) {
@@ -72,6 +81,7 @@ class Board extends Model {
 			'posts_per_page' => $this->posts_per_page,
 			'title' => $this->title,
 			'use_attachment' => $this->use_attachment,
+			'use_category' => $this->use_category,
 			'perm_read' => $this->perm_read,
 			'perm_write' => $this->perm_write,
 			'perm_comment' => $this->perm_comment,
@@ -84,6 +94,7 @@ class Board extends Model {
 			'posts_per_page' => $this->posts_per_page,
 			'title' => $this->title,
 			'use_attachment' => $this->use_attachment,
+			'use_category' => $this->use_category,
 			'perm_read' => $this->perm_read,
 			'perm_write' => $this->perm_write,
 			'perm_comment' => $this->perm_comment,

@@ -20,6 +20,9 @@ class Post extends Model {
 	function get_board() {
 		return Board::find($this->board_id);
 	}
+	function get_category() {
+		return Category::find($this->category_id);
+	}
 	function get_board_name() {
 		$board = $this->get_board();
 		if ($board->title) {
@@ -40,6 +43,7 @@ class Post extends Model {
 			'body'	 => $this->body,
 			'type' => $this->type,
 			'password' => md5($this->password),
+			'category_id' => $this->category_id,
 			'created_at' => model_datetime()));
 	}
 	function update() {
@@ -48,11 +52,13 @@ class Post extends Model {
 			'title'	  => $this->title,
 			'type' => $this->type,
 			'body'	   => $this->body,
+			'category_id' => $this->category_id,
 			'created_at' => model_datetime()), 'id='.$this->id);
 	}
 	function delete() {
 		model_delete('post', 'id='.$this->id);
 		model_delete('comment', 'post_id='.$this->id);
+		model_delete('trackback', 'post_id='.$this->id);
 		model_delete('attachment', 'post_id='.$this->id);
 	}
 	function get_comments() {

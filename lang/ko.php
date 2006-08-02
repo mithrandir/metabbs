@@ -49,3 +49,5 @@ Admin ID=관리자 아이디
 Admin Password=관리자 암호
 Admin Password (Again)=관리자 암호 (확인)
 Admin Name=관리자 이름
+Category=분류
+Use category=분류 사용

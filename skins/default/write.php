@@ -4,6 +4,14 @@
 <p><?=label_tag("Password", "post", "password")?> <?=password_field("post", "password")?></p>
 <? } ?>
 <p><?=label_tag("Title", "post", "title")?> <?=text_field("post", "title", $post->title, 50)?></p>
+<? if ($board->use_category) { ?>
+<p><?=label_tag("Category", "post", "category_id")?>
+<select name="post[category_id]" id="post_category_id">
+<? foreach ($board->get_categories() as $category) { ?>
+<option value="<?=$category->id?>"><?=$category->name?></option>
+<? } ?>
+</select>
+<? } ?>
 <? if ($account->is_admin()) { ?>
 <p><?=label_tag("Notice", "post", "type")?> <?=check_box("post", "type", $post->type)?></p>
 <? } ?>

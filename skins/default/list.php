@@ -1,4 +1,18 @@
 <h1>Board: <?=$title?></h1>
+<? if ($board->use_category) { ?>
+<? if (isset($category)) { ?>
+<h2><?=i('Category')?> '<?=$category->name?>'</h2>
+<? } ?>
+<form method="get" action="<?=url_for($board)?>">
+<select name="category" onchange="this.form.submit()">
+<option value="0">Select category</option>
+<? foreach ($board->get_categories() as $_category) { ?>
+<option value="<?=$_category->id?>"<? if (isset($category)&&$category->id==$_category->id) { ?> selected="selected"<? } ?>><?=$_category->name?></option>
+<? } ?>
+</select>
+<input type="submit" value="Go" />
+</form>
+<? } ?>
 <table id="posts">
 	<caption>
         Total <?=$board->get_post_count()?> posts
@@ -17,6 +31,9 @@
 <? } ?>
 		<td class="name"><?=link_to_user($post->get_user())?></td>
 		<td class="title">
+			<? if ($board->use_category && $post->category_id) { ?>
+			[<?=link_to_category($post->get_category())?>]
+			<? } ?>
 			<?=link_to_post($post)?>
 			<span class="comment-count"><?=link_to_comments($post)?></span>
 		</td>

@@ -1,4 +1,5 @@
 <?php
+$metabbs_dir = realpath(dirname(__FILE__));
 require_once("lib/core.php");
 require_once("lib/backends/$backend/installer.php");
 $conn = get_conn();

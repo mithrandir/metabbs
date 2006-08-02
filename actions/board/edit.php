@@ -7,6 +7,16 @@ if (is_post()) {
 	if ($_board->name == $board->name || $_board->validate()) {
 		$board->import($_POST['board']);
 		$board->update();
+		if (isset($_POST['categories'])) {
+			foreach ($_POST['categories'] as $_category) {
+				if (!empty($_category)) {
+					$category = new Category;
+					$category->board_id = $board->id;
+					$category->name = $_category;
+					$category->create();
+				}
+			}
+		}
 		redirect_to(url_for('admin'));
 	} else {
 		$flash = "Board '$_board->name' already exists.";

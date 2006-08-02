@@ -81,6 +81,9 @@ class MySQLAdapter
     	$table = new Table($t);
     	$this->query("ALTER TABLE meta_$t ADD " . $table->_column($name, $type, $length));
 	}
+	function add_index($t, $name) {
+		$this->query("ALTER TABLE meta_$t ADD INDEX ${t}_$name ($name)");
+	}
 }
 
 function get_table_name($model) {
