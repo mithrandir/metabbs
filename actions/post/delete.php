@@ -1,6 +1,11 @@
 <?php
 if (is_post() && ($account->level >= $board->perm_delete ||
 		$post->password == md5($_POST['password']))) {
+	$attachments = $post->get_attachments();
+	foreach ($attachments as $attachment) {
+		@unlink($attachment->get_filename());
+		$attachment->delete();
+	}
 	$post->delete();
 	redirect_to(url_for($board));
 } else {

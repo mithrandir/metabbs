@@ -22,11 +22,14 @@ class Attachment extends Model
 	function is_image() {
 		return is_image($this->filename);
 	}
+	function get_filename() {
+		return 'data/uploads/' . $this->id;
+	}
 	function get_size() {
-		return filesize('data/uploads/' . $this->id);
+		return filesize($this->get_filename());
 	}
 	function exist() {
-	return file_exists('data/uploads/' . $this->id);
+		return file_exists($this->get_filename());
 	}
 }
 ?>
