@@ -8,6 +8,7 @@ class Post extends Model {
 	var $title, $body;
 	var $user_id = 0;
 	var $type = 0;
+	var $category_id = 0;
 	var $tb_count;
 	
 	function get_user() {
