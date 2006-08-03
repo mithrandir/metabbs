@@ -51,3 +51,4 @@ Admin Password (Again)=관리자 암호 (확인)
 Admin Name=관리자 이름
 Category=분류
 Use category=분류 사용
+Add category=분류 추가

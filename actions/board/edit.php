@@ -17,7 +17,7 @@ if (is_post()) {
 				}
 			}
 		}
-		redirect_to(url_for('admin'));
+		redirect_to(url_for($board, 'edit', array('tab'=>$_GET['tab'])));
 	} else {
 		$flash = "Board '$_board->name' already exists.";
 	}

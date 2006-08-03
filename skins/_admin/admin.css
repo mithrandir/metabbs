@@ -130,5 +130,3 @@ label {
 #skins-current img, #skins-available img { border: 3px solid #ccc; }
 .skins-item h3 { font-size: 1.1em; }
 .skins-item { float: left; margin: 5px; }
-
-#permission, #skin { display: none; }

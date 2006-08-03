@@ -13,6 +13,10 @@ class Board extends Model {
 	var $searchtype = '';
 	var $search = '';
 	var $category = null;
+	var $perm_read = 0;
+	var $perm_write = 0;
+	var $perm_comment = 0;
+	var $perm_delete = 255;
 
 	function get_id() {
 		return $this->name;

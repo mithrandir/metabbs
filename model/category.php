@@ -15,5 +15,9 @@ class Category extends Model {
 	function find($id) {
 		return model_find('category', $id);
 	}
+	function delete() {
+		model_update('post', array('category_id' => 0), 'category_id='.$this->id);
+		return model_delete('category', 'id='.$this->id);
+	}
 }
 ?>
