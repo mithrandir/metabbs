@@ -31,6 +31,7 @@
 	</a>
 	</h2>
 	<div class="content"><xsl:value-of select="description" disable-output-escaping="yes" /></div>
+	<xsl:apply-templates select="category" />
 </div>
 </xsl:for-each>
 <div id="powered">
@@ -38,5 +39,8 @@
 </div>
 </body>
 </html>
+</xsl:template>
+<xsl:template match="category">
+<p>Category: <xsl:value-of select="." /></p>
 </xsl:template>
 </xsl:stylesheet>

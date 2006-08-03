@@ -21,7 +21,11 @@ class Post extends Model {
 		return Board::find($this->board_id);
 	}
 	function get_category() {
-		return Category::find($this->category_id);
+		if ($this->category_id) {
+			return Category::find($this->category_id);
+		} else {
+			return null;
+		}
 	}
 	function get_board_name() {
 		$board = $this->get_board();
