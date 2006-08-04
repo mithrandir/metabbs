@@ -19,7 +19,7 @@ function model_find_all($model, $condition = null, $order = null, $offset = null
 	$query = "SELECT * FROM " . get_table_name($model);
 	if ($condition) $query .= " WHERE $condition";
 	if ($order) $query .= " ORDER BY $order";
-	if ($offset && $limit)
+	if ($offset !== null && $limit !== null)
 		$query .= "LIMIT $limit OFFSET $offset";
 	return $db->fetchall($query, $model);
 }
