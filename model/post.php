@@ -4,13 +4,18 @@ model('attachment');
 model('trackback');
 
 class Post extends Model {
-	var $id, $count;
 	var $title, $body;
 	var $user_id = 0;
 	var $type = 0;
 	var $category_id = 0;
-	var $tb_count;
 	
+	function _init() {
+		$this->board = $this->belongs_to('board');
+		$this->category = $this->belongs_to('category');
+		$this->comments = $this->has_many('comment');
+		$this->trackbacks = $this->has_many('trackback');
+		$this->attachments = $this->has_many('attachment');
+	}
 	function get_user() {
 		$user = User::find($this->user_id);
         if ($user->is_guest()) {
@@ -19,22 +24,14 @@ class Post extends Model {
         return $user;
 	}
 	function get_board() {
-		return Board::find($this->board_id);
+		return $this->board->find();
 	}
 	function get_category() {
-		if ($this->category_id) {
-			return Category::find($this->category_id);
-		} else {
-			return null;
-		}
+		return $this->category->find();
 	}
 	function get_board_name() {
 		$board = $this->get_board();
-		if ($board->title) {
-			return $board->title;
-		} else {
-			return $board->name;
-		}
+		return $board->get_title();
 	}
 	function find($id) {
 		return model_find('post', $id);
@@ -54,31 +51,25 @@ class Post extends Model {
 			'created_at' => model_datetime()), 'id='.$this->id);
 	}
 	function delete() {
-		model_delete('post', 'id='.$this->id);
-		model_delete('comment', 'post_id='.$this->id);
-		model_delete('trackback', 'post_id='.$this->id);
-		model_delete('attachment', 'post_id='.$this->id);
+		Model::delete();
+		$this->comments->clear();
+		$this->trackbacks->clear();
+		$this->attachments->clear();
 	}
 	function get_comments() {
-		return model_find_all('comment', 'post_id='.$this->id);
+		return $this->comments->find_all();
 	}
 	function get_comment_count() {
-		if (!$this->count) {
-			$this->count = model_count('comment', 'post_id='.$this->id);
-		}
-		return $this->count;
-	}
-	function get_trackback_count() {
-		if (!$this->tb_count) {
-			$this->tb_count = model_count('trackback', 'post_id='.$this->id);
-		}
-		return $this->tb_count;
-	}
-	function get_attachments() {
-		return model_find_all('attachment', 'post_id='.$this->id);
+		return $this->comments->count();
 	}
 	function get_trackbacks() {
-		return model_find_all('trackback', 'post_id='.$this->id);
+		return $this->trackbacks->find_all();
+	}
+	function get_trackback_count() {
+		return $this->trackbacks->count();
+	}
+	function get_attachments() {
+		return $this->attachments->find_all();
 	}
 	function is_notice() {
 		return ($this->type == 1);

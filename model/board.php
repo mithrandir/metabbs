@@ -99,5 +99,12 @@ class Board extends Model {
 			$post->delete();
 		}
 	}
+	function get_title() {
+		if ($this->title) {
+			return $this->title;
+		} else {
+			return $this->name;
+		}
+	}
 }
 ?>

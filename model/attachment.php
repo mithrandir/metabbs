@@ -1,6 +1,9 @@
 <?php
 class Attachment extends Model
 {
+	function _init() {
+		$this->post = $this->belongs_to('post');
+	}
 	function find($id) {
 		return model_find('attachment', $id);
 	}
@@ -9,7 +12,7 @@ class Attachment extends Model
 		return $post->get_board();
 	}
 	function get_post() {
-		return Post::find($this->post_id);
+		return $this->post->find();
 	}
 	function is_image() {
 		return is_image($this->filename);

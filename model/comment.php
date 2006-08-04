@@ -1,5 +1,8 @@
 <?php
 class Comment extends Model {
+	function _init() {
+		$this->post = $this->belongs_to('post');
+	}
 	function find($id) {
 		return model_find('comment', $id);
 	}
@@ -8,7 +11,7 @@ class Comment extends Model {
 		return $post->get_board();
 	}
 	function get_post() {
-		return Post::find($this->post_id);
+		return $this->post->find();
 	}
 	function create() {
 		if (isset($this->password))

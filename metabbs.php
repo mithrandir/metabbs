@@ -62,9 +62,9 @@ $_skin_dir = 'skins/' . $skin;
 $skin_dir = get_base_path() . $_skin_dir;
 
 if ($controller == 'board') {
-	$title = $board->title;
+	$title = $board->get_title();
 } else if ($controller == 'post') {
-	$title = "$board->title - $post->title";
+	$title = $board->get_title() . " - $post->title";
 } else if ($controller == 'user') {
 	$title = $user->name;
 } else {

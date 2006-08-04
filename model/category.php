@@ -1,8 +1,10 @@
 <?php
 class Category extends Model {
-	var $board_id, $name;
+	function _init() {
+		$this->board = $this->belongs_to('board');
+	}
 	function get_board() {
-		return Board::find($this->board_id);
+		return $this->board->find();
 	}
 	function get_posts($offset, $limit) {
 		return model_find_all('post', 'board_id='.$this->board_id.' AND category_id='.$this->id, 'type DESC, id DESC', $offset, $limit);

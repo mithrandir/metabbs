@@ -36,12 +36,57 @@ function model_delete($model, $condition = null) {
 	$db->query($query);
 }
 
+class Association
+{
+	function Association($parent, $model) {
+		$this->parent = $parent;
+		$this->model = $model;
+	}
+}
+class BelongsTo extends Association
+{
+	function find() {
+		if (!isset($this->cache)) {
+			$p = "{$this->model}_id";
+			if ($this->parent->$p) {
+				$this->cache = model_find($this->model, $this->parent->$p);
+			} else {
+				$this->cache = null;
+			}
+		}
+		return $this->cache;
+	}
+}
+class HasMany extends Association
+{
+	function get_condition() {
+		return $this->parent->get_model_name().'_id='.$this->parent->id;
+	}
+	function find_all() {
+		return model_find_all($this->model, $this->get_condition());
+	}
+	function count() {
+		return model_count($this->model, $this->get_condition());
+	}
+	function clear() {
+		return model_delete($this->model, $this->get_condition());
+	}
+}
+
 class Model
 {
 	var $id;
 
 	function Model($attributes = null) {
 		$this->import($attributes);
+		$this->_init();
+	}
+	function _init() { }
+	function belongs_to($model) {
+		return new BelongsTo($this, $model);
+	}
+	function has_many($model) {
+		return new HasMany($this, $model);
 	}
 	function get_model_name() {
 		if (!isset($this->model)) {
