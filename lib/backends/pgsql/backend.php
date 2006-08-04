@@ -66,47 +66,6 @@ class PgSQLAdapter
     }
 }
 
-function get_table_name($model) {
-    return 'meta_' . $model . 's';
-}
-function model_find($model, $id = NULL, $condition = '') {
-    $db = get_conn();
-    $query = 'SELECT * FROM ';
-    $query .= get_table_name($model);
-    if ($id) {
-        $query .= "WHERE id=$id";
-        if ($condition) {
-            $query .= " AND $condition";
-        }
-    }
-    else if ($condition) {
-        $query .= "WHERE $condition";
-    }
-    return $db->fetchrow($query, $model);
-}
-function model_find_all($model, $condition = '' , $order = '', $offset = -1, $limit = -1) {
-    $db = get_conn();
-    $query = 'SELECT * FROM ';
-    $query .= get_table_name($model);
-    if ($condition) $query .= ' WHERE '.$condition;
-    if ($order) $query .= ' ORDER BY '.$order;
-    if ($offset > -1 && $limit > -1) $query .= ' OFFSET '.$offset.' LIMIT '.$limit;
-    return $db->fetchall($query, $model);
-}
-function model_count($model, $condition = '') {
-    $db = get_conn();
-    $query = 'SELECT COUNT(*) FROM ';
-    $query .= get_table_name($model);
-    if ($condition) $query .= ' WHERE '.$condition;
-    return $db->fetchone($query);
-}
-function model_delete($model, $condition) {
-    $db = get_conn();
-    $query = 'DELETE FROM ';
-    $query .= get_table_name($model);
-    if ($condition) $query .= ' WHERE '.$condition;
-    $db->query($query);
-}
 function model_insert($model, $data) {
     $db = get_conn();
     $query = 'INSERT INTO ';

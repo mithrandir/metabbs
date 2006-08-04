@@ -77,40 +77,6 @@ class SQLiteAdapter
     }
 }
 
-function get_table_name($model) {
-    return 'meta_' . $model;
-}
-function model_find($model, $id = null, $condition = '1') {
-    $db = get_conn();
-    if ($id) $condition = 'id='.$id.' AND '.$condition;
-    $query = 'SELECT * FROM ';
-    $query .= get_table_name($model);
-    $query .= ' WHERE ' . $condition;
-    return $db->fetchrow($query, $model);
-}
-function model_find_all($model, $condition = '1', $order = '', $offset = -1, $limit = -1) {
-    $db = get_conn();
-    $query = 'SELECT * FROM ';
-    $query .= get_table_name($model);
-    $query .= ' WHERE '.$condition;
-    if ($order) $query .= ' ORDER BY '.$order;
-    if ($offset > -1) $query .= ' LIMIT '.$offset.', '.$limit;
-    return $db->fetchall($query, $model);
-}
-function model_count($model, $condition = '1') {
-    $db = get_conn();
-    $query = 'SELECT COUNT(*) FROM ';
-    $query .= get_table_name($model);
-    $query .= ' WHERE '.$condition;
-    return $db->fetchone($query);
-}
-function model_delete($model, $condition = '1') {
-    $db = get_conn();
-    $query = 'DELETE FROM ';
-    $query .= get_table_name($model);
-    $query .= ' WHERE '.$condition;
-    $db->query($query);
-}
 function model_insert($model, $data) {
     $db = get_conn();
     $query = 'INSERT INTO ';

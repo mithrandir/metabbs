@@ -11,14 +11,6 @@ class Attachment extends Model
 	function get_post() {
 		return Post::find($this->post_id);
 	}
-	function create() {
-		$this->id = model_insert('attachment', array(
-			'post_id' => $this->post_id,
-			'filename' => $this->filename));
-	}
-	function delete() {
-		model_delete('attachment', 'id='.$this->id);
-	}
 	function is_image() {
 		return is_image($this->filename);
 	}

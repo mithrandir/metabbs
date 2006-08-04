@@ -40,16 +40,9 @@ class Post extends Model {
 		return model_find('post', $id);
 	}
 	function create() {
-		$this->id = model_insert('post', array(
-			'board_id' => $this->board_id,
-			'user_id'  => $this->user_id,
-			'name'	 => $this->name,
-			'title'	=> $this->title,
-			'body'	 => $this->body,
-			'type' => $this->type,
-			'password' => md5($this->password),
-			'category_id' => $this->category_id,
-			'created_at' => model_datetime()));
+		if (isset($this->password))
+			$this->password = md5($this->password);
+		Model::create();
 	}
 	function update() {
 		model_update('post', array(

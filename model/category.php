@@ -7,11 +7,6 @@ class Category extends Model {
 	function get_posts($offset, $limit) {
 		return model_find_all('post', 'board_id='.$this->board_id.' AND category_id='.$this->id, 'type DESC, id DESC', $offset, $limit);
 	}
-	function create() {
-		$this->id = model_insert('category', array(
-			'board_id'   => $this->board_id,
-			'name'	   => $this->name));
-	}
 	function find($id) {
 		return model_find('category', $id);
 	}

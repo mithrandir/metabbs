@@ -8,14 +8,6 @@ class Trackback extends Model {
 	function get_post() {
 		return Post::find($this->post_id);
 	}
-	function create() {
-		$this->id = model_insert('trackback', array(
-			'post_id'   => $this->post_id,
-			'blog_name' => $this->blog_name,
-			'title'	 => $this->title,
-			'excerpt'   => $this->excerpt,
-			'url'	   => $this->url));
-	}
 	function validate() {
 		return $this->url && $this->blog_name;
 	}

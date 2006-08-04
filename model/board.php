@@ -78,19 +78,6 @@ class Board extends Model {
 		$board = Board::find_by_name($this->name);
 		return !$board->exists();
 	}
-	function create() {
-		model_insert('board', array(
-			'name' => $this->name,
-			'skin' => $this->skin,
-			'posts_per_page' => $this->posts_per_page,
-			'title' => $this->title,
-			'use_attachment' => $this->use_attachment,
-			'use_category' => $this->use_category,
-			'perm_read' => $this->perm_read,
-			'perm_write' => $this->perm_write,
-			'perm_comment' => $this->perm_comment,
-			'perm_delete' => $this->perm_delete));
-	}
 	function update() {
 		model_update('board', array(
 			'name' => $this->name,
@@ -107,7 +94,10 @@ class Board extends Model {
 	}
 	function delete() {
 		model_delete('board', 'id='.$this->id);
-		model_delete('post', 'board_id='.$this->id);
+		$posts = model_find_all('post', 'board_id='.$this->id);
+		foreach ($posts as $post) {
+			$post->delete();
+		}
 	}
 }
 ?>
