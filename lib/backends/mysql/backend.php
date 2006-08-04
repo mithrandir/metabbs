@@ -89,9 +89,11 @@ class MySQLAdapter
         }
         return $results;
     }
+    function fetch($query) {
+		return mysql_fetch_assoc($this->query($query));
+	}
     function fetchrow($query, $model = 'Model') {
-        $data = mysql_fetch_assoc($this->query($query));
-        return new $model($data);
+        return new $model($this->fetch($query));
     }
     function fetchone($query) {
         $result = mysql_fetch_row($this->query($query));

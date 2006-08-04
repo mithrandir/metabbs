@@ -33,9 +33,6 @@ class Post extends Model {
 		$board = $this->get_board();
 		return $board->get_title();
 	}
-	function find($id) {
-		return model_find('post', $id);
-	}
 	function create() {
 		if (isset($this->password))
 			$this->password = md5($this->password);

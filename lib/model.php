@@ -81,8 +81,13 @@ class Model
 {
 	var $id;
 
-	function Model($attributes = null) {
-		$this->import($attributes);
+	function Model($id_or_attributes = null, $field = 'id') {
+		if ($id_or_attributes && !is_array($id_or_attributes)) {
+			$db = get_conn();
+			$table = get_table_name($this->get_model_name());
+			$id_or_attributes = $db->fetch("SELECT * FROM $table WHERE $field='$id_or_attributes'");
+		}
+		$this->import($id_or_attributes);
 		$this->_init();
 	}
 	function _init() { }

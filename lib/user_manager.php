@@ -65,7 +65,7 @@ class User extends Model {
 		}
 	}
 	function find_by_user($user) {
-		return model_find('user', null, "user='$user'");
+		return new User($user, 'user');
 	}
 	function find_all() {
 		return model_find_all('user');

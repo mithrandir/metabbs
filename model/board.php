@@ -24,11 +24,8 @@ class Board extends Model {
 	function get_id() {
 		return $this->name;
 	}
-	function find_by_name($name) {
-		return model_find('board', null, "name='$name'");
-	}
-	function find($id) {
-		return model_find('board', $id);
+	function find_by_name($name) { /* backward compability */
+		return new Board($name, 'name');
 	}
 	function find_all() {
 		return model_find_all('board');

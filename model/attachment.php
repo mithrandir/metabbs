@@ -4,9 +4,6 @@ class Attachment extends Model
 	function _init() {
 		$this->post = $this->belongs_to('post');
 	}
-	function find($id) {
-		return model_find('attachment', $id);
-	}
 	function get_board() {
 		$post = $this->get_post();
 		return $post->get_board();

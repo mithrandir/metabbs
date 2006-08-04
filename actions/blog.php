@@ -1,11 +1,6 @@
 <?php
 class Blog extends Board
 {
-	function find_by_name($name) {
-		$board = Board::find_by_name($name);
-		$blog = new Blog(get_object_vars($board));
-		return $blog;
-	}
 	function get_model_name() {
 		return "board";
 	}
@@ -14,7 +9,7 @@ class Blog extends Board
 	}
 }
 
-$board = Blog::find_by_name("blog"); //XXX
+$board = new Blog("blog", "name");
 
 require_once 'lib/page.php';
 $controller = 'board';

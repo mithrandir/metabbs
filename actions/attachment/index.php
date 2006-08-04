@@ -1,5 +1,5 @@
 <?php
-$attachment = Attachment::find($id);
+$attachment = new Attachment($id);
 if (!$attachment->exists() || !$attachment->exist()) {
 	print_notice('Attachment not found', "Attachment #$id is not exist or broken.<br />Please check the attachment id.");
 }

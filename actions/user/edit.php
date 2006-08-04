@@ -4,7 +4,7 @@ if (!$account->is_admin()) {
 } else {
 	$level = $_POST['level'];
 	foreach ($_POST['user_id'] as $id => $check) {
-		$user = User::find($id);
+		$user = new User($id);
 		$user->level = $level;
 		$user->update();
 	}
