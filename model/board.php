@@ -31,7 +31,7 @@ class Board extends Model {
 		return model_find_all('board');
 	}
 	function get_where() {
-        	if ($this->searchtype) {
+       	if ($this->searchtype) {
 			$searchtype = $this->searchtype;
 		}
 		else {
@@ -39,22 +39,23 @@ class Board extends Model {
 		}
 		$search = '%' . $this->search . '%';
 		if ($searchtype == 'tb') {
-			return "(title LIKE '$search' OR body LIKE '$search')";
+			$where = "(title LIKE '$search' OR body LIKE '$search')";
 		}
 		else if ($searchtype == 't') {
-			return "title LIKE '$search'";
+			$where = "title LIKE '$search'";
 		}
 		else if ($searchtype == 'b') {
-			return "body LIKE '$search'";
-		}
-	}
-	function get_posts($offset, $limit) {
-		$where = "board_id=$this->id";
-		if ($this->search) {
-			$where .= " AND " . $this->get_where();
+			$where = "body LIKE '$search'";
 		}
 		if ($this->category) {
 			$where .= " AND category_id=" . $this->category;
+		}
+		return $where;
+	}
+	function get_posts($offset, $limit) {
+		$where = "board_id=$this->id";
+		if ($this->search || $this->category) {
+			$where .= " AND " . $this->get_where();
 		}
 		return model_find_all('post', $where, 'type DESC, id DESC', $offset, $limit);
 	}
