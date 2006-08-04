@@ -20,7 +20,7 @@ function model_find_all($model, $condition = null, $order = null, $offset = null
 	if ($condition) $query .= " WHERE $condition";
 	if ($order) $query .= " ORDER BY $order";
 	if ($offset !== null && $limit !== null)
-		$query .= "LIMIT $limit OFFSET $offset";
+		$query .= " LIMIT $limit OFFSET $offset";
 	return $db->fetchall($query, $model);
 }
 function model_count($model, $condition = null) {
