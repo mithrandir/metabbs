@@ -14,7 +14,7 @@ class Category extends Model {
 	}
 	function delete() {
 		model_update('post', array('category_id' => 0), 'category_id='.$this->id);
-		return model_delete('category', 'id='.$this->id);
+		Model::delete();
 	}
 }
 ?>

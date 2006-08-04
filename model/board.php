@@ -18,6 +18,9 @@ class Board extends Model {
 	var $perm_comment = 0;
 	var $perm_delete = 255;
 
+	function _init() {
+		$this->categories = $this->has_many('category');
+	}
 	function get_id() {
 		return $this->name;
 	}
@@ -62,7 +65,7 @@ class Board extends Model {
 		return model_find_all('post', 'board_id='.$this->id, 'id DESC', 0, $count);
 	}
 	function get_categories() {
-		return model_find_all('category', 'board_id=' . $this->id);
+		return $this->categories->find_all();
 	}
 	function get_post_count() {
 		if (!$this->count) {
@@ -77,20 +80,6 @@ class Board extends Model {
 	function validate() {
 		$board = Board::find_by_name($this->name);
 		return !$board->exists();
-	}
-	function update() {
-		model_update('board', array(
-			'name' => $this->name,
-			'skin' => $this->skin,
-			'posts_per_page' => $this->posts_per_page,
-			'title' => $this->title,
-			'use_attachment' => $this->use_attachment,
-			'use_category' => $this->use_category,
-			'perm_read' => $this->perm_read,
-			'perm_write' => $this->perm_write,
-			'perm_comment' => $this->perm_comment,
-			'perm_delete' => $this->perm_delete),
-		'id='.$this->id);
 	}
 	function delete() {
 		model_delete('board', 'id='.$this->id);

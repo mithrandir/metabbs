@@ -36,6 +36,10 @@ function model_delete($model, $condition = null) {
 	$db->query($query);
 }
 
+function get_column_pair($column) {
+	return "$column->name=" . $column->to_string();
+}
+
 class Association
 {
 	function Association($parent, $model) {
@@ -120,6 +124,19 @@ class Model
 		$query .= " VALUES(".implode(",", array_map('column_to_string', $columns)).")";
 		$db->query($query);
 		$this->id = $db->insertid();
+	}
+	function update() {
+		$db = get_conn();
+		$model = $this->get_model_name();
+		$table = get_table_name($model);
+		$columns = $db->get_columns($table);
+		foreach ($columns as $column) {
+			$column->set_value(@$this->{$column->name});
+		}
+		$query = "UPDATE $table SET ";
+		$query .= implode(",", array_map('get_column_pair', $columns));
+		$query .= " WHERE id=$this->id";
+		$db->query($query);
 	}
 	function delete() {
 		model_delete($this->get_model_name(), 'id='.$this->id);

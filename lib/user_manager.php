@@ -80,24 +80,6 @@ class User extends Model {
 	function get_comment_count() {
 		return model_count('comment', "user_id=$this->id");
 	}
-	function create() {
-		model_insert('user', array(
-			'user' => $this->user,
-			'password' => $this->password,
-			'name' => $this->name,
-			'email' => $this->email,
-			'url' => $this->url,
-			'level' => $this->level));
-	}
-	function update() {
-		model_update('user', array(
-			'password' => $this->password,
-			'name' => $this->name,
-			'email' => $this->email,
-			'url' => $this->url,
-			'level' => $this->level),
-		'id='.$this->id);
-	}
 	function delete() {
 		model_delete('user', 'id='.$this->id);
 	}

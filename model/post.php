@@ -42,13 +42,8 @@ class Post extends Model {
 		Model::create();
 	}
 	function update() {
-		model_update('post', array(
-			'name'	   => $this->name,
-			'title'	  => $this->title,
-			'type' => $this->type,
-			'body'	   => $this->body,
-			'category_id' => $this->category_id,
-			'created_at' => model_datetime()), 'id='.$this->id);
+		$this->created_at = null;
+		Model::update();
 	}
 	function delete() {
 		Model::delete();
