@@ -11,18 +11,18 @@ function get_base_path() {
 	return $GLOBALS['base_path'];
 }
 
-$metabbs_dir = realpath(dirname(__FILE__) . '/..');
+define('METABBS_DIR', realpath(dirname(__FILE__) . '/..'));
 
 if (!isset($_SERVER['REQUEST_URI'])) { // workaround for CGI environment
 	$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
 }
 
-if (!file_exists($metabbs_dir . '/metabbs.conf.php')) {
+if (!file_exists(METABBS_DIR . '/metabbs.conf.php')) {
 	echo '<h1>Config file not found.</h1><p>Did you install metaBBS? :) <a href="'.get_base_path().'install.php">Go to install page &raquo;</a></p>';
 	exit;
 }
 
-ini_set("include_path", ini_get("include_path") . PATH_SEPARATOR . $metabbs_dir);
+ini_set("include_path", METABBS_DIR . '/lib' . PATH_SEPARATOR . METABBS_DIR . PATH_SEPARATOR . ini_get("include_path"));
 
 require_once("core.php");
 require_once("request.php");
