@@ -121,7 +121,9 @@ class Model
 		$model = $this->get_model_name();
 		$table = get_table_name($model);
 		$columns = $db->get_columns($table);
-		foreach ($columns as $column) {
+		$count = count($columns);
+		for ($i = 0; $i < $count; $i++) {
+			$column = &$columns[$i];
 			$column->set_value(@$this->{$column->name});
 		}
 		$query = "INSERT INTO $table";
@@ -135,7 +137,9 @@ class Model
 		$model = $this->get_model_name();
 		$table = get_table_name($model);
 		$columns = $db->get_columns($table);
-		foreach ($columns as $column) {
+		$count = count($columns);
+		for ($i = 0; $i < $count; $i++) {
+			$column = &$columns[$i];
 			$column->set_value(@$this->{$column->name});
 		}
 		$query = "UPDATE $table SET ";
