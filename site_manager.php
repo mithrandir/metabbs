@@ -1,8 +1,5 @@
 <?php
-if (substr(METABBS_BASE_PATH, 0, -1) != '/') {
-	define(METABBS_BASE_PATH, METABBS_BASE_PATH . '/');
-}
-require_once(METABBS_BASE_PATH.'lib/common.php');
+require_once(METABBS_DIR.'lib/common.php');
 class MetaBBS
 {
 	var $feed_link = 'RSS';

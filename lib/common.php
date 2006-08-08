@@ -1,18 +1,20 @@
 <?php
 header("Content-Type: text/html; charset=utf-8");
 
-if (!defined(METABBS_BASE_PATH)) {
+if (!defined('METABBS_BASE_PATH')) {
 	$base_path = dirname($_SERVER['SCRIPT_NAME']);
 	if ($base_path != '/' && $base_path != '\\') {
 		$base_path .= '/';
 	}
-	define(METABBS_BASE_PATH, $base_path);
+	define('METABBS_BASE_PATH', $base_path);
 }
 function get_base_path() {
 	return METABBS_BASE_PATH;
 }
 
-define('METABBS_DIR', realpath(dirname(__FILE__) . '/..'));
+if (!defined('METABBS_DIR')) {
+	define('METABBS_DIR', realpath(dirname(__FILE__) . '/..'));
+}
 
 if (!isset($_SERVER['REQUEST_URI'])) { // workaround for CGI environment
 	$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
