@@ -1,4 +1,5 @@
 <?php
+// site_manager.php를 include하는 곳에서 상대적인 METABBS_DIR, METABBS_BASE_PATH를 정의해야 한다.
 require_once(METABBS_DIR.'lib/common.php');
 class MetaBBS
 {
