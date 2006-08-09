@@ -22,7 +22,7 @@
 <ol id="uploads">
 <? if ($post->exists()) { ?>
 <? foreach ($post->get_attachments() as $attachment) { ?>
-<? if (!$attachment->exist()) $attachment->filename = "<del>$attachment->filename</del>"; ?>
+<? if (!$attachment->file_exists()) $attachment->filename = "<del>$attachment->filename</del>"; ?>
 	<li><?=$attachment->filename?> <label><input type="checkbox" name="delete[]" value="<?=$attachment->id?>" /> Delete</li>
 <? } ?>
 <? } ?>
