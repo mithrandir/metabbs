@@ -33,7 +33,7 @@
 		<? if ($post->user_id) { ?>
 			<?=link_to_user($post->get_user())?>
 		<? } else { ?>
-			<?=$post->name?>
+			<?=htmlspecialchars($post->name)?>
 		<? } ?>
 		</td>
 		<td class="title">
