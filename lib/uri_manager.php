@@ -44,8 +44,9 @@ function full_url_for($controller, $action = '') {
 
 function url_for($controller, $action = null, $params = array()) {
 	if (isset($_GET['search']) && $_GET['search']) {
-		$params['search'] = urlencode($_GET['search']);
-		$params['searchtype'] = $_GET['searchtype'];
+		foreach ($_GET['search'] as $k => $v) {
+			$params["search[$k]"] = urlencode($v);
+		}
 	}
 	return _url_for($controller, $action, $params);
 }

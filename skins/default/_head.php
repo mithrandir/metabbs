@@ -9,10 +9,10 @@
 	window.onload = function () {
 <? if (isset($_GET['search'])) { ?>
 <? if ($controller == 'post') { ?>
-		highlight('#title', '<?=$_GET['search']?>');
-		highlight('#body', '<?=$_GET['search']?>');
+		highlight('#title', '<?=$board->search['text']?>');
+		highlight('#body', '<?=$board->search['text']?>');
 <? } else if ($controller == 'board') { ?>
-		highlight('td.title a', '<?=$_GET['search']?>');
+		highlight('td.title a', '<?=$board->search['text']?>');
 <? } ?>
 <? } ?>
 	}

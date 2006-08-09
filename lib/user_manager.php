@@ -48,19 +48,43 @@ class User extends Model {
 	var $email, $url;
 	var $level = 1;
 	var $posts_per_page = 10;
+	function _init() {
+		$this->table = get_table_name('user');
+		$this->post_table = get_table_name('post');
+		$this->comment_table = get_table_name('comment');
+	}
+	function find($id) {
+		$db = get_conn();
+		$table = get_table_name('user');
+		return $db->fetchrow("SELECT * FROM $table WHERE id=$id", 'User');
+	}
+	function get_posts() {
+		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE user_id=$this->id", 'Post');
+	}
+	function add_post($post) {
+		$post->user_id = $this->id;
+		$post->create();
+	}
+	function get_post_count() {
+		return $this->db->fetchone("SELECT COUNT(*) FROM $this->post_table WHERE user_id=$this->id");
+	}
+	function get_comments() {
+		return $this->db->fetchall("SELECT * FROM $this->comment_table WHERE user_id=$this->id", 'Comment');
+	}
+	function add_comment($comment) {
+		$comment->user_id = $this->id;
+		$comment->create();
+	}
+	function get_comment_count() {
+		return $this->db->fetchone("SELECT COUNT(*) FROM $this->comment_table WHERE user_id=$this->id");
+	}
 	function auth($user, $password) {
-		$user = model_find('user', null, "user='$user' AND password='$password'");
+		$db = get_conn();
+		$table = get_table_name('user');
+		$user = $db->fetchrow("SELECT * FROM $table WHERE user='$user' AND password='$password'", 'User');
 		if ($user->exists()) {
 			return $user;
 		} else {
-			return new Guest;
-		}
-	}
-	function find($id) {
-		if ($id) {
-			return model_find('user', $id);
-		}
-		else {
 			return new Guest;
 		}
 	}
@@ -69,19 +93,6 @@ class User extends Model {
 	}
 	function find_all() {
 		return model_find_all('user');
-	}
-	function get_posts($offset, $limit) {
-		$where = "user_id=$this->id";
-		return model_find_all('post', $where, 'id DESC', $offset, $limit);
-	}
-	function get_post_count() {
-		return model_count('post', "user_id=$this->id");
-	}
-	function get_comment_count() {
-		return model_count('comment', "user_id=$this->id");
-	}
-	function delete() {
-		model_delete('user', 'id='.$this->id);
 	}
 	function is_guest() {
 		return false;

@@ -9,6 +9,12 @@ $model_dir = 'model';
 require_once 'model.php';
 require_once 'backends/' . $backend . '/backend.php';
 require_once 'model/board.php';
+require_once 'model/category.php';
+require_once 'model/post.php';
+require_once 'model/comment.php';
+require_once 'model/trackback.php';
+require_once 'model/attachment.php';
+require_once 'model/user.php';
 
 require_once 'template.php';
 require_once 'uri_manager.php';

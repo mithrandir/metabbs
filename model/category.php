@@ -1,17 +1,27 @@
 <?php
 class Category extends Model {
 	function _init() {
-		$this->board = $this->belongs_to('board');
+		$this->table = get_table_name('category');
+		$this->board_table = get_table_name('board');
+		$this->post_table = get_table_name('post');
+	}
+	function find($id) {
+		$db = get_conn();
+		$table = get_table_name('category');
+		return $db->fetchrow("SELECT * FROM $table WHERE id=$id", 'Category');
 	}
 	function get_board() {
-		return $this->board->find();
+		return Board::find($this->board_id);
 	}
-	function get_posts($offset, $limit) {
-		return model_find_all('post', 'board_id='.$this->board_id.' AND category_id='.$this->id, 'type DESC, id DESC', $offset, $limit);
+	function get_posts() {
+		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE category_id=$this->id", 'Post');
 	}
-	function delete() {
-		model_update('post', array('category_id' => 0), 'category_id='.$this->id);
-		Model::delete();
+	function add_post($post) {
+		$post->category_id = $this->id;
+		$post->create();
+	}
+	function get_post_count() {
+		return $this->db->fetchone("SELECT COUNT(*) FROM $this->post_table WHERE category_id=$this->id");
 	}
 }
 ?>

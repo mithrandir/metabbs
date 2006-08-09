@@ -4,7 +4,7 @@
 <h2><?=i('Category')?> '<?=$category->name?>'</h2>
 <? } ?>
 <form method="get" action="<?=url_for($board)?>">
-<select name="category" onchange="this.form.submit()">
+<select name="search[category]" onchange="this.form.submit()">
 <option value="0">Select category</option>
 <? foreach ($board->get_categories() as $_category) { ?>
 <option value="<?=$_category->id?>"<? if (isset($category)&&$category->id==$_category->id) { ?> selected="selected"<? } ?>><?=$_category->name?></option>
@@ -29,7 +29,13 @@
 <? } else { ?>
 	<tr>
 <? } ?>
-		<td class="name"><?=link_to_user($post->get_user())?></td>
+		<td class="name">
+		<? if ($post->user_id) { ?>
+			<?=link_to_user($post->get_user())?>
+		<? } else { ?>
+			<?=$post->name?>
+		<? } ?>
+		</td>
 		<td class="title">
 			<? if ($board->use_category && $post->category_id) { ?>
 			[<?=link_to_category($post->get_category())?>]
@@ -46,11 +52,8 @@
 
 <form method="get">
 <p>
-<select name="searchtype" id="searchtype">
-<? $types = array('tb' => 'Title+Body', 't' => 'Title', 'b' => 'Body'); foreach ($types as $type => $text) { ?>
-<option value="<?=$type?>"<? if (isset($_GET['searchtype']) && $_GET['searchtype'] == $type) { ?> selected="selected"<? } ?>><?=$text?></option>
-<? } ?>
-</select>
-<?=input_tag("search", $board->search)?> <?=submit_tag("Search")?> <?=link_text("?", "Return")?>
+<?=check_box("search", "title", $board->search['title'])?> Title
+<?=check_box("search", "body", $board->search['body'])?> Body
+<?=text_field("search", "text", $board->search['text'])?> <?=submit_tag("Search")?> <?=link_text("?", "Return")?>
 </p>
 </form>
