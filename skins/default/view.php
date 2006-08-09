@@ -8,7 +8,7 @@
 <div id="attachments">
 <ul>
 <? foreach ($attachments as $attachment) { ?>
-<? if (!$attachment->exist()) { ?>
+<? if (!$attachment->file_exists()) { ?>
 	<li>Attachment: <del><?=$attachment->filename?></del></li>
 <? } else if ($attachment->is_image()) { ?>
 	<li><img src="<?=url_for($attachment)?>" alt="<?=$attachment->filename?>" /></li>

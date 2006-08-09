@@ -41,10 +41,7 @@ class Model
 		return $this->id;
 	}
 	function create() {
-		$db = get_conn();
-		$model = $this->get_model_name();
-		$table = get_table_name($model);
-		$columns = $db->get_columns($table);
+		$columns = $this->db->get_columns($this->table);
 		$count = count($columns);
 		for ($i = 0; $i < $count; $i++) {
 			$column = &$columns[$i];
@@ -53,8 +50,8 @@ class Model
 		$query = "INSERT INTO $table";
 		$query .= " (".implode(",", array_map('get_column_name', $columns)).")";
 		$query .= " VALUES(".implode(",", array_map('column_to_string', $columns)).")";
-		$db->query($query);
-		$this->id = $db->insertid();
+		$this->db->query($query);
+		$this->id = $this->db->insertid();
 	}
 	function update() {
 		$columns = $this->db->get_columns($this->table);
