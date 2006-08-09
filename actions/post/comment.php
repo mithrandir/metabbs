@@ -1,6 +1,5 @@
 <?php
 $comment = new Comment($_POST['comment']);
-$comment->post_id = $post->id;
 if ($account->level < $board->perm_comment) {
 	redirect_to(url_for($post));
 }
@@ -10,7 +9,7 @@ if ($account->is_guest()) {
 } else {
 	$comment->name = $account->name;
 }
-$comment->create();
+$post->add_comment($comment);
 if (isset($_POST['ajax'])) {
 	include("skins/$board->skin/_comment.php");
 	exit;

@@ -11,7 +11,7 @@ if (!$account->is_guest()) {
 if ($post->exists()) {
 	$post->update();
 } else {
-	$post->create();
+	$board->add_post($post);
 }
 if (isset($_FILES['upload'])) {
 	$upload = $_FILES['upload'];

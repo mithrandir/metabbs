@@ -1,6 +1,5 @@
 <?php
 $trackback = new Trackback($_POST);
-$trackback->post_id = $post->id;
 header("Content-type: text/xml");
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 echo "<response>\n";
@@ -10,7 +9,7 @@ if ($url['path'] == '/') {
 	exit;
 }
 if (is_post() && $trackback->validate()) {
-	$trackback->create();
+	$post->add_trackback($trackback);
 	echo "<error>0</error>\n";
 } else {
 	echo "<error>1</error>\n";
