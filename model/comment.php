@@ -12,7 +12,7 @@ class Comment extends Model {
 	}
 	function create() {
 		$this->created_at = model_datetime();
-		$this->password = md5($this->password);
+		$this->password = md5(@$this->password);
 		Model::create();
 	}
 	function get_user() {

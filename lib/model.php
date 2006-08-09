@@ -47,7 +47,7 @@ class Model
 			$column = &$columns[$i];
 			$column->set_value(@$this->{$column->name});
 		}
-		$query = "INSERT INTO $table";
+		$query = "INSERT INTO $this->table";
 		$query .= " (".implode(",", array_map('get_column_name', $columns)).")";
 		$query .= " VALUES(".implode(",", array_map('column_to_string', $columns)).")";
 		$this->db->query($query);
