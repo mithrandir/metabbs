@@ -31,21 +31,19 @@ class Board extends Model {
 		return model_find_all('board');
 	}
 	function get_where() {
-       	if ($this->searchtype) {
-			$searchtype = $this->searchtype;
-		}
-		else {
-			$searchtype = 'tb';
-		}
-		$search = '%' . $this->search . '%';
-		if ($searchtype == 'tb') {
-			$where = "(title LIKE '$search' OR body LIKE '$search')";
-		}
-		else if ($searchtype == 't') {
-			$where = "title LIKE '$search'";
-		}
-		else if ($searchtype == 'b') {
-			$where = "body LIKE '$search'";
+       	$where = "board_id=$this->id";
+       	if ($this->search) {
+			$search = '%' . $this->search . '%';
+			if ($this->searchtype == 'tb') {
+				$w = "(title LIKE '$search' OR body LIKE '$search')";
+			}
+			else if ($this->searchtype == 't') {
+				$w = "title LIKE '$search'";
+			}
+			else if ($this->searchtype == 'b') {
+				$w = "body LIKE '$search'";
+			}
+			$where .= " AND $w";
 		}
 		if ($this->category) {
 			$where .= " AND category_id=" . $this->category;
@@ -53,11 +51,7 @@ class Board extends Model {
 		return $where;
 	}
 	function get_posts($offset, $limit) {
-		$where = "board_id=$this->id";
-		if ($this->search || $this->category) {
-			$where .= " AND " . $this->get_where();
-		}
-		return model_find_all('post', $where, 'type DESC, id DESC', $offset, $limit);
+		return model_find_all('post', $this->get_where(), 'type DESC, id DESC', $offset, $limit);
 	}
 	function get_feed_posts($count) {
 		return model_find_all('post', 'board_id='.$this->id, 'id DESC', 0, $count);
@@ -67,11 +61,7 @@ class Board extends Model {
 	}
 	function get_post_count() {
 		if (!$this->count) {
-			$where = "board_id=$this->id";
-			if ($this->search) {
-				$where .= " AND " . $this->get_where();
-			}
-			$this->count = model_count('post', $where);
+			$this->count = model_count('post', $this->get_where());
 		}
 		return $this->count;
 	}
