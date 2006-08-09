@@ -57,19 +57,16 @@ class Model
 		$this->id = $db->insertid();
 	}
 	function update() {
-		$db = get_conn();
-		$model = $this->get_model_name();
-		$table = get_table_name($model);
-		$columns = $db->get_columns($table);
+		$columns = $this->db->get_columns($this->table);
 		$count = count($columns);
 		for ($i = 0; $i < $count; $i++) {
 			$column = &$columns[$i];
 			$column->set_value(@$this->{$column->name});
 		}
-		$query = "UPDATE $table SET ";
+		$query = "UPDATE $this->table SET ";
 		$query .= implode(",", array_map('get_column_pair', $columns));
 		$query .= " WHERE id=$this->id";
-		$db->query($query);
+		$this->db->query($query);
 	}
 	function delete() {
 		$db = get_conn();

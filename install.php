@@ -45,9 +45,7 @@ if (!isset($_POST['config'])) {
 	if (!is_supported()) {
 		fail('Your server doesn\'t support <em>' . $backend . '</em>');
 	}
-?>
-<?php
-        db_info_form();
+    db_info_form();
 ?>
 	<h2>Admin Information</h2>
 	<p>
@@ -145,5 +143,3 @@ if (!isset($_POST['config'])) {
 }
 print_footer();
 ?>
-
-<?php # vim: set et: ?>

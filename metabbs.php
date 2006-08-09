@@ -16,25 +16,21 @@ function get_skins() {
 	closedir($dir);
 	return $skins;
 }
-function print_header() {
+function print_layout($type) {
 	global $config;
-	$header = $config->get('global_header');
-	if ($header) {
-		include($header);
+	$template = $config->get('global_' . $type);
+	if ($template) {
+		include($template);
 		return true;
 	} else {
 		return false;
 	}
 }
+function print_header() {
+	return print_layout('header');
+}
 function print_footer() {
-	global $config;
-	$footer = $config->get('global_footer');
-	if ($footer) {
-		include($footer);
-		return true;
-	} else {
-		return false;
-	}
+	return print_layout('footer');
 }
 
 @list(, $controller, $id, $action, $sub_id) = explode('/', $_SERVER['PATH_INFO']);
@@ -76,10 +72,6 @@ if (isset($render)) {
 	include($_skin_dir . '/' . $render . '.php');
 	$content = ob_get_contents();
 	ob_end_clean();
-	if ($layout = $config->get('global_layout') && $controller != 'admin') {
-		include($layout);
-	} else {
-		include($_skin_dir . '/layout.php');
-	}
+	include($_skin_dir . '/layout.php');
 }
 ?>
