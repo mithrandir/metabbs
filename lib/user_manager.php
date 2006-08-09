@@ -89,10 +89,14 @@ class User extends Model {
 		}
 	}
 	function find_by_user($user) {
-		return new User($user, 'user');
+		$db = get_conn();
+		$table = get_table_name('user');
+		return $db->fetchrow("SELECT * FROM $table WHERE user='$user'", 'User');
 	}
 	function find_all() {
-		return model_find_all('user');
+		$db = get_conn();
+		$table = get_table_name('user');
+		return $db->fetchall("SELECT * FROM $table", 'User');
 	}
 	function is_guest() {
 		return false;

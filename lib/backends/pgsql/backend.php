@@ -66,32 +66,6 @@ class PgSQLAdapter
     }
 }
 
-function model_insert($model, $data) {
-    $db = get_conn();
-    $query = 'INSERT INTO ';
-    $query .= ($table=get_table_name($model));
-    $query .= ' ("'.implode('","', array_keys($data)).'") VALUES(';
-    foreach ($data as $key => $value) {
-        $query .= '\''.$value.'\',';
-    }
-    $query = substr($query, 0, -1);
-    $query .= ')';
-    $db->query($query);
-    return $db->insertid($table);
-}
-function model_update($model, $data, $condition = '1') {
-    $db = get_conn();
-    $query = 'UPDATE ';
-    $query .= get_table_name($model);
-    $query .= ' SET ';
-    foreach ($data as $key => $value) {
-        $query .= '"'.$key.'"=\''.$value.'\',';
-    }
-    $query = substr($query, 0, -1);
-    $query .= ' WHERE '.$condition;
-    $db->query($query);
-}
-
 function model_datetime(){
     return date("Y-m-d H:i:s");
 }
