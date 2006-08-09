@@ -17,6 +17,10 @@ class Post extends Model {
 		$table = get_table_name('post');
 		return $db->fetchrow("SELECT * FROM $table WHERE id=$id", 'Post');
 	}
+	function create() {
+		$this->password = md5($this->password);
+		Model::create();
+	}
 	function is_notice() {
 		return $this->type == 1;
 	}

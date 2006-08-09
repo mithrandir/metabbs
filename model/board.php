@@ -45,7 +45,7 @@ class Board extends Model {
 	}
 	function get_posts($offset, $limit) {
 		$where = $this->get_condition();
-		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE $where ORDER BY id DESC, type DESC LIMIT $limit OFFSET $offset", 'Post');
+		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE $where ORDER BY type DESC, id DESC LIMIT $limit OFFSET $offset", 'Post');
 	}
 	function get_feed_posts($count) {
 		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE board_id=$this->id ORDER BY id DESC LIMIT $count", 'Post');

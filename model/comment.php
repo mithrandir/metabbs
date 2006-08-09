@@ -10,15 +10,20 @@ class Comment extends Model {
 		$table = get_table_name('comment');
 		return $db->fetchrow("SELECT * FROM $table WHERE id=$id", 'Comment');
 	}
+	function create() {
+		$this->created_at = model_datetime();
+		$this->password = md5($this->password);
+		Model::create();
+	}
 	function get_user() {
 		return User::find($this->user_id);
 	}
 	function get_post() {
 		return Post::find($this->post_id);
 	}
-	function create() {
-		$this->created_at = model_datetime();
-		Model::create();
+	function get_board() {
+		$post = $this->get_post();
+		return $post->get_board();
 	}
 }
 ?>
