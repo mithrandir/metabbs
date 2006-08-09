@@ -1,7 +1,7 @@
 <div id="post">
 
 <div class="post-title">
-    <div class="info">Posted by <?=$post->user_id?link_to_user($post->get_user()):htmlspecialchars($post->name)?> at <?=date_format("%Y-%m-%d %H:%M:%S", $post->created_at)?></div>
+    <div class="info"><?=i('Posted by %s at %s', $post->user_id ? link_to_user($post->get_user()) : htmlspecialchars($post->name), date_format("%Y-%m-%d %H:%M:%S", $post->created_at))?></div>
     <h2><?=htmlspecialchars($post->title)?></h2>
 </div>
 
@@ -23,8 +23,8 @@
 </div>
 
 <div id="trackbacks">
-<h3>Trackbacks</h3>
-<p>Trackback URL: <?=link_text(full_url_for($post, 'trackback'), '', array('onclick' => 'return false'))?></p>
+<h3><?=i('Trackbacks')?></h3>
+<p><?=i('Trackback URL')?>: <?=link_text(full_url_for($post, 'trackback'), '', array('onclick' => 'return false'))?></p>
 <!--
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	 xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -44,7 +44,7 @@
 </div>
 
 <div id="comments">
-<h3>Comments</h3>
+<h3><?=i('Comments')?></h3>
 <ul id="comment-list">
 <? foreach ($comments as $comment) { ?>
 	<? include($_skin_dir . '/_comment.php'); ?>

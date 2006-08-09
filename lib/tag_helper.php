@@ -27,13 +27,6 @@ function link_to($text, $controller, $action = null, $params = array()) {
 function link_with_id_to($id, $text, $controller, $action = null, $params = array()) {
 	return link_text(url_for($controller, $action, $params), $text, array("id" => $id));
 }
-function link_to_if($condition, $default, $text, $controller, $action = null, $params = array()) {
-	if ($condition) {
-		return link_to($text, $controller, $action, $params);
-	} else {
-		return $default;
-	}
-}
 
 function link_to_comments($post) {
     if ($post->get_comment_count() > 0) {

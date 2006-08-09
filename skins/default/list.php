@@ -5,7 +5,7 @@
 <? } ?>
 <form method="get" action="<?=url_for($board)?>">
 <select name="search[category]" onchange="this.form.submit()">
-<option value="0">Select category</option>
+<option value="0"><?=i('Select category')?></option>
 <? foreach ($board->get_categories() as $_category) { ?>
 <option value="<?=$_category->id?>"<? if (isset($category)&&$category->id==$_category->id) { ?> selected="selected"<? } ?>><?=$_category->name?></option>
 <? } ?>
@@ -15,13 +15,13 @@
 <? } ?>
 <table id="posts">
 	<caption>
-        Total <?=$board->get_post_count()?> posts
+        <?=i('Total %d posts', $board->get_post_count())?>
         <?=link_with_id_to("rss-feed", image_tag("$skin_dir/feed.png", "RSS Feed"), $board, 'rss')?>
     </caption>
 	<tr>
-		<th class="name">Name</th>
-		<th class="title">Title</th>
-		<th class="date">Date</th>
+		<th class="name"><?=i('Writer')?></th>
+		<th class="title"><?=i('Title')?></th>
+		<th class="date"><?=i('Date')?></th>
 	</tr>
 <? foreach ($posts as $post) { ?>
 <? if ($post->is_notice()) { ?>
@@ -52,8 +52,8 @@
 
 <form method="get">
 <p>
-<?=check_box("search", "title", $board->search['title'])?> Title
-<?=check_box("search", "body", $board->search['body'])?> Body
-<?=text_field("search", "text", $board->search['text'])?> <?=submit_tag("Search")?> <?=link_text("?", "Return")?>
+<?=check_box("search", "title", $board->search['title'])?> <?=i('Title')?>
+ <?=check_box("search", "body", $board->search['body'])?> <?=i('Body')?>
+ <?=text_field("search", "text", $board->search['text'])?> <?=submit_tag("Search")?> <?=link_text("?", i("Return"))?>
 </p>
 </form>
