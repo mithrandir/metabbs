@@ -5,7 +5,6 @@ $config = new Config('metabbs.conf.php');
 $backend = $config->get('backend');
 if (!$backend) $backend = 'mysql';
 
-$model_dir = 'model';
 require_once 'model.php';
 require_once 'backends/' . $backend . '/backend.php';
 require_once 'model/board.php';

@@ -1,11 +1,7 @@
 <?php
-function model($name) {
-	global $model_dir;
-	require_once "$model_dir/$name.php";
-}
-
+define('METABBS_TABLE_PREFIX', 'meta_');
 function get_table_name($model) {
-	return 'meta_' . $model;
+	return METABBS_TABLE_PREFIX . $model;
 }
 function get_column_pair($column) {
 	return "$column->name=" . $column->to_string();
@@ -14,6 +10,7 @@ function get_column_pair($column) {
 class Model
 {
 	var $id;
+	var $db;
 
 	function Model($attributes = null) {
 		$this->db = get_conn();
@@ -35,7 +32,7 @@ class Model
 		}
 	}
 	function exists() {
-		return $this->id;
+		return !!$this->id;
 	}
 	function get_id() {
 		return $this->id;
@@ -66,8 +63,7 @@ class Model
 		$this->db->query($query);
 	}
 	function delete() {
-		$db = get_conn();
-		$db->query("DELETE FROM " . get_table_name($this->get_model_name()) . " WHERE id=$this->id");
+		$this->db->query("DELETE FROM $this->table WHERE id=$this->id");
 	}
 }
 ?>

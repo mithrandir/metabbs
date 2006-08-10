@@ -104,17 +104,17 @@ class MySQLAdapter
         $this->query($t->to_sql());
     }
     function rename_table($ot, $t) {
-        $this->query("RENAME TABLE meta_$ot TO meta_$t");
+        $this->query("RENAME TABLE ".get_table_name($ot)." TO ".get_table_name($t));
     }
     function drop_table($t) {
-        $this->query("DROP TABLE meta_$t");
+        $this->query("DROP TABLE ".get_table_name($t));
     }
     function add_field($t, $name, $type, $length = null) {
     	$table = new Table($t);
-    	$this->query("ALTER TABLE meta_$t ADD " . $table->_column($name, $type, $length));
+    	$this->query("ALTER TABLE ".get_table_name($t)." ADD " . $table->_column($name, $type, $length));
 	}
 	function add_index($t, $name) {
-		$this->query("ALTER TABLE meta_$t ADD INDEX ${t}_$name ($name)");
+		$this->query("ALTER TABLE ".get_table_name($t)." ADD INDEX ${t}_$name ($name)");
 	}
 	function get_field_class_from_type($type) {
 		global $column_type_map;
@@ -131,31 +131,6 @@ class MySQLAdapter
 		}
 		return $fields;
 	}
-}
-function model_insert($model, $data) {
-    $db = get_conn();
-    $query = 'INSERT INTO ';
-    $query .= get_table_name($model);
-    $query .= ' ('.implode(',', array_keys($data)).') VALUES(';
-    foreach ($data as $key => $value) {
-        $query .= '\''.$value.'\',';
-    }
-    $query = substr($query, 0, -1);
-    $query .= ')';
-    $db->query($query);
-    return $db->insertid();
-}
-function model_update($model, $data, $condition = '1') {
-    $db = get_conn();
-    $query = 'UPDATE ';
-    $query .= get_table_name($model);
-    $query .= ' SET ';
-    foreach ($data as $key => $value) {
-        $query .= $key.'=\''.$value.'\',';
-    }
-    $query = substr($query, 0, -1);
-    $query .= ' WHERE '.$condition;
-    $db->query($query);
 }
 function model_datetime() {
     return date("YmdHis");

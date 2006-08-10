@@ -55,7 +55,7 @@ if (!isset($skin)) {
 	$skin = isset($board->skin) ? $board->skin : 'default';
 }
 $_skin_dir = 'skins/' . $skin;
-$skin_dir = get_base_path() . $_skin_dir;
+$skin_dir = METABBS_BASE_PATH . $_skin_dir;
 
 if ($controller == 'board') {
 	$title = $board->get_title();

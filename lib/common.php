@@ -8,9 +8,6 @@ if (!defined('METABBS_BASE_PATH')) {
 	}
 	define('METABBS_BASE_PATH', $base_path);
 }
-function get_base_path() {
-	return METABBS_BASE_PATH;
-}
 
 if (!defined('METABBS_DIR')) {
 	define('METABBS_DIR', realpath(dirname(__FILE__) . '/..'));
@@ -21,7 +18,7 @@ if (!isset($_SERVER['REQUEST_URI'])) { // workaround for CGI environment
 }
 
 if (!file_exists(METABBS_DIR . '/metabbs.conf.php')) {
-	echo '<h1>Config file not found.</h1><p>Did you install metaBBS? :) <a href="'.get_base_path().'install.php">Go to install page &raquo;</a></p>';
+	echo '<h1>Config file not found.</h1><p>Did you install metaBBS? :) <a href="' . METABBS_BASE_PATH . 'install.php">Go to install page &raquo;</a></p>';
 	exit;
 }
 

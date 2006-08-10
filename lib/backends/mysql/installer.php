@@ -41,7 +41,7 @@ class Table
 	}
 	function to_sql() {
 		array_unshift($this->columns, "`id` int(10) unsigned NOT NULL auto_increment PRIMARY KEY");
-		$sql = "CREATE TABLE `meta_$this->name` (\n";
+		$sql = "CREATE TABLE `".get_table_name($this->name)."` (\n";
 		$sql .= implode(",\n", $this->columns);
 		$sql .= "\n)\n";
 		return $sql;

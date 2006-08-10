@@ -2,7 +2,7 @@
 function get_base_uri() {
 	static $uri;
 	if (!isset($uri)) {
-		$uri = get_base_path();
+		$uri = METABBS_BASE_PATH;
 		if (!isset($_GET['redirect'])) {
 			$uri .= 'metabbs.php/';
 		}
