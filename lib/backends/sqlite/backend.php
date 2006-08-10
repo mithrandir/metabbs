@@ -70,10 +70,10 @@ class SQLiteAdapter
         $this->querymany($table->to_sql());
     }
     function rename_table($ot, $t) {
-        $this->query("ALTER TABLE meta_$ot RENAME TO meta_$t");
+        $this->query("ALTER TABLE ".get_table_name($ot)." RENAME TO ".get_table_name($t));
     }
     function drop_table($table) {
-        $this->query("DROP TABLE meta_$table");
+        $this->query("DROP TABLE ".get_table_name($t));
     }
 }
 function model_datetime() {

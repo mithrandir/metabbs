@@ -32,11 +32,11 @@ class Table
 		$this->columns[] = $column;
 	}
 	function add_index($name) {
-		$this->indexes[] = "CREATE INDEX '{$this->name}_${name}_index' ON 'meta_$this->name ('$name')";
+		$this->indexes[] = "CREATE INDEX '{$this->name}_${name}_index' ON '" . get_table_name($this->name) . " ('$name')";
 	}
 	function to_sql() {
 		array_unshift($this->columns, "'id' INTEGER PRIMARY KEY");
-		$sql = "CREATE TABLE 'meta_$this->name' (\n";
+		$sql = "CREATE TABLE '" . get_table_name($this->name) . "' (\n";
 		$sql .= implode(",\n", $this->columns);
 		$sql .= "\n)";
 		return array($sql)+$this->indexes;
