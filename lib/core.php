@@ -4,6 +4,7 @@ $config = new Config('metabbs.conf.php');
 
 $backend = $config->get('backend');
 if (!$backend) $backend = 'mysql';
+define('METABBS_TABLE_PREFIX', $config->get('prefix', 'meta_'));
 
 require_once 'model.php';
 require_once 'backends/' . $backend . '/backend.php';

@@ -46,6 +46,7 @@ if (!isset($_POST['config'])) {
 		fail('Your server doesn\'t support <em>' . $backend . '</em>');
 	}
     db_info_form();
+	field('table_prefix', 'meta_', 'text', 'MetaBBS가 저장될 DB 테이블의 prefix를 입력합니다. (다중 설치인 경우 사용)');
 ?>
 	<h2>Admin Information</h2>
 	<p>
@@ -88,6 +89,7 @@ if (!isset($_POST['config'])) {
     register_shutdown_function('check_unexcepted_exit');
 
 	// TODO : clearing var. need policy
+	$_POST['table_prefix'] = trim($_POST['table_prefix']);
 	$_POST['admin_id'] = trim($_POST['admin_id']);
 	$_POST['admin_password'] = trim($_POST['admin_password']);
 	$_POST['admin_password_verify'] = trim($_POST['admin_password_verify']);
@@ -113,6 +115,7 @@ if (!isset($_POST['config'])) {
 	$config->config = $_POST['config'];
 	$config->set('backend', $backend);
     $config->set('revision', $revision);
+	$config->set('prefix', $_POST['table_prefix']);
 	$config->write_to_file();
 	
 	pass("Writing configuration to file");

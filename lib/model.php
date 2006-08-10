@@ -1,5 +1,4 @@
 <?php
-define('METABBS_TABLE_PREFIX', 'meta_');
 function get_table_name($model) {
 	return METABBS_TABLE_PREFIX . $model;
 }
