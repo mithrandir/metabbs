@@ -13,4 +13,4 @@
 </table>
 <form method="post" action="<?=url_for('admin', 'new')?>">
 <h3>게시판 생성</h3>
-<p><input type="text" name="name" /> <?=submit_tag(i('New Board'))?></p>
+<p><input type="text" name="name" /> <span class="description">(<?=i('영문, 숫자만 가능')?>)</span> <?=submit_tag(i('New Board'))?></p>

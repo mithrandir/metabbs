@@ -2,7 +2,7 @@
 <h2><?=i('General')?></h2>
 <p>
 	<?=label_tag("Name", "board", "name")?>
-	<?=text_field('board', 'name', $board->name)?>
+	<?=text_field('board', 'name', $board->name)?> <span class="description">(<?=i('영문, 숫자만 가능')?>)</span>
 </p>
 <p>
 	<?=label_tag("Title", "board", "title")?>

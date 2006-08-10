@@ -52,6 +52,11 @@ div.right {
     float: right;
 }
 
+.description {
+	font-size: 0.8em;
+	color: #666;
+}
+
 .flash {
     padding: 0.5em;
     width: 50%;
