@@ -8,6 +8,7 @@ http://ditto.exca.net/
 $column_type_map = array(
 	'int' => 'Integer',
 	'varchar' => 'String',
+	'longtext' => 'String',
 	'text' => 'String',
 	'timestamp' => 'Timestamp'
 	);
