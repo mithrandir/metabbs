@@ -5,8 +5,12 @@ if (!$account->is_admin()) {
 if (is_post()) {
 	if ($_GET['tab'] == 'general') {
 		$_board = new Board($_POST['board']);
-		if ($_board->name != $board->name && Board::find_by_name($_board->name)) {
+		if ($_board->name != $board->name && !$_board->validate()) {
 			$flash = "Board '$_board->name' already exists.";
+			$skin = '_admin';
+			$skins = get_skins();
+			render('edit');
+			return;
 		}
 	}
 	$board->import($_POST['board']);

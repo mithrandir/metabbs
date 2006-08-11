@@ -25,6 +25,10 @@ class Board extends Model {
 		$table = get_table_name('board');
 		return $db->fetchall("SELECT * FROM $table", 'Board');
 	}
+	function validate() {
+		$_board = Board::find_by_name($this->name);
+		return !$_board->exists();
+	}
 	function get_title() {
 		return $this->title ? $this->title : $this->name;
 	}
