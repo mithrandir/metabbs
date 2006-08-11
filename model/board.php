@@ -2,6 +2,9 @@
 class Board extends Model {
 	var $search = array('title' => 1, 'body' => 1, 'text' => '', 'category' => 0);
 	var $category;
+	var $posts_per_page = 10;
+	var $perm_delete = 255;
+	var $skin = 'default';
 	function _init() {
 		$this->table = get_table_name('board');
 		$this->post_table = get_table_name('post');
