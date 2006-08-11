@@ -10,6 +10,7 @@ if (is_post()) {
 		}
 	}
 
+	unset($_POST['post']['password']);
 	$post->import($_POST['post']);
 	if ($_POST['delete']) {
 		foreach ($_POST['delete'] as $id) {

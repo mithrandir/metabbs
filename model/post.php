@@ -21,6 +21,10 @@ class Post extends Model {
 		$this->password = md5($this->password);
 		Model::create();
 	}
+	function update() {
+		unset($this->created_at);
+		Model::update();
+	}
 	function is_notice() {
 		return $this->type == 1;
 	}
