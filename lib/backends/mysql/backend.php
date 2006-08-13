@@ -7,6 +7,7 @@ http://ditto.exca.net/
 
 $column_type_map = array(
 	'int' => 'Integer',
+	'enum' => 'String',
 	'varchar' => 'String',
 	'longtext' => 'String',
 	'text' => 'String',
