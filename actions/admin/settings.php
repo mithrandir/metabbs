@@ -4,7 +4,7 @@ if (is_post()) {
     if ($settings['admin_password']) { 
         $new_password = md5($settings['admin_password']);
         if ($new_password != $account->password) {
-            $user->password = $new_password;
+            $account->password = $new_password;
             cookie_register('password', $account->password);
             $account->update();
         }
