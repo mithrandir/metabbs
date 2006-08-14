@@ -51,7 +51,7 @@ function link_to_post($post) {
     return link_to(htmlspecialchars($post->title), $post, '', $params);
 }
 function link_to_category($category) {
-	return link_to(htmlspecialchars($category->name), $category->get_board(), '', array('category' => $category->id));
+	return link_to(htmlspecialchars($category->name), $category->get_board(), '', array('search[category]' => $category->id));
 }
 
 function image_tag($src, $alt = "") {
