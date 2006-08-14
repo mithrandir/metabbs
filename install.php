@@ -115,7 +115,7 @@ if (!isset($_POST['config'])) {
 	$config->set('backend', $backend);
     $config->set('revision', $revision);
 	$config->write_to_file();
-	define('METABBS_TABLE_PREFIX', $config->prefix);
+	define('METABBS_TABLE_PREFIX', $config->get('prefix', 'meta_'));
 	
 	pass("Writing configuration to file");
 	$htaccess = implode('', file('.htaccess.in'));
