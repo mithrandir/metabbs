@@ -5,7 +5,7 @@
 <div class="skins-item">
 <h3><input type="radio" name="board[skin]" value="<?=$skin?>" <? if ($board->skin == $skin) { ?>checked="checked"<? } ?> /> <?=$skin?></h3>
 <? if(file_exists("./skins/$skin/screenshot.jpg")) { ?>
-	<img src="<?=_url_for("skins/$skin/screenshot.jpg")?>" width="320" alt="skin screenshot" />
+	<img src="<?=METABBS_BASE_PATH."skins/$skin/screenshot.jpg"?>" width="320" alt="skin screenshot" />
 <? } else { ?>
 	<div class="skins-noscreenshot"><?=i('No Screenshot')?></div>
 <? } ?>
