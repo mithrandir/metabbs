@@ -45,13 +45,14 @@ function link_to_user($user) {
 }
 function link_to_post($post) {
 	$params = array('page' => get_requested_page());
-	if (isset($_GET['category'])) {
-		$params['category'] = $_GET['category'];
-	}
     return link_to(htmlspecialchars($post->title), $post, '', $params);
 }
 function link_to_category($category) {
-	return link_to(htmlspecialchars($category->name), $category->get_board(), '', array('search[category]' => $category->id));
+	if ($category->exists()) {
+		return link_to(htmlspecialchars($category->name), $category->get_board(), '', array('search[category]' => $category->id));
+	} else {
+		return 'Unknown';
+	}
 }
 
 function image_tag($src, $alt = "") {
