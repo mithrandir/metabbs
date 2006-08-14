@@ -1,12 +1,13 @@
 <?php
 header("Content-Type: text/html; charset=UTF-8");
 
+define('METABBS_DIR', dirname(__FILE__));
 require_once 'installer/common.php';
+require_once 'lib/model.php';
 require_once 'lib/config.php';
 require_once 'lib/i18n.php';
 require_once 'lib/tag_helper.php';
 
-$metabbs_dir = dirname(__FILE__);
 $backend = isset($_GET['backend']) ? $_GET['backend'] : 'mysql';
 require "lib/backends/$backend/installer.php";
 
@@ -46,7 +47,7 @@ if (!isset($_POST['config'])) {
 		fail('Your server doesn\'t support <em>' . $backend . '</em>');
 	}
     db_info_form();
-	field('table_prefix', 'Table Prefix', 'meta_', 'text', 'MetaBBS가 저장될 DB 테이블의 prefix를 입력합니다. (다중 설치인 경우 사용)');
+	field('prefix', 'Table Prefix', 'meta_', 'text', 'MetaBBS가 저장될 DB 테이블의 prefix를 입력합니다. (다중 설치인 경우 사용)');
 ?>
 	<h2>Admin Information</h2>
 	<p>
@@ -79,17 +80,15 @@ if (!isset($_POST['config'])) {
     function check_unexcepted_exit() {
         global $safe;
         if (!$safe) {
-        	if (isset($GLOBALS['config'])) {
-		        	$conn = get_conn();
-		        	@include("db/uninstall.php");
+		if (isset($GLOBALS['config'])) {
+				$conn = get_conn();
+				@include("db/uninstall.php");
 			}
             unlink(dirname(__FILE__).'/metabbs.conf.php');
         }
     }
     register_shutdown_function('check_unexcepted_exit');
 
-	// TODO : clearing var. need policy
-	$_POST['table_prefix'] = trim($_POST['table_prefix']);
 	$_POST['admin_id'] = trim($_POST['admin_id']);
 	$_POST['admin_password'] = trim($_POST['admin_password']);
 	$_POST['admin_password_verify'] = trim($_POST['admin_password_verify']);
@@ -115,8 +114,8 @@ if (!isset($_POST['config'])) {
 	$config->config = $_POST['config'];
 	$config->set('backend', $backend);
     $config->set('revision', $revision);
-	$config->set('prefix', $_POST['table_prefix']);
 	$config->write_to_file();
+	define('METABBS_TABLE_PREFIX', $config->prefix);
 	
 	pass("Writing configuration to file");
 	$htaccess = implode('', file('.htaccess.in'));
@@ -129,7 +128,7 @@ if (!isset($_POST['config'])) {
 
 	pass("Creating admin user");
 	$backend = $config->get('backend');
-	require_once 'lib/core.php';
+	require_once "lib/backends/$backend/backend.php";
 	require_once 'lib/user_manager.php';
 	$user = new User;
 	$user->user = $_POST['admin_id'];
