@@ -29,5 +29,9 @@ if (isset($_FILES['upload'])) {
 		move_uploaded_file($upload['tmp_name'][$key], 'data/uploads/' . $attachment->id);
 	}
 }
-redirect_to(url_for($post));
+if ($post->id) {
+	redirect_to(url_for($post));
+} else {
+	redirect_to(url_for($board));
+}
 ?>

@@ -44,7 +44,7 @@ class Post extends Model {
 	function get_comments() {
 		return $this->db->fetchall("SELECT * FROM $this->comment_table WHERE post_id=$this->id", 'Comment');
 	}
-	function add_comment($comment) {
+	function add_comment(&$comment) {
 		$comment->post_id = $this->id;
 		$comment->create();
 	}
