@@ -7,7 +7,7 @@
 					<?=$comment->name?>
 				<? } ?>
 			</span>
-			<span class="date"><?=date_format("%Y-%m-%d %H:%m", $comment->created_at)?></span>
+			<span class="date"><?=meta_format_date("%Y-%m-%d %H:%m", $comment->created_at)?></span>
 			<? if ($board->perm_delete <= $account->level || $account->id == $comment->user_id) { ?>
 				<?=link_to('x', $comment, 'delete')?>
 			<? } ?>

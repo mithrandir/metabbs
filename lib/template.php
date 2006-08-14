@@ -1,5 +1,5 @@
 <?php
-function date_format($format, $date) {
+function meta_format_date($format, $date) {
 	if (preg_match('/^\d{14}$/', $date)) {
 		$time = mktime(substr($date, 8, 2), substr($date, 10, 2),
 			substr($date, 12, 2), substr($date, 4, 2),

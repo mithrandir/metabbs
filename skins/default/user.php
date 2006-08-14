@@ -21,7 +21,7 @@ Homepage: <?=link_text($user->get_url())?><br />
 	<tr>
 		<td class="name"><a href="<?=url_for($post->get_board())?>"><?=$post->get_board_name()?></a></td>
 		<td class="title"><?=link_to_post($post)?> <span class="comment-count"><?=link_to_comments($post)?></span></td>
-		<td class="date"><?=date_format("%Y-%m-%d", $post->created_at)?></td>
+		<td class="date"><?=meta_format_date("%Y-%m-%d", $post->created_at)?></td>
 	</tr>
 <? } ?>
 </table>

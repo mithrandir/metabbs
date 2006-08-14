@@ -43,7 +43,7 @@
 			<?=link_to_post($post)?>
 			<span class="comment-count"><?=link_to_comments($post)?></span>
 		</td>
-		<td class="date"><?=date_format("%Y-%m-%d", $post->created_at)?></td>
+		<td class="date"><?=meta_format_date("%Y-%m-%d", $post->created_at)?></td>
 	</tr>
 <? } ?>
 </table>
