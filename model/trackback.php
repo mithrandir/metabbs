@@ -12,5 +12,8 @@ class Trackback extends Model {
 	function get_post() {
 		return Post::find($this->post_id);
 	}
+	function validate() {
+		return !empty($this->url);
+	}
 }
 ?>
