@@ -2,7 +2,6 @@
 if (is_post()) {
 	$info = $_POST['user'];
 	if (strlen($info['password']) < 5) {
-		print_r($info);
 		$account = new Guest($info);
 		$account->password = "";
 		$flash = "Password length must be longer than 5";

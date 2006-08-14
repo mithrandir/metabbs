@@ -6,7 +6,7 @@
 <p><?=label_tag("Title", "post", "title")?> <?=text_field("post", "title", $post->title, 50)?></p>
 <? if ($board->use_category) { ?>
 <p><?=label_tag("Category", "post", "category_id")?>
-<select name="post[category_id]" id="post_category_id">
+<select name="post[category_id]" id="post_category_id" class="ignore">
 <? foreach ($board->get_categories() as $category) { ?>
 <option value="<?=$category->id?>"<? if ($category->id==$post->category_id) { ?> selected="selected"<? } ?>><?=$category->name?></option>
 <? } ?>
