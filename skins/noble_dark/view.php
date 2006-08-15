@@ -3,7 +3,7 @@
 <div class="title">
     <h2 id="title"><?=$post->title?></h2>
     <div class="info">
-    <p>Posted by <?=link_to_user($post->get_user())?> at <?=date_format("%Y-%m-%d %H:%M:%S", $post->created_at)?></p>
+    <p>Posted by <?=link_to_user($post->get_user())?> at <?=meta_format_date("%Y-%m-%d %H:%M:%S", $post->created_at)?></p>
     </div>
 </div>
 
@@ -54,9 +54,9 @@
 </ul>
 </div>
 
-<? if ($board->perm_comment <= $user->level) { ?>
+<? if ($board->perm_comment <= $account->level) { ?>
 <form method="post" action="<?=url_for($post, 'comment')?>" onsubmit="return sendForm(this, 'comment-list', function (f) { $('comment_body').value='' })">
-<? if ($user->is_guest()) { ?>
+<? if ($account->is_guest()) { ?>
 <p><?=label_tag("Name:", "comment", "name")?> <?=text_field("comment", "name", $name)?></p>
 <p><?=label_tag("Password:", "comment", "password")?> <?=password_field("comment", "password")?></p>
 <? } ?>
@@ -64,13 +64,3 @@
 <p><?=submit_tag("Save")?> <span id="sending"><?=image_tag("$skin_dir/spin.gif", "Sending")?> Sending...</span></p>
 </form>
 <? } ?>
-
-<div id="meta-nav">
-<p><?=link_to("List", $board, '', array('page' => get_requested_page()))?>
-<? if ($user->level >= $board->perm_write) { ?>
- | <?=link_to("New Post", $board, 'post')?>
-<? } ?>
-<? if ($post->user_id == 0 || $user->id == $post->user_id || $user->level >= $board->perm_delete) { ?>
- | <?=link_to("Edit", $post, 'edit')?> or <?=link_to("Delete", $post, 'delete')?>
-<? } ?></p>
-</div>

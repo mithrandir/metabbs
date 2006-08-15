@@ -1,3 +1,4 @@
+<? if (!print_header()) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -29,20 +30,24 @@
 	</script>
 </head>
 <body onload="init()">
+<? } ?>
 <div id="meta">
 <? if ($title != "MetaBBS") { ?>
 	<h1><?=$title?></h1>
 <? } ?>
 	<div id="meta-control">
-		Hello, <?=$user->name?>! :)
-		<?=implode(' | ', get_account_control($user))?>
+		Hello, <?=$account->name?>! :)
+		<?=implode(' | ', get_account_control($account))?>
 	</div>
 	<div id="meta-content">
 <?=$content?>
+	<div id="meta-nav"><? print_nav(); ?></div>
 	</div>
+<? if (!print_footer()) { ?>
 	<div id="meta-tail">
 		<p>Powered by <a href="http://metabbs.org">MetaBBS</a></p>
 	</div>
 </div>
 </body>
 </html>
+<? } ?>
