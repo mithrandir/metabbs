@@ -21,7 +21,7 @@ if (file_exists("skins/$board->skin/board/rss.xsl")) {
 			<link><?=full_url_for($post)?></link>
 			<description><![CDATA[<?=format($post->body)?>]]></description>
 			<author><![CDATA[<?=$post->name?>]]></author>
-			<pubDate><?=date_format("%d %b %Y %H:%M:%S", $post->created_at)?></pubDate>
+			<pubDate><?=meta_format_date("%d %b %Y %H:%M:%S", $post->created_at)?></pubDate>
 <? if ($board->use_category && $category = $post->get_category()) { ?>
 			<category><?=htmlspecialchars($category->name)?></category>
 <? } ?>
