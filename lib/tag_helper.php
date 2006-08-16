@@ -2,9 +2,9 @@
 function block_tag($name, $content, $options = array()) {
 	$s = "<$name";
 	foreach ($options as $key => $value) {
-		$s .= " $key=\"$value\"";
+		if (!is_null($value)) $s .= " $key=\"$value\"";
 	}
-	if ($content !== null) {
+	if (!is_null($content)) {
 		$s .= ">$content</$name>";
 	} else {
 		$s .= " />";
@@ -27,7 +27,10 @@ function link_to($text, $controller, $action = null, $params = array()) {
 function link_with_id_to($id, $text, $controller, $action = null, $params = array()) {
 	return link_text(url_for($controller, $action, $params), $text, array("id" => $id));
 }
-
+function link_list_tab($link, $name, $text) {
+	$anchor = link_text($link, $text);
+	return block_tag('li', $anchor, array('id' => "tab-$name", 'class' => $_GET['tab']==$name ? "selected" : null));
+}
 function link_to_comments($post) {
     if ($post->get_comment_count() > 0) {
         return link_text(url_for($post) . "#comments", "[" . $post->get_comment_count() . "]");

@@ -10,7 +10,7 @@
 <div id="meta">
 	<h1><?=i('MetaBBS Administration')?></h1>
 <div id="header">
-	<p><?=link_to(i('Boards'), 'admin')?> | <?=link_to(i('Users'), 'admin', 'users')?> | <?=link_to(i('Settings'), 'admin', 'settings')?></a> | <?=link_to(i('Uninstall'), 'admin', 'uninstall')?> | <a href="<?=url_with_referer_for('account', 'logout')?>"><?=i('Logout')?> &raquo;</a></p>
+	<p><?=link_to(i('Boards'), 'admin')?> | <?=link_to(i('Users'), 'admin', 'users')?> | <?=link_to(i('Settings'), 'admin', 'settings')?> | <?=link_to(i('Uninstall'), 'admin', 'uninstall')?> | <a href="<?=url_with_referer_for('account', 'logout')?>"><?=i('Logout')?> &raquo;</a></p>
 </div>
 <div id="body">
 <? if (isset($flash)) { ?>

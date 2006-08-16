@@ -1,10 +1,10 @@
 <form method="post">
 <ul id="edit-section" class="tabs">
-    <li id="tab-general"<?=$_GET['tab']=='general'?' class="selected"':''?>><a href="?tab=general"><?=i('General')?></a></li>
-    <li id="tab-permission"<?=$_GET['tab']=='permission'?' class="selected"':''?>><a href="?tab=permission"><?=i('Permission')?></a></li>
-    <li id="tab-skin"<?=$_GET['tab']=='skin'?' class="selected"':''?>><a href="?tab=skin"><?=i('Skin')?></a></li>
+	<?=link_list_tab("?tab=general", 'general', i('General'))?>
+	<?=link_list_tab("?tab=permission", 'permission', i('Permission'))?>
+	<?=link_list_tab("?tab=skin", 'skin', i('Skin'))?>
 <? if ($board->use_category) { ?>
-    <li id="tab-category"<?=$_GET['tab']=='category'?' class="selected"':''?>><a href="?tab=category"><?=i('Category')?></a></li>
+	<?=link_list_tab("?tab=category", 'cateogry', i('Category'))?>
 <? } ?>
 </ul>
 
