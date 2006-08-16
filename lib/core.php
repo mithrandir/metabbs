@@ -6,6 +6,8 @@ $backend = $config->get('backend');
 if (!$backend) $backend = 'mysql';
 define('METABBS_TABLE_PREFIX', $config->get('prefix', 'meta_'));
 
+set_magic_quotes_runtime(0);
+
 require_once 'model.php';
 require_once 'backends/' . $backend . '/backend.php';
 require_once 'model/board.php';
