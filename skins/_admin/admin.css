@@ -110,24 +110,24 @@ label {
     text-align: center;
 }
 
-#edit-section ul {
+ul.tabs {
 	list-style: none;
 	margin: 0px;
 	padding: 0px;
 }
 
-#edit-section li {
+ul.tabs li {
     display: inline;
     margin: 0px;
     padding: 0px;
 }
 
-#edit-section li.selected {
+ul.tabs li.selected {
 	font-weight: bold;
 	color: #4e9a06;
 }
 
-#edit-section a {
+ul.tabs a {
 	margin: 0px;
 	padding: 3px;
 }
