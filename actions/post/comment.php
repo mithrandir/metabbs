@@ -11,6 +11,8 @@ if ($account->is_guest()) {
 }
 $post->add_comment($comment);
 if (isset($_POST['ajax'])) {
+	$comment->name = stripslashes($comment->name);
+	$comment->body = stripslasehs($comment->body);
 	include("skins/$board->skin/_comment.php");
 	exit;
 } else {

@@ -24,6 +24,22 @@ if (!file_exists(METABBS_DIR . '/metabbs.conf.php')) {
 
 ini_set("include_path", METABBS_DIR . '/lib' . PATH_SEPARATOR . METABBS_DIR . PATH_SEPARATOR . ini_get("include_path"));
 
+function addslashes_deep($v) {
+	if (is_array($v)) {
+		return array_map('addslashes_deep', $v);
+	} else {
+		return addslashes($v);
+	}
+}
+
+function stripslashes_deep($v) {
+	if (is_array($v)) {
+		return array_map('stripslashes_deep', $v);
+	} else {
+		return stripslashes($v);
+	}
+}
+
 require_once("core.php");
 require_once("request.php");
 require_once("i18n.php");
