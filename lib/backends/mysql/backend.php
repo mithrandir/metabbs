@@ -34,7 +34,8 @@ class Column {
 class IntegerColumn extends Column {}
 class StringColumn extends Column {
 	function to_string() {
-		return "'" . mysql_real_escape_string($this->value) . "'";
+		// return "'" . mysql_real_escape_string($this->value) . "'";
+		return "'" . $this->value . "'";
 	}
 }
 class TimestampColumn extends Column {}
