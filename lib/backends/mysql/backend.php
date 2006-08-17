@@ -38,7 +38,11 @@ class StringColumn extends Column {
 		return "'" . $this->value . "'";
 	}
 }
-class TimestampColumn extends Column {}
+class TimestampColumn extends Column {
+	function to_string() {
+		return model_datetime();
+	}
+}
 
 function get_conn() {
     static $conn;
