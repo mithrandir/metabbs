@@ -23,9 +23,8 @@ if (isset($_FILES['upload'])) {
 			continue;
 		}
 		$attachment = new Attachment;
-		$attachment->post_id = $post->id;
 		$attachment->filename = $filename;
-		$attachment->create();
+		$post->add_attachment($attachment);
 		move_uploaded_file($upload['tmp_name'][$key], 'data/uploads/' . $attachment->id);
 	}
 }

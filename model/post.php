@@ -64,7 +64,7 @@ class Post extends Model {
 	function get_attachments() {
 		return $this->db->fetchall("SELECT * FROM $this->attachment_table WHERE post_id=$this->id", 'Attachment');
 	}
-	function add_attachment($attachment) {
+	function add_attachment(&$attachment) {
 		$attachment->post_id = $this->id;
 		$attachment->create();
 	}
