@@ -46,6 +46,7 @@ require_once("i18n.php");
 require_once("cookie.php");
 require_once("tag_helper.php");
 require_once("user_manager.php");
+require_once("plugin.php");
 
 $account = UserManager::get_user();
 if (!$account) { 

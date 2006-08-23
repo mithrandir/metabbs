@@ -50,7 +50,9 @@ $nav = array();
 
 @include("actions/$controller.php");
 $action_dir = 'actions/' . $controller;
-include($action_dir . '/' . $action . '.php');
+if (!run_hook_handler($controller, $action)) {
+	include($action_dir . '/' . $action . '.php');
+}
 if (!isset($skin)) {
 	$skin = isset($board->skin) ? $board->skin : 'default';
 }
