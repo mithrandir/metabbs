@@ -13,9 +13,9 @@ class MetaBBS
 	function printLoginForm() {
 ?>
 <form method="post" action="<?=url_with_referer_for("account", "login")?>">
-<label id="meta-login-id">User ID <input type="text" name="user" /></label>
-<label id="meta-login-password">Password <input type="password" name="password" /></label>
-<input type="submit" value="Login" />
+<label>User ID</label><input id="meta-login-id" type="text" name="user" /><br />
+<label>Password</label><input id="meta-login-password" type="password" name="password" /><br />
+<input id="meta-login-submit" type="submit" value="Login" />
 </form>
 <?php
 	}
