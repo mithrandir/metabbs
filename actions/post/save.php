@@ -8,6 +8,9 @@ if (!$account->is_guest()) {
 } else {
 	cookie_register('name', $post->name);
 }
+
+apply_filters('PostSave', $post);
+
 if ($post->exists()) {
 	$post->update();
 } else {

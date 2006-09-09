@@ -9,6 +9,9 @@ if ($account->is_guest()) {
 } else {
 	$comment->name = $account->name;
 }
+
+apply_filters('PostComment', $comment);
+
 $post->add_comment($comment);
 if (isset($_POST['ajax'])) {
 	$comment->name = stripslashes($comment->name);
