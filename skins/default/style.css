@@ -83,7 +83,6 @@ span.date { font-size: x-small; }
 .star { color: red; }
 .flash { background-color: #ffe; border: 1px solid #ddd; padding: 0.5em; }
 .flash p { margin: 0; }
-.new { opacity: 0; filter: alpha(opacity=0); }
 .highlight { background-color: yellow; }
 
 #profile {

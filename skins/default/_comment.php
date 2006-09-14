@@ -1,4 +1,4 @@
-	<li class="comment<?if(isset($_POST['ajax'])){echo" new";}?>" id="comment_<?=$comment->id?>">
+	<li class="comment" id="comment_<?=$comment->id?>">
 		<div class="info">
 			<span class="name">
 				<? if ($comment->user_id) { ?>

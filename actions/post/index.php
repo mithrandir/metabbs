@@ -2,6 +2,9 @@
 if ($board->perm_read > $account->level) {
 	access_denied();
 }
+if (isset($_GET['search'])) {
+	$board->search = array_merge($board->search, $_GET['search']);
+}
 $comments = $post->get_comments();
 $attachments = $post->get_attachments();
 $trackbacks = $post->get_trackbacks();

@@ -12,9 +12,9 @@ if (file_exists("skins/$board->skin/board/rss.xsl")) {
 ?>
 <rss version="2.0">
 	<channel>
-		<title><![CDATA[<?=$board->title?>]]></title>
+		<title><![CDATA[<?=$board->get_title()?>]]></title>
 		<link><?=full_url_for($board)?></link>
-		<description>The latest posts from <?=$board->title?></description>
+		<description>The latest posts from <?=$board->get_title()?></description>
 <? foreach ($posts as $post) { ?>
 		<item>
 			<title><![CDATA[<?=$post->title?>]]></title>

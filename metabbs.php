@@ -33,14 +33,22 @@ function print_footer() {
 	return print_layout('footer');
 }
 
-@list(, $controller, $id, $action, $sub_id) = explode('/', $_SERVER['PATH_INFO']);
-if (!is_numeric($id) && $controller != 'board') {
-	$action = $id;
-	unset($id);
-}
+$routes = array(
+	'/([a-z]+)/?' => '$1/index/',
+	'/([a-z]+)/([^/]+)' => '$1/index/$2',
+	'/([a-z]+)/([a-z]+)/(.*)' => '$1/$2/$3'
+);
 
-if (!$action) $action = 'index';
-if (!$controller) {
+$path = $_SERVER['PATH_INFO'];
+$matched = false;
+foreach ($routes as $pattern => $args) {
+	if (preg_match("|^$pattern$|", $path)) {
+		@list($controller, $action, $id) = explode("/", preg_replace("|^$pattern$|", $args, $path));
+		$matched = true;
+		break;
+	}
+}
+if (!$matched) {
 	print_notice('Requested URL is not valid.', 'Valid URL format is '.full_url_for("<em>controller</em>", "<em>action</em>").'<br />If you are administrator, go to '.link_to('administration page', 'admin'));
 }
 

@@ -2,6 +2,7 @@
 class Board extends Model {
 	var $search = array('title' => 1, 'body' => 1, 'text' => '', 'category' => 0);
 	var $category;
+	var $title;
 	var $posts_per_page = 10;
 	var $perm_delete = 255;
 	var $skin = 'default';
@@ -33,7 +34,7 @@ class Board extends Model {
 		return !$_board->exists();
 	}
 	function get_title() {
-		return $this->title ? $this->title : $this->name;
+		return $this->title ? $this->title : @$this->name;
 	}
 	function get_condition() {
 		$cond = "board_id=$this->id";
@@ -73,6 +74,10 @@ class Board extends Model {
 	}
 	function get_category_count() {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->category_table WHERE board_id=$this->id");
+	}
+	function delete() {
+		Model::delete();
+		$this->db->query("DELETE FROM $this->post_table WHERE board_id=$this->id");
 	}
 }
 ?>

@@ -10,29 +10,20 @@ function get_base_uri() {
 	return $uri;
 }
 
-function chomp(&$str) {
-	$str = substr($str, 0, -1);
-}
-
-function get_href($model) {
-	if (is_string($model)) {
-		return $model;
-	} else {
-		return $model->get_model_name() . '/' . $model->get_id();
-	}
-}
-
 function _url_for($controller, $action = null, $params = array()) {
-	$url = get_base_uri() . get_href($controller);
-
-	if ($action)
-		$url .= '/' . $action;
+	if (is_a($controller, 'Model')) {
+		$uri = array($controller->get_model_name(), $controller->get_id());
+	} else {
+		$uri = array($controller, '');
+	}
+	if ($action) $uri = array($uri[0], $action, $uri[1]);
+	$url = get_base_uri() . implode('/', $uri);
 
 	if ($params) {
-		$url .= "?";
+		$_params = array();
 		foreach ($params as $key => $value)
-			$url .= "$key=$value&";
-		chomp($url);
+			$_params[] = "$key=$value";
+		$url .= '?' . implode('&', $_params);
 	}
 
 	return $url;
