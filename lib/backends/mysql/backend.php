@@ -17,7 +17,7 @@ $column_type_map = array(
 function get_column_name($column) { return $column->name; }
 function column_to_string($column) { return $column->to_string(); }
 class Column {
-	function Column($name, $default) {
+	function Column($name, $default = '') {
 		$this->name = $name;
 		$this->default = $default;
 	}
@@ -31,16 +31,26 @@ class Column {
 		return $this->value;
 	}
 }
-class IntegerColumn extends Column {}
+class IntegerColumn extends Column {
+	function to_spec() {
+		return "`$this->name` integer(10) NOT NULL DEFAULT '$this->default'";
+	}
+}
 class StringColumn extends Column {
 	function to_string() {
 		// return "'" . mysql_real_escape_string($this->value) . "'";
 		return "'" . $this->value . "'";
 	}
+	function to_spec($length) {
+		return "`$this->name` varchar($length) NOT NULL DEFAULT '$this->default'";
+	}
 }
 class TimestampColumn extends Column {
 	function to_string() {
 		return model_datetime();
+	}
+	function to_spec() {
+		return "`$this->name` timestamp NOT NULL";
 	}
 }
 

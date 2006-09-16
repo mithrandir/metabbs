@@ -4,34 +4,14 @@ class Table
 {
 	var $name;
 	var $columns = array();
-	var $types = array(
-		'integer' => array('int', 10, 0),
-		'string' => array('varchar', 255, ''),
-		'text' => array('text', null, null),
-		'timestamp' => array('timestamp', null, null)
-	);
 
 	function Table($name) {
 		$this->name = $name;
 	}
 	function _column($name, $type, $length = null) {
-		$_type = $this->types[$type];
-		if ($_type == 'integer' && $length == 1) {
-			$_type = 'tinyint';
-		}
-		if ($length) {
-			$column = "`$name` $_type[0]($length) NOT NULL";
-		} else {
-			$column = "`$name` $_type[0]";
-			if ($_type[1]) {
-				$column .= "($_type[1])";
-			}
-			$column .= " NOT NULL";
-		}
-		if ($_type[2] !== null) {
-			$column .= " default '$_type[2]'";
-		}
-		return $column;
+		$class = $type.'Column';
+		$column = new $class($name);
+		return $column->to_spec($length);
 	}
 	function column($name, $type, $length = null) {
 		$this->columns[] = $this->_column($name, $type, $length);
