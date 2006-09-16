@@ -5,17 +5,6 @@ function render($template) {
 	global $render;
 	$render = $template;
 }
-function get_skins() {
-	$skins = array();
-	$dir = opendir('skins');
-	while ($file = readdir($dir)) {
-		if ($file{0} != '_' && $file{0} != '.' && is_dir("skins/$file")) {
-			$skins[] = $file;
-		}
-	}
-	closedir($dir);
-	return $skins;
-}
 function print_layout($type) {
 	global $config;
 	$template = $config->get('global_' . $type);
@@ -39,11 +28,11 @@ $routes = array(
 	'/([a-z]+)/([a-z]+)/(.*)' => '$1/$2/$3'
 );
 
-$path = $_SERVER['PATH_INFO'];
+$uri = $_SERVER['PATH_INFO'];
 $matched = false;
-foreach ($routes as $pattern => $args) {
-	if (preg_match("|^$pattern$|", $path)) {
-		@list($controller, $action, $id) = explode("/", preg_replace("|^$pattern$|", $args, $path));
+foreach ($routes as $k => $v) {
+	if (preg_match("|^$k$|", $uri, $groups)) {
+		list($controller, $action, $id) = parse_internal_uri($v, $groups);
 		$matched = true;
 		break;
 	}

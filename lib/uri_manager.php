@@ -1,15 +1,20 @@
 <?php
-function get_base_uri() {
-	static $uri;
-	if (!isset($uri)) {
-		$uri = METABBS_BASE_PATH;
-		if (!isset($_GET['redirect'])) {
-			$uri .= 'metabbs.php/';
-		}
-	}
-	return $uri;
+if (isset($_SERVER['REDIRECT_URL'])) {
+	define('METABBS_BASE_URI', METABBS_BASE_PATH);
+} else {
+	define('METABBS_BASE_URI', $_SERVER['SCRIPT_NAME'] . '/');
 }
 
+function parse_internal_uri($str, $groups) {
+	foreach ($groups as $k => $v) {
+		$str = str_replace('$' . $k, $v, $str);
+	}
+	return explode('/', $str, 3);
+}
+
+function get_base_uri() {
+	return METABBS_BASE_URI;
+}
 function _url_for($controller, $action = null, $params = array()) {
 	if (is_a($controller, 'Model')) {
 		$uri = array($controller->get_model_name(), $controller->get_id());

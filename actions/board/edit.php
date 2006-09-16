@@ -2,6 +2,17 @@
 if (!$account->is_admin()) {
 	access_denied();
 }
+function get_skins() {
+	$skins = array();
+	$dir = opendir('skins');
+	while ($file = readdir($dir)) {
+		if ($file{0} != '_' && $file{0} != '.' && is_dir("skins/$file")) {
+			$skins[] = $file;
+		}
+	}
+	closedir($dir);
+	return $skins;
+}
 if (is_post()) {
 	if ($_GET['tab'] == 'general') {
 		$_board = new Board($_POST['board']);
