@@ -1,8 +1,10 @@
 <?php
-if (isset($_SERVER['REDIRECT_URL'])) {
-	define('METABBS_BASE_URI', METABBS_BASE_PATH);
-} else {
-	define('METABBS_BASE_URI', $_SERVER['SCRIPT_NAME'] . '/');
+if (!defined('METABBS_BASE_URI')) {
+	if (isset($_SERVER['REDIRECT_URL'])) {
+		define('METABBS_BASE_URI', METABBS_BASE_PATH);
+	} else {
+		define('METABBS_BASE_URI', $_SERVER['SCRIPT_NAME'] . '/');
+	}
 }
 
 function parse_internal_uri($str, $groups) {

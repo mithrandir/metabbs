@@ -1,5 +1,5 @@
 <?php
-$spam_words = array('casino', 'poker', 'porn');
+$spam_words = array('casino', 'poker', 'porn', 'blackjack', 'roulette', 'viagra', 'phentermine');
 
 function simple_spam_has_spam_word($text) {
 	global $spam_words;

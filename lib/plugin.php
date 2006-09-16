@@ -51,7 +51,7 @@ function run_before_handler($controller, $action) {
 	}
 }
 
-include('lib/plugins/SayHello.php');
-include('lib/plugins/SimpleSpam.php');
-include('lib/plugins/NameCookie.php');
+include('plugins/SayHello.php');
+include('plugins/SimpleSpam.php');
+include('plugins/NameCookie.php');
 ?>

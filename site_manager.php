@@ -1,5 +1,8 @@
 <?php
 // constant METABBS_BASE_PATH required!
+if (isset($_GET['redirect'])) { // backward compatibility
+	define("METABBS_BASE_URI", METABBS_BASE_PATH);
+}
 require_once(dirname(__FILE__).'/lib/common.php');
 class MetaBBS
 {
