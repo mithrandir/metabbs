@@ -36,6 +36,7 @@ function add_handler($controller, $action, $callback, $type = 'hook') {
 }
 function run_hook_handler($controller, $action) {
 	global $filters;
+	run_before_handler($controller, $action);
 	if (isset($filters[$controller][$action]['hook'])) {
 		call_user_func($filters[$controller][$action]['hook']);
 		return true;
@@ -43,7 +44,14 @@ function run_hook_handler($controller, $action) {
 		return false;
 	}
 }
+function run_before_handler($controller, $action) {
+	global $filters;
+	if (isset($filters[$controller][$action]['before'])) {
+		call_user_func($filters[$controller][$action]['before']);
+	}
+}
 
 include('lib/plugins/SayHello.php');
 include('lib/plugins/SimpleSpam.php');
+include('lib/plugins/NameCookie.php');
 ?>

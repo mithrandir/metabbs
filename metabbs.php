@@ -41,8 +41,6 @@ if (!$matched) {
 	print_notice('Requested URL is not valid.', 'Valid URL format is '.full_url_for("<em>controller</em>", "<em>action</em>").'<br />If you are administrator, go to '.link_to('administration page', 'admin'));
 }
 
-$name = cookie_get('name');
-
 $nav = array();
 
 @include("actions/$controller.php");

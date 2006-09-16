@@ -1,7 +1,7 @@
 function checkForm(form)
 {
     elements = form.elements ? form.elements : form;
-	vaild = true;
+	valid = true;
     for (i = elements.length; i > 0; i--) {
         field = $(elements[i-1]);
         if (!field.name) continue;
