@@ -17,7 +17,7 @@ if (is_writable('.')) {
 	pass('Permission check');
 } else {
 	$path = realpath('.');
-	fail("Please change permission of $path to 0777");
+	fail("Please change permission of $path to 0707");
 }
 
 if (file_exists('metabbs.conf.php')) {
@@ -84,7 +84,7 @@ if (!isset($_POST['config'])) {
 				$conn = get_conn();
 				@include("db/uninstall.php");
 			}
-            unlink(dirname(__FILE__).'/metabbs.conf.php');
+            @unlink(dirname(__FILE__).'/metabbs.conf.php');
         }
     }
     register_shutdown_function('check_unexcepted_exit');
@@ -104,7 +104,7 @@ if (!isset($_POST['config'])) {
 
 	$dirs = array('data', 'data/uploads');
 	foreach ($dirs as $dir) {
-		mkdir($dir, 0777);
+		mkdir($dir, 0707);
 	}
 
 	pass("Creating directories");

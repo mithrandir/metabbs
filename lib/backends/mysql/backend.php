@@ -17,9 +17,9 @@ $column_type_map = array(
 function get_column_name($column) { return $column->name; }
 function column_to_string($column) { return $column->to_string(); }
 class Column {
-	function Column($name, $default = '') {
+	var $default = '';
+	function Column($name) {
 		$this->name = $name;
-		$this->default = $default;
 	}
 	function set_value($value) {
 		if ($value)
@@ -32,6 +32,7 @@ class Column {
 	}
 }
 class IntegerColumn extends Column {
+	var $default = 0;
 	function to_spec() {
 		return "`$this->name` integer(10) NOT NULL DEFAULT '$this->default'";
 	}
@@ -43,6 +44,11 @@ class StringColumn extends Column {
 	}
 	function to_spec($length) {
 		return "`$this->name` varchar($length) NOT NULL DEFAULT '$this->default'";
+	}
+}
+class TextColumn extends Column {
+	function to_spec() {
+		return "`$this->name` text NOT NULL";
 	}
 }
 class TimestampColumn extends Column {
@@ -89,7 +95,7 @@ class MySQLAdapter
         }
         $result = mysql_query($query, $this->conn);
         if (!$result && $check_error) {
-            trigger_error(mysql_error($this->conn), E_USER_WARNING);
+            trigger_error(mysql_error($this->conn), E_USER_ERROR);
         }
         return $result;
     }
