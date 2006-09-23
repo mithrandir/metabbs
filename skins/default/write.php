@@ -8,7 +8,7 @@
 <p><?=label_tag("Category", "post", "category_id")?>
 <select name="post[category_id]" id="post_category_id" class="ignore">
 <? foreach ($board->get_categories() as $category) { ?>
-<option value="<?=$category->id?>"<? if ($category->id==$post->category_id) { ?> selected="selected"<? } ?>><?=$category->name?></option>
+<?=option_tag($category->id, $category->name, $category->id == $post->category_id)?>
 <? } ?>
 </select>
 <? } ?>

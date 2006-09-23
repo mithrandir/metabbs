@@ -8,7 +8,7 @@ if (isset($_GET['search'])) {
 if ($board->search['category'] && $board->use_category) {
 	$category = Category::find($board->search['category']);
 }
-$posts = $board->get_posts((get_requested_page() - 1) * $board->posts_per_page, $board->posts_per_page);
+$posts = $board->get_posts_in_page(get_requested_page());
 
 $nav[] = link_to(i("New Post"), $board, 'post');
 

@@ -7,7 +7,7 @@
 <select name="search[category]" onchange="this.form.submit()">
 <option value="0"><?=i('Select category')?></option>
 <? foreach ($board->get_categories() as $_category) { ?>
-<option value="<?=$_category->id?>"<? if (isset($category)&&$category->id==$_category->id) { ?> selected="selected"<? } ?>><?=$_category->name?></option>
+<?=option_tag($_category->id, $_category->name, isset($category) && $category->id == $_category->id)?>
 <? } ?>
 </select>
 <input type="submit" value="Go" />

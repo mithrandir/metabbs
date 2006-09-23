@@ -1,7 +1,11 @@
 <div id="post">
 
 <div class="post-title">
-    <div class="info"><?=i('Posted by %s at %s', $post->user_id ? link_to_user($post->get_user()) : htmlspecialchars($post->name), meta_format_date("%Y-%m-%d %H:%M:%S", $post->created_at))?></div>
+    <div class="info">
+		<?=i('Posted by %s at %s', $post->user_id ? link_to_user($post->get_user()) : htmlspecialchars($post->name), meta_format_date("%Y-%m-%d %H:%M:%S", $post->created_at))?>
+<? if ($board->use_category && $post->category_id) { ?>
+		| <?=i('Category')?>: <?=link_to_category($post->get_category())?>
+<? } ?></div>
     <h2><?=htmlspecialchars($post->title)?></h2>
 </div>
 
