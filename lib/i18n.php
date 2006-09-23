@@ -21,7 +21,7 @@ class I18N extends Config {
 	function import($lang) {
 		if ($lang == 'en') {
 			return new DefaultLanguage;
-		} else if (file_exists('lang/'.$lang.'.php')) {
+		} else if (file_exists(METABBS_DIR . '/lang/'.$lang.'.php')) {
 			return new I18N($lang);
 		} else {
 			return false;
