@@ -12,5 +12,5 @@
 <? } ?>
 </table>
 <form method="post" action="<?=url_for('admin', 'new')?>">
-<h3>게시판 생성</h3>
-<p><input type="text" name="name" /> <?=submit_tag(i('New Board'))?></p>
+<h3><?=i('New Board')?></h3>
+<p><input type="text" name="name" /> <?=submit_tag(i('Create'))?></p>

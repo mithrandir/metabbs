@@ -90,6 +90,11 @@ function text_area($model, $field, $rows = 10, $cols = 50, $value='', $options=a
     $options['cols'] = $cols;
     return block_tag("textarea", htmlspecialchars($value), $options);
 }
+function option_tag($value, $text, $selected = false, $options = array()) {
+	$options['value'] = htmlspecialchars($value);
+	if ($selected) $options['selected'] = 'selected';
+	return block_tag('option', htmlspecialchars($text), $options);
+}
 function submit_tag($label) {
     return inline_tag("input", array("type" => "submit", "value" => i($label)));
 }

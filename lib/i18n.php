@@ -29,11 +29,15 @@ class I18N extends Config {
 	}
 }
 
-$langs = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-foreach ($langs as $langcode) {
-	list($langcode) = explode(';', $langcode, 2);
-	if ($lang = I18N::import($langcode))
-		break;
+$default_language = $config->get('default_language', 'en');
+if ($config->get('always_use_default_language', false)) {
+	$lang = I18N::import($default_language);
+} else {
+	$langs = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+	$langs[] = $default_language;
+	foreach ($langs as $langcode) {
+		list($langcode) = explode(';', $langcode, 2);
+		if ($lang = I18N::import($langcode)) break;
+	}
 }
-if (!$lang) $lang = new DefaultLanguage;
 ?>

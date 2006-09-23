@@ -1,4 +1,4 @@
-<form method="post">
+<form method="post" action="?tab=<?=$_GET['tab']?>">
 <ul id="edit-section" class="tabs">
 	<?=link_list_tab("?tab=general", 'general', i('General'))?>
 	<?=link_list_tab("?tab=permission", 'permission', i('Permission'))?>

@@ -92,6 +92,9 @@ div.right {
     color: #999;
 }
 
+form p {
+	clear: both;
+}
 label {
     width: 120px;
     margin-right: 10px;
