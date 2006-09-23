@@ -14,7 +14,7 @@ class Category extends Model {
 		return Board::find($this->board_id);
 	}
 	function get_posts() {
-		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE category_id=$this->id", 'Post');
+		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->post_table WHERE category_id=$this->id", 'Post');
 	}
 	function add_post($post) {
 		$post->category_id = $this->id;

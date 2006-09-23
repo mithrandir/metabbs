@@ -7,6 +7,7 @@ class Table
 
 	function Table($name) {
 		$this->name = $name;
+		$this->table = get_table_name($name);
 	}
 	function _column($name, $type, $length = null) {
 		$class = $type.'Column';
@@ -21,7 +22,7 @@ class Table
 	}
 	function to_sql() {
 		array_unshift($this->columns, "`id` int(10) unsigned NOT NULL auto_increment PRIMARY KEY");
-		$sql = "CREATE TABLE `".get_table_name($this->name)."` (\n";
+		$sql = "CREATE TABLE `$this->name` (\n";
 		$sql .= implode(",\n", $this->columns);
 		$sql .= "\n)\n";
 		return $sql;
@@ -38,7 +39,6 @@ function is_supported() {
 }
 function init_db() {
 	$conn = get_conn();
-	//$conn->query_from_file('db/mysql.sql', get_conn());
 	include("db/schema.php");
 }
 ?>

@@ -3,7 +3,7 @@ function is_post() {
 	return $_SERVER['REQUEST_METHOD'] == 'POST';
 }
 function get_requested_page() {
-	return (isset($_GET['page']) ? $_GET['page'] : 1);
+	return isset($_GET['page']) ? $_GET['page'] : 1;
 }
 
 if (@ini_get('register_globals')) {

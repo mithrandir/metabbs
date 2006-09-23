@@ -1,10 +1,6 @@
 <?php
 function cookie_get($name) {
-	if (cookie_is_registered($name)) {
-		return $_COOKIE["metabbs_$name"];
-	} else {
-		return "";
-	}
+	return cookie_is_registered($name) ? $_COOKIE["metabbs_$name"] : '';
 }
 function cookie_is_registered($name) {
 	return isset($_COOKIE["metabbs_$name"]);

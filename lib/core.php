@@ -2,8 +2,7 @@
 require_once 'config.php';
 $config = new Config('metabbs.conf.php');
 
-$backend = $config->get('backend');
-if (!$backend) $backend = 'mysql';
+$backend = $config->get('backend', 'mysql');
 define('METABBS_TABLE_PREFIX', $config->get('prefix', 'meta_'));
 
 set_magic_quotes_runtime(0);

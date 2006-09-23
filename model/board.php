@@ -53,7 +53,7 @@ class Board extends Model {
 	}
 	function get_posts($offset, $limit) {
 		$where = $this->get_condition();
-		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE $where ORDER BY type DESC, id DESC LIMIT $offset, $limit", 'Post');
+		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->post_table WHERE $where ORDER BY type DESC, id DESC LIMIT $offset, $limit", 'Post');
 	}
 	function get_posts_in_page($page) {
 		return $this->get_posts(($page - 1) * $this->posts_per_page, $this->posts_per_page);

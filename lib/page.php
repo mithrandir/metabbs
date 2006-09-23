@@ -4,9 +4,7 @@ function link_to_page($board, $page, $text = null) {
 }
 function print_pages($board, $padding = 2) {
 	$page = get_requested_page();
-	$count = $board->get_post_count();
-	if (!$count) $page_count = 1;
-	else $page_count = ceil($count / $board->posts_per_page);
+	$page_count = floor($board->get_post_count() / $board->posts_per_page) + 1;
 	$prev_page = $page - 1;
 	$next_page = $page + 1;
 	$first_page = 1;

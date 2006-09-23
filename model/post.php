@@ -15,7 +15,7 @@ class Post extends Model {
 	function find($id) {
 		$db = get_conn();
 		$table = get_table_name('post');
-		return $db->fetchrow("SELECT * FROM $table WHERE id=$id", 'Post');
+		return $db->fetchrow("SELECT *, created_at+0 as created_at FROM $table WHERE id=$id", 'Post');
 	}
 	function create() {
 		$this->password = md5($this->password);
@@ -42,7 +42,7 @@ class Post extends Model {
 		return $this->category_id ? Category::find($this->category_id) : null;
 	}
 	function get_comments() {
-		return $this->db->fetchall("SELECT * FROM $this->comment_table WHERE post_id=$this->id", 'Comment');
+		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->comment_table WHERE post_id=$this->id", 'Comment');
 	}
 	function add_comment(&$comment) {
 		$comment->post_id = $this->id;

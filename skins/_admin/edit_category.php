@@ -1,4 +1,5 @@
 <div id="category">
+<h2><?=i('Category')?></h2>
 <table id="boards">
 <tr>
 	<th><?=i('Name')?></th>

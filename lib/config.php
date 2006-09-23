@@ -38,8 +38,5 @@ class Config
 		}
 		return rtrim($str);
 	}
-	function to_array() {
-		return $this->config;
-	}
 }
 ?>

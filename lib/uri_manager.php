@@ -18,12 +18,14 @@ function get_base_uri() {
 	return METABBS_BASE_URI;
 }
 function _url_for($controller, $action = null, $params = array()) {
+	$id = '';
 	if (is_a($controller, 'Model')) {
-		$uri = array($controller->get_model_name(), $controller->get_id());
-	} else {
-		$uri = array($controller, '');
+		$id = $controller->get_id();
+		$controller = $controller->get_model_name();
 	}
-	if ($action) $uri = array($uri[0], $action, $uri[1]);
+	$uri = array($controller);
+	if ($action) $uri[] = $action;
+	$uri[] = $id;
 	$url = get_base_uri() . implode('/', $uri);
 
 	if ($params) {

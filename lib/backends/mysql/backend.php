@@ -1,10 +1,4 @@
 <?php
-/*
-MySQL backend by:
-Kim Taeho aka ditto <dittos@gmail.com>
-http://ditto.exca.net/
-*/
-
 $column_type_map = array(
 	'int' => 'Integer',
 	'enum' => 'String',
@@ -39,7 +33,6 @@ class IntegerColumn extends Column {
 }
 class StringColumn extends Column {
 	function to_string() {
-		// return "'" . mysql_real_escape_string($this->value) . "'";
 		return "'" . $this->value . "'";
 	}
 	function to_spec($length) {
@@ -86,23 +79,16 @@ class MySQLAdapter
         @mysql_close($this->conn);
     }
     function selectdb($dbname) {
-        @mysql_select_db($dbname, $this->conn) or trigger_error("mysql - Can't select database",E_USER_ERROR);
+        @mysql_select_db($dbname, $this->conn) or trigger_error("Can't select database", E_USER_ERROR);
     }
 
-    function query($query, $check_error = true) {
-        if (!$query) {
-            return;
-        }
+    function query($query) {
+        if (!$query) return;
         $result = mysql_query($query, $this->conn);
-        if (!$result && $check_error) {
+        if (!$result) {
             trigger_error(mysql_error($this->conn), E_USER_ERROR);
         }
         return $result;
-    }
-    function query_from_file($name) {
-        $data = trim(implode('', file($name)));
-        $statements = explode(';', $data);
-        array_walk($statements, array($this, 'query'));
     }
     function fetchall($query, $model = 'Model') {
         $results = array();
@@ -116,8 +102,8 @@ class MySQLAdapter
         return new $model(mysql_fetch_assoc($this->query($query)));
     }
     function fetchone($query) {
-        $result = mysql_fetch_row($this->query($query));
-        return $result[0];
+        list($result) = mysql_fetch_row($this->query($query));
+        return $result;
     }
     function insertid() {
         return mysql_insert_id($this->conn);
@@ -133,7 +119,7 @@ class MySQLAdapter
     }
     function add_field($t, $name, $type, $length = null) {
     	$table = new Table($t);
-    	$this->query("ALTER TABLE ".get_table_name($t)." ADD " . $table->_column($name, $type, $length));
+    	$this->query("ALTER TABLE $table->table ADD " . $table->_column($name, $type, $length));
 	}
 	function add_index($t, $name) {
 		$this->query("ALTER TABLE ".get_table_name($t)." ADD INDEX ${t}_$name ($name)");
@@ -144,7 +130,7 @@ class MySQLAdapter
 		return $column_type_map[$t]."Column";
 	}
 	function get_columns($table) {
-		$result = $this->query("SHOW COLUMNS FROM $table", "Model");
+		$result = $this->query("SHOW COLUMNS FROM $table");
 		$fields = array();
 		while (list($name, $type, /*null*/, $key, $default) = mysql_fetch_row($result)) {
 			if ($key == 'PRI') continue;

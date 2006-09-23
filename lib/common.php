@@ -2,11 +2,7 @@
 header("Content-Type: text/html; charset=utf-8");
 
 if (!defined('METABBS_BASE_PATH')) {
-	$base_path = dirname($_SERVER['SCRIPT_NAME']);
-	if ($base_path != '/' && $base_path != '\\') {
-		$base_path .= '/';
-	}
-	define('METABBS_BASE_PATH', $base_path);
+	define('METABBS_BASE_PATH', substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/') + 1));
 }
 
 if (!defined('METABBS_DIR')) {
@@ -25,19 +21,10 @@ if (!file_exists(METABBS_DIR . '/metabbs.conf.php')) {
 ini_set("include_path", METABBS_DIR . '/lib' . PATH_SEPARATOR . METABBS_DIR . PATH_SEPARATOR . ini_get("include_path"));
 
 function addslashes_deep($v) {
-	if (is_array($v)) {
-		return array_map('addslashes_deep', $v);
-	} else {
-		return addslashes($v);
-	}
+	return is_array($v) ? array_map('addslashes_deep', $v) : addslashes($v);
 }
-
 function stripslashes_deep($v) {
-	if (is_array($v)) {
-		return array_map('stripslashes_deep', $v);
-	} else {
-		return stripslashes($v);
-	}
+	return is_array($v) ? array_map('stripslashes_deep', $v) : stripslashes($v);
 }
 
 require_once("core.php");

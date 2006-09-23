@@ -1,10 +1,12 @@
 <?php
 header("Content-Type: text/html; charset=UTF-8");
 
-define('METABBS_DIR', dirname(__FILE__));
+define('METABBS_DIR', '.');
 require_once 'installer/common.php';
 require_once 'lib/model.php';
 require_once 'lib/config.php';
+$config = new Config('metabbs.conf.php');
+
 require_once 'lib/i18n.php';
 require_once 'lib/tag_helper.php';
 
@@ -108,9 +110,7 @@ if (!isset($_POST['config'])) {
 	}
 
 	pass("Creating directories");
-	require_once 'lib/config.php';
 	require_once 'db/revision.php';
-	$config = new Config('metabbs.conf.php');
 	$config->config = $_POST['config'];
 	$config->set('backend', $backend);
     $config->set('revision', $revision);

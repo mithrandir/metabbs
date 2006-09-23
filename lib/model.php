@@ -9,7 +9,6 @@ function get_column_pair($column) {
 class Model
 {
 	var $id;
-	var $db;
 
 	function Model($attributes = null) {
 		$this->db = get_conn();
@@ -36,13 +35,15 @@ class Model
 	function get_id() {
 		return $this->id;
 	}
-	function create() {
+	function get_columns() {
 		$columns = $this->db->get_columns($this->table);
-		$count = count($columns);
-		for ($i = 0; $i < $count; $i++) {
-			$column = &$columns[$i];
-			$column->set_value(@$this->{$column->name});
+		foreach ($columns as $key => $column) {
+			$columns[$key]->set_value(@$this->{$column->name});
 		}
+		return $columns;
+	}
+	function create() {
+		$columns = $this->get_columns();
 		$query = "INSERT INTO $this->table";
 		$query .= " (".implode(",", array_map('get_column_name', $columns)).")";
 		$query .= " VALUES(".implode(",", array_map('column_to_string', $columns)).")";
@@ -50,12 +51,7 @@ class Model
 		$this->id = $this->db->insertid();
 	}
 	function update() {
-		$columns = $this->db->get_columns($this->table);
-		$count = count($columns);
-		for ($i = 0; $i < $count; $i++) {
-			$column = &$columns[$i];
-			$column->set_value(@$this->{$column->name});
-		}
+		$columns = $this->get_columns();
 		$query = "UPDATE $this->table SET ";
 		$query .= implode(",", array_map('get_column_pair', $columns));
 		$query .= " WHERE id=$this->id";
