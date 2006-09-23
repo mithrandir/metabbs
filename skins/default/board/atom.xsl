@@ -8,7 +8,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><xsl:value-of select="atom:title" /> - MetaBBS Atom Feeds</title>
-	<link rel="stylesheet" type="text/css" href="../../skins/default/board/feed.css" />
+	<link rel="stylesheet" type="text/css" href="?mode=css" />
 	<script type="text/javascript" src="../../skins/default/fix_html.js"></script>
 </head>
 <body>

@@ -7,17 +7,12 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><xsl:value-of select="channel/title" /> - MetaBBS RSS Feeds</title>
-	<link rel="stylesheet" type="text/css" href="../../skins/default/board/feed.css" />
+	<link rel="stylesheet" type="text/css" href="?mode=css" />
 	<script type="text/javascript" src="../../skins/default/fix_html.js"></script>
 </head>
 <body>
 <h1>
-	<a>
-		<xsl:attribute name="href">
-			<xsl:value-of select="channel/link" />
-		</xsl:attribute>
-		<xsl:value-of select="channel/title" />
-	</a>
+	<a href="{channel/link}"><xsl:value-of select="channel/title" /></a>
 </h1>
 <p id="description" class="content"><xsl:value-of select="channel/description" disable-output-escaping="yes" /></p>
 <xsl:for-each select="channel/item">
