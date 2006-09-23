@@ -13,12 +13,7 @@
 </head>
 <body>
 <h1>
-	<a>
-		<xsl:attribute name="href">
-			<xsl:value-of select="atom:id" />
-		</xsl:attribute>
-		<xsl:value-of select="atom:title" />
-	</a>
+	<a href="{atom:id}"><xsl:value-of select="atom:title" /></a>
 </h1>
 <p id="description" class="content"><xsl:value-of select="atom:subtitle" disable-output-escaping="yes" /></p>
 <xsl:for-each select="atom:entry">

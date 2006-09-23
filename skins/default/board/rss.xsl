@@ -18,12 +18,7 @@
 <xsl:for-each select="channel/item">
 <div class="post">
 	<h2>
-	<a>
-		<xsl:attribute name="href">
-			<xsl:value-of select="link" />
-		</xsl:attribute>
-		<xsl:value-of select="title" />
-	</a>
+	<a href="{link}"><xsl:value-of select="title" /></a>
 	</h2>
 	<div class="content"><xsl:value-of select="description" disable-output-escaping="yes" /></div>
 	<xsl:apply-templates select="category" />
