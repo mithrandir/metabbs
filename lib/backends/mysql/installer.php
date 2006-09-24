@@ -22,7 +22,7 @@ class Table
 	}
 	function to_sql() {
 		array_unshift($this->columns, "`id` int(10) unsigned NOT NULL auto_increment PRIMARY KEY");
-		$sql = "CREATE TABLE `$this->name` (\n";
+		$sql = "CREATE TABLE `$this->table` (\n";
 		$sql .= implode(",\n", $this->columns);
 		$sql .= "\n)\n";
 		return $sql;
