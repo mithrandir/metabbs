@@ -1,4 +1,4 @@
-#meta { font-size: 13px; font-family: Verdana, sans-serif; width: 600px; }
+#meta { font-size: 13px; font-family: Verdana, sans-serif; }
 
 #meta p, #meta li { line-height: 1.5; }
 #meta img { border: none; vertical-align: middle; }
@@ -41,8 +41,8 @@ a#rss-feed:hover { background-color: #fff; }
 .comment-count { font-size: x-small; }
 
 td.name, td.date { text-align: center; }
-td.name { width: 100px; }
-td.date { width: 120px; }
+td.name { width: 8em; }
+td.date { width: 9em; }
 
 #comments ul { margin: 0; padding: 0; list-style: none; }
 .comment {
@@ -50,7 +50,7 @@ td.date { width: 120px; }
     border: 1px solid #ccc;
     background: url(bg.png) repeat-x;
     margin-bottom: 1em;
-    width: 100%;
+    width: 98%;
 }
 .comment .info { padding-bottom: 3px; }
 span.name { font-weight: bold; }

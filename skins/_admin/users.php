@@ -12,7 +12,7 @@
 	<td><input type="checkbox" name="user_id[<?=$user->id?>]" class="check" /></td>
 	<td class="name"><?=$user->name?> <small>(<?=$user->user?>)</small></td>
 	<td class="level"><?=$user->level?></td>
-	<td class="actions"><?=link_text('#', i('View'))?> | <?=link_text('#', i('Delete user'))?></td>
+	<td class="actions"><?=link_to(i('View'), $user)?> | <?=link_text('#', i('Delete user'))?></td>
 </tr>
 <? } ?>
 </table>

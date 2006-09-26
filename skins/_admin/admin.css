@@ -95,10 +95,13 @@ div.right {
 form p {
 	clear: both;
 }
-label {
-    width: 120px;
-    margin-right: 10px;
-    float: left;
+dt {
+	float: left;
+    width: 10em;
+}
+dd {
+	margin-bottom: 0.5em;
+	clear: right;
 }
 
 #header, #body {

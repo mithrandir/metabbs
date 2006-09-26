@@ -14,7 +14,7 @@ class User extends Model {
 		return $db->fetchrow("SELECT * FROM $table WHERE id=$id", 'User');
 	}
 	function get_posts() {
-		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE user_id=$this->id", 'Post');
+		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->post_table WHERE user_id=$this->id", 'Post');
 	}
 	function get_post_count() {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->post_table WHERE user_id=$this->id");
