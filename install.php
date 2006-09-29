@@ -49,7 +49,7 @@ if (!isset($_POST['config'])) {
 		fail('Your server doesn\'t support <em>' . $backend . '</em>');
 	}
     db_info_form();
-	field('prefix', 'Table Prefix', 'meta_', 'text', 'MetaBBS가 저장될 DB 테이블의 prefix를 입력합니다. (다중 설치인 경우 사용)');
+	field('prefix', 'Table Prefix', 'meta_', 'text', 'MetaBBS가 저장될 DB 테이블의 식별자를 입력합니다. (다중 설치인 경우 사용)');
 ?>
 	<h2>Admin Information</h2>
 	<p>
