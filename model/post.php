@@ -42,7 +42,7 @@ class Post extends Model {
 		return $this->category_id ? Category::find($this->category_id) : null;
 	}
 	function get_comments() {
-		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->comment_table WHERE post_id=$this->id", 'Comment');
+		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->comment_table WHERE post_id=$this->id ORDER BY id", 'Comment');
 	}
 	function add_comment(&$comment) {
 		$comment->post_id = $this->id;
