@@ -10,13 +10,13 @@ class DefaultLanguage {
 		return $text;
 	}
 }
-class I18N extends Config {
+class I18N {
 	function I18N($lang) {
-		$this->Config("lang/$lang.php");
 		$this->lang = $lang;
+		$this->messages = Config::_parse(METABBS_DIR . "/lang/$lang.php");
 	}
 	function get($text) {
-		return Config::get($text, $text);
+		return array_key_exists($text, $this->messages) ? $this->messages[$text] : $text;
 	}
 	function import($lang) {
 		if ($lang == 'en') {

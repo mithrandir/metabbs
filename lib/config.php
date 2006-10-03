@@ -2,18 +2,20 @@
 class Config
 {
 	function Config($name) {
-		$this->config = array();
 		$this->filename = METABBS_DIR . '/' . $name;
-		if (file_exists($this->filename)) {
-			$file = file($this->filename);
-		} else {
-			return;
+		$this->config = $this->_parse($this->filename);
+	}
+	function _parse($path) {
+		$config = array();
+		if (file_exists($path)) {
+			$file = file($path);
+			array_shift($file);
+			foreach ($file as $_ => $line) {
+				list($key, $value) = explode('=', rtrim($line), 2);
+				$config[$key] = $value;
+			}
 		}
-		array_shift($file);
-		foreach ($file as $_ => $line) {
-			list($key, $value) = explode('=', rtrim($line), 2);
-			$this->set($key, $value);
-		}
+		return $config;
 	}
 	function write_to_file() {
 		$str = $this->to_string();
