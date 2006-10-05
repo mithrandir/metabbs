@@ -1,7 +1,4 @@
 <?php
-if (defined('E_STRICT'))
-	error_reporting(E_ALL ^ E_STRICT);
-
 require_once 'config.php';
 $config = new Config('metabbs.conf.php');
 
