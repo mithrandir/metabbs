@@ -61,7 +61,7 @@ function get_conn() {
         $conn->connect($config->get('host'), $config->get('user'), $config->get('password'));
         $conn->selectdb($config->get('dbname'));
         if ($config->get('force_utf8') == '1') {
-            $conn->query('set names utf8');
+            $conn->enable_utf8();
         }
     }
     return $conn;
@@ -81,6 +81,9 @@ class MySQLAdapter
     function selectdb($dbname) {
         @mysql_select_db($dbname, $this->conn) or trigger_error("Can't select database", E_USER_ERROR);
     }
+	function enable_utf8() {
+		$this->query('set names utf8');
+	}
 
     function query($query) {
         if (!$query) return;
@@ -138,6 +141,10 @@ class MySQLAdapter
 			$fields[] = new $c($name, $default);
 		}
 		return $fields;
+	}
+	function get_server_version() {
+		list($major, $minor) = explode('.', mysql_get_server_info($this->conn), 3);
+		return array($major, $minor);
 	}
 }
 function model_datetime() {

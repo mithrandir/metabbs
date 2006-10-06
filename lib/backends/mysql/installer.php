@@ -25,6 +25,9 @@ class Table
 		$sql = "CREATE TABLE `$this->table` (\n";
 		$sql .= implode(",\n", $this->columns);
 		$sql .= "\n)\n";
+		if (defined('MYSQL_USE_UTF8') && MYSQL_USE_UTF8) {
+			$sql .= 'CHARACTER SET utf8 COLLATE utf8_general_ci';
+		}
 		return $sql;
 	}
 }
@@ -39,6 +42,14 @@ function is_supported() {
 }
 function init_db() {
 	$conn = get_conn();
+	list($major, $minor) = $conn->get_server_version();
+	if (($major == 4 && $minor >= 1) || $major > 4) {
+		global $config;
+		define('MYSQL_USE_UTF8', 1);
+		$config->set('force_utf8', 1);
+		$config->write_to_file();
+		$conn->enable_utf8();
+	}
 	include("db/schema.php");
 }
 ?>
