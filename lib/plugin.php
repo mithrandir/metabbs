@@ -51,7 +51,7 @@ function run_before_handler($controller, $action) {
 	}
 }
 
-include('plugins/SayHello.php');
-include('plugins/SimpleSpam.php');
-include('plugins/NameCookie.php');
+foreach (get_enabled_plugins() as $plugin) {
+	include_once("plugins/$plugin->name.php");
+}
 ?>

@@ -17,6 +17,7 @@ require_once 'model/comment.php';
 require_once 'model/trackback.php';
 require_once 'model/attachment.php';
 require_once 'model/user.php';
+require_once 'model/plugin.php';
 
 require_once 'template.php';
 require_once 'uri_manager.php';
