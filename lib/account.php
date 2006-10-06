@@ -26,6 +26,11 @@ function editinfo() {
 }
 
 function access_denied() {
-	redirect_to(url_with_referer_for('account', 'login'));
+	global $account;
+	if ($account->is_guest()) {
+		redirect_to(url_with_referer_for('account', 'login'));
+	} else {
+		print_notice('Access denied', 'You have no permission to access this page.');
+	}
 }
 ?>
