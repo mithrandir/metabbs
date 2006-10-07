@@ -25,7 +25,7 @@ function _url_for($controller, $action = null, $params = array()) {
 	}
 	$uri = array($controller);
 	if ($action) $uri[] = $action;
-	$uri[] = $id;
+	$uri[] = urlencode($id);
 	$url = get_base_uri() . implode('/', $uri);
 
 	if ($params) {

@@ -24,5 +24,8 @@ class Attachment extends Model {
 	function file_exists() {
 		return file_exists($this->get_filename());
 	}
+	function get_id() {
+		return $this->id . '_' . $this->filename;
+	}
 }
 ?>

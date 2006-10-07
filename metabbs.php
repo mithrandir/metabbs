@@ -24,6 +24,7 @@ function print_footer() {
 
 $routes = array(
 	'/([a-z]+)/?' => '$1/index/',
+	'/attachment/([0-9]+)_.*' => 'attachment/index/$1',
 	'/([a-z]+)/([^/]+)' => '$1/index/$2',
 	'/([a-z]+)/([a-z]+)/(.*)' => '$1/$2/$3'
 );
