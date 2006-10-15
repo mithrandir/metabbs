@@ -82,3 +82,4 @@ Disabled=비활성
 Plugin=플러그인
 Plugins=플러그인
 Edit Comment=댓글 고치기
+Rename=이름 바꾸기

@@ -8,7 +8,7 @@
 <? foreach ($board->get_categories() as $category) { ?>
 <tr>
 	<td><?=$category->name?></td>
-	<td><a href="<?=url_for($category, 'delete')?>" onclick="return window.confirm('<?=i('Are you sure?')?>')"><?=i('Delete')?></a></td>
+	<td><a href="<?=url_for($category, 'rename')?>"><?=i('Rename')?></a> | <a href="<?=url_for($category, 'delete')?>" onclick="return window.confirm('<?=i('Are you sure?')?>')"><?=i('Delete')?></a></td>
 </tr>
 <? } ?>
 <tr>
