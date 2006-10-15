@@ -1,5 +1,6 @@
 <?php
 class Trackback extends Model {
+	var $valid = true;
 	function _init() {
 		$this->table = get_table_name('trackback');
 		$this->post_table = get_table_name('post');
@@ -13,7 +14,7 @@ class Trackback extends Model {
 		return Post::find($this->post_id);
 	}
 	function validate() {
-		return !empty($this->url);
+		return $this->valid && !empty($this->url);
 	}
 }
 ?>

@@ -6,8 +6,9 @@ echo "<response>\n";
 // TODO: spam filtering
 $url = parse_url($trackback->url);
 if ($url['path'] == '/') {
-	exit;
+	$trackback->valid = false;
 }
+apply_filters('PostTrackback', $trackback);
 if (is_post() && $trackback->validate()) {
 	$post->add_trackback($trackback);
 	echo "<error>0</error>\n";
