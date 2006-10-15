@@ -55,6 +55,7 @@ td.date { width: 9em; }
 .comment .info { padding-bottom: 3px; }
 span.name { font-weight: bold; }
 span.date { font-size: x-small; }
+span.actions { font-size: 0.9em; }
 
 #attachments { clear: both; }
 #attachments ul { list-style: none; margin: 0; padding: 0; }
