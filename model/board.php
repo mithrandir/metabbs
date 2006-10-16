@@ -9,6 +9,7 @@ class Board extends Model {
 	function _init() {
 		$this->table = get_table_name('board');
 		$this->post_table = get_table_name('post');
+		$this->comment_table = get_table_name('comment');
 		$this->category_table = get_table_name('category');
 	}
 	function get_id() {
@@ -81,6 +82,9 @@ class Board extends Model {
 	function delete() {
 		Model::delete();
 		$this->db->query("DELETE FROM $this->post_table WHERE board_id=$this->id");
+	}
+	function get_recent_comments($count) {
+		return $this->db->fetchall("SELECT * FROM $this->comment_table WHERE board_id=$this->id ORDER BY id DESC LIMIT $count", "Comment");
 	}
 }
 ?>
