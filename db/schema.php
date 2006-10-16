@@ -29,6 +29,7 @@ $t->add_index('user_id');
 $conn->add_table($t);
 
 $t = new Table('comment');
+$t->column('board_id', 'integer');
 $t->column('post_id', 'integer');
 $t->column('user_id', 'integer');
 $t->column('name', 'string', 45);
@@ -36,6 +37,7 @@ $t->column('body', 'text');
 $t->column('password', 'string', 32);
 $t->column('created_at', 'timestamp');
 $t->add_index('post_id');
+$t->add_index('board_id');
 $conn->add_table($t);
 
 $t = new Table('attachment');

@@ -45,6 +45,7 @@ class Post extends Model {
 		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->comment_table WHERE post_id=$this->id ORDER BY id", 'Comment');
 	}
 	function add_comment(&$comment) {
+		$comment->board_id = $this->board_id;
 		$comment->post_id = $this->id;
 		$comment->create();
 	}

@@ -1,3 +1,3 @@
 <?php
-$revision = 500;
+$revision = 525;
 ?>
