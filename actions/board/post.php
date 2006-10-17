@@ -8,7 +8,7 @@ if (is_post()) {
 	include 'actions/post/save.php';
 } else {
 	$post = new Post;
-	$post->name = $name;
+	$post->name = cookie_get('name');
 	$nav[] = link_to(i("List"), $board);
 	render('write');
 }

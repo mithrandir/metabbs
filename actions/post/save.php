@@ -5,6 +5,8 @@ if (!defined('SECURITY')) {
 if (!$account->is_guest()) {
 	$post->user_id = $account->id;
 	$post->name = $account->name;
+} else {
+	cookie_register('name', $post->name);
 }
 
 apply_filters('PostSave', $post);

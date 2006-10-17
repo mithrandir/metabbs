@@ -6,6 +6,8 @@ if ($account->level < $board->perm_comment) {
 $comment->user_id = $account->id;
 if (!$account->is_guest()) {
 	$comment->name = $account->name;
+} else {
+	cookie_register('name', $comment->name);
 }
 
 apply_filters('PostComment', $comment);

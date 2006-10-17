@@ -10,7 +10,9 @@ if ($board->search['category'] && $board->use_category) {
 }
 $posts = $board->get_posts_in_page(get_requested_page());
 
-$nav[] = link_to(i("New Post"), $board, 'post');
+if ($board->perm_write <= $account->level) {
+	$nav[] = link_to(i("New Post"), $board, 'post');
+}
 
 render('list');
 ?>
