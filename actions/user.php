@@ -9,4 +9,5 @@ if ($action != 'edit') {
 	}
 }
 require_once 'lib/page.php';
+$title = $user->name;
 ?>

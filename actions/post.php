@@ -7,4 +7,5 @@ if (!$post->exists()) {
 	print_notice('Post not found', "Post #$id is not exist.");
 }
 $board = $post->get_board();
+$title = $board->get_title() . " - $post->title";
 ?>

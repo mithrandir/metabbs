@@ -10,4 +10,5 @@ if (!$board->exists()) {
 if ($account->is_admin()) {
 	$nav[] = link_to(i('Edit Settings'), $board, 'edit', array('tab' => 'general'));
 }
+$title = $board->get_title();
 ?>

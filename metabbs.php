@@ -44,6 +44,7 @@ if (!$matched) {
 
 $nav = array();
 
+$title = 'MetaBBS';
 @include("actions/$controller.php");
 $action_dir = 'actions/' . $controller;
 if (!run_hook_handler($controller, $action)) {
@@ -54,16 +55,6 @@ if (!isset($skin)) {
 }
 $_skin_dir = 'skins/' . $skin;
 $skin_dir = METABBS_BASE_PATH . $_skin_dir;
-
-if ($controller == 'board') {
-	$title = $board->get_title();
-} else if ($controller == 'post') {
-	$title = $board->get_title() . " - $post->title";
-} else if ($controller == 'user') {
-	$title = $user->name;
-} else {
-	$title = "MetaBBS";
-}
 
 if (isset($render)) {
 	ob_start();
