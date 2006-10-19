@@ -14,19 +14,16 @@ function parse_internal_uri($str, $groups) {
 	return explode('/', $str, 3);
 }
 
-function get_base_uri() {
-	return METABBS_BASE_URI;
-}
-function _url_for($controller, $action = null, $params = array()) {
-	$id = '';
+function _url_for($controller, $action = null, $params = null) {
+	$url = METABBS_BASE_URI;
 	if (is_a($controller, 'Model')) {
-		$id = $controller->get_id();
-		$controller = $controller->get_model_name();
+		$url .= $controller->get_model_name() . '/';
+		if ($action) $url .= $action . '/';
+		$url .= $controller->get_id();
+	} else {
+		$url .= $controller . '/';
+		if ($action) $url .= $action . '/';
 	}
-	$uri = array($controller);
-	if ($action) $uri[] = $action;
-	$uri[] = urlencode($id);
-	$url = get_base_uri() . implode('/', $uri);
 
 	if ($params) {
 		$_params = array();
