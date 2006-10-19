@@ -13,5 +13,5 @@ if (is_post()) {
 	$account->update();
 	redirect_back();
 }
-render('account/edit');
+render('account');
 ?>

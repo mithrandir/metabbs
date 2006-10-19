@@ -51,9 +51,10 @@ function url_for($controller, $action = null, $params = array()) {
 	return _url_for($controller, $action, $params);
 }
 function url_with_referer_for($controller, $action = null, $params = array()) {
-	$params['url'] = urlencode($_SERVER['REQUEST_URI']);
-	if (isset($GLOBALS['board'])) {
-		$params['board_id'] = $GLOBALS['board']->id;
+	if (!isset($_GET['url'])) {
+		$params['url'] = urlencode($_SERVER['REQUEST_URI']);
+	} else {
+		$params['url'] = urlencode($_GET['url']);
 	}
 	return url_for($controller, $action, $params);
 }

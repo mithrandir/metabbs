@@ -18,5 +18,5 @@ if (is_post()) {
 } else {
 	$account->name = "";
 }
-render('account/signup');
+render('signup');
 ?>
