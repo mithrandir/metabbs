@@ -18,6 +18,6 @@ function simple_spam_filter($model) {
 	}
 }
 
-add_filter('PostSave', 'simple_spam_filter', 10);
-add_filter('PostComment', 'simple_spam_filter', 10);
+add_filter('PostSave', 'simple_spam_filter', 20);
+add_filter('PostComment', 'simple_spam_filter', 20);
 ?>
