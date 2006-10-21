@@ -1,3 +1,4 @@
+<form method="post" action="?tab=permission">
 <div id="permission">
 <h2><?=i('Permission')?></h2>
 <dl>
@@ -14,3 +15,4 @@
 	<dd><?=i('Writer and more than level %s', text_field('board', 'perm_delete', $board->perm_delete, 3))?></dd>
 </dl>
 </div>
+</form>

@@ -1,3 +1,4 @@
+<form method="post" action="?tab=general">
 <div id="general">
 <h2><?=i('General')?></h2>
 <dl>
@@ -17,3 +18,4 @@
 	<dd><?=check_box('board', 'use_category', $board->use_category)?></dd>
 </dl>
 </div>
+</form>

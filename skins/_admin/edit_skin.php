@@ -1,3 +1,4 @@
+<form method="post" action="?tab=skin">
 <div id="skin">
 <h2><?=i('Skin')?></h2>
 <div id="skins-available">
@@ -14,3 +15,4 @@
 <p style="clear: left"></p>
 </div>
 </div>
+</form>

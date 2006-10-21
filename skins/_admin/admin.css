@@ -86,8 +86,9 @@ div.right {
 }
 
 #boards .name {
-    width: 120px;
+    width: 150px;
 }
+#boards .name form { display: inline; }
 #boards td.actions {
     color: #999;
 }
