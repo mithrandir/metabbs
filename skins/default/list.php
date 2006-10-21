@@ -54,6 +54,7 @@
 <p>
 <?=check_box("search", "title", $board->search['title'])?> <?=i('Title')?>
  <?=check_box("search", "body", $board->search['body'])?> <?=i('Body')?>
+ <?=check_box("search", "comment", $board->search['comment'])?> <?=i('Comments')?>
  <?=text_field("search", "text", $board->search['text'])?> <?=submit_tag("Search")?> <?=link_text("?", i("Return"))?>
 </p>
 </form>
