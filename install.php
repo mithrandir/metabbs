@@ -2,7 +2,158 @@
 header("Content-Type: text/html; charset=UTF-8");
 
 define('METABBS_DIR', '.');
-require_once 'installer/common.php';
+function pass($msg) {
+	echo "<div class=\"flash pass\">$msg ... <em>OK :)</em></div>";
+}
+function warn($msg) {
+	echo "<div class=\"flash warn\"><em>Warning:</em> $msg</div>";
+}
+function fail($msg) {
+	if (file_exists('metabbs.conf.php')) {
+		unlink('metabbs.conf.php');
+	}
+	echo "<div class=\"flash fail\">$msg. <a href=\"$_SERVER[REQUEST_URI]\">Retry?</a></div>";
+	print_footer();
+	exit;
+}
+function field($name, $display_name, $value = '', $type = 'text', $desc = '') {
+	echo "<p><label>$display_name</label> <input type=\"$type\" name=\"config[$name]\" value=\"$value\" />\n<span class='desc'>$desc</span></p>";
+}
+function get_backends() {
+	$backends = array();
+	$dir = opendir('lib/backends');
+	while ($backend = readdir($dir)) {
+		if ($backend{0} != '.') {
+			$backends[] = $backend;
+		}
+	}
+	return $backends;
+}
+function capture_errors($errno, $errstr, $errfile, $errline) {
+	if ($errno & (E_ERROR | E_USER_ERROR)) {
+		fail($errstr);
+	}
+}
+
+function print_header($step) {
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>MetaBBS Installation</title>
+  <style type="text/css">
+  <!--
+*{} /* for Opera */
+
+* {
+    font-family: Verdana, Arial, sans-serif;
+}
+
+body {
+    margin: 0em;
+    padding: 0em;
+    font-size: 0.8em;
+    color: black;
+    background-color: #333;
+}
+#wrap {
+    margin: 20px;
+    background-color: white;
+    border: 5px solid #ccc;
+}
+h1 {
+    margin: 0em;
+    padding: 0.6em 0.6em 0.4em 0.6em;
+    font-family: Trebuchet MS, Verdana, Arial, sans-serif;
+    font-size: 2.5em;
+}
+h2 {
+    border-bottom: 1px solid #9c6;
+    font-family: Trebuchet MS, Verdana, sans-serif;
+    font-size: 1.3em;
+    padding: 0.1em;
+}
+a:link, a:visited {
+    color: #4e9a06;
+}
+a:hover {
+    background-color: #efc;
+}
+#title {
+    border-bottom: 1px solid #ccc;
+    background: url(skins/_admin/bg.png) repeat-x top left;
+}
+#contents, #footer {
+    margin: 1.5em;
+}
+#footer p {
+    text-align: right;
+    color: #999;
+}
+#step {
+    font-size: 0.7em;
+    font-weight: normal;
+    color: #9c9;
+}
+.flash {
+    border: 1px solid #ccc;
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+}
+.flash a:link, .flash a:visited {
+    font-weight: bold;
+    color: black;
+}
+.flash a:hover {
+    font-weight: bold;
+    background: none;
+    color: #555;
+}
+.fail {
+    background-color: pink;
+}
+.pass {
+    background-color: lightgreen;
+}
+.warn {
+    background-color: yellow;
+}
+.desc {
+    color: #999;
+    font-size: 90%;
+}
+form label {
+    display: block;
+    padding-top: 0.2em;
+    width: 13em;
+    float: left;
+}
+form p {
+    margin: 0px 0px 10px 0px;
+}
+  -->
+  </style>
+</head>
+<body>
+  <div id="wrap">
+	<div id="title">
+		<h1>MetaBBS Installation <span id="step">Step <?=$step?></span></h1>
+	</div>
+	<div id="contents">
+<?php
+}
+function print_footer() {
+?>
+	</div><!-- contents -->
+	<div id="footer">
+		<p id="copyright">&copy; 2005-2006, <a href="http://metabbs.daybreaker.info">MetaBBS Team</a></p>
+	</div>
+  </div><!-- wrap -->
+</body>
+</html>
+<?php
+}
 require_once 'lib/model.php';
 require_once 'lib/config.php';
 $config = new Config('metabbs.conf.php');

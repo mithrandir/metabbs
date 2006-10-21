@@ -9,26 +9,25 @@ function get_account_control($account) {
 	}
 }
 
+function link_to_account($text, $action, $id) {
+	global $board;
+	$controller = $action == 'login' && isset($board) ? $board : 'account';
+	return link_text(url_with_referer_for($controller, $action), $text, array('id' => $id));
+}
 function admin() {
 	return link_text(url_for('admin'), i('Admin'), array('id' => 'link-admin'));
 }
 function login() {
-	global $board;
-	$controller = isset($board) ? $board : 'account';
-	return link_text(url_with_referer_for($controller, 'login'), i('Login'), array('id' => 'link-login'));
+	return link_to_account(i('Login'), 'login', 'link-login');
 }
 function logout() {
-	return link_text(url_with_referer_for('account', 'logout'), i('Logout'), array('id' => 'link-logout'));
+	return link_to_account(i('Logout'), 'logout', 'link-logout');
 }
 function signup() {
-	global $board;
-	$controller = isset($board) ? $board : 'account';
-	return link_text(url_with_referer_for($controller, 'signup'), i('Sign Up'), array('id' => 'link-signup'));
+	return link_to_account(i('Sign Up'), 'signup', 'link-signup');
 }
 function editinfo() {
-	global $board;
-	$controller = isset($board) ? $board : 'account';
-	return link_text(url_with_referer_for('account', 'edit'), i('Edit Info'), array('id' => 'link-editinfo'));
+	return link_to_account(i('Edit Info'), 'edit', 'link-editinfo');
 }
 
 function access_denied() {
