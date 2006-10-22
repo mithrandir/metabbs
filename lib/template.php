@@ -24,7 +24,7 @@ function is_image($path) {
 	return ($ext == '.png' || $ext == '.gif' || $ext == '.jpg');
 }
 function format($str) {
-	return preg_replace(array("/ {2}/", "/\n /", "/\r?\n/", "/<br \/><br \/>/"), array("&nbsp;&nbsp;", "\n&nbsp;", "<br />", "</p><p>"), autolink(htmlspecialchars($str)));
+	return '<p>'.preg_replace(array("/ {2}/", "/\n /", "/\r?\n/", "/<br \/><br \/>/"), array("&nbsp;&nbsp;", "\n&nbsp;", "<br />", "</p><p>"), autolink(htmlspecialchars($str))).'</p>';
 }
 function print_nav($nav = null) {
 	echo implode(' | ', !$nav ? $GLOBALS['nav'] : $nav);

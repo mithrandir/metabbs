@@ -23,7 +23,7 @@
 </ul>
 </div>
 
-<p id="body"><?=format($post->body)?></p>
+<div id="body"><?=format($post->body)?></div>
 </div>
 
 <div id="trackbacks">
