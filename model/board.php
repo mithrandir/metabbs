@@ -67,7 +67,7 @@ class Board extends Model {
 		return $this->$method(($page - 1) * $this->posts_per_page, $this->posts_per_page);
 	}
 	function get_feed_posts($count) {
-		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE board_id=$this->id ORDER BY id DESC LIMIT $count", 'Post');
+		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->post_table WHERE board_id=$this->id ORDER BY id DESC LIMIT $count", 'Post');
 	}
 	function add_post(&$post) {
 		$post->board_id = $this->id;
