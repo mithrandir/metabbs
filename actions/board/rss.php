@@ -1,17 +1,6 @@
 <?php
-setlocale(LC_TIME, "en_US");
-if ($board->perm_read > $account->level) {
-	exit;
-}
-if (isset($_GET['mode']) && $_GET['mode'] == 'css') {
-	redirect_to(METABBS_BASE_PATH . "skins/$board->skin/feed.css");
-}
-$posts = $board->get_feed_posts($board->posts_per_page);
-header("Content-Type: text/xml; charset=UTF-8");
-echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-if (file_exists("skins/$board->skin/rss.xsl")) {
-	echo "<?xml-stylesheet type=\"text/xsl\" href=\"" . METABBS_BASE_PATH . "skins/$board->skin/rss.xsl\"?>\n";
-}
+require_once 'lib/feed.php';
+$posts = feed_render_header($board, 'rss');
 ?>
 <rss version="2.0">
 	<channel>
