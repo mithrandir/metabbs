@@ -53,6 +53,7 @@ td.date { width: 9em; }
     width: 98%;
 }
 .comment .info { padding-bottom: 3px; }
+.comment .body p { margin: 0; }
 span.name { font-weight: bold; }
 span.date { font-size: x-small; }
 span.actions { font-size: 0.9em; }
