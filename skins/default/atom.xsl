@@ -27,6 +27,7 @@
 	</a>
 	</h2>
 	<div class="content"><xsl:value-of select="atom:content" disable-output-escaping="yes" /></div>
+	<xsl:apply-templates select="atom:category" />
 </div>
 </xsl:for-each>
 <div id="powered">
@@ -34,5 +35,8 @@
 </div>
 </body>
 </html>
+</xsl:template>
+<xsl:template match="atom:category">
+<p>Category: <xsl:value-of select="attribute::term" /></p>
 </xsl:template>
 </xsl:stylesheet>

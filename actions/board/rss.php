@@ -4,13 +4,13 @@ if ($board->perm_read > $account->level) {
 	exit;
 }
 if (isset($_GET['mode']) && $_GET['mode'] == 'css') {
-	redirect_to(METABBS_BASE_PATH . "skins/$board->skin/board/feed.css");
+	redirect_to(METABBS_BASE_PATH . "skins/$board->skin/feed.css");
 }
 $posts = $board->get_feed_posts($board->posts_per_page);
 header("Content-Type: text/xml; charset=UTF-8");
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-if (file_exists("skins/$board->skin/board/rss.xsl")) {
-	echo "<?xml-stylesheet type=\"text/xsl\" href=\"" . METABBS_BASE_PATH . "skins/$board->skin/board/rss.xsl\"?>\n";
+if (file_exists("skins/$board->skin/rss.xsl")) {
+	echo "<?xml-stylesheet type=\"text/xsl\" href=\"" . METABBS_BASE_PATH . "skins/$board->skin/rss.xsl\"?>\n";
 }
 ?>
 <rss version="2.0">
