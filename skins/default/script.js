@@ -28,6 +28,15 @@ function sendForm(form, id, func) {
 	}
 	return false;
 }
+function toggleAll(form, bit) {
+	elements = form.elements ? form.elements : form;
+	for (i = 0; i < elements.length; i++) {
+		el = elements[i];
+		if (el.tagName.toLowerCase() == 'input' && el.type == 'checkbox') {
+			el.checked = bit;
+		}
+	}
+}
 
 function sendingRequest() {
 	$('sending').style.display = 'inline';

@@ -14,3 +14,8 @@
 	}
 	//-->
 	</script>
+	<style type="text/css">
+	<? if ($account->level < $board->perm_delete) { ?>
+	.massdelete { display: none; }
+	<? } ?>
+	</style>

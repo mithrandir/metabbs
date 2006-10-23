@@ -13,12 +13,14 @@
 <input type="submit" value="Go" />
 </form>
 <? } ?>
+<form method="post" action="<?=url_for($board, 'massdelete')?>">
 <table id="posts">
 	<caption>
         <?=i('Total %d posts', $board->get_post_count())?>
         <?=link_with_id_to("rss-feed", image_tag("$skin_dir/feed.png", "RSS Feed"), $board, 'rss')?>
     </caption>
 	<tr>
+		<th class="massdelete"><input type="checkbox" onclick="toggleAll(this.form, this.checked)" /></th>
 		<th class="name"><?=i('Writer')?></th>
 		<th class="title"><?=i('Title')?></th>
 		<th class="date"><?=i('Date')?></th>
@@ -29,6 +31,7 @@
 <? } else { ?>
 	<tr>
 <? } ?>
+		<td class="massdelete"><input type="checkbox" name="delete[]" value="<?=$post->id?>" /></th>
 		<td class="name">
 		<? if ($post->user_id) { ?>
 			<?=link_to_user($post->get_user())?>
@@ -47,6 +50,8 @@
 	</tr>
 <? } ?>
 </table>
+<p><input type="submit" value="<?=i('Delete selected posts')?>" /></p>
+</form>
 
 <? print_pages($board); ?>
 
