@@ -13,7 +13,7 @@
 <input type="submit" value="Go" />
 </form>
 <? } ?>
-<form method="post" action="<?=url_for($board, 'massdelete')?>">
+<form method="post" action="<?=url_for($board, 'massdelete')?>" onsubmit="return confirm('<?=i('Are you sure?')?>')">
 <table id="posts">
 	<caption>
         <?=i('Total %d posts', $board->get_post_count())?>

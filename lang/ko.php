@@ -83,3 +83,4 @@ Plugin=플러그인
 Plugins=플러그인
 Edit Comment=댓글 고치기
 Rename=이름 바꾸기
+Delete selected posts=선택된 글 지우기

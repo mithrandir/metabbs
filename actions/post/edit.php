@@ -12,7 +12,7 @@ if (is_post()) {
 
 	unset($_POST['post']['password']);
 	$post->import($_POST['post']);
-	if ($_POST['delete']) {
+	if ($board->use_attachment && isset($_POST['delete'])) {
 		foreach ($_POST['delete'] as $id) {
 			$attachment = Attachment::find($id);
 			$attachment->delete();
