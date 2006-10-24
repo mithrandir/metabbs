@@ -13,8 +13,8 @@ class User extends Model {
 		$table = get_table_name('user');
 		return $db->fetchrow("SELECT * FROM $table WHERE id=$id", 'User');
 	}
-	function get_posts() {
-		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->post_table WHERE user_id=$this->id", 'Post');
+	function get_posts($offset, $limit) {
+		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->post_table WHERE user_id=$this->id ORDER BY id DESC LIMIT $offset, $limit", 'Post');
 	}
 	function get_post_count() {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->post_table WHERE user_id=$this->id");
