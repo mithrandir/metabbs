@@ -11,6 +11,14 @@ if (!$account->is_guest()) {
 
 apply_filters('PostSave', $post);
 
+if (isset($_FILES['upload'])) {
+	foreach ($_FILES['upload']['error'] as $error) {
+		if ($error) {
+			print_notice('Max upload size exceeded', 'Please upload files smaller than ' . ini_get('upload_max_filesize') . '.');
+		}
+	}
+}
+
 if ($post->exists()) {
 	$post->update();
 } else {
