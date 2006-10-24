@@ -1,4 +1,4 @@
-<form method="post" onsubmit="return checkForm(this)">
+<form method="post" onsubmit="return checkForm(this)" action="?url=<?=url_for('account', 'edit')?>">
 <p><span class="star">*</span> Required</p>
 <p>
 	<label>User ID<span class="star">*</span></label>
@@ -19,6 +19,10 @@
 <p>
 	<label>Homepage</label>
 	<input type="text" name="user[url]" size="50" class="ignore" value="<?=$account->url?>" />
+</p>
+<p>
+	<label>Signature</label>
+	<textarea name="user[signature]" cols="50" rows="5" class="ignore"><?=$account->signature?></textarea>
 </p>
 <p><input type="submit" value="Edit" />
 </form>

@@ -24,6 +24,7 @@
 </div>
 
 <div id="body"><?=format($post->body)?></div>
+<div id="signature"><?=format($post->user->signature)?></div>
 </div>
 
 <div id="trackbacks">

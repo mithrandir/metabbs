@@ -36,7 +36,9 @@ class Post extends Model {
 		return $board->get_title();
 	}
 	function get_user() {
-		return User::find($this->user_id);
+		if (!isset($this->user))
+			$this->user = User::find($this->user_id);
+		return $this->user;
 	}
 	function get_category() {
 		return $this->category_id ? Category::find($this->category_id) : null;

@@ -65,7 +65,7 @@ function redirect_back() {
 	if (isset($_GET['url'])) {
 		redirect_to($_GET['url']);
 	} else {
-		redirect_to(url_for(""));
+		redirect_to($_SERVER['HTTP_REFERER']);
 	}
 }
 
