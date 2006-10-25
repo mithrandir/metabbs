@@ -24,7 +24,9 @@
 </div>
 
 <div id="body"><?=format($post->body)?></div>
+<? if ($post->user->signature) { ?>
 <div id="signature"><?=format($post->user->signature)?></div>
+<? } ?>
 </div>
 
 <div id="trackbacks">
