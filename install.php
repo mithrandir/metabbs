@@ -261,10 +261,9 @@ if (!isset($_POST['config'])) {
 	}
 
 	pass("Creating directories");
-	require_once 'db/revision.php';
 	$config->config = $_POST['config'];
 	$config->set('backend', $backend);
-    $config->set('revision', $revision);
+    $config->set('revision', METABBS_DB_REVISION);
 	$config->write_to_file();
 	define('METABBS_TABLE_PREFIX', $config->get('prefix', 'meta_'));
 	

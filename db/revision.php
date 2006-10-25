@@ -1,3 +1,3 @@
 <?php
-$revision = 550;
+define('METABBS_DB_REVISION', 550);
 ?>

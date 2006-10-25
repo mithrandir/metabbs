@@ -11,11 +11,13 @@ if (!$account->is_guest()) {
 
 apply_filters('PostSave', $post);
 
-if (isset($_FILES['upload'])) {
-	foreach ($_FILES['upload']['error'] as $error) {
-		if ($error) {
-			print_notice('Max upload size exceeded', 'Please upload files smaller than ' . ini_get('upload_max_filesize') . '.');
-		}
+if ($board->use_attachment && isset($_FILES['upload'])) {
+	$uploads = $_FILES['upload'];
+	$attachments = array();
+	foreach ($uploads['name'] as $key => $filename) {
+		if (!$filename) continue;
+		if ($uploads['size'][$key] == 0) print_notice('Max upload size exceeded', 'Please upload files smaller than ' . ini_get('upload_max_filesize') . '.');
+		$attachments[] = new Attachment(array('filename' => $filename, 'tmp_name' => $uploads['tmp_name'][$key]));
 	}
 }
 
@@ -24,24 +26,13 @@ if ($post->exists()) {
 } else {
 	$board->add_post($post);
 }
-if (isset($_FILES['upload'])) {
-	$upload = $_FILES['upload'];
-	if (!file_exists('data/uploads')) {
-		@mkdir('data/uploads', 0777);
-	}
-	foreach ($upload['name'] as $key => $filename) {
-		if (!$filename || $upload['size'][$key] == 0) {
-			continue;
-		}
-		$attachment = new Attachment;
-		$attachment->filename = $filename;
+
+if (isset($attachments)) {
+	foreach ($attachments as $attachment) {
 		$post->add_attachment($attachment);
-		move_uploaded_file($upload['tmp_name'][$key], 'data/uploads/' . $attachment->id);
+		move_uploaded_file($attachment->tmp_name, 'data/uploads/' . $attachment->id);
 	}
 }
-if ($post->id) {
-	redirect_to(url_for($post));
-} else {
-	redirect_to(url_for($board));
-}
+
+redirect_to(url_for($post));
 ?>

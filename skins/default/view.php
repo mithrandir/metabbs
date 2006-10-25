@@ -24,7 +24,7 @@
 </div>
 
 <div id="body"><?=format($post->body)?></div>
-<? if ($post->user->signature) { ?>
+<? if ($post->user_id && $post->user->signature) { ?>
 <div id="signature"><?=format($post->user->signature)?></div>
 <? } ?>
 </div>

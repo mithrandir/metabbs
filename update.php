@@ -3,14 +3,13 @@ define('METABBS_DIR', '.');
 require_once("lib/core.php");
 require_once("lib/backends/$backend/installer.php");
 $conn = get_conn();
-include('db/revision.php');
 if (isset($_GET['rev'])) {
 	$current = $_GET['rev'];
 } else {
 	$current = $config->get('revision', 347);
 }
 
-if ($current < $revision) {
+if ($current < METABBS_DB_REVISION) {
 	// find updates
 	$dh = opendir('db');
 	while ($f = readdir($dh)) {
@@ -22,7 +21,7 @@ if ($current < $revision) {
 		}
 	}
 	closedir($dh);
-	$config->set('revision', $revision);
+	$config->set('revision', METABBS_DB_REVISION);
 	$config->write_to_file();
 	echo 'done.';
 } else {
