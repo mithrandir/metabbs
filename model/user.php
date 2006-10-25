@@ -71,6 +71,7 @@ class Guest extends Model
 	var $level = 0;
 	var $name = 'guest';
 	var $email, $url;
+	var $signature;
 	function is_guest() {
 		return true;
 	}

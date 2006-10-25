@@ -28,5 +28,9 @@
 	<label>Homepage</label>
 	<input type="text" name="user[url]" size="50" class="ignore" value="<?=$account->url?>" />
 </p>
+<p>
+	<label>Signature</label>
+	<textarea name="user[signature]" cols="50" rows="5" class="ignore"><?=$account->signature?></textarea>
+</p>
 <p><input type="submit" value="Sign up" /></p>
 </form>
