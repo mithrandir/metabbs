@@ -5,21 +5,9 @@ function render($template) {
 	global $render;
 	$render = $template;
 }
-function print_layout($type) {
-	global $config;
-	$template = $config->get('global_' . $type);
-	if ($template) {
-		include($template);
-		return true;
-	} else {
-		return false;
-	}
-}
-function print_header() {
-	return print_layout('header');
-}
-function print_footer() {
-	return print_layout('footer');
+function get_layout_path($type) {
+	global $config, $_skin_dir;
+	return $config->get('global_' . $type, "$_skin_dir/$type.php");
 }
 
 $routes = array(
@@ -57,10 +45,8 @@ $_skin_dir = 'skins/' . $skin;
 $skin_dir = METABBS_BASE_PATH . $_skin_dir;
 
 if (isset($render)) {
-	ob_start();
+	include(get_layout_path('header'));
 	include($_skin_dir . '/' . $render . '.php');
-	$content = ob_get_contents();
-	ob_end_clean();
-	include($_skin_dir . '/layout.php');
+	include(get_layout_path('footer'));
 }
 ?>

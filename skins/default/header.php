@@ -1,4 +1,3 @@
-<? if (!print_header()) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -9,11 +8,4 @@
 </head>
 <body>
 <p>Hello, <?=link_to_user($account)?>! :) <? print_nav(get_account_control($account)); ?></p>
-<? } ?>
 <div id="meta">
-<?=$content?>
-</div>
-<? if (!print_footer()) { ?>
-</body>
-</html>
-<? } ?>
