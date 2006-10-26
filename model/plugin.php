@@ -1,5 +1,7 @@
 <?php
 class Plugin extends Model {
+	var $model = 'plugin';
+
 	var $name;
 	var $enabled = false;
 	var $description = '';

@@ -1,5 +1,7 @@
 <?php
 class Attachment extends Model {
+	var $model = 'attachment';
+
 	function _init() {
 		$this->table = get_table_name('attachment');
 		$this->post_table = get_table_name('post');

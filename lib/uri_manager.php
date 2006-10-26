@@ -24,7 +24,7 @@ class Router {
 function _url_for($controller, $action = null, $params = null) {
 	$url = METABBS_BASE_URI;
 	if (is_a($controller, 'Model')) {
-		$url .= $controller->get_model_name() . '/';
+		$url .= $controller->model . '/';
 		if ($action) $url .= $action . '/';
 		$url .= $controller->get_id();
 	} else {

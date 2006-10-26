@@ -1,5 +1,7 @@
 <?php
 class Board extends Model {
+	var $model = 'board';
+
 	var $search = array('title' => 1, 'body' => 1, 'comment' => 0, 'text' => '', 'category' => 0);
 	var $category;
 	var $title;

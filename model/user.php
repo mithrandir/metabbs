@@ -1,5 +1,7 @@
 <?php
 class User extends Model {
+	var $model = 'user';
+
 	var $email, $url;
 	var $level = 1;
 	var $posts_per_page = 10;

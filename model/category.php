@@ -1,5 +1,7 @@
 <?php
 class Category extends Model {
+	var $model = 'category';
+
 	function _init() {
 		$this->table = get_table_name('category');
 		$this->board_table = get_table_name('board');

@@ -1,5 +1,7 @@
 <?php
 class Trackback extends Model {
+	var $model = 'trackback';
+
 	var $valid = true;
 	function _init() {
 		$this->table = get_table_name('trackback');

@@ -1,5 +1,7 @@
 <?php
 class Post extends Model {
+	var $model = 'post';
+
 	var $name, $title, $type = 0, $body;
 	var $category_id;
 

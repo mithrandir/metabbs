@@ -18,12 +18,6 @@ class Model
 		$this->_init();
 	}
 	function _init() { }
-	function get_model_name() {
-		if (!isset($this->model)) {
-			$this->model = strtolower(get_class($this));
-		}
-		return $this->model;
-	}
 	function import($attributes) {
 		if (is_array($attributes)) {
 			foreach ($attributes as $key => $value) {

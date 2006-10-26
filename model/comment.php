@@ -1,5 +1,7 @@
 <?php
 class Comment extends Model {
+	var $model = 'comment';
+
 	function _init() {
 		$this->table = get_table_name('comment');
 		$this->user_table = get_table_name('user');
