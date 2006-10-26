@@ -7,11 +7,18 @@ if (!defined('METABBS_BASE_URI')) {
 	}
 }
 
-function parse_internal_uri($str, $groups) {
-	foreach ($groups as $k => $v) {
-		$str = str_replace('$' . $k, $v, $str);
+class Router {
+	var $routes = array();
+
+	function parse_uri($uri) {
+		foreach ($this->routes as $pattern => $method) {
+			if (preg_match('|^'.$pattern.'$|', $uri, $groups)) {
+				$this->$method($groups);
+				return true;
+			}
+		}
+		return false;
 	}
-	return explode('/', $str, 3);
 }
 
 function _url_for($controller, $action = null, $params = null) {
@@ -68,5 +75,4 @@ function redirect_back() {
 		redirect_to($_SERVER['HTTP_REFERER']);
 	}
 }
-
 ?>

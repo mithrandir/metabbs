@@ -14,27 +14,30 @@ function get_layout_path($type) {
 		return $config->get('global_' . $type, $default);
 }
 
-$routes = array(
-	'/([a-z]+)/?' => '$1/index/',
-	'/attachment/([0-9]+)_.*' => 'attachment/index/$1',
-	'/([a-z]+)/([^/]+)' => '$1/index/$2',
-	'/([a-z]+)/([a-z]+)/(.*)' => '$1/$2/$3'
-);
+class MetaRouter extends Router {
+	var $routes = array(
+		'/(attachment)/([0-9]+)_.*' => 'controller',
+		'/([a-z]+)(?:/([^/]*))?' => 'controller',
+		'/([a-z]+)/([a-z]+)/(.*)' => 'full'
+	);
+	var $action = 'index';
 
-$uri = $_SERVER['PATH_INFO'];
-$matched = false;
-foreach ($routes as $k => $v) {
-	if (preg_match("|^$k$|", $uri, $groups)) {
-		list($controller, $action, $id) = parse_internal_uri($v, $groups);
-		$matched = true;
-		break;
+	function controller($groups) {
+		list(, $this->controller, $this->id) = $groups;
+	}
+	function full($groups) {
+		list(, $this->controller, $this->action, $this->id) = $groups;
 	}
 }
-if (!$matched) {
+
+$router = new MetaRouter;
+if ($router->parse_uri($_SERVER['PATH_INFO'])) {
+	$controller = $router->controller;
+	$action = $router->action;
+	$id = $router->id;
+} else {
 	print_notice('Requested URL is not valid.', 'Valid URL format is '.full_url_for("<em>controller</em>", "<em>action</em>").'<br />If you are administrator, go to '.link_to('administration page', 'admin'));
 }
-
-$nav = array();
 
 $title = 'MetaBBS';
 @include("actions/$controller.php");
