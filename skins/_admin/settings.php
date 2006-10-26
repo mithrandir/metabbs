@@ -1,3 +1,4 @@
+<h2><?=i('Settings')?></h2>
 <form method="post" action="?">
 <dl>
 	<dt><?=label_tag(i('Admin password'), 'settings', 'admin_password')?></dt>

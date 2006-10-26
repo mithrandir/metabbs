@@ -6,8 +6,12 @@ function render($template) {
 	$render = $template;
 }
 function get_layout_path($type) {
-	global $config, $_skin_dir;
-	return $config->get('global_' . $type, "$_skin_dir/$type.php");
+	global $config, $_skin_dir, $skin;
+	$default = $_skin_dir . '/' . $type . '.php';
+	if ($skin == '_admin')
+		return $default;
+	else
+		return $config->get('global_' . $type, $default);
 }
 
 $routes = array(

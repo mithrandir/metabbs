@@ -7,8 +7,7 @@
   <script type="text/javascript" src="<?=$skin_dir?>/script.js"></script>
 </head>
 <body>
-<div id="meta">
-	<h1><?=i('MetaBBS Administration')?></h1>
+<h1><?=i('MetaBBS Administration')?></h1>
 <div id="header">
 <?=link_to(i('Boards'), 'admin')?> |
 <?=link_to(i('Users'), 'admin', 'users')?> |
@@ -23,10 +22,3 @@
 <p><?=$flash?></p>
 </div>
 <? } ?>
-<?=$content?>
-</div>
-
-</div>
-</body>
-</html>
-

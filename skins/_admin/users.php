@@ -17,6 +17,6 @@
 <? } ?>
 </table>
 
-<h2><?=i('Mass operation')?></h2>
+<h3><?=i('Mass operation')?></h3>
 <p><?=i('Change levels of selected users to %s', '<input type="text" name="level" value="1" size="3" />')?> (0~255) <input type="submit" value="OK" /></p>
 </form>

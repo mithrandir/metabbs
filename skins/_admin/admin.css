@@ -1,14 +1,7 @@
 body {
     margin: 0;
-    background-color: #333;
     font-family: verdana, sans-serif;
     font-size: 14px;
-}
-
-#meta {
-    border: 5px solid #ccc;
-    margin: 20px;
-    background: url(bg.png) repeat-x #fff;
 }
 
 a {
@@ -28,6 +21,7 @@ h2 {
     font-family: "trebuchet ms", verdana, sans-serif;
     font-size: 1.4em;
     margin-bottom: 0.5em;
+	margin-top: 0;
 }
 
 table {
@@ -73,7 +67,6 @@ div.right {
 
 #header {
     padding: 10px 20px 20px 20px;
-    margin-bottom: 20px;
     border-bottom: 1px solid #ccc;
 }
 #header p {
@@ -81,8 +74,8 @@ div.right {
 }
 
 #body {
-    margin-left: 20px;
-    margin-bottom: 20px;
+    background: url(bg.png) repeat-x #fff;
+    padding: 20px;
 }
 
 #boards .name {
@@ -119,7 +112,7 @@ dd {
 
 ul.tabs {
 	list-style: none;
-	margin: 0px;
+	margin: 0 0 1em 0;
 	padding: 0px;
 }
 
