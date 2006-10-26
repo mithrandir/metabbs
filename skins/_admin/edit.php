@@ -10,7 +10,3 @@
 </ul>
 
 <?php include('skins/_admin/edit_'.$_GET['tab'].'.php'); ?>
-
-<? if ($_GET['tab'] != 'category') { ?>
-<p><input type="submit" value="OK" /></p>
-<? } ?>

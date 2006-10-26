@@ -15,4 +15,5 @@
 <p style="clear: left"></p>
 </div>
 </div>
+<p><input type="submit" value="OK" /></p>
 </form>

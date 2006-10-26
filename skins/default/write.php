@@ -32,3 +32,8 @@
 <? } ?>
 <p><?=submit_tag($action == 'post' ? "Post" : "Edit")?> <span id="sending"><?=image_tag("$skin_dir/spin.gif", 'Sending...')?></span></p>
 </form>
+
+<div id="nav">
+<a href="<?=$link_list?>"><?=i('List')?></a>
+<? if ($link_cancel) { ?>| <a href="<?=$link_cancel?>"><?=i('Cancel')?></a><? } ?>
+</div>

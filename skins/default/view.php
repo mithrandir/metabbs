@@ -24,8 +24,8 @@
 </div>
 
 <div id="body"><?=format($post->body)?></div>
-<? if ($post->user_id && $post->user->signature) { ?>
-<div id="signature"><?=format($post->user->signature)?></div>
+<? if ($signature) { ?>
+<div id="signature"><?=format($signature)?></div>
 <? } ?>
 </div>
 
@@ -59,7 +59,7 @@
 </ul>
 </div>
 
-<? if ($board->perm_comment <= $account->level) { ?>
+<? if ($commentable) { ?>
 <form method="post" action="<?=url_for($post, 'comment')?>" onsubmit="return sendForm(this, 'comments', function () { $('comment_body').value='' })">
 <input type="hidden" name="ajax" value="0" />
 <? if ($account->is_guest()) { ?>
@@ -70,3 +70,12 @@
 <p><?=submit_tag("Comment")?> <span id="sending"><?=image_tag("$skin_dir/spin.gif", "Sending...")?></span></p>
 </form>
 <? } ?>
+
+<div id="nav">
+<a href="<?=$link_list?>"><?=i('List')?></a> |
+<? if ($link_new_post) { ?><a href="<?=$link_new_post?>"><?=i('New Post')?></a> <? } ?>
+<? if ($owner) { ?>
+| <a href="<?=$link_edit?>"><?=i('Edit')?></a>
+| <a href="<?=$link_delete?>"><?=i('Delete')?></a>
+<? } ?>
+</div>

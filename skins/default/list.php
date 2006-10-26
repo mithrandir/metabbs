@@ -6,7 +6,7 @@
 <form method="get" action="<?=url_for($board)?>">
 <select name="search[category]" onchange="this.form.submit()">
 <option value="0"><?=i('Select category')?></option>
-<? foreach ($board->get_categories() as $_category) { ?>
+<? foreach ($categories as $_category) { ?>
 <?=option_tag($_category->id, $_category->name, isset($category) && $category->id == $_category->id)?>
 <? } ?>
 </select>
@@ -63,3 +63,7 @@
  <?=text_field("search", "text", $board->search['text'])?> <?=submit_tag("Search")?> <?=link_text("?", i("Return"))?>
 </p>
 </form>
+
+<div id="nav">
+<? if ($link_new_post) { ?><a href="<?=$link_new_post?>"><?=i('New Post')?></a><? } ?>
+</div>

@@ -22,8 +22,8 @@ if (is_post()) {
 	define('SECURITY', 1);
 	include 'actions/post/save.php';
 } else {
-	$nav[] = link_to(i("List"), $board);
-	$nav[] = link_to(i("Cancel"), $post);
+	$link_list = url_for($board);
+	$link_cancel = url_for($post);
 	
 	render('write');
 }

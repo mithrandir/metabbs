@@ -9,7 +9,8 @@ if (is_post()) {
 } else {
 	$post = new Post;
 	$post->name = cookie_get('name');
-	$nav[] = link_to(i("List"), $board);
+	$link_list = url_for($board);
+	$link_cancel = null;
 	render('write');
 }
 ?>

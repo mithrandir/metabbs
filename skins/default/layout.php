@@ -12,10 +12,6 @@
 <? } ?>
 <div id="meta">
 <?=$content?>
-
-<div id="nav">
-<p><? print_nav(); ?></p>
-</div>
 </div>
 <? if (!print_footer()) { ?>
 </body>

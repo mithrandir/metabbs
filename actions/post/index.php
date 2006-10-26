@@ -10,16 +10,24 @@ $attachments = $post->get_attachments();
 $trackbacks = $post->get_trackbacks();
 
 $name = cookie_get('name');
+if ($post->user_id) {
+	$user = $post->get_user();
+	$signature = $user->signature;
+} else {
+	$signature = null;
+}
 apply_filters('PostView', $post);
 
-$nav[] = link_to(i("List"), $board, '', array('page' => get_requested_page()));
-if ($account->level >= $board->perm_write) {
-	$nav[] = link_to(i("New Post"), $board, 'post');
+$link_list = url_for($board, '', array('page' => get_requested_page()));
+$link_new_post = ($account->level >= $board->perm_write) ? url_for($board, 'post') : null;
+
+$owner = $post->user_id == 0 || $account->id == $post->user_id || $account->level >= $board->perm_delete;
+if ($owner) {
+	$link_edit = url_for($post, 'edit');
+	$link_delete = url_for($post, 'delete');
 }
-if ($post->user_id == 0 || $account->id == $post->user_id || $account->level >= $board->perm_delete) {
-	$nav[] = link_to(i("Edit"), $post, 'edit');
-	$nav[] = link_to(i("Delete"), $post, 'delete');
-}
+
+$commentable = $board->perm_comment <= $account->level;
 
 render('view');
 ?>

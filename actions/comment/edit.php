@@ -6,7 +6,7 @@ if (is_post() && ($account->level >= $board->perm_delete ||
 	$comment->update();
 	redirect_to(url_for($post) . '#comment_' . $comment->id);
 } else {
-	$nav[] = link_to(i("Cancel"), $post);
+	$link_cancel = url_for($post);
 
 	if ($comment->user_id != 0 && $comment->user_id == $account->id ||
 		$account->level >= $board->perm_delete) {

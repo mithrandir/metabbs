@@ -9,7 +9,7 @@ if (is_post() && ($account->level >= $board->perm_delete ||
 	$post->delete();
 	redirect_to(url_for($board));
 } else {
-	$nav[] = link_to(i("Cancel"), $post);
+	$link_cancel = url_for($post);
 
 	if ($post->user_id != 0 && $post->user_id == $account->id ||
 		$account->level >= $board->perm_delete) {

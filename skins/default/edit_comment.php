@@ -6,3 +6,6 @@
 <p><textarea name="body" rows="5" cols="50"><?=$comment->body?></textarea></p>
 <p><?=submit_tag(i("Edit"))?></p>
 </form>
+<div id="nav">
+<a href="<?=$link_cancel?>"><?=i('Cancel')?></a>
+</div>

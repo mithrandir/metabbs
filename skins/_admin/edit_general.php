@@ -18,4 +18,5 @@
 	<dd><?=check_box('board', 'use_category', $board->use_category)?></dd>
 </dl>
 </div>
+<p><input type="submit" value="OK" /></p>
 </form>

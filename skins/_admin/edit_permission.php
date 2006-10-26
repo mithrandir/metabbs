@@ -15,4 +15,5 @@
 	<dd><?=i('Writer and more than level %s', text_field('board', 'perm_delete', $board->perm_delete, 3))?></dd>
 </dl>
 </div>
+<p><input type="submit" value="OK" /></p>
 </form>
