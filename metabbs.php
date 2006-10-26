@@ -8,7 +8,7 @@ function render($template) {
 function get_layout_path($type) {
 	global $config, $_skin_dir, $skin;
 	$default = $_skin_dir . '/' . $type . '.php';
-	if ($skin == '_admin')
+	if ($skin{0} == '_')
 		return $default;
 	else
 		return $config->get('global_' . $type, $default);

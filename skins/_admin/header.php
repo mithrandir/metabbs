@@ -7,6 +7,7 @@
   <script type="text/javascript" src="<?=$skin_dir?>/script.js"></script>
 </head>
 <body>
+<div id="meta-admin">
 <h1><?=i('MetaBBS Administration')?></h1>
 <div id="header">
 <?=link_to(i('Boards'), 'admin')?> |
