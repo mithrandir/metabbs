@@ -78,6 +78,9 @@ class Board extends Model {
 	function get_post_count() {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->post_table WHERE board_id=$this->id");
 	}
+	function get_post_count_with_condition() {
+		return $this->db->fetchone("SELECT COUNT(*) FROM $this->post_table as p, $this->comment_table as c WHERE ".$this->get_condition());
+	}
 	function get_categories() {
 		return $this->db->fetchall("SELECT * FROM $this->category_table WHERE board_id=$this->id", 'Category');
 	}
