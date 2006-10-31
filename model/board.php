@@ -53,7 +53,7 @@ class Board extends Model {
 			$cond .= " AND (" . implode(" OR ", $search) . ")";
 		}
 		if ($this->search['category']) {
-			$cond .= " AND category_id=" . $this->search['category'];
+			$cond .= " AND p.category_id=" . $this->search['category'];
 		}
 		return $cond;
 	}
