@@ -64,6 +64,9 @@ class User extends Model {
 			return $this->url;
 		}
 	}
+	function is_owner_of($model) {
+		return $model->user_id == $this->id;
+	}
 }
 
 class Guest extends Model

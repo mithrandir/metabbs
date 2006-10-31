@@ -53,9 +53,9 @@ $skin_dir = METABBS_BASE_PATH . $_skin_dir;
 
 if (isset($render)) {
 	include(get_layout_path('header'));
-	echo '<div id="meta">';
+	echo "<div id=\"meta\">\n";
 	include($_skin_dir . '/' . $render . '.php');
-	echo '</div>';
+	echo "</div>\n";
 	include(get_layout_path('footer'));
 }
 ?>

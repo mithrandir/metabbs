@@ -38,5 +38,9 @@ require_once("plugin.php");
 $account = UserManager::get_user();
 if (!$account) { 
 	$account = new Guest;
+	$guest = true;
+} else {
+	$guest = false;
 }
+$admin = $account->is_admin();
 ?>
