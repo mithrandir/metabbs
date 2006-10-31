@@ -17,6 +17,7 @@ if ($post->user_id) {
 	$signature = null;
 }
 apply_filters('PostView', $post);
+apply_filters_array('PostViewComment', $comments);
 
 $link_list = url_for($board, '', array('page' => get_requested_page()));
 $link_new_post = ($account->level >= $board->perm_write) ? url_for($board, 'post') : null;

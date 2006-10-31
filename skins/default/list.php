@@ -32,13 +32,7 @@
 	<tr>
 <? } ?>
 		<td class="massdelete"><input type="checkbox" name="delete[]" value="<?=$post->id?>" /></th>
-		<td class="name">
-		<? if ($post->user_id) { ?>
-			<?=link_to_user($post->get_user())?>
-		<? } else { ?>
-			<?=htmlspecialchars($post->name)?>
-		<? } ?>
-		</td>
+		<td class="name"><?=$post->name?></td>
 		<td class="title">
 			<? if ($board->use_category && $post->category_id) { ?>
 			[<?=link_to_category($post->get_category())?>]

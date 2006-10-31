@@ -16,6 +16,7 @@ $post->add_comment($comment);
 if ($_POST['ajax']) {
 	$comment->name = stripslashes($comment->name);
 	$comment->body = stripslashes($comment->body);
+	apply_filters('PostViewComment', $comment);
 	include("skins/$board->skin/_comment.php");
 	exit;
 } else {

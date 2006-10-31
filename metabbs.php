@@ -23,7 +23,7 @@ class MetaRouter extends Router {
 	var $action = 'index';
 
 	function controller($groups) {
-		list(, $this->controller, $this->id) = $groups;
+		@list(, $this->controller, $this->id) = $groups;
 	}
 	function full($groups) {
 		list(, $this->controller, $this->action, $this->id) = $groups;

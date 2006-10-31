@@ -23,8 +23,8 @@ function apply_filters($event, &$model) {
 	}
 }
 function apply_filters_array($event, &$array) {
-	foreach (array_keys($array[$event]) as $key) {
-		apply_filters($array[$event][$key]);
+	foreach (array_keys($array) as $key) {
+		apply_filters($event, $array[$key]);
 	}
 }
 
