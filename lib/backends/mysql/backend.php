@@ -5,7 +5,9 @@ $column_type_map = array(
 	'varchar' => 'String',
 	'longtext' => 'String',
 	'text' => 'String',
-	'timestamp' => 'Timestamp'
+	'timestamp' => 'Timestamp',
+	'tinyint' => 'Short',
+	'bool' => 'Boolean'
 	);
 
 function get_column_name($column) { return $column->name; }
@@ -31,6 +33,16 @@ class IntegerColumn extends Column {
 		return "`$this->name` integer(10) NOT NULL DEFAULT '$this->default'";
 	}
 }
+class ShortColumn extends IntegerColumn {
+	function to_spec() {
+		return "`$this->name` tinyint NOT NULL DEFAULT '$this->default'";
+	}
+}
+class UShortColumn extends IntegerColumn {
+	function to_spec() {
+		return "`$this->name` tinyint UNSIGNED NOT NULL DEFAULT '$this->default'";
+	}
+}
 class StringColumn extends Column {
 	function to_string() {
 		return "'" . $this->value . "'";
@@ -50,6 +62,14 @@ class TimestampColumn extends Column {
 	}
 	function to_spec() {
 		return "`$this->name` timestamp NOT NULL";
+	}
+}
+class BooleanColumn extends Column {
+	function to_string() {
+		return !!$this->value ? 1 : 0;
+	}
+	function to_spec() {
+		return "`$this->name` bool NOT NULL";
 	}
 }
 
