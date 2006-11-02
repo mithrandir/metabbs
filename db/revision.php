@@ -1,3 +1,3 @@
 <?php
-define('METABBS_DB_REVISION', 550);
+define('METABBS_DB_REVISION', 565);
 ?>

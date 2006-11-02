@@ -46,7 +46,18 @@ class Post extends Model {
 		return $this->category_id ? Category::find($this->category_id) : null;
 	}
 	function get_comments() {
-		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->comment_table WHERE post_id=$this->id ORDER BY id", 'Comment');
+		$_comments = $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->comment_table WHERE post_id=$this->id ORDER BY id", 'Comment', true);
+		$comments = array();
+		foreach ($_comments as $id => $comment) {
+			if ($comment->parent) {
+				$_comments[$comment->parent]->comments[] = &$_comments[$id];
+				//echo 'adding child ('.$id.'->'.$comment->parent.')<br>';
+			} else {
+				$comments[] = &$_comments[$id];
+				//echo 'adding root comment ('.$id.')<br>';
+			}
+		}
+		return $comments;
 	}
 	function add_comment(&$comment) {
 		$comment->board_id = $this->board_id;

@@ -113,11 +113,14 @@ class MySQLAdapter
         }
         return $result;
     }
-    function fetchall($query, $model = 'Model') {
+    function fetchall($query, $model = 'Model', $assoc = false) {
         $results = array();
         $result = $this->query($query);
         while ($data = mysql_fetch_assoc($result)) {
-            $results[] = new $model($data);
+			if ($assoc)
+	            $results[$data['id']] = new $model($data);
+			else
+				$results[] = new $model($data);
         }
         return $results;
     }

@@ -48,6 +48,7 @@ td.date { width: 9em; }
 .massdelete { width: 30px; text-align: center; }
 
 #comments ul { margin: 0; padding: 0; list-style: none; }
+#comments ul ul { margin-left: 2em; }
 .comment {
     padding: 0.5em;
     border: 1px solid #ccc;

@@ -32,6 +32,7 @@ $t = new Table('comment');
 $t->column('board_id', 'integer');
 $t->column('post_id', 'integer');
 $t->column('user_id', 'integer');
+$t->column('parent', 'integer');
 $t->column('name', 'string', 45);
 $t->column('body', 'text');
 $t->column('password', 'string', 32);

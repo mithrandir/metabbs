@@ -53,9 +53,12 @@
 <div id="comments">
 <h3><?=i('Comments')?></h3>
 <ul>
-<? foreach ($comments as $comment) { ?>
-	<? include($_skin_dir . '/_comment.php'); ?>
-<? } ?>
+<?
+$comment_stack = array();
+foreach ($comments as $comment) {
+	include($_skin_dir . '/_comment.php');
+}
+?>
 </ul>
 </div>
 
