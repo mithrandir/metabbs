@@ -22,4 +22,7 @@ require_once 'model/plugin.php';
 require_once 'template.php';
 require_once 'uri_manager.php';
 require_once 'account.php';
+
+/* -*- mode: php; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
+/* vim: set ts=4 sts=4 sw=4 noet: */
 ?>

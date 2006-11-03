@@ -102,4 +102,7 @@ class Board extends Model {
 		return $this->db->fetchall("SELECT * FROM $this->comment_table WHERE board_id=$this->id ORDER BY id DESC LIMIT $count", "Comment");
 	}
 }
+
+/* -*- mode: php; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
+/* vim: set ts=4 sts=4 sw=4 noet: */
 ?>
