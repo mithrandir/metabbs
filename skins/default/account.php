@@ -1,4 +1,4 @@
-<form method="post" onsubmit="return checkForm(this)" action="?url=<?=url_for('account', 'edit')?>">
+<form method="post" onsubmit="return checkForm(this)" action="?url=<?=$_GET['url']?>">
 <p><span class="star">*</span> Required</p>
 <p>
 	<label>User ID<span class="star">*</span></label>

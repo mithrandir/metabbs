@@ -8,6 +8,5 @@ if ($action != 'edit') {
 		print_notice('User not found', "User #$id is not exist.");
 	}
 }
-require_once 'lib/page.php';
 $title = $user->name;
 ?>

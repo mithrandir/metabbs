@@ -1,5 +1,4 @@
 <?php
-$posts = $user->get_posts((get_requested_page() - 1) * 10, 10);
-
+apply_filters('UserInfo', $user);
 render('user');
 ?>
