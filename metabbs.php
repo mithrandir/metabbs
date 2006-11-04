@@ -5,10 +5,13 @@ function render($template) {
 	global $render;
 	$render = $template;
 }
+function is_default_skin($skin) {
+    return $skin{0} == '_';
+}
 function get_layout_path($type) {
 	global $config, $_skin_dir, $skin;
 	$default = $_skin_dir . '/' . $type . '.php';
-	if ($skin{0} == '_')
+	if (is_default_skin($skin))
 		return $default;
 	else
 		return $config->get('global_' . $type, $default);
