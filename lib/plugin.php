@@ -3,7 +3,7 @@ $filters = array();
 $handlers = array();
 
 // Filter API
-// TODO: °°Àº ¿ì¼±¼øÀ§¿¡ ¿©·¯ °³ ÇÊÅÍ°¡ µî·ÏµÇ¾úÀ» ¶§
+// TODO: ê°™ì€ ìš°ì„ ìˆœìœ„ì— ì—¬ëŸ¬ ê°œ í•„í„°ê°€ ë“±ë¡ë˜ì—ˆì„ ë•Œ
 function add_filter($event, $callback, $priority) {
 	global $filters;
 	$filters[$event][$priority] = $callback;
@@ -29,7 +29,7 @@ function apply_filters_array($event, &$array) {
 }
 
 // Handler API
-// TODO: ÇÑ ¾×¼ÇÀ» ¿©·¯ ÇÚµé·¯°¡ Ã³¸®ÇØ¾ß ÇÒ ¶§
+// TODO: í•œ ì•¡ì…˜ì„ ì—¬ëŸ¬ í•¸ë“¤ëŸ¬ê°€ ì²˜ë¦¬í•´ì•¼ í•  ë•Œ 
 function add_handler($controller, $action, $callback, $type = 'hook') {
 	global $filters;
 	$filters[$controller][$action][$type] = $callback;
