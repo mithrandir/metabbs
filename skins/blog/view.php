@@ -1,13 +1,8 @@
-<div class="post">
-	<h2><?php echo $post->title; ?></h2>
-	<div class="date"><?php echo $post->created_at; ?></div>
-	
-	<p><?php echo format($post->body); ?></p>
-</div>
+<? include($_skin_dir . '/_post.php'); ?>
 
 <div id="trackbacks">
-<h3>Trackbacks</h3>
-<p>Trackback URL: <?=link_text(full_url_for($post, 'trackback'))?></p>
+<h3><?=i('Trackbacks')?></h3>
+<p><?=i('Trackback URL')?>: <?=link_text(full_url_for($post, 'trackback'), '', array('onclick' => 'return false'))?></p>
 <!--
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	 xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -27,24 +22,30 @@
 </div>
 
 <div id="comments">
-<h3>Comments</h3>
+<h3><?=i('Comments')?></h3>
 <ul>
-<?php foreach ($comments as $comment) { ?>
-	<li class="comment">
-		<div class="comment-info"><strong><?=$comment->name?></strong> <small><?=$comment->created_at?></small></div>
-		<div class="comment-body"><p><?=format($comment->body)?></p></div>
-	</li>
-<?php } ?>
+<?
+$comment_stack = array();
+foreach ($comments as $comment) {
+	include($_skin_dir . '/_comment.php');
+}
+?>
 </ul>
+</div>
 
+<? if ($commentable) { ?>
 <form method="post" action="<?=url_for($post, 'comment')?>">
 <? if ($account->is_guest()) { ?>
 <p><?=label_tag("Name", "comment", "name")?> <?=text_field("comment", "name", $name)?></p>
 <p><?=label_tag("Password", "comment", "password")?> <?=password_field("comment", "password")?></p>
 <? } ?>
 <p><?=text_area("comment", "body", 5, 50, "", array("id" => "comment_body"))?></p>
-<p><?=submit_tag("Save")?></p>
+<p><?=submit_tag("Comment")?></p>
 </form>
-</div>
+<? } ?>
 
-<? print_nav(); ?>
+<div id="nav">
+<? if ($owner) { ?>
+<a href="<?=$link_edit?>"><?=i('Edit')?></a> | <a href="<?=$link_delete?>"><?=i('Delete')?></a>
+<? } ?>
+</div>

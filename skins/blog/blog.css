@@ -37,8 +37,9 @@ div.date, div.links { font-size: small; margin: 0.5em 0 1.5em 0; }
 .post { padding-bottom: 1em; }
 
 #comments ul { list-style: none; margin: 0; padding: 0; }
-.comment { border: 1px solid #ccc; background-color: #f4f4f4; padding: 1em; margin-top: 1em; }
-.comment-body p { margin: 0.5em 0 0 0; }
+#comments ul ul { margin-left: 3em; }
+.comment { border: 1px solid #ccc; background-color: #f4f4f4; padding: 0 1em; margin-top: 1em; }
+.comment .name { font-weight: bold; }
 
 #pages { list-style: none; margin: 0; padding: 0.5em; }
 #pages li { display: inline; padding: 0 2px; }

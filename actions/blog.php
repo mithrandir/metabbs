@@ -3,6 +3,7 @@ class Blog extends Board
 {
 	var $model = 'blog';
 
+	function get_id() { return ""; }
 	function find_by_name($name) {
 		$db = get_conn();
 		$table = get_table_name('board');
