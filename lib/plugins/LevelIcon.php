@@ -12,13 +12,15 @@ function prepend_level_icon($level, $name) {
 	}
 }
 function prepend_level_icon_filter(&$model) {
+	$model->name = htmlspecialchars($model->name);
 	if ($model->user_id) {
 		$user = $model->get_user();
 		$level = $user->level;
+		$model->name = link_to($model->name, $user);
 	} else {
 		$level = 0;
 	}
-	$model->name = prepend_level_icon($level, htmlspecialchars($model->name));
+	$model->name = prepend_level_icon($level, $model->name);
 }
 function user_info_level_icon_filter(&$user) {
 	$user->name = prepend_level_icon($user->level, htmlspecialchars($user->name));
