@@ -33,6 +33,17 @@ class Config
 			return $default;
 		}
 	}
+    function remove($key) {
+        if ($this->exist($key)) {
+            unset($this->config[$key]);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function exist($key) {
+        return array_key_exists($key, $this->config);
+    }
 	function to_string() {
 		$str = "<?php/*\n";
 		foreach ($this->config as $key => $value) {
