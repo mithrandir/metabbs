@@ -5,16 +5,16 @@ function render($template) {
 	global $render;
 	$render = $template;
 }
-function is_default_skin($skin) {
+function is_system_view($skin) {
     return $skin{0} == '_';
 }
 function get_layout_path($type) {
 	global $config, $_skin_dir, $skin;
-	$default = $_skin_dir . '/' . $type . '.php';
-	if (is_default_skin($skin))
-		return $default;
+	$layout = $config->get('global_' . $type);
+	if (is_system_view($skin) || !$layout)
+		return $_skin_dir . '/' . $type . '.php';
 	else
-		return $config->get('global_' . $type, $default);
+		return $layout;
 }
 
 class MetaRouter extends Router {
