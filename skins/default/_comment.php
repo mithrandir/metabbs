@@ -5,11 +5,11 @@
 		<span class="date"><?=meta_format_date("%Y-%m-%d %H:%M", $comment->created_at)?></span>
 		<span class="actions">
 		<? if ($board->perm_comment <= $account->level) { ?>
-			<?=link_to(i('Reply'), $comment, 'reply')?> |
+			<?=link_to(i('Reply'), $comment, 'reply')?>
 		<? } ?>
 		<? if ($board->perm_delete <= $account->level || $account->id == $comment->user_id) { ?>
-			<?=link_to(i('Delete'), $comment, 'delete')?> |
-			<?=link_to(i('Edit'), $comment, 'edit')?>
+			| <?=link_to(i('Delete'), $comment, 'delete')?>
+			I <?=link_to(i('Edit'), $comment, 'edit')?>
 		<? } ?>
 		</span>
 	</div>

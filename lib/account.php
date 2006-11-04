@@ -1,6 +1,6 @@
 <?php
 function get_account_control($account) {
-	if ($account->is_guest()) {
+	if (!$account || $account->is_guest()) {
 		return array(login(), signup());
 	} else if ($account->is_admin()) {
 		return array(logout(), editinfo(), admin());

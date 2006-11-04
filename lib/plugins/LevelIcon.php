@@ -18,7 +18,7 @@ function prepend_level_icon_filter(&$model) {
 	} else {
 		$level = 0;
 	}
-	$model->name = prepend_level_icon($user->level, htmlspecialchars($model->name));
+	$model->name = prepend_level_icon($level, htmlspecialchars($model->name));
 }
 function user_info_level_icon_filter(&$user) {
 	$user->name = prepend_level_icon($user->level, htmlspecialchars($user->name));
