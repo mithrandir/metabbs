@@ -17,12 +17,4 @@ if (!get_magic_quotes_gpc()) {
 	$_GET = addslashes_deep($_GET);
 	$_COOKIE = addslashes_deep($_COOKIE);
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 4
-// c-basic-offset: 4
-// indet-tabs-mode: t
-// End:
-// vim: set ts=4 sts=4 sw=4 noet:
 ?>

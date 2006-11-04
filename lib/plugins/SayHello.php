@@ -8,12 +8,4 @@ function say_hello_handler() {
 }
 add_handler('say', 'hello', 'before_say_hello_handler', 'before');
 add_handler('say', 'hello', 'say_hello_handler');
-
-// Local Variables:
-// mode: php
-// tab-width: 4
-// c-basic-offset: 4
-// indet-tabs-mode: t
-// End:
-// vim: set ts=4 sts=4 sw=4 noet:
 ?>

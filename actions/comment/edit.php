@@ -16,12 +16,4 @@ if (is_post() && ($account->level >= $board->perm_delete ||
 	}
 	render('edit_comment');
 }
-
-// Local Variables:
-// mode: php
-// tab-width: 4
-// c-basic-offset: 4
-// indet-tabs-mode: t
-// End:
-// vim: set ts=4 sts=4 sw=4 noet:
 ?>

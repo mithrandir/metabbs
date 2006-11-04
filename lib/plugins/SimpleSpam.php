@@ -20,12 +20,4 @@ function simple_spam_filter($model) {
 
 add_filter('PostSave', 'simple_spam_filter', 10);
 add_filter('PostComment', 'simple_spam_filter', 10);
-
-// Local Variables:
-// mode: php
-// tab-width: 4
-// c-basic-offset: 4
-// indet-tabs-mode: t
-// End:
-// vim: set ts=4 sts=4 sw=4 noet:
 ?>

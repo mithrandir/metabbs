@@ -17,12 +17,4 @@ if (is_post() && $trackback->validate()) {
 	echo "<message>Unable to create trackback</message>\n";
 }
 echo '</response>';
-
-// Local Variables:
-// mode: php
-// tab-width: 4
-// c-basic-offset: 4
-// indet-tabs-mode: t
-// End:
-// vim: set ts=4 sts=4 sw=4 noet:
 ?>

@@ -27,12 +27,4 @@ function english_patient_post_filter($model) {
 add_filter('PostTrackback', 'english_patient_tb_filter', 10);
 add_filter('PostComment', 'english_patient_cmt_filter', 20);
 add_filter('PostSave', 'english_patient_post_filter', 20);
-
-// Local Variables:
-// mode: php
-// tab-width: 4
-// c-basic-offset: 4
-// indet-tabs-mode: t
-// End:
-// vim: set ts=4 sts=4 sw=4 noet:
 ?>
