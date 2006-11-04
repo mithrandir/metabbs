@@ -27,7 +27,7 @@ class Plugin extends Model {
 	}
 }
 function get_plugins() {
-	$dp = opendir(METABBS_DIR . '/lib/plugins');
+	$dp = opendir(METABBS_DIR . '/plugins');
 	$plugins = array();
 	while ($file = readdir($dp)) {
 		list($name, $ext) = explode('.', $file);
