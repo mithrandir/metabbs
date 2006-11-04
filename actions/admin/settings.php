@@ -9,8 +9,14 @@ if (is_post()) {
             $account->update();
         }
     }
-	$config->set('global_header', $settings['global_header']);
-	$config->set('global_footer', $settings['global_footer']);
+    if (!empty($settings['global_header']))
+        $config->set('global_header', $settings['global_header']);
+    else if ($config->exist('global_header'))
+        $config->remove('global_header');
+    if (!empty($settings['global_footer']))
+        $config->set('global_footer', $settings['global_footer']);
+    else if ($config->exist('global_footer'))
+        $config->remove('global_footer');
 	$config->set('default_language', $settings['default_language']);
 	$config->set('always_use_default_language', $settings['always_use_default_language']);
 	if ($settings['always_use_default_language']) {
