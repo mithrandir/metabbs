@@ -14,4 +14,12 @@ function feed_render_header($board, $format) {
 	}
 	return $board->get_feed_posts($board->posts_per_page);
 }
+
+// Local Variables:
+// mode: php
+// tab-width: 4
+// c-basic-offset: 4
+// indet-tabs-mode: t
+// End:
+// vim: set ts=4 sts=4 sw=4 noet:
 ?>

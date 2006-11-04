@@ -24,4 +24,12 @@ $link_new_post = ($board->perm_write <= $account->level) ? url_for($board, 'post
 $massdelete = $board->perm_delete <= $account->level;
 
 render('list');
+
+// Local Variables:
+// mode: php
+// tab-width: 4
+// c-basic-offset: 4
+// indet-tabs-mode: t
+// End:
+// vim: set ts=4 sts=4 sw=4 noet:
 ?>
