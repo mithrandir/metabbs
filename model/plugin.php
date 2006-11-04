@@ -12,7 +12,7 @@ class Plugin extends Model {
 	function find_by_name($name) {
 		$table = get_table_name('plugin');
 		$db = get_conn();
-		return $db->fetchrow("SELECT * FROM $table WHERE name='$name'", 'Plugin');
+		return $db->fetchrow("SELECT * FROM $table WHERE name=?", 'Plugin', array($name));
 	}
 	function get_id() {
 		return $this->name;

@@ -24,7 +24,7 @@ class Column {
 			$this->value = $this->default;
 	}
 	function to_string() {
-		return $this->value;
+		return mysql_real_escape_string($this->value);
 	}
 }
 class IntegerColumn extends Column {
@@ -45,7 +45,7 @@ class UShortColumn extends IntegerColumn {
 }
 class StringColumn extends Column {
 	function to_string() {
-		return "'" . $this->value . "'";
+		return "'" . mysql_real_escape_string($this->value) . "'";
 	}
 	function to_spec($length) {
 		return "`$this->name` varchar($length) NOT NULL DEFAULT '$this->default'";
@@ -105,17 +105,28 @@ class MySQLAdapter
 		$this->query('set names utf8');
 	}
 
-    function query($query) {
+    function query($query, $data = null) {
         if (!$query) return;
+		if ($data) $query = $this->_q($query, $data);
         $result = mysql_query($query, $this->conn);
         if (!$result) {
             trigger_error(mysql_error($this->conn), E_USER_ERROR);
         }
         return $result;
     }
-    function fetchall($query, $model = 'Model', $assoc = false) {
+	function _q($query, $data) {
+		$tokens = preg_split('/([?!])/', $query, -1, PREG_SPLIT_DELIM_CAPTURE);
+		foreach ($tokens as $i => $token) {
+			if ($token == '?')
+				$tokens[$i] = "'".mysql_real_escape_string(array_shift($data), $this->conn)."'";
+			else if ($token == '!')
+				$tokens[$i] = array_shift($data);
+		}
+		return implode('', $tokens);
+	}
+    function fetchall($query, $model = 'Model', $data = null, $assoc = false) {
         $results = array();
-        $result = $this->query($query);
+        $result = $this->query($query, $data);
         while ($data = mysql_fetch_assoc($result)) {
 			if ($assoc)
 	            $results[$data['id']] = new $model($data);
@@ -124,11 +135,11 @@ class MySQLAdapter
         }
         return $results;
     }
-    function fetchrow($query, $model = 'Model') {
-        return new $model(mysql_fetch_assoc($this->query($query)));
+    function fetchrow($query, $model = 'Model', $data = null) {
+        return new $model(mysql_fetch_assoc($this->query($query, $data)));
     }
-    function fetchone($query) {
-        list($result) = mysql_fetch_row($this->query($query));
+    function fetchone($query, $data = null) {
+        list($result) = mysql_fetch_row($this->query($query, $data));
         return $result;
     }
     function insertid() {

@@ -17,7 +17,7 @@ class Post extends Model {
 	function find($id) {
 		$db = get_conn();
 		$table = get_table_name('post');
-		return $db->fetchrow("SELECT *, created_at+0 as created_at FROM $table WHERE id=$id", 'Post');
+		return $db->fetchrow("SELECT *, created_at+0 as created_at FROM $table WHERE id=?", 'Post', array($id));
 	}
 	function create() {
 		$this->password = md5($this->password);

@@ -13,7 +13,7 @@ class User extends Model {
 	function find($id) {
 		$db = get_conn();
 		$table = get_table_name('user');
-		return $db->fetchrow("SELECT * FROM $table WHERE id=$id", 'User');
+		return $db->fetchrow("SELECT * FROM $table WHERE id=?", 'User', array($id));
 	}
 	function get_posts($offset, $limit) {
 		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->post_table WHERE user_id=$this->id ORDER BY id DESC LIMIT $offset, $limit", 'Post');
@@ -30,7 +30,7 @@ class User extends Model {
 	function auth($user, $password) {
 		$db = get_conn();
 		$table = get_table_name('user');
-		$user = $db->fetchrow("SELECT * FROM $table WHERE user='$user' AND password='$password'", 'User');
+		$user = $db->fetchrow("SELECT * FROM $table WHERE user=? AND password=?", 'User', array($user, $password));
 		if ($user->exists()) {
 			return $user;
 		} else {
@@ -40,7 +40,7 @@ class User extends Model {
 	function find_by_user($user) {
 		$db = get_conn();
 		$table = get_table_name('user');
-		return $db->fetchrow("SELECT * FROM $table WHERE user='$user'", 'User');
+		return $db->fetchrow("SELECT * FROM $table WHERE user=?", 'User', array($user));
 	}
 	function find_all() {
 		$db = get_conn();

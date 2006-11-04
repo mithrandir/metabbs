@@ -12,9 +12,9 @@ if (@ini_get('register_globals')) {
 	}
 }
 
-if (!get_magic_quotes_gpc()) {
-	$_POST = addslashes_deep($_POST);
-	$_GET = addslashes_deep($_GET);
-	$_COOKIE = addslashes_deep($_COOKIE);
+if (get_magic_quotes_gpc()) {
+	$_POST = stripslashes_deep($_POST);
+	$_GET = stripslashes_deep($_GET);
+	$_COOKIE = stripslashes_deep($_COOKIE);
 }
 ?>

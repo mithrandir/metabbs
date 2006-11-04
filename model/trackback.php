@@ -10,7 +10,7 @@ class Trackback extends Model {
 	function find($id) {
 		$db = get_conn();
 		$table = get_table_name('trackback');
-		return $db->fetchrow("SELECT * FROM $table WHERE id=$id", 'Trackback');
+		return $db->fetchrow("SELECT * FROM $table WHERE id=?", 'Trackback', array($id));
 	}
 	function get_post() {
 		return Post::find($this->post_id);

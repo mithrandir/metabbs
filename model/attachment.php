@@ -9,7 +9,7 @@ class Attachment extends Model {
 	function find($id) {
 		$db = get_conn();
 		$table = get_table_name('attachment');
-		return $db->fetchrow("SELECT * FROM $table WHERE id=$id", 'Attachment');
+		return $db->fetchrow("SELECT * FROM $table WHERE id=?", 'Attachment', array($id));
 	}
 	function get_post() {
 		return Post::find($this->post_id);

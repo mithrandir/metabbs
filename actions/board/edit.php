@@ -6,7 +6,7 @@ function get_skins() {
 	$skins = array();
 	$dir = opendir('skins');
 	while ($file = readdir($dir)) {
-		if ($file{0} != '_' && $file{0} != '.' && is_dir("skins/$file")) {
+		if (!is_system_view($file) && $file[0] != '.' && is_dir("skins/$file")) {
 			$skins[] = $file;
 		}
 	}

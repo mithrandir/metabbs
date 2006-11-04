@@ -20,12 +20,12 @@ class Board extends Model {
 	function find($id) {
 		$db = get_conn();
 		$table = get_table_name('board');
-		return $db->fetchrow("SELECT * FROM $table WHERE id=$id", 'Board');
+		return $db->fetchrow("SELECT * FROM $table WHERE id=?", 'Board', array($id));
 	}
 	function find_by_name($name) {
 		$db = get_conn();
 		$table = get_table_name('board');
-		return $db->fetchrow("SELECT * FROM $table WHERE name='$name'", 'Board');
+		return $db->fetchrow("SELECT * FROM $table WHERE name=?", 'Board', array($name));
 	}
 	function find_all() {
 		$db = get_conn();
@@ -41,21 +41,29 @@ class Board extends Model {
 	}
 	function get_condition() {
 		$cond = "p.board_id=$this->id";
+		$data = array();
 		if ($text = $this->search['text']) {
+			$text = '%' . $text . '%';
 			$search = array();
 			if ($this->search['comment']) {
-				$search[] = "(p.id=c.post_id AND c.body LIKE '%$text%')";
+				$search[] = "(p.id=c.post_id AND c.body LIKE ?)";
+				$data[] = $text;
 			}
-			if ($this->search['title'])
-				$search[] = "p.title LIKE '%$text%'";
-			if ($this->search['body'])
-				$search[] = "p.body LIKE '%$text%'";
+			if ($this->search['title']) {
+				$search[] = "p.title LIKE ?";
+				$data[] = $text;
+			}
+			if ($this->search['body']) {
+				$search[] = "p.body LIKE ?";
+				$data[] = $text;
+			}
 			$cond .= " AND (" . implode(" OR ", $search) . ")";
 		}
 		if ($this->search['category']) {
-			$cond .= " AND p.category_id=" . $this->search['category'];
+			$cond .= " AND p.category_id=?";
+			$data[] = $this->search['category'];
 		}
-		return $cond;
+		return $this->db->_q($cond, $data);
 	}
 	function get_posts($offset, $limit) {
 		$where = $this->get_condition();
