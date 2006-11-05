@@ -19,16 +19,12 @@ function get_layout_path($type) {
 
 class MetaRouter extends Router {
 	var $routes = array(
-		'/' => 'main',
 		'/(attachment)/([0-9]+)_.*' => 'controller',
 		'/([a-z]+)(?:/([^/]*))?' => 'controller',
 		'/([a-z]+)/([a-z]+)/(.*)' => 'full'
 	);
 	var $action = 'index';
 
-	function main() {
-		$this->controller = 'blog';
-	}
 	function controller($groups) {
 		@list(, $this->controller, $this->id) = $groups;
 	}
