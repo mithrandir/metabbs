@@ -87,5 +87,10 @@ class Post extends Model {
 	function get_attachment_count() {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->attachment_table WHERE post_id=$this->id");
 	}
+	function delete() {
+		Model::delete();
+		$this->db->query("DELETE FROM $this->comment_table WHERE post_id=$this->id");
+		$this->db->query("DELETE FROM $this->trackback_table WHERE post_id=$this->id");
+	}
 }
 ?>
