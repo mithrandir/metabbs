@@ -4,6 +4,9 @@
 		<? if ($guest || $board->perm_write < $account->level) { ?>
 		<h3>Admin</h3>
 		<ul>
+		<? if ($guest) { ?>
+			<li><?=login()?></li>
+		<? } ?>
 		<? if ($account->is_admin()) { ?>
 			<li><?=admin()?></li>
 		<? } ?>
