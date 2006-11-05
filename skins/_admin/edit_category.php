@@ -12,7 +12,7 @@
 </tr>
 <? } ?>
 </table>
-<form method="post" action="?tab=skin">
+<form method="post" action="?tab=category">
 <p><input type="text" name="categories[]" /> <input type="submit" value="<?=i('Add category')?>" /></p>
 </form>
 </div>

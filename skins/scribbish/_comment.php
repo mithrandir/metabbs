@@ -1,8 +1,8 @@
 <li id="comment_<?=$comment->id?>">
-	<div class="comment">
-	<div class="info">
-		<span class="name"><?=$comment->name?></span>
-		<span class="date"><?=meta_format_date("%Y-%m-%d %H:%M", $comment->created_at)?></span>
+<div class="comment">
+	<div class="author">
+		<cite><?=$comment->name?></cite>
+		<abbr title="<?=meta_format_date_rfc822($comment->created_at)?>"><?=meta_format_date("%Y-%m-%d %H:%M", $comment->created_at)?></abbr>
 		<span class="actions">
 		<? if ($board->perm_comment <= $account->level) { ?>
 			<?=link_to(i('Reply'), $comment, 'reply')?>
@@ -13,11 +13,10 @@
 		<? } ?>
 		</span>
 	</div>
-	<div class="body"><?=format($comment->body)?></div>
-	</div>
-	
+	<div class="content"><?=format($comment->body)?></div>
+</div>
 	<? if ($comment->comments) { apply_filters_array('PostViewComment', $comment->comments); ?>
-	<ul>
+	<ol class="comments">
 	<?
 	$comment_stack[] = $comment;
 	foreach ($comment->comments as $comment) {
@@ -25,6 +24,6 @@
 	}
 	$comment = array_pop($comment_stack);
 	?>
-	</ul>
+	</ol>
 	<? } ?>
 </li>
