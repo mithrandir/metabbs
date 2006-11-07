@@ -32,6 +32,22 @@ class Board extends Model {
 		$table = get_table_name('board');
 		return $db->fetchall("SELECT * FROM $table", 'Board');
 	}
+	function correct_boards_name($boards) {
+		$result = array();
+		foreach($boards as $board) {
+			if(empty($board->name)) {
+				$board->name = "_recovery_".$board->id."_";
+				$new_board = Board::find_by_name($board->id);
+				$new_board->import(get_object_vars($board));
+				if($new_board->validate())
+					$new_board->update();
+				else
+					return false;
+			}
+			array_push($result, $board);
+		}
+		return $result;
+	}
 	function validate() {
 		$_board = Board::find_by_name($this->name);
 		return !$_board->exists();
