@@ -36,13 +36,17 @@ class Board extends Model {
 		$result = array();
 		foreach($boards as $board) {
 			if(empty($board->name)) {
+				$append_number = 1;
 				$board->name = "_recovery_".$board->id."_";
 				$new_board = Board::find_by_name($board->id);
 				$new_board->import(get_object_vars($board));
-				if($new_board->validate())
-					$new_board->update();
-				else
-					return false;
+				$old_name = $board->name;
+				while(!$new_board->validate()) {
+					$board->name = $old_name.$append_number."_";
+					$new_board->import(get_object_vars($board));
+					$append_number++;
+				}
+				$new_board->update();
 			}
 			array_push($result, $board);
 		}
