@@ -16,8 +16,12 @@ function get_skins() {
 if (is_post()) {
 	if ($_GET['tab'] == 'general') {
 		$_board = new Board($_POST['board']);
-		if ($_board->name != $board->name && !$_board->validate()) {
+		if (empty($_board->name)) {
+			$flash = 'Board name is empty.';
+		} else if ($_board->name != $board->name && !$_board->validate()) {
 			$flash = "Board '$_board->name' already exists.";
+		}
+		if (isset($flash)) {
 			$skin = '_admin';
 			$skins = get_skins();
 			render('edit');

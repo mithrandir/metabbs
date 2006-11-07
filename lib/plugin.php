@@ -20,7 +20,6 @@ function register_plugin($name, $description, $init_function, $install_function 
 }
 
 // Filter API
-// TODO: 같은 우선순위에 여러 개 필터가 등록되었을 때
 define('META_FILTER_OVERWRITE', 1);
 define('META_FILTER_PREPEND', 2);
 define('META_FILTER_APPEND', 3);

@@ -11,7 +11,7 @@ function say_hello_handler() {
 	echo "</pre>";
 }
 function collision_test_callback() {
-	echo '<p style="color:red"><big>collision!</big></p>';
+	echo '<!-- collision! -->';
 }
 function say_hello_init() {
 	add_handler('say', 'hello', 'before_say_hello_handler', 'before');
@@ -33,5 +33,5 @@ function say_hello_uninstall() {
 	exit;
 }
 
-register_plugin('SayHello', 'MetaBBS plugin example', 'say_hello_init', 'say_hello_install', 'say_hello_uninstall');
+register_plugin('SayHello', 'MetaBBS plugin example. <strong>for testing purpose only!</strong>', 'say_hello_init', 'say_hello_install', 'say_hello_uninstall');
 ?>

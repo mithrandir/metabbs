@@ -1,17 +1,13 @@
 <?php
+$board = new Board(array('name' => $_POST['name']));
 if (empty($_POST['name'])) {
-	$flash = "Empty board's name.";
-	$boards = Board::find_all();
-	render('index');
+	$flash = "Board name is empty.";
+} else if (!$board->validate()) {
+	$flash = "Board '$board->name' already exists.";
 } else {
-	$board = new Board(array('name' => $_POST['name']));
-	if ($board->validate()) {
-		$board->create();
-		redirect_to(url_for('admin'));
-	} else {
-		$flash = "Board '$board->name' already exists.";
-		$boards = Board::find_all();
-		render('index');
-	}
+	$board->create();
+	redirect_to(url_for('admin'));
 }
+$boards = Board::find_all();
+render('index');
 ?>
