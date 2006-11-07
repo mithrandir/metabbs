@@ -24,7 +24,7 @@ define('META_FILTER_OVERWRITE', 1);
 define('META_FILTER_PREPEND', 2);
 define('META_FILTER_APPEND', 3);
 define('META_FILTER_CALLBACK', 4);
-function add_filter($event, $callback, $priority, $collision = META_FILTER_OVERWRITE, $callback = null) {
+function add_filter($event, $callback, $priority, $collision = META_FILTER_OVERWRITE, $fallback = null) {
 	global $filters;
 	if (@array_key_exists($priority, $filters[$event])) {
 		switch ($collision) {
@@ -40,7 +40,7 @@ function add_filter($event, $callback, $priority, $collision = META_FILTER_OVERW
 				add_filter($event, $callback, $priority, $collision);
 			break;
 			case META_FILTER_CALLBACK:
-				if ($callback) $callback();
+				if ($fallback) $fallback();
 			break;
 		}
 	} else {
