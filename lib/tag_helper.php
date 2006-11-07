@@ -58,8 +58,10 @@ function link_to_category($category) {
 	}
 }
 
-function image_tag($src, $alt = "") {
-    return inline_tag("img", array("src" => $src, "alt" => $alt));
+function image_tag($src, $alt = "", $options = array()) {
+	$options['src'] = $src;
+	$options['alt'] = $alt;
+    return inline_tag("img", $options);
 }
 
 function label_tag($label, $model, $field) {
