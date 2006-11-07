@@ -24,6 +24,7 @@ function say_hello_init() {
 	add_filter('collision-test', 'test_prepend', 10, META_FILTER_PREPEND);
 	add_filter('collision-test', 'test_append', 10, META_FILTER_APPEND);
 	add_filter('collision-test', 'test_callback', 10, META_FILTER_CALLBACK, 'collision_test_callback');
+	add_admin_menu(url_for('say', 'hello'), 'Plugin Test');
 }
 function say_hello_install() {
 	echo 'installation callback test<br />';

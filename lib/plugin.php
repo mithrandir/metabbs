@@ -2,6 +2,7 @@
 $filters = array();
 $handlers = array();
 $__plugins = array();
+$__admin_menu = array();
 
 function register_plugin($name, $description, $init_function, $settings_function = '', $install_function = '', $uninstall_function = '') {
 	global $__plugins;
@@ -18,6 +19,10 @@ function register_plugin($name, $description, $init_function, $settings_function
 	}
 	$__plugins[$name] = $plugin;
 	ksort($__plugins);
+}
+function add_admin_menu($url, $text) {
+	global $__admin_menu;
+	$__admin_menu[] = link_text($url, $text);
 }
 
 // Filter API

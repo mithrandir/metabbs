@@ -15,6 +15,7 @@
 <?=link_to(i('Settings'), 'admin', 'settings')?> |
 <?=link_to(i('Plugins'), 'admin', 'plugins')?> |
 <?=link_to(i('Uninstall'), 'admin', 'uninstall')?> |
+<? foreach ($__admin_menu as $item) echo $item . ' | '; ?>
 <a href="<?=url_with_referer_for('account', 'logout')?>"><?=i('Logout')?> &raquo;</a></p>
 </div>
 <div id="body">
