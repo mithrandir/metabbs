@@ -21,9 +21,32 @@ function register_plugin($name, $description, $init_function, $install_function 
 
 // Filter API
 // TODO: 같은 우선순위에 여러 개 필터가 등록되었을 때
-function add_filter($event, $callback, $priority) {
+define('META_FILTER_OVERWRITE', 1);
+define('META_FILTER_PREPEND', 2);
+define('META_FILTER_APPEND', 3);
+define('META_FILTER_CALLBACK', 4);
+function add_filter($event, $callback, $priority, $collision = META_FILTER_OVERWRITE, $callback = null) {
 	global $filters;
-	$filters[$event][$priority] = $callback;
+	if (@array_key_exists($priority, $filters[$event])) {
+		switch ($collision) {
+			case META_FILTER_OVERWRITE:
+				$filters[$event][$priority] = $callback;
+			break;
+			case META_FILTER_PREPEND:
+				$priority--;
+				add_filter($event, $callback, $priority, $collision);
+			break;
+			case META_FILTER_APPEND:
+				$priority++;
+				add_filter($event, $callback, $priority, $collision);
+			break;
+			case META_FILTER_CALLBACK:
+				if ($callback) $callback();
+			break;
+		}
+	} else {
+		$filters[$event][$priority] = $callback;
+	}
 }
 function remove_filter($event, $callback) {
 	global $filters;
