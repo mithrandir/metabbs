@@ -26,7 +26,11 @@ function user_info_level_icon_filter(&$user) {
 	$user->name = prepend_level_icon($user->level, htmlspecialchars($user->name));
 }
 
-add_filter('PostView', 'prepend_level_icon_filter', 50);
-add_filter('PostViewComment', 'prepend_level_icon_filter', 50);
-add_filter('UserInfo', 'user_info_level_icon_filter', 50);
+function level_icon_init() {
+	add_filter('PostView', 'prepend_level_icon_filter', 50);
+	add_filter('PostViewComment', 'prepend_level_icon_filter', 50);
+	add_filter('UserInfo', 'user_info_level_icon_filter', 50);
+}
+
+register_plugin('LevelIcon', 'Display a level icon', 'level_icon_init');
 ?>

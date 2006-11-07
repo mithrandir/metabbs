@@ -30,15 +30,13 @@ function get_plugins() {
 	$dp = opendir(METABBS_DIR . '/plugins');
 	$plugins = array();
 	while ($file = readdir($dp)) {
-		list($name, $ext) = explode('.', $file);
+		@list($name, $ext) = explode('.', $file);
 		if ($ext == 'php') {
-			$plugin = Plugin::find_by_name($name);
-			$plugin->name = $name;
-			$plugins[] = $plugin;
+			include_once(METABBS_DIR . '/plugins/' . $file);
 		}
 	}
 	closedir($dp);
-	return $plugins;
+	return $GLOBALS['__plugins'];
 }
 function get_enabled_plugins() {
 	$db = get_conn();

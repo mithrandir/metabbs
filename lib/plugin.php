@@ -1,6 +1,23 @@
 <?php
 $filters = array();
 $handlers = array();
+$__plugins = array();
+
+function register_plugin($name, $description, $init_function, $install_function = '', $uninstall_function = '') {
+	global $__plugins;
+	$plugin = Plugin::find_by_name($name);
+	$plugin->name = $name;
+	$plugin->description = $description;
+	$plugin->init_function = $init_function;
+	$plugin->install_function = $install_function;
+	$plugin->uninstall_function = $uninstall_function;
+	if ($plugin->enabled) {
+		$func = $plugin->init_function;
+		$func();
+	}
+	$__plugins[$name] = $plugin;
+	ksort($__plugins);
+}
 
 // Filter API
 // TODO: 같은 우선순위에 여러 개 필터가 등록되었을 때
