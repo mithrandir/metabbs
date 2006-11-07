@@ -11,7 +11,10 @@ function say_hello_handler() {
 	echo "</pre>";
 }
 function collision_test_callback() {
-	echo '<!-- collision! -->';
+	global $controller, $action;
+	if ($controller == 'say' && $action == 'hello') {
+		echo '<!-- collision! -->';
+	}
 }
 function say_hello_init() {
 	add_handler('say', 'hello', 'before_say_hello_handler', 'before');
