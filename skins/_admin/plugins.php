@@ -9,7 +9,19 @@
 <tr>
 	<td><?=$plugin->name?><br /><small><?=$plugin->description?></small></td>
 	<td class="status <?=$plugin->enabled ? 'enabled' : 'disabled'?>"><?=i($plugin->enabled ? 'Enabled' : 'Disabled')?></td>
-	<td class="actions"><?=$plugin->enabled ? link_to(i('Disable'), $plugin, 'disable') : link_to(i('Enable'), $plugin, 'enable')?> <? if ($plugin->exists()) { ?>| <a href="<?=url_for($plugin, 'uninstall')?>" onclick="return confirm('<?=i('Are you sure?')?>')"><?=i('Uninstall')?></a><? } ?></td>
+	<td class="actions">
+	<? if ($plugin->enabled) { ?>
+	<? if ($plugin->settings_function) { ?>
+	<?=link_to(i('Edit Settings'), $plugin, 'settings')?> |
+	<? } ?>
+	<?=link_to(i('Disable'), $plugin, 'disable')?>
+	<? } else { ?>
+	<?=link_to(i('Enable'), $plugin, 'enable')?>
+	<? } ?>
+	<? if ($plugin->exists()) { ?>
+	| <a href="<?=url_for($plugin, 'uninstall')?>" onclick="return confirm('<?=i('Are you sure?')?>')"><?=i('Uninstall')?></a>
+	<? } ?>
+	</td>
 </tr>
 <? } ?>
 </table>

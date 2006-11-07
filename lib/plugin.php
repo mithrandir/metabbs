@@ -3,7 +3,7 @@ $filters = array();
 $handlers = array();
 $__plugins = array();
 
-function register_plugin($name, $description, $init_function, $install_function = '', $uninstall_function = '') {
+function register_plugin($name, $description, $init_function, $settings_function = '', $install_function = '', $uninstall_function = '') {
 	global $__plugins;
 	$plugin = Plugin::find_by_name($name);
 	$plugin->name = $name;
@@ -11,6 +11,7 @@ function register_plugin($name, $description, $init_function, $install_function 
 	$plugin->init_function = $init_function;
 	$plugin->install_function = $install_function;
 	$plugin->uninstall_function = $uninstall_function;
+	$plugin->settings_function = $settings_function;
 	if ($plugin->enabled) {
 		$func = $plugin->init_function;
 		$func();

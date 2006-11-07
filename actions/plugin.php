@@ -4,4 +4,5 @@ if (!$account->is_admin()) {
 }
 include_once('plugins/'.$id.'.php');
 $plugin = $__plugins[$id];
+$skin = '_admin';
 ?>
