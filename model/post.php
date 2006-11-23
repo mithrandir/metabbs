@@ -92,5 +92,9 @@ class Post extends Model {
 		$this->db->query("DELETE FROM $this->comment_table WHERE post_id=$this->id");
 		$this->db->query("DELETE FROM $this->trackback_table WHERE post_id=$this->id");
 	}
+	function update_view_count() {
+		$this->views++;
+		$this->db->query("UPDATE $this->table SET views=views+1 WHERE id=$this->id");
+	}
 }
 ?>

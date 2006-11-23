@@ -39,6 +39,7 @@ a#rss-feed:hover { background-color: #fff; }
 }
 #posts td { padding: 0.5em; border-bottom: 1px solid #ddd; }
 .comment-count { font-size: x-small; }
+.views { font-size: x-small; color: #999; }
 #signature { font-size: 90%; border-top: 1px solid #ccc; width: 50em; }
 
 td.name, td.date { text-align: center; }

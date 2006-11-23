@@ -5,6 +5,13 @@ if ($board->perm_read > $account->level) {
 if (isset($_GET['search'])) {
 	$board->search = array_merge($board->search, $_GET['search']);
 }
+$seen_posts = explode(',', cookie_get('seen_posts'));
+if (!in_array($post->id, $seen_posts)) {
+	$post->update_view_count();
+	$seen_posts[] = $post->id;
+	cookie_register('seen_posts', implode(',', $seen_posts));
+}
+
 $comments = $post->get_comments();
 $attachments = $post->get_attachments();
 $trackbacks = $post->get_trackbacks();
