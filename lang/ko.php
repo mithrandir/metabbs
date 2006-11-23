@@ -85,3 +85,4 @@ Edit Comment=댓글 고치기
 Rename=이름 바꾸기
 Delete selected posts=선택된 글 지우기
 Reply=답글 달기
+%d views=조회수 %d

@@ -3,6 +3,7 @@
 <div class="post-title">
     <div class="info">
 		<?=i('Posted by %s at %s', $post->name, meta_format_date("%Y-%m-%d %H:%M:%S", $post->created_at))?>
+		| <?=i('%d views', $post->views)?>
 <? if ($board->use_category && $post->category_id) { ?>
 		| <?=i('Category')?>: <?=link_to_category($post->get_category())?>
 <? } ?></div>

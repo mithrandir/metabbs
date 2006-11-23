@@ -5,16 +5,16 @@ function front_page_init() {
 
 function parse_expr($matches) {
 	$parts = explode(' ', $matches[1]);
-	$renderer = array_shift($parts);
+	$component = array_shift($parts);
 	$options = array();
 	foreach ($parts as $part) {
 		list($key, $value) = explode('=', $part, 2);
 		$options[$key] = $value;
 	}
-	if (function_exists('render_' . $renderer))
-		return call_user_func('render_' . $renderer, $options);
+	if (function_exists('render_' . $component))
+		return call_user_func('render_' . $component, $options);
 	else
-		return "<br />Error: unknown renderer '$renderer'";
+		trigger_error("unknown component '$component'", E_USER_WARNING);
 }
 function parse_template($str) {
 	return preg_replace_callback('/\{\{(.+?)\}\}/', 'parse_expr', $str);
@@ -31,7 +31,7 @@ function front_page_setup() {
 		fclose($fp);
 	}
 	echo '<form method="post" action="?">';
-	echo '<textarea name="template" cols="50" rows="15">';
+	echo '<textarea name="template" cols="60" rows="15" style="font-size: small">';
 	readfile('data/front.html');
 	echo '</textarea>';
 	echo '<p><input type="submit" value="Save" /></p>';
