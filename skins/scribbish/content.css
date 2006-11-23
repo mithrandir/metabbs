@@ -409,5 +409,7 @@ form textarea {
 #post_category_id { margin-left: 1em; }
 #post_body { height: 250px; }
 
-#pages { margin: 0; padding: 0; }
-#pages li { list-style: none; margin: 0; padding: 0; }
+.pagination { margin-bottom: 1em; }
+#pages { margin: 0 !important; padding: 0 !important; display: inline; }
+#pages li { margin: 0; padding-right: 0.5em; display: inline; }
+#pages li.here { font-weight: bold; }

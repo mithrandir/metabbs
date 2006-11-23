@@ -2,4 +2,4 @@
 <? include ($_skin_dir . '/_post.php'); ?>
 <? } ?>
 
-<p class="pagination"><? include($_skin_dir . '/_pagination.php'); ?></p>
+<div class="pagination">Older posts: <? print_pages($board); ?></div>
