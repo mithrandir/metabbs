@@ -18,10 +18,13 @@ function simple_spam_filter($model) {
 	}
 }
 
-function simple_spam_init() {
-	add_filter('PostSave', 'simple_spam_filter', 10);
-	add_filter('PostComment', 'simple_spam_filter', 10);
+class SimpleSpam extends Plugin {
+	var $description = 'Block posts containing bad words.';
+	function on_init() {
+		add_filter('PostSave', 'simple_spam_filter', 10);
+		add_filter('PostComment', 'simple_spam_filter', 10);
+	}
 }
 
-register_plugin('SimpleSpam', 'Block posts containing bad words.', 'simple_spam_init');
+register_plugin('SimpleSpam');
 ?>

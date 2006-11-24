@@ -7,11 +7,11 @@
 </tr>
 <? foreach ($plugins as $plugin) { ?>
 <tr>
-	<td><?=$plugin->name?><br /><small><?=$plugin->description?></small></td>
+	<td><?=$plugin->get_plugin_name()?><br /><small><?=$plugin->description?></small></td>
 	<td class="status <?=$plugin->enabled ? 'enabled' : 'disabled'?>"><?=i($plugin->enabled ? 'Enabled' : 'Disabled')?></td>
 	<td class="actions">
 	<? if ($plugin->enabled) { ?>
-	<? if ($plugin->settings_function) { ?>
+	<? if (method_exists($plugin, 'on_settings')) { ?>
 	<?=link_to(i('Edit Settings'), $plugin, 'settings')?> |
 	<? } ?>
 	<?=link_to(i('Disable'), $plugin, 'disable')?>

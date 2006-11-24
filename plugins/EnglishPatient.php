@@ -24,11 +24,14 @@ function english_patient_post_filter($model) {
 	}
 }
 
-function english_patient_init() {
-	add_filter('PostTrackback', 'english_patient_tb_filter', 10);
-	add_filter('PostComment', 'english_patient_cmt_filter', 20);
-	add_filter('PostSave', 'english_patient_post_filter', 20);
+class EnglishPatient extends Plugin {
+	var $plugin_name = '영어 환자';
+	var $description = 'ASCII 문자로만 작성된 글/댓글/트랙백을 막습니다.'; 
+	function on_init() {
+		add_filter('PostTrackback', 'english_patient_tb_filter', 10);
+		add_filter('PostComment', 'english_patient_cmt_filter', 20);
+		add_filter('PostSave', 'english_patient_post_filter', 20);
+	}
 }
-
-register_plugin('EnglishPatient', 'ASCII 문자로만 작성된 글/댓글/트랙백을 막습니다.', 'english_patient_init');
+register_plugin('EnglishPatient');
 ?>

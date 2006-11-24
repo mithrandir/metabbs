@@ -1,6 +1,5 @@
 <?php
-$func = $plugin->settings_function;
-if ($func) {
-	$func();
+if (method_exists($plugin, 'on_settings')) {
+	$plugin->on_settings();
 }
 ?>

@@ -2,10 +2,7 @@
 if (!$plugin->exists()) {
 	$plugin->enabled = 1;
 	$plugin->create();
-	if ($plugin->install_function) {
-		$func = $plugin->install_function;
-		$func();
-	}
+	$plugin->on_install();
 } else {
 	$plugin->enable();
 }

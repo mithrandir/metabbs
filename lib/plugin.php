@@ -4,18 +4,11 @@ $handlers = array();
 $__plugins = array();
 $__admin_menu = array();
 
-function register_plugin($name, $description, $init_function, $settings_function = '', $install_function = '', $uninstall_function = '') {
+function register_plugin($name) {
 	global $__plugins;
 	$plugin = Plugin::find_by_name($name);
-	$plugin->name = $name;
-	$plugin->description = $description;
-	$plugin->init_function = $init_function;
-	$plugin->install_function = $install_function;
-	$plugin->uninstall_function = $uninstall_function;
-	$plugin->settings_function = $settings_function;
 	if ($plugin->enabled) {
-		$func = $plugin->init_function;
-		$func();
+		$plugin->on_init();
 	}
 	$__plugins[$name] = $plugin;
 	ksort($__plugins);
@@ -97,6 +90,6 @@ function run_before_handler($controller, $action) {
 }
 
 foreach (get_enabled_plugins() as $plugin) {
-	include_once("plugins/$plugin->name.php");
+	include_once("plugins/".$plugin->name.".php");
 }
 ?>
