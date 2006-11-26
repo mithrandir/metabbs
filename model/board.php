@@ -83,15 +83,16 @@ class Board extends Model {
 			$cond .= " AND p.category_id=?";
 			$data[] = $this->search['category'];
 		}
-		return $this->db->_q($cond, $data);
+		$this->search_data = $data;
+		return $cond;
 	}
 	function get_posts($offset, $limit) {
 		$where = $this->get_condition();
-		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->post_table as p WHERE $where ORDER BY type DESC, id DESC LIMIT $offset, $limit", 'Post');
+		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->post_table as p WHERE $where ORDER BY type DESC, id DESC LIMIT $offset, $limit", 'Post', $this->search_data);
 	}
 	function search_posts_with_comment($offset, $limit) {
 		$where = $this->get_condition();
-		return $this->db->fetchall("SELECT p.*, p.created_at+0 as created_at FROM $this->post_table as p, $this->comment_table as c WHERE $where GROUP BY p.id ORDER BY p.type DESC, p.id DESC LIMIT $offset, $limit", 'Post');
+		return $this->db->fetchall("SELECT p.*, p.created_at+0 as created_at FROM $this->post_table as p, $this->comment_table as c WHERE $where GROUP BY p.id ORDER BY p.type DESC, p.id DESC LIMIT $offset, $limit", 'Post', $this->search_data);
 	}
 	function get_posts_in_page($page, $method = 'get_posts') {
 		return $this->$method(($page - 1) * $this->posts_per_page, $this->posts_per_page);

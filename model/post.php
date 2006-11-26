@@ -46,7 +46,7 @@ class Post extends Model {
 		return $this->category_id ? Category::find($this->category_id) : null;
 	}
 	function get_comments() {
-		$_comments = $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->comment_table WHERE post_id=$this->id ORDER BY id", 'Comment', null, true);
+		$_comments = $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->comment_table WHERE post_id=$this->id ORDER BY id", 'Comment', array(), true);
 		$comments = array();
 		foreach ($_comments as $id => $comment) {
 			if ($comment->parent) {
