@@ -138,9 +138,7 @@ ul.tabs a {
 	padding: 3px;
 }
 
-#skins-current img, #skins-available img { border: 3px solid #ccc; }
-.skins-item h3 { font-size: 1.1em; }
-.skins-item { float: left; margin: 5px; }
+#skin ul { list-style: none; margin: 0 0 1em 0; padding: 0; }
 
 #plugins dl { margin: 0; }
 #plugins dt { float: none; }
