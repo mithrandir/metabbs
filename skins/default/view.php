@@ -1,6 +1,6 @@
 <script type="text/javascript">
 function openPlayer(id, url) {
-	$(id).innerHTML = '<object type="application/x-shockwave-flash" data="/player.swf" width="290" height="24"><param name="movie" value="/player.swf" /><param name="FlashVars" value="autostart=yes&amp;soundFile='+url+'" /></object>';
+	$(id).innerHTML = '<object type="application/x-shockwave-flash" data="<?=$skin_dir?>/player.swf" width="290" height="24"><param name="movie" value="<?=$skin_dir?>/player.swf" /><param name="FlashVars" value="autostart=yes&amp;soundFile='+url+'" /></object>';
 }
 </script>
 <div id="post">
