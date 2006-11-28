@@ -55,7 +55,7 @@ function page_index() {
 <hr />
 <p>
 <?=link_to(i('Edit'), $page, 'edit')?> |
-Last edited <?=$page->created_at?> by <?=link_to_user($page->get_user())?>
+Last edited <?=$page->created_at?> by <?=$page->user_id ? link_to_user($page->get_user()) : 'Anonymous'?>
 </p>
 <?php
 }
