@@ -24,7 +24,13 @@ function is_image($path) {
 	return ($ext == '.png' || $ext == '.gif' || $ext == '.jpg');
 }
 function format($str) {
-	return '<p>'.preg_replace(array("/ {2}/", "/\n /", "/\r?\n/", "/<br \/><br \/>/"), array("&nbsp;&nbsp;", "\n&nbsp;", "<br />", "</p><p>"), autolink(htmlspecialchars($str))).'</p>';
+	//return '<p>'.preg_replace(array("/ {2}/", "/\n /", "/\r?\n/", "/<br \/><br \/>/"), array("&nbsp;&nbsp;", "\n&nbsp;", "<br />", "</p><p>"), autolink(htmlspecialchars($str))).'</p>';
+	@list($formatline, $body) = explode("\n", $str, 2);
+	if (rtrim($formatline) == '#format html') {
+		return $body;
+	} else {
+		return '<p>' . autolink(nl2br(htmlspecialchars($str))) . '</p>';
+	}
 }
 function print_nav($nav = null, $separator = ' | ') {
 	echo implode($separator, $nav === null ? $GLOBALS['nav'] : $nav);

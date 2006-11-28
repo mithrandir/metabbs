@@ -19,6 +19,7 @@ function get_layout_path($type) {
 
 class MetaRouter extends Router {
 	var $routes = array(
+		'/(blog)/(rss)2\.php' => 'full',
 		'/(attachment)/([0-9]+)_.*' => 'controller',
 		'/([a-z]+)(?:/([^/]*))?' => 'controller',
 		'/([a-z]+)/([a-z]+)/(.*)' => 'full'
