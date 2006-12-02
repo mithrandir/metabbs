@@ -15,13 +15,15 @@ function get_skins() {
 }
 function get_styles($skin) {
 	$skins = array();
-	$dir = opendir('skins/'.$skin.'/styles');
-	while ($file = readdir($dir)) {
-		if ($file[0] != '.') {
-			$skins[] = preg_replace('/\.css$/', '', $file);
+	$dir = @opendir('skins/'.$skin.'/styles');
+	if ($dir) {
+		while ($file = readdir($dir)) {
+			if ($file[0] != '.') {
+				$skins[] = preg_replace('/\.css$/', '', $file);
+			}
 		}
+		closedir($dir);
 	}
-	closedir($dir);
 	return $skins;
 }
 if (is_post()) {
