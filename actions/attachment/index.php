@@ -13,6 +13,8 @@ header('Content-Disposition: attachment; filename="' . $attachment->filename . '
 header('Content-Transfer-Encoding: binary');
 header('Pragma: no-cache');
 header('Expires: 0');
-readfile($filename);
+$fp = fopen($filename, 'rb');
+fpassthru($fp);
+fclose($fp);
 exit;
 ?>
