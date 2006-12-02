@@ -9,12 +9,13 @@ header('Content-Length: ' . filesize($filename));
 if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false) {
 	$attachment->filename = urlencode($attachment->filename);
 }
-header('Content-Disposition: attachment; filename="' . $attachment->filename . '"');
+header('Content-Disposition: inline; filename="' . $attachment->filename . '"');
 header('Content-Transfer-Encoding: binary');
-header('Pragma: no-cache');
-header('Expires: 0');
+header('Last-Modified: ' . meta_format_date_RFC822(filemtime($filename)));
 $fp = fopen($filename, 'rb');
-fpassthru($fp);
+while (!feof($fp)) {
+	echo fread($fp, 4096);
+}
 fclose($fp);
 exit;
 ?>
