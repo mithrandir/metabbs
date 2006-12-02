@@ -2,6 +2,7 @@
 class Page extends Model {
 	var $model = 'page';
 
+	var $title;
 	var $body;
 	
 	function _init() {
@@ -41,6 +42,7 @@ function format_wiki($body) {
 	return $body;
 }
 function print_wiki_title($page) {
+	print_nav(get_account_control($GLOBALS['account']));
 	echo '<h1><small>'.link_to('Wiki', 'wiki').' &raquo; </small>'.$page->title.'</h1>';
 }
 function page_index() {
@@ -88,6 +90,7 @@ class Wiki extends Plugin {
 		add_handler('wiki', 'index', 'wiki_index');
 		add_handler('page', 'index', 'page_index');
 		add_handler('page', 'edit', 'page_edit');
+		add_admin_menu(url_for('wiki'), 'Wiki');
 	}
 	function on_install() {
 		$t = new Table('page');
