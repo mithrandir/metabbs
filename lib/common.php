@@ -18,7 +18,7 @@ if (!file_exists(METABBS_DIR . '/metabbs.conf.php')) {
 	exit;
 }
 
-ini_set("include_path", METABBS_DIR . '/lib' . PATH_SEPARATOR . METABBS_DIR . PATH_SEPARATOR . ini_get("include_path"));
+ini_set("include_path", METABBS_DIR . PATH_SEPARATOR . METABBS_DIR . '/lib' . PATH_SEPARATOR . ini_get("include_path"));
 
 function addslashes_deep($v) {
 	return is_array($v) ? array_map('addslashes_deep', $v) : addslashes($v);
