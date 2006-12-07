@@ -16,7 +16,7 @@ if ($board->search['comment']) {
 	$posts = $board->get_posts_in_page(get_requested_page());
 }
 
-apply_filters_array('PostView', $posts);
+apply_filters_array('PostList', $posts);
 
 $posts_count = $board->get_post_count();
 $link_rss = url_for($board, 'rss');

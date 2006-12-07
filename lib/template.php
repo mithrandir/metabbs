@@ -23,14 +23,8 @@ function is_image($path) {
 	$ext = strtolower(strrchr($path, '.'));
 	return ($ext == '.png' || $ext == '.gif' || $ext == '.jpg');
 }
-function format($str) {
-	//return '<p>'.preg_replace(array("/ {2}/", "/\n /", "/\r?\n/", "/<br \/><br \/>/"), array("&nbsp;&nbsp;", "\n&nbsp;", "<br />", "</p><p>"), autolink(htmlspecialchars($str))).'</p>';
-	@list($formatline, $body) = explode("\n", $str, 2);
-	if (rtrim($formatline) == '#format html') {
-		return $body;
-	} else {
-		return '<p>' . autolink(nl2br(htmlspecialchars($str))) . '</p>';
-	}
+function format($str) { // deprecated
+	return $str;
 }
 function print_nav($nav = null, $separator = ' | ') {
 	echo implode($separator, $nav === null ? $GLOBALS['nav'] : $nav);

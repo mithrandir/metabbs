@@ -89,7 +89,8 @@ function run_before_handler($controller, $action) {
 	}
 }
 
+include_once('plugins/_base.php'); // import base plugin
 foreach (get_enabled_plugins() as $plugin) {
-	include_once("plugins/".$plugin->name.".php");
+	include_once("plugins/$plugin->name.php");
 }
 ?>

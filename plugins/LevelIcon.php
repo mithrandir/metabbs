@@ -30,6 +30,7 @@ class LevelIcon extends Plugin {
 	var $description = 'Display a level icon';
 	function on_init() {
 		add_filter('PostView', 'prepend_level_icon_filter', 50);
+		add_filter('PostList', 'prepend_level_icon_filter', 50);
 		add_filter('PostViewComment', 'prepend_level_icon_filter', 50);
 		add_filter('UserInfo', 'user_info_level_icon_filter', 50);
 	}
