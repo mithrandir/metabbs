@@ -19,7 +19,7 @@
 
 <? if ($board->use_attachment) { ?>
 <h3><?=i('Attachments')?> <span class="info"><a href="#" onclick="addFileEntry(); return false">+ <?=i('Add file...')?></a></span></h3>
-<p>Max upload size: <?=ini_get('upload_max_filesize')?></p>
+<p>Max upload size: <?=get_upload_size_limit()?></p>
 <ol id="uploads">
 <? if ($post->exists()) { ?>
 <? foreach ($post->get_attachments() as $attachment) { ?>

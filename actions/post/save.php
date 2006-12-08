@@ -2,9 +2,11 @@
 if (!defined('SECURITY')) {
 	return;
 }
+$limit = get_upload_size_limit();
+
 // If the size of post data is greater than post_max_size, the $_POST and $_FILES superglobals are empty. (see http://kr.php.net/manual/en/ini.core.php#ini.post-max-size)
 if (empty($_POST) && empty($_FILES)) {
-	print_notice('Max upload size exceeded', 'Please upload files smaller than ' . ini_get('post_max_size') . '.');
+	print_notice('Max upload size exceeded', 'Please upload files smaller than ' . $limit . '.');
 }
 
 if (!$account->is_guest()) {
@@ -21,7 +23,7 @@ if ($board->use_attachment && isset($_FILES['upload'])) {
 	$attachments = array();
 	foreach ($uploads['name'] as $key => $filename) {
 		if (!$filename) continue;
-		if ($uploads['size'][$key] == 0) print_notice('Max upload size exceeded', 'Please upload files smaller than ' . ini_get('upload_max_filesize') . '.');
+		if ($uploads['size'][$key] == 0) print_notice('Max upload size exceeded', 'Please upload files smaller than ' . $limit . '.');
 		$attachments[] = new Attachment(array('filename' => $filename, 'tmp_name' => $uploads['tmp_name'][$key]));
 	}
 }
