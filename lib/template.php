@@ -23,8 +23,11 @@ function is_image($path) {
 	$ext = strtolower(strrchr($path, '.'));
 	return ($ext == '.png' || $ext == '.gif' || $ext == '.jpg');
 }
-function format($str) { // deprecated
+function format($str) { // deprecated. use format_plain instead
 	return $str;
+}
+function format_plain($text) {
+	return '<p>'.autolink(nl2br(htmlspecialchars($text))).'</p>';
 }
 function print_nav($nav = null, $separator = ' | ') {
 	echo implode($separator, $nav === null ? $GLOBALS['nav'] : $nav);
