@@ -17,17 +17,18 @@ function openPlayer(id, url) {
 
 <div id="attachments">
 <ul>
-<? foreach ($attachments as $attachment) { ?>
+<? foreach ($attachments as $attachment): ?>
 <? if (!$attachment->file_exists()) { ?>
 	<li>Attachment: <del><?=$attachment->filename?></del></li>
-<? } else if ($attachment->is_image()) { ?>
-	<li><img src="<?=url_for($attachment)?>" alt="<?=$attachment->filename?>" /></li>
-<? } else if ($attachment->is_music()) { ?>
-	<li><?=$attachment->filename?>: <?=link_to('Download', $attachment)?> or <a href="<?=url_for($attachment)?>" onclick="openPlayer('player-<?=$attachment->id?>', this.href); return false">Listen</a><div id="player-<?=$attachment->id?>"></div></li>
 <? } else { ?>
-	<li>Attachment: <?=link_to($attachment->filename, $attachment)?> (<?=human_readable_size($attachment->get_size())?>)</li>
+	<li>Attachment: <?=link_to($attachment->filename, $attachment)?> (<?=human_readable_size($attachment->get_size())?>)
+<? if ($attachment->is_image()) { ?>
+	<br /><img src="<?=url_for($attachment)?>" alt="<?=$attachment->filename?>" />
+<? } else if ($attachment->is_music()) { ?>
+	<a href="<?=url_for($attachment)?>" onclick="openPlayer('player-<?=$attachment->id?>', this.href); return false">Listen</a><div id="player-<?=$attachment->id?>"></div>
 <? } ?>
-<? } ?>
+	</li>
+<? } endforeach; ?>
 </ul>
 </div>
 
