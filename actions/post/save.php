@@ -2,6 +2,11 @@
 if (!defined('SECURITY')) {
 	return;
 }
+// If the size of post data is greater than post_max_size, the $_POST and $_FILES superglobals are empty. (see http://kr.php.net/manual/en/ini.core.php#ini.post-max-size)
+if (empty($_POST) && empty($_FILES)) {
+	print_notice('Max upload size exceeded', 'Please upload files smaller than ' . ini_get('post_max_size') . '.');
+}
+
 if (!$account->is_guest()) {
 	$post->user_id = $account->id;
 	$post->name = $account->name;
