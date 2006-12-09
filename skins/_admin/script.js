@@ -45,6 +45,12 @@ RemoteForm.prototype.serialize = function () {
 	return parts.join('&');
 }
 function addNewBoard(form) {
+	if (!form.name.value) {
+		form.name.className = 'empty';
+		return false;
+	} else {
+		form.name.className = '';
+	}
 	var rf = new RemoteForm(form);
 	rf.onComplete = function () {
 		var result = this.xhr.responseText;

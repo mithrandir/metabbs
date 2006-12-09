@@ -147,3 +147,5 @@ ul.tabs a {
 .status { width: 5em; text-align: center; }
 td.enabled { background-color: lightgreen; }
 td.disabled { background-color: pink; }
+
+.empty { border: 2px solid red; }
