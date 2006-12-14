@@ -91,9 +91,9 @@ function run_before_handler($controller, $action) {
 
 include_once('plugins/_base.php'); // import base plugin
 foreach (get_enabled_plugins() as $plugin) {
-	$path = "lib/plugins/$plugin->name.php";
+	$path = "plugins/$plugin->name.php";
 	if (file_exists($path)) {
-		include_once($path);
+		include($path);
 	}
 }
 ?>
