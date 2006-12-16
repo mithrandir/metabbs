@@ -3,7 +3,7 @@ function meta_parse_date($now) {
 	return mktime((int)substr($now, 8, 2), (int)substr($now, 10, 2), (int)substr($now, 12, 2), (int)substr($now, 4, 2), (int)substr($now, 6, 2), (int)substr($now, 0, 4));
 }
 function meta_format_date($format, $now) {
-	return strftime($format, (is_string($now) ? meta_parse_date($now) : $now));
+	return strftime($format, meta_parse_date($now));
 }
 function meta_format_date_RFC822($now) {
 	return date('r', (is_string($now) ? meta_parse_date($now) : $now));
@@ -23,8 +23,11 @@ function is_image($path) {
 	$ext = strtolower(strrchr($path, '.'));
 	return ($ext == '.png' || $ext == '.gif' || $ext == '.jpg');
 }
-function format($str) {
-	return '<p>'.preg_replace(array("/ {2}/", "/\n /", "/\r?\n/", "/<br \/><br \/>/"), array("&nbsp;&nbsp;", "\n&nbsp;", "<br />", "</p><p>"), autolink(htmlspecialchars($str))).'</p>';
+function format($str) { // deprecated. use format_plain instead
+	return $str;
+}
+function format_plain($text) {
+	return '<p>'.autolink(nl2br(htmlspecialchars($text))).'</p>';
 }
 function print_nav($nav = null, $separator = ' | ') {
 	echo implode($separator, $nav === null ? $GLOBALS['nav'] : $nav);

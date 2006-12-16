@@ -1,3 +1,8 @@
+<script type="text/javascript">
+function openPlayer(id, url) {
+	$(id).innerHTML = '<object type="application/x-shockwave-flash" data="<?=$skin_dir?>/player.swf" width="290" height="24"><param name="movie" value="<?=$skin_dir?>/player.swf" /><param name="FlashVars" value="autostart=yes&amp;soundFile='+url+'" /></object>';
+}
+</script>
 <div id="post">
 
 <div class="post-title">
@@ -12,15 +17,18 @@
 
 <div id="attachments">
 <ul>
-<? foreach ($attachments as $attachment) { ?>
+<? foreach ($attachments as $attachment): ?>
 <? if (!$attachment->file_exists()) { ?>
 	<li>Attachment: <del><?=$attachment->filename?></del></li>
-<? } else if ($attachment->is_image()) { ?>
-	<li><img src="<?=url_for($attachment)?>" alt="<?=$attachment->filename?>" /></li>
 <? } else { ?>
-	<li>Attachment: <?=link_to($attachment->filename, $attachment)?> (<?=human_readable_size($attachment->get_size())?>)</li>
+	<li>Attachment: <?=link_to($attachment->filename, $attachment)?> (<?=human_readable_size($attachment->get_size())?>)
+<? if ($attachment->is_image()) { ?>
+	<br /><img src="<?=url_for($attachment)?>" alt="<?=$attachment->filename?>" />
+<? } else if ($attachment->is_music()) { ?>
+	<a href="<?=url_for($attachment)?>" onclick="openPlayer('player-<?=$attachment->id?>', this.href); return false">Listen</a><div id="player-<?=$attachment->id?>"></div>
 <? } ?>
-<? } ?>
+	</li>
+<? } endforeach; ?>
 </ul>
 </div>
 

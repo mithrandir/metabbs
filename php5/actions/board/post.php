@@ -3,7 +3,7 @@ if ($board->perm_write > $account->level) {
 	access_denied();
 }
 if (is_post()) {
-	$post = new Post($_POST['post']);
+	$post = new Post(@$_POST['post']);
 	define('SECURITY', 1);
 	include 'actions/post/save.php';
 } else {

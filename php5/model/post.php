@@ -94,7 +94,7 @@ class Post extends Model {
 	}
 	function update_view_count() {
 		$this->views++;
-		$this->db->query("UPDATE $this->table SET views=views+1 WHERE id=$this->id");
+		$this->db->query("UPDATE $this->table SET views=views+1, created_at='$this->created_at' WHERE id=$this->id");
 	}
 }
 ?>

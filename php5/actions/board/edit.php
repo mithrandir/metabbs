@@ -13,6 +13,19 @@ function get_skins() {
 	closedir($dir);
 	return $skins;
 }
+function get_styles($skin) {
+	$skins = array();
+	$dir = @opendir('skins/'.$skin.'/styles');
+	if ($dir) {
+		while ($file = readdir($dir)) {
+			if ($file[0] != '.') {
+				$skins[] = preg_replace('/\.css$/', '', $file);
+			}
+		}
+		closedir($dir);
+	}
+	return $skins;
+}
 if (is_post()) {
 	if ($_GET['tab'] == 'general') {
 		$_board = new Board($_POST['board']);
@@ -23,7 +36,6 @@ if (is_post()) {
 		}
 		if (isset($flash)) {
 			$skin = '_admin';
-			$skins = get_skins();
 			render('edit');
 			return;
 		}
@@ -41,5 +53,6 @@ if (is_post()) {
 }
 $skin = '_admin';
 $skins = get_skins();
+$styles = get_styles($board->skin);
 render('edit');
 ?>

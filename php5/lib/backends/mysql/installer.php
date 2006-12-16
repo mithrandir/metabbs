@@ -21,11 +21,12 @@ class Table
 		$this->columns[] = "KEY `{$this->name}_${name}_index` (`$name`)";
 	}
 	function to_sql() {
+		$db = get_conn();
 		array_unshift($this->columns, "`id` int(10) unsigned NOT NULL auto_increment PRIMARY KEY");
 		$sql = "CREATE TABLE `$this->table` (\n";
 		$sql .= implode(",\n", $this->columns);
 		$sql .= "\n)\n";
-		if (defined('MYSQL_USE_UTF8') && MYSQL_USE_UTF8) {
+		if ($db->utf8) {
 			$sql .= 'CHARACTER SET utf8 COLLATE utf8_general_ci';
 		}
 		return $sql;
@@ -45,7 +46,6 @@ function init_db() {
 	list($major, $minor) = $conn->get_server_version();
 	if (($major == 4 && $minor >= 1) || $major > 4) {
 		global $config;
-		define('MYSQL_USE_UTF8', 1);
 		$config->set('force_utf8', 1);
 		$config->write_to_file();
 		$conn->enable_utf8();

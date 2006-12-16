@@ -86,3 +86,5 @@ Rename=이름 바꾸기
 Delete selected posts=선택된 글 지우기
 Reply=답글 달기
 %d views=%d명 읽음
+Style=스타일
+Appearance=모양새

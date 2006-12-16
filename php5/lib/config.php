@@ -1,6 +1,5 @@
 <?php
-class Config
-{
+class Config {
 	function Config($name) {
 		$this->filename = METABBS_DIR . '/' . $name;
 		$this->config = $this->_parse($this->filename);

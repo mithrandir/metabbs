@@ -19,6 +19,7 @@
         <?=i('Total %d posts', $board->get_post_count())?>
         <?=link_with_id_to("rss-feed", image_tag("$skin_dir/feed.png", "RSS Feed"), $board, 'rss')?>
     </caption>
+	<thead>
 	<tr>
 	<? if ($massdelete) { ?>
 		<th class="massdelete"><input type="checkbox" onclick="toggleAll(this.form, this.checked)" /></th>
@@ -27,6 +28,8 @@
 		<th class="title"><?=i('Title')?></th>
 		<th class="date"><?=i('Date')?></th>
 	</tr>
+	</thead>
+	<tbody>
 <? foreach ($posts as $post) { ?>
 <? if ($post->is_notice()) { ?>
 	<tr class="notice">
@@ -48,6 +51,7 @@
 		<td class="date"><?=meta_format_date("%Y-%m-%d", $post->created_at)?></td>
 	</tr>
 <? } ?>
+	</tbody>
 </table>
 <? if ($massdelete) { ?>
 <p><input type="submit" value="<?=i('Delete selected posts')?>" /></p>

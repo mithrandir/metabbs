@@ -19,6 +19,9 @@ class Router {
 		}
 		return false;
 	}
+	function add_route($pattern, $route) {
+		$this->routes[$pattern] = $route;
+	}
 }
 
 function _url_for($controller, $action = null, $params = null) {

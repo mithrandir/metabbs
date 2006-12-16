@@ -1,19 +1,16 @@
 <form method="post" action="?tab=skin">
 <div id="skin">
 <h2><?=i('Skin')?></h2>
-<div id="skins-available">
+<ul>
 <? foreach ($skins as $skin) { ?>
-<div class="skins-item">
-<h3><input type="radio" name="board[skin]" value="<?=$skin?>" <? if ($board->skin == $skin) { ?>checked="checked"<? } ?> /> <?=$skin?></h3>
-<? if(file_exists("./skins/$skin/screenshot.jpg")) { ?>
-	<img src="<?=METABBS_BASE_PATH."skins/$skin/screenshot.jpg"?>" width="320" alt="skin screenshot" />
-<? } else { ?>
-	<div class="skins-noscreenshot"><?=i('No Screenshot')?></div>
+<li><input type="radio" name="board[skin]" value="<?=$skin?>" <? if ($board->skin == $skin) { ?>checked="checked"<? } ?> onchange="this.form.submit()" /> <?=$skin?></li>
 <? } ?>
-</div>
+</ul>
+
+<h2><?=i('Style')?></h2>
+<ul>
+<? foreach ($styles as $style) { ?>
+<li><input type="radio" name="board[style]" value="<?=$style?>" <? if ($board->style == $style) { ?>checked="checked"<? } ?> onchange="this.form.submit()" /> <?=$style?></li>
 <? } ?>
-<p style="clear: left"></p>
-</div>
-</div>
-<p><input type="submit" value="OK" /></p>
+</ul>
 </form>
