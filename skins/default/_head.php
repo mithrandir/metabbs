@@ -1,4 +1,5 @@
-	<link rel="stylesheet" href="<?=$skin_dir?>/style.css" type="text/css" />
+	<link rel="stylesheet" href="<?=$skin_dir?>/base.css" type="text/css" />
+	<link rel="stylesheet" href="<?=$skin_dir?>/styles/<?=$board->style?>.css" type="text/css" />
 <? if (isset($board)) { ?>
 	<link rel="alternate" href="<?=url_for($board, 'rss')?>" type="application/rss+xml" title="RSS" />
 <? } ?>

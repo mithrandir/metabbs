@@ -90,6 +90,7 @@ function get_conn() {
 class MySQLAdapter
 {
     var $conn;
+	var $utf8 = false;
 
     function connect($host, $user, $password) {
         $this->conn = @mysql_connect($host, $user, $password) or trigger_error("mysql - Can't connect database",E_USER_ERROR);
@@ -103,6 +104,7 @@ class MySQLAdapter
     }
 	function enable_utf8() {
 		$this->query('set names utf8');
+		$this->utf8 = true;
 	}
 
     function query($query, $data = null) {

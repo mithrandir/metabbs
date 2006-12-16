@@ -19,7 +19,7 @@ $trackbacks = $post->get_trackbacks();
 $name = cookie_get('name');
 if ($post->user_id) {
 	$user = $post->get_user();
-	$signature = $user->signature;
+	$signature = format_plain($user->signature);
 } else {
 	$signature = null;
 }

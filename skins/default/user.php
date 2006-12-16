@@ -11,6 +11,6 @@ Homepage: <?=link_text($user->get_url())?><br />
 </p>
 <p><?=$user->get_post_count()?> posts, <?=$user->get_comment_count()?> comments</p>
 <? if ($user->signature) { ?>
-<p id="signature"><?=format($user->signature)?></p>
+<p id="signature"><?=format_plain($user->signature)?></p>
 <? } ?>
 </div>

@@ -1,5 +1,5 @@
 <?php
-require_once 'lib/common.php';
+require 'lib/common.php';
 
 function render($template) {
 	global $render;

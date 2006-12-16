@@ -17,6 +17,9 @@ class Attachment extends Model {
 	function is_image() {
 		return is_image($this->filename);
 	}
+	function is_music() {
+		return strrchr($this->filename, '.') == '.mp3';
+	}
 	function get_filename() {
 		return 'data/uploads/' . $this->id;
 	}
