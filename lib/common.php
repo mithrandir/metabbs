@@ -27,13 +27,13 @@ function stripslashes_deep($v) {
 	return is_array($v) ? array_map('stripslashes_deep', $v) : stripslashes($v);
 }
 
-require_once("core.php");
-require_once("request.php");
-require_once("i18n.php");
-require_once("cookie.php");
-require_once("tag_helper.php");
-require_once("user_manager.php");
-require_once("plugin.php");
+require("core.php");
+require("request.php");
+require("i18n.php");
+require("cookie.php");
+require("tag_helper.php");
+require("user_manager.php");
+require("plugin.php");
 
 $account = UserManager::get_user();
 if (!$account) { 

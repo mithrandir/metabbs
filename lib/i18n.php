@@ -1,8 +1,13 @@
 <?php
 function i() {
 	global $lang;
-	$args = func_get_args();
-	return vsprintf($lang->get(array_shift($args)), $args);
+	if (func_num_args() > 1) {
+		$args = func_get_args();
+		return vsprintf($lang->get(array_shift($args)), $args);
+	} else {
+		$arg = func_get_arg(0);
+		return $lang->get($arg);
+	}
 }
 
 class DefaultLanguage {
