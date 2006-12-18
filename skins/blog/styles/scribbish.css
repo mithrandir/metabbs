@@ -1,9 +1,100 @@
+@media print { #sidebar { display:none; }
+               #content { float: none; width:90%; }
+               #content pre { color: #000; background: #eee; }
+               #content form.comments { display:none; } }
+
+body {
+	background: url(../background.gif) repeat-x left top;
+	font: normal 12px "lucida grande", verdana, arial, helvetica, sans-serif;
+}
+
+input,
+textarea { font: normal 12px "bitstream vera sans", verdana, sans-serif; }
+
+abbr  { border: none; }
+cite  { font-style: normal; }
+a img { border: none; padding: 0; margin: 0; }
+
+a:link,  a:visited { color: #930; }
+a:hover, a:active  { color: #fff; background: #000; }
+
+/**
+ * Controls the main layout (width, height, margin, padding)
+ *
+ * #container
+ *   #header
+ *   #page
+ *     #content
+ *     #sidebar
+ *   #footer
+ */
+body {
+	text-align: center;
+	margin: 0; padding: 1em; 
+}
+
+#container {
+	width: 740px;
+	text-align: left; 
+	margin: 0 auto; padding: 0;
+}
+
+#header {
+	height: 60px; 
+	margin: 0 0 15px; padding: 0;
+}
+
+#page {}
+
+#content {
+	width: 500px;
+}
+
+#sidebar {
+	width: 200px;
+}
+
+#footer {
+	height: 40px; 
+	margin: 10px 0 0; padding: 10px 0 0;
+	clear:both; 
+}
+
+/*--------------------------------------------------------------
+ Sidebar Alignment: you can have left or right
+ --------------------------------------------------------------*/
+
+/* BEGIN: Right Sidebar */
+#sidebar {
+	float: right; text-align: left;
+	padding-left: 15px; 
+	border-left: 1px dotted #ddd; 
+}
+#content {
+	float: left;
+	padding-left: 5px; 
+}
+/* END: Right Sidebar */
+
+
+/* BEGIN: Left Sidebar
+#sidebar {
+	float: left; text-align: right;
+	padding-right: 20px; 
+	border-right: 1px dotted #ddd; 
+}
+
+#content {
+	float: right; text-align: left;
+}
+/* END: Left Sidebar */
+
 /*--------------------------------------------------------------
  Header
  --------------------------------------------------------------*/
 
 #header { 
-	background: url(header_shadow.gif) repeat-x left bottom;
+	background: url(../header_shadow.gif) repeat-x left bottom;
 }
 
 #header a:link,

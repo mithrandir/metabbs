@@ -22,7 +22,7 @@ function plural_link($post, $noun, $count) {
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title><?=$title?></title>
-	<link rel="stylesheet" href="<?=$skin_dir?>/blog.css" type="text/css" />
+	<link rel="stylesheet" href="<?=$skin_dir?>/styles/<?=$board->style?$board->style:'scribbish'?>.css" type="text/css" />
 <? if (isset($board)) { ?>
 	<link rel="alternate" href="<?=url_for($board, 'rss')?>" type="application/rss+xml" title="RSS" />
 <? } ?>
