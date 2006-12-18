@@ -24,7 +24,7 @@ if ($board->use_attachment && isset($_FILES['upload'])) {
 	foreach ($uploads['name'] as $key => $filename) {
 		if (!$filename) continue;
 		if ($uploads['size'][$key] == 0) print_notice('Max upload size exceeded', 'Please upload files smaller than ' . $limit . '.');
-		$attachments[] = new Attachment(array('filename' => $filename, 'tmp_name' => $uploads['tmp_name'][$key]));
+		$attachments[] = new Attachment(array('filename' => $filename, 'tmp_name' => $uploads['tmp_name'][$key], 'type' => $uploads['type'][$key]));
 	}
 }
 

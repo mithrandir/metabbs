@@ -17,27 +17,16 @@ function get_layout_path($type) {
 		return $layout;
 }
 
-class MetaRouter extends Router {
-	var $routes = array(
-		'/(attachment)/([0-9]+)_.*' => 'controller',
-		'/([a-z]+)(?:/([^/]*))?' => 'controller',
-		'/([a-z]+)/([a-z]+)/(.*)' => 'full'
-	);
-	var $action = 'index';
-
-	function controller($groups) {
-		@list(, $this->controller, $this->id) = $groups;
-	}
-	function full($groups) {
-		list(, $this->controller, $this->action, $this->id) = $groups;
-	}
-}
-
-$router = new MetaRouter;
-if ($router->parse_uri($_SERVER['PATH_INFO'])) {
-	$controller = $router->controller;
-	$action = $router->action;
-	$id = $router->id;
+$parts = explode('/', $_SERVER['PATH_INFO'], 4);
+$len = count($parts);
+if ($len == 3) { // /controller/id
+	$controller = $parts[1];
+	$action = 'index';
+	$id = $parts[2];
+} else if ($len == 4) { // /controller/action/id
+	$controller = $parts[1];
+	$action = $parts[2];
+	$id = $parts[3];
 } else {
 	print_notice('Requested URL is not valid.', 'Valid URL format is '.full_url_for("<em>controller</em>", "<em>action</em>").'<br />If you are administrator, go to '.link_to('administration page', 'admin'));
 }

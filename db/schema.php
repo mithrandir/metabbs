@@ -47,6 +47,7 @@ $conn->add_table($t);
 $t = new Table('attachment');
 $t->column('post_id', 'integer');
 $t->column('filename', 'string', 255);
+$t->column('type', 'string', 50);
 $t->add_index('post_id');
 $conn->add_table($t);
 

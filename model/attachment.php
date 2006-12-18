@@ -32,5 +32,8 @@ class Attachment extends Model {
 	function get_id() {
 		return $this->id . '_' . $this->filename;
 	}
+	function get_content_type() {
+		return $this->type ? $this->type : 'application/octet-stream';
+	}
 }
 ?>
