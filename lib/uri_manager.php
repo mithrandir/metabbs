@@ -7,23 +7,6 @@ if (!defined('METABBS_BASE_URI')) {
 	}
 }
 
-class Router {
-	var $routes = array();
-
-	function parse_uri($uri) {
-		foreach ($this->routes as $pattern => $method) {
-			if (preg_match('|^'.$pattern.'$|', $uri, $groups)) {
-				$this->$method($groups);
-				return true;
-			}
-		}
-		return false;
-	}
-	function add_route($pattern, $route) {
-		$this->routes[$pattern] = $route;
-	}
-}
-
 function _url_for($controller, $action = null, $params = null) {
 	$url = METABBS_BASE_URI;
 	if (is_a($controller, 'Model')) {
