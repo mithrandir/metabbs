@@ -8,6 +8,7 @@ class Board extends Model {
 	var $posts_per_page = 10;
 	var $perm_delete = 255;
 	var $skin = 'default';
+	var $use_trackback = 1;
 	function _init() {
 		$this->table = get_table_name('board');
 		$this->post_table = get_table_name('post');

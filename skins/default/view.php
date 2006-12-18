@@ -38,6 +38,7 @@ function openPlayer(id, url) {
 <? } ?>
 </div>
 
+<? if ($board->use_trackback) { ?>
 <div id="trackbacks">
 <h3><?=i('Trackbacks')?></h3>
 <p><?=i('Trackback URL')?>: <?=link_text(full_url_for($post, 'trackback'), '', array('onclick' => 'return false'))?></p>
@@ -58,6 +59,7 @@ function openPlayer(id, url) {
 <? } ?>
 </ul>
 </div>
+<? } ?>
 
 <div id="comments">
 <h3><?=i('Comments')?></h3>

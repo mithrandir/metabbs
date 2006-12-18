@@ -1,5 +1,6 @@
 <? include($_skin_dir . '/_post.php'); ?>
 
+<? if ($board->use_trackback) { ?>
 <h5><a name="trackbacks"><?=i('Trackbacks')?></a></h5>
 <p><?=i('Trackback URL')?>: <?=link_text(full_url_for($post, 'trackback'), '', array('onclick' => 'return false'))?></p>
 <!--
@@ -18,6 +19,7 @@
 	<li><?=link_text($trackback->url, $trackback->title)?> from <?=$trackback->blog_name?></li>
 <? } ?>
 </ol>
+<? } ?>
 
 <h5><a name="comments"><?=i('Comments')?></a></h5>
 <div id="comments_div">

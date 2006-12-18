@@ -88,3 +88,4 @@ Reply=답글 달기
 %d views=%d명 읽음
 Style=스타일
 Appearance=모양새
+Use trackback=트랙백 허용

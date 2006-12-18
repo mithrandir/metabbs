@@ -32,7 +32,9 @@
 	<? } ?>
 	<li>Meta 
 	<?=plural_link($post, 'comment', $post->get_comment_count())?>
+	<? if ($board->use_trackback) { ?>
 	<?=plural_link($post, 'trackback', $post->get_trackback_count())?>
+	<? } ?>
 	<a href="<?=url_for($post)?>" rel="bookmark">permalink</a>
 	</li>
 	</ul>

@@ -7,6 +7,7 @@ $t->column('style', 'string', 45);
 $t->column('title', 'string', 255);
 $t->column('use_attachment', 'boolean');
 $t->column('use_category', 'boolean');
+$t->column('use_trackback', 'boolean');
 $t->column('perm_read', 'ushort');
 $t->column('perm_write', 'ushort');
 $t->column('perm_comment', 'ushort');

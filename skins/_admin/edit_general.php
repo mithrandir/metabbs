@@ -16,6 +16,8 @@
 
 	<dt><?=label_tag("Use category", "board", "use_category")?></dt>
 	<dd><?=check_box('board', 'use_category', $board->use_category)?></dd>
+	<dt><?=label_tag("Use trackback", "board", "use_trackback")?></dt>
+	<dd><?=check_box('board', 'use_trackback', $board->use_trackback)?></dd>
 </dl>
 </div>
 <p><input type="submit" value="OK" /></p>
