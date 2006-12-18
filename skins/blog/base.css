@@ -1,0 +1,78 @@
+/* Comments and Trackbacks */
+#content ol.comments,
+#content ol.trackbacks {
+	list-style-type: none;
+	margin: 0; padding: 0;
+}
+
+#content .comment,
+#content .trackback {
+	border: 2px solid #ddd;
+	margin: 0 0 1.5em; padding: 1em;
+}
+
+#content .comment.preview { 
+	background: #ffc;
+	border: 3px solid #fab444;
+}
+
+#content .comment   .author,
+#content .trackback .author { 
+	font-weight: bold;
+	margin-bottom: 1em;
+}
+
+#content .comment   .author cite,
+#content .trackback .author cite {
+	font-size: 16px;
+	letter-spacing: -1px;
+}
+
+#content .comment   .author abbr, 
+#content .trackback .author abbr { color: #999; }
+
+#content .comment .author .gravatar { 
+	margin: 0 0 0.5em 0.5em;
+	float: right; 
+}
+
+/* uncomment to enable a default gravatar
+#content .comment .author div {
+	margin: 0 0 0.5em 0.5em;
+ 	width: 60px; height: 60px;
+	background: url(/images/theme/gravatar.gif) no-repeat left top;
+	float: right; 
+}*/
+
+
+#content form.comments {
+	background: #f2f2f2;
+	border-top: 1px solid #ddd;
+	padding: 1em 0.5em;
+}
+
+#content form.comments fieldset { 
+	border: none;
+}
+
+#content form.comments legend { 
+	display: none;
+}
+
+#content form.comments label { 
+	font-weight: bold;
+}
+
+form textarea { 
+	width: 90%; height: 150px;
+	padding: 3px;
+}
+
+#post_title { font-size: 1.4em; }
+#post_category_id { margin-left: 1em; }
+#post_body { height: 250px; }
+
+.pagination { margin-bottom: 1em; }
+#pages { margin: 0 !important; padding: 0 !important; display: inline; }
+#pages li { margin: 0; padding-right: 0.5em; display: inline; }
+#pages li.here { font-weight: bold; }

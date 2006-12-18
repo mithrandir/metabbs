@@ -46,7 +46,7 @@
 		<p><a href="<?=url_for_blog($board)?>"><?=$board->title?></a></p>
 		<ul>
 			<li>powered by <a href="http://metabbs.org/">MetaBBS</a> /
-			    styled with <a href="http://quotedprintable.com/pages/scribbish">scribbish</a></li>
+			    styled with <?=$board->style?$board->style:'basic'?></li>
 		</ul>
 	</div>
 </div>

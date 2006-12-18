@@ -19,14 +19,14 @@ function get_layout_path($type) {
 
 $parts = explode('/', $_SERVER['PATH_INFO'], 4);
 $len = count($parts);
-if ($len == 3) { // /controller/id
-	$controller = $parts[1];
-	$action = 'index';
-	$id = $parts[2];
-} else if ($len == 4) { // /controller/action/id
+if ($len == 4) { // /controller/action/id
 	$controller = $parts[1];
 	$action = $parts[2];
 	$id = $parts[3];
+} else if ($len == 2 || $len == 3) { // /controller/id
+	$controller = $parts[1];
+	$action = 'index';
+	$id = $len == 3 ? $parts[2] : null;
 } else {
 	print_notice('Requested URL is not valid.', 'Valid URL format is '.full_url_for("<em>controller</em>", "<em>action</em>").'<br />If you are administrator, go to '.link_to('administration page', 'admin'));
 }
