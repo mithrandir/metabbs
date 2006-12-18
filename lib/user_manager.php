@@ -8,11 +8,11 @@ class UserManager
 			return null;
 		}
 	}
-	function login($user, $password) {
+	function login($user, $password, $autologin) {
 		$user = User::auth($user, md5($password));
 		if ($user->exists()) {
-			cookie_register("user", $user->user);
-			cookie_register("password", $user->password);
+			cookie_register("user", $user->user, !$autologin);
+			cookie_register("password", $user->password, !$autologin);
 			return true;
 		} else {
 			return false;
