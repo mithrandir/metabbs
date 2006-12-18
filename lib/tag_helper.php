@@ -27,6 +27,9 @@ function link_to($text, $controller, $action = null, $params = array()) {
 function link_with_id_to($id, $text, $controller, $action = null, $params = array()) {
 	return link_text(url_for($controller, $action, $params), $text, array("id" => $id));
 }
+function link_with_dialog_to($text, $controller, $action = null, $params = array()) {
+	return link_text(url_for($controller, $action, $params), $text, array('onclick' => 'return confirm(\''.i('Are you sure?').'\')'));
+}
 function link_list_tab($link, $name, $text) {
 	$anchor = link_text($link, $text);
 	return block_tag('li', $anchor, array('id' => "tab-$name", 'class' => $_GET['tab']==$name ? "selected" : null));
