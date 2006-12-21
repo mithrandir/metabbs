@@ -93,20 +93,26 @@ class MySQLAdapter
 	var $utf8 = false;
 
     function connect($host, $user, $password) {
-        $this->conn = @mysql_connect($host, $user, $password) or trigger_error("mysql - Can't connect database",E_USER_ERROR);
+        $this->conn = mysql_connect($host, $user, $password) or trigger_error("mysql - Can't connect database",E_USER_ERROR);
         register_shutdown_function(array(&$this, 'disconnect'));
     }
     function disconnect() {
-        @mysql_close($this->conn);
+        mysql_close($this->conn);
     }
     function selectdb($dbname) {
-        @mysql_select_db($dbname, $this->conn) or trigger_error("Can't select database", E_USER_ERROR);
+        mysql_select_db($dbname, $this->conn) or trigger_error("Can't select database", E_USER_ERROR);
     }
 	function enable_utf8() {
-		$this->query('set names utf8');
+		$this->execute('set names utf8');
 		$this->utf8 = true;
 	}
 
+	function execute($query) {
+		$result = mysql_query($query, $this->conn);
+		if (!$result) {
+            trigger_error(mysql_error($this->conn), E_USER_ERROR);
+		}
+	}
     function query($query, $data = null) {
         if (!$query) return;
 		if ($data) $query = $this->_q($query, $data);

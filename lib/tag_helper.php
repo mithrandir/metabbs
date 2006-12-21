@@ -2,9 +2,9 @@
 function block_tag($name, $content, $options = array()) {
 	$s = "<$name";
 	foreach ($options as $key => $value) {
-		if (!is_null($value)) $s .= " $key=\"$value\"";
+		if (isset($value)) $s .= " $key=\"$value\"";
 	}
-	if (!is_null($content)) {
+	if (isset($content)) {
 		$s .= ">$content</$name>";
 	} else {
 		$s .= " />";

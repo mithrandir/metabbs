@@ -9,7 +9,7 @@ class Config {
 		if (file_exists($path)) {
 			$file = file($path);
 			array_shift($file);
-			foreach ($file as $_ => $line) {
+			foreach ($file as $line) {
 				list($key, $value) = explode('=', rtrim($line), 2);
 				$config[$key] = $value;
 			}

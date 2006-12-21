@@ -13,7 +13,7 @@ function feed_render_header($board, $format) {
 		echo "<?xml-stylesheet type=\"text/xsl\" href=\"" . METABBS_BASE_PATH . $xslt . "\"?>\n";
 	}
 	$posts = $board->get_feed_posts($board->posts_per_page);
-	apply_filters_array('PostViewRSS', &$posts);
+	apply_filters_array('PostViewRSS', $posts);
 	return $posts;
 }
 ?>

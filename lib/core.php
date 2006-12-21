@@ -1,4 +1,6 @@
 <?php
+define('METABBS_DB_REVISION', 643);
+
 require 'config.php';
 $config = new Config('metabbs.conf.php');
 
