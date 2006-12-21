@@ -5,7 +5,9 @@ $posts = feed_render_header($board, 'atom');
 <feed xmlns="http://www.w3.org/2005/Atom">
 	<title><![CDATA[<?=$board->get_title()?>]]></title>
 	<id><?=full_url_for($board)?></id>
+<? if (!empty($posts)) { ?>
 	<updated><?=meta_format_date_RFC822($posts[0]->created_at)?></updated>
+<? } ?>
 	<subtitle>The latest posts from <?=$board->get_title()?></subtitle>
 <? foreach ($posts as $post) { ?>
 	<entry>

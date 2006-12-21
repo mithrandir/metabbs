@@ -7,6 +7,9 @@ $posts = feed_render_header($board, 'rss');
 		<title><![CDATA[<?=$board->get_title()?>]]></title>
 		<link><?=full_url_for($board)?></link>
 		<description>The latest posts from <?=$board->get_title()?></description>
+<? if (!empty($posts)) { ?>
+		<pubDate><?=meta_format_date_RFC822($posts[0]->created_at)?></pubDate>
+<? } ?>
 <? foreach ($posts as $post) { ?>
 		<item>
 			<title><![CDATA[<?=$post->title?>]]></title>
