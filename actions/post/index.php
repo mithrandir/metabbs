@@ -19,9 +19,8 @@ $trackbacks = $post->get_trackbacks();
 $name = cookie_get('name');
 if ($post->user_id) {
 	$user = $post->get_user();
-	$signature = format_plain($user->signature);
-} else {
-	$signature = null;
+	if ($user->signature)
+		$signature = format_plain($user->signature);
 }
 apply_filters('PostView', $post);
 apply_filters_array('PostViewComment', $comments);

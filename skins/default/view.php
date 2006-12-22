@@ -32,9 +32,9 @@ function openPlayer(id, url) {
 </ul>
 </div>
 
-<div id="body"><?=format($post->body)?></div>
-<? if ($signature) { ?>
-<div id="signature"><?=format($signature)?></div>
+<div id="body"><?=$post->body?></div>
+<? if (isset($signature)) { ?>
+<div id="signature"><?=$signature?></div>
 <? } ?>
 </div>
 
