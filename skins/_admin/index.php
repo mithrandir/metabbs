@@ -10,4 +10,4 @@
 </table>
 <form method="post" action="<?=url_for('admin', 'new')?>" onsubmit="return addNewBoard(this)">
 <h3><?=i('New Board')?></h3>
-<p><input type="text" name="name" /> <?=submit_tag(i('Create'))?></p>
+<p><input type="text" name="name" /> <input type="submit" value="<?=i('Create')?>" id="create-board" /></p>

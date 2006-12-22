@@ -18,6 +18,7 @@ if (is_post()) {
 	$post->add_comment($_comment);
 	redirect_to(url_for($post));
 } else {
+	$name = cookie_get('name');
 	render('reply');
 }
 ?>

@@ -1,0 +1,59 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>12comment_reply</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">12comment_reply</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>board/_autotest</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=test title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Reply</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>comment_name</td>
+	<td>test reply name</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>comment_password</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>comment_body</td>
+	<td>test reply body</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Comment']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>test reply name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>test reply body</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

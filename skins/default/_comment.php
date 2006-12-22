@@ -8,8 +8,8 @@
 			<?=link_to(i('Reply'), $comment, 'reply')?>
 		<? } ?>
 		<? if ($board->perm_delete <= $account->level || $account->id == $comment->user_id) { ?>
-			| <?=link_to(i('Delete'), $comment, 'delete')?>
-			| <?=link_to(i('Edit'), $comment, 'edit')?>
+			| <span class="delete"><?=link_to(i('Delete'), $comment, 'delete')?></span>
+			| <span class="edit"><?=link_to(i('Edit'), $comment, 'edit')?></span>
 		<? } ?>
 		</span>
 	</div>
