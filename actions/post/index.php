@@ -19,7 +19,7 @@ $trackbacks = $post->get_trackbacks();
 $name = cookie_get('name');
 if ($post->user_id) {
 	$user = $post->get_user();
-	if ($user->signature)
+	if ($user->exists() && $user->signature)
 		$signature = format_plain($user->signature);
 }
 apply_filters('PostView', $post);

@@ -9,17 +9,19 @@ class Plugin extends Model {
 
 	function _init() {
 		$this->table = get_table_name('plugin');
-		$this->name = $this->get_id();
 	}
 	function find_by_name($name) {
 		$table = get_table_name('plugin');
 		$db = get_conn();
 		$plugin = $db->fetchrow("SELECT * FROM $table WHERE name=?", $name, array($name));
-		if ($plugin) return $plugin;
-		else return new $name();
+		if (!$plugin) {
+			$plugin = new $name;
+		}
+		$plugin->name = $name;
+		return $plugin;
 	}
 	function get_id() {
-		return get_class($this);
+		return $this->name;
 	}
 	function enable() {
 		$this->enabled = 1;
@@ -52,6 +54,6 @@ function get_plugins() {
 function get_enabled_plugins() {
 	$db = get_conn();
 	$table = get_table_name('plugin');
-	return $db->fetchall("SELECT * FROM $table WHERE enabled=1");
+	return $db->fetchall("SELECT name FROM $table WHERE enabled=1");
 }
 ?>

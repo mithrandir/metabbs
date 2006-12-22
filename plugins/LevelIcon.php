@@ -15,8 +15,8 @@ function prepend_level_icon_filter(&$model) {
 	$model->name = htmlspecialchars($model->name);
 	if ($model->user_id) {
 		$user = $model->get_user();
-		$level = $user->level;
-		$model->name = link_to($model->name, $user);
+		$level = $user->exists() ? $user->level : 0;
+		if ($level > 0) $model->name = link_to($model->name, $user);
 	} else {
 		$level = 0;
 	}

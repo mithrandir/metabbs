@@ -16,7 +16,7 @@ h1 {
 	color: white;
 }
 
-#meta a { color: white; }
+a { color: white !important; }
 #meta a:hover {
     background-color: #333;
     color: #fc0;

@@ -39,6 +39,11 @@ if (is_post()) {
 			render('edit');
 			return;
 		}
+	} else if ($_GET['tab'] == 'skin') {
+		if ($board->skin != $_POST['board']['skin']) {
+			// reset style
+			$board->style = '';
+		}
 	}
 	$board->import($_POST['board']);
 	$board->update();

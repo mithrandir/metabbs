@@ -24,7 +24,7 @@ class Column {
 			$this->value = $this->default;
 	}
 	function to_string() {
-		return mysql_real_escape_string($this->value);
+		return "'" . mysql_real_escape_string($this->value) . "'";
 	}
 }
 class IntegerColumn extends Column {
@@ -44,9 +44,6 @@ class UShortColumn extends IntegerColumn {
 	}
 }
 class StringColumn extends Column {
-	function to_string() {
-		return "'" . mysql_real_escape_string($this->value) . "'";
-	}
 	function to_spec($length) {
 		return "`$this->name` varchar($length) NOT NULL DEFAULT '$this->default'";
 	}
@@ -73,7 +70,7 @@ class BooleanColumn extends Column {
 	}
 }
 
-function get_conn() {
+function &get_conn() {
     static $conn;
     global $config;
     if (!isset($conn)) {
@@ -118,6 +115,7 @@ class MySQLAdapter
 		if ($data) $query = $this->_q($query, $data);
         $result = mysql_query($query, $this->conn);
         if (!$result) {
+			echo '<br />Error query: ' . htmlspecialchars($query);
             trigger_error(mysql_error($this->conn), E_USER_ERROR);
         }
         return $result;
