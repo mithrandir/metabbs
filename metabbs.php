@@ -9,9 +9,9 @@ function is_system_view($skin) {
     return $skin{0} == '_';
 }
 function get_layout_path($type) {
-	global $config, $_skin_dir, $skin;
+	global $config, $_skin_dir, $__skin;
 	$layout = $config->get('global_' . $type);
-	if (is_system_view($skin) || !$layout)
+	if (is_system_view($__skin) || !$layout)
 		return $_skin_dir . '/' . $type . '.php';
 	else
 		return $layout;
@@ -40,6 +40,7 @@ if (!run_hook_handler($controller, $action)) {
 if (!isset($skin)) {
 	$skin = isset($board->skin) ? $board->skin : 'default';
 }
+$__skin = $skin;
 $_skin_dir = 'skins/' . $skin;
 $skin_dir = METABBS_BASE_PATH . $_skin_dir;
 
