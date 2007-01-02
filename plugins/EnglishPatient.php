@@ -8,7 +8,7 @@ class EnglishPatient extends Plugin {
 		add_filter('PostComment', array(&$this, 'cmt_filter'), 20);
 		add_filter('PostSave', array(&$this, 'post_filter'), 20);
 	}
-	function tb_filter($model) {
+	function tb_filter(&$model) {
 		if (preg_match($this->pattern, $model->title) && preg_match($this->pattern, $model->excerpt)) {
 			$model->valid = false;
 		}

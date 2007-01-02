@@ -22,7 +22,7 @@ class SimpleSpam extends Plugin {
 			exit;
 		}
 	}
-	function tb_filter($trackback) {
+	function tb_filter(&$trackback) {
 		$word = $this->has_spam_word($trackback->excerpt);
 		if ($word !== FALSE) {
 			$trackback->valid = false;

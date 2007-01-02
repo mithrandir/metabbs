@@ -76,3 +76,5 @@ form textarea {
 #pages { margin: 0 !important; padding: 0 !important; display: inline; }
 #pages li { margin: 0; padding-right: 0.5em; display: inline; }
 #pages li.here { font-weight: bold; }
+
+.attachments ul { list-style-type: none; margin: 1em 0; padding: 0; }
