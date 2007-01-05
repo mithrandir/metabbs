@@ -29,6 +29,8 @@ h2.title { font-size: 1.4em; margin: 0; }
 .meta { list-style-type: none; margin: 0; padding: 0; }
 .meta li { font-size: 0.8em; }
 
+.comments ol { margin-left: 2em !important; }
+
 #sidebar a { color: #444; }
 #sidebar a:hover { background-color: #444; color: #fff; text-decoration: none; }
 
