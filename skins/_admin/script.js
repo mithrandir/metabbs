@@ -30,16 +30,12 @@ RemoteForm.prototype.send = function () {
 	this.xhr.send(this.serialize());
 }
 RemoteForm.prototype.serialize = function () {
-	var length = this.form.elements.length;
-	var elements = this.form.elements;
+	var elements = this.form.elements ? this.form.elements : this.form;
 	var parts = [];
-	for (var i = 0; i < length; i++) {
+	for (var i = 0; i < elements.length; i++) {
 		var el = elements[i];
-		// TODO: add support for <select>
-		if (['input', 'textarea'].indexOf(el.tagName.toLowerCase()) != -1) {
-			if (el.name) {
-				parts.push(escape(el.name) + '=' + escape(el.value));
-			}
+		if (el.name) {
+			parts.push(escape(el.name) + '=' + escape(el.value));
 		}
 	}
 	return parts.join('&');
@@ -55,8 +51,12 @@ function addNewBoard(form) {
 	rf.onComplete = function () {
 		var result = this.xhr.responseText;
 		if (result) {
-			$('boards').innerHTML += result;
-			this.form.name.value = '';
+			try {
+				$('boards').innerHTML += result;
+				this.form.reset();
+			} catch (e) {
+				window.location.reload();
+			}
 		} else {
 			alert("Board '" + this.form.name.value + "' already exists.");
 		}
