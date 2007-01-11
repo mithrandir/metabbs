@@ -9,6 +9,8 @@ function prepend_level_icon($level, $name) {
 	global $level_icon_mapping;
 	if (array_key_exists($level, $level_icon_mapping)) {
 		return image_tag(METABBS_BASE_PATH.'plugins/icons/'.$level_icon_mapping[$level], $level?'Lv.'.$level:'Guest', array('style' => 'vertical-align: middle')).' '.$name;
+	} else {
+		return $name;
 	}
 }
 function prepend_level_icon_filter(&$model) {
