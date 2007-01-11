@@ -60,7 +60,7 @@
 
 <? print_pages($board); ?>
 
-<form method="get">
+<form method="get" action="?">
 <p>
 <?=check_box("search", "title", $board->search['title'])?> <?=i('Title')?>
  <?=check_box("search", "body", $board->search['body'])?> <?=i('Body')?>
