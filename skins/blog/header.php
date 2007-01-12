@@ -15,6 +15,9 @@ function plural_link($post, $noun, $count) {
 		$text = $count . ' ' . $noun . 's';
 	return link_text($url, $text);
 }
+function summary_text($text, $length) {
+	return preg_replace('/^(.{'.$length.'}).+$/su', "$1...", $text);
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
