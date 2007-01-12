@@ -28,5 +28,8 @@ class Comment extends Model {
 		$post = $this->get_post();
 		return $post->get_board();
 	}
+	function valid() {
+		return !empty($this->body);
+	}
 }
 ?>
