@@ -43,7 +43,7 @@ class MetaBBS
 <div class="board-title"><?=link_to(htmlspecialchars($board->title), $board)?> <span class="feed"><?=link_to($this->feed_link, $board, 'rss')?></span></div>
 <ul>
 <? foreach ($board->get_feed_posts($count) as $post) {
-	if ($title_length > 0) $post->title = preg_replace('/^(.{'.$title_length.'}).+$/su', "$1...", $text);
+	if ($title_length > 0) $post->title = utf8_strcut($post->title, $title_length);
 ?>
 	<li>[<?=htmlspecialchars($post->name)?>] <?=link_to_post($post)?> <span class="comment-count"><?=link_to_comments($post)?></span></li>
 <? } ?>

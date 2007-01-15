@@ -5,9 +5,6 @@ $config = new Config('metabbs.conf.php');
 $backend = $config->get('backend', 'mysql');
 define('METABBS_TABLE_PREFIX', $config->get('prefix', 'meta_'));
 
-if (@ini_get('magic_quotes_runtime'))
-	set_magic_quotes_runtime(0);
-
 require 'model.php';
 require 'backends/' . $backend . '/backend.php';
 require 'model/board.php';
