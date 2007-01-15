@@ -1,8 +1,6 @@
 <?php
 header("Content-Type: text/html; charset=utf-8");
 
-require 'lib/compat.php';
-
 if (!defined('METABBS_BASE_PATH')) {
 	define('METABBS_BASE_PATH', substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/') + 1));
 }
@@ -18,6 +16,7 @@ if (!file_exists(METABBS_DIR . '/metabbs.conf.php')) {
 
 ini_set("include_path", METABBS_DIR . PATH_SEPARATOR . METABBS_DIR . '/lib' . PATH_SEPARATOR . ini_get("include_path"));
 
+require('compat.php');
 require("core.php");
 require("request.php");
 require("i18n.php");

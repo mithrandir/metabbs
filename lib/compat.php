@@ -29,7 +29,7 @@ if (get_magic_quotes_gpc()) {
 if (function_exists('mb_substr')) {
 	function utf8_strcut($str, $len) {
 		if (mb_strlen($str, 'UTF-8') > $len)
-			return mb_substr($str, 0, $len) . '...';
+			return mb_substr($str, 0, $len, 'UTF-8') . '...';
 		else
 			return $str;
 	}
