@@ -93,6 +93,7 @@ function text_area($model, $field, $rows = 10, $cols = 50, $value='', $options=a
     $options['name'] = "${model}[${field}]";
     $options['rows'] = $rows;
     $options['cols'] = $cols;
+	$options['id'] = "${model}_${field}";
     return block_tag("textarea", htmlspecialchars($value), $options);
 }
 function option_tag($value, $text, $selected = false, $options = array()) {
