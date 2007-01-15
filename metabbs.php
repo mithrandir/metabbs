@@ -41,7 +41,8 @@ if (!isset($skin)) {
 	$skin = isset($board->skin) ? $board->skin : 'default';
 }
 $__skin = $skin;
-$_skin_dir = 'skins/' . $skin;
+include 'skins/' . $board->skin . '/skin.php';
+$_skin_dir = 'lib/skins/' . $skin_engine;
 $skin_dir = METABBS_BASE_PATH . $_skin_dir;
 
 if (isset($render)) {
