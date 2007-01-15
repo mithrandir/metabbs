@@ -36,13 +36,15 @@ class MetaBBS
 			include($_skin_dir . '/_head.php');
 		}
 	}
-	function printLatestPosts($board_name, $count) {
+	function printLatestPosts($board_name, $count, $title_length = -1) {
 		$board = Board::find_by_name($board_name);
 ?>
 <div id="latest-<?=$board_name?>" class="latest-posts">
 <div class="board-title"><?=link_to(htmlspecialchars($board->title), $board)?> <span class="feed"><?=link_to($this->feed_link, $board, 'rss')?></span></div>
 <ul>
-<? foreach ($board->get_feed_posts($count) as $post) { ?>
+<? foreach ($board->get_feed_posts($count) as $post) {
+	if ($title_length > 0) $post->title = preg_replace('/^(.{'.$title_length.'}).+$/su', "$1...", $text);
+?>
 	<li>[<?=htmlspecialchars($post->name)?>] <?=link_to_post($post)?> <span class="comment-count"><?=link_to_comments($post)?></span></li>
 <? } ?>
 </ul>
