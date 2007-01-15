@@ -81,7 +81,7 @@ foreach ($comments as $comment) {
 <p><?=label_tag("Password", "comment", "password")?> <?=password_field("comment", "password")?></p>
 <? } ?>
 <p><?=text_area("comment", "body", 5, 50, "", array("id" => "comment_body"))?></p>
-<p><?=submit_tag("Comment")?> <span id="sending"><?=image_tag("$skin_dir/spin.gif", "Sending...")?></span></p>
+<p><?=submit_tag("Comment")?></p>
 </form>
 <? } ?>
 

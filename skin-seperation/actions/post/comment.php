@@ -18,7 +18,8 @@ apply_filters('PostComment', $comment);
 $post->add_comment($comment);
 if ($_POST['ajax']) {
 	apply_filters('PostViewComment', $comment);
-	include("skins/$board->skin/_comment.php");
+	include("skins/$board->skin/skin.php");
+	include("lib/skins/$skin_engine/_comment.php");
 	exit;
 } else {
 	redirect_to(url_for($post));

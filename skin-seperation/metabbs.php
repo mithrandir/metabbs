@@ -41,9 +41,14 @@ if (!isset($skin)) {
 	$skin = isset($board->skin) ? $board->skin : 'default';
 }
 $__skin = $skin;
-include 'skins/' . $board->skin . '/skin.php';
+if ($skin != '_admin') {
+	include 'skins/' . $skin . '/skin.php';
+} else {
+	$skin_engine = 'admin';
+}
 $_skin_dir = 'lib/skins/' . $skin_engine;
-$skin_dir = METABBS_BASE_PATH . $_skin_dir;
+$skin_dir = METABBS_BASE_PATH . 'skins/' . $skin;
+$skin_engine_dir = METABBS_BASE_PATH . $_skin_dir;
 
 if (isset($render)) {
 	include(get_layout_path('header'));
