@@ -17,7 +17,7 @@
 <table id="posts">
 	<caption>
         <?=i('Total %d posts', $board->get_post_count())?>
-        <?=link_with_id_to("rss-feed", image_tag("$skin_dir/feed.png", "RSS Feed"), $board, 'rss')?>
+        <?=link_with_id_to("rss-feed", image_tag("$skin_engine_dir/feed.png", "RSS Feed"), $board, 'rss')?>
     </caption>
 	<thead>
 	<tr>
