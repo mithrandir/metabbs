@@ -7,14 +7,20 @@ function get_styles() {
 	$dir = @opendir('styles');
 	if ($dir) {
 		while ($file = readdir($dir)) {
-			if ($file[0] != '.' && is_dir('styles/'.$file)) {
-				$skins[] = $file;
+			$path = 'styles/' . $file;
+			if ($file[0] != '.' && is_dir($path)) {
+				include $path.'/style.php';
+				$skins[] = array($file, $style_name, $style_creator, $style_license);
 			}
 		}
 		closedir($dir);
 	}
 	return $skins;
 }
+$license_mapping = array(
+	'GPL' => '<a href="http://www.opensource.org/licenses/gpl-license.php">GNU General Public License (GPL)</a>',
+	'MIT' => '<a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>'
+);
 if (is_post()) {
 	if ($_GET['tab'] == 'general') {
 		$_board = new Board($_POST['board']);
@@ -27,11 +33,6 @@ if (is_post()) {
 			$skin = '_admin';
 			render('edit');
 			return;
-		}
-	} else if ($_GET['tab'] == 'skin') {
-		if ($board->skin != $_POST['board']['skin']) {
-			// reset style
-			$board->style = '';
 		}
 	}
 	$board->import($_POST['board']);
@@ -46,7 +47,6 @@ if (is_post()) {
 	redirect_to(url_for($board, 'edit', array('tab'=>$_GET['tab'])));
 }
 $skin = '_admin';
-//$skins = get_skins();
 $styles = get_styles();
 render('edit');
 ?>
