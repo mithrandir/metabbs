@@ -2,24 +2,13 @@
 if (!$account->is_admin()) {
 	access_denied();
 }
-function get_skins() {
+function get_styles() {
 	$skins = array();
-	$dir = opendir('skins');
-	while ($file = readdir($dir)) {
-		if (!is_system_view($file) && $file[0] != '.' && is_dir("skins/$file")) {
-			$skins[] = $file;
-		}
-	}
-	closedir($dir);
-	return $skins;
-}
-function get_styles($skin) {
-	$skins = array();
-	$dir = @opendir('skins/'.$skin.'/styles');
+	$dir = @opendir('styles');
 	if ($dir) {
 		while ($file = readdir($dir)) {
-			if ($file[0] != '.') {
-				$skins[] = preg_replace('/\.css$/', '', $file);
+			if ($file[0] != '.' && is_dir('styles/'.$file)) {
+				$skins[] = $file;
 			}
 		}
 		closedir($dir);
@@ -57,7 +46,7 @@ if (is_post()) {
 	redirect_to(url_for($board, 'edit', array('tab'=>$_GET['tab'])));
 }
 $skin = '_admin';
-$skins = get_skins();
-$styles = get_styles($board->skin);
+//$skins = get_skins();
+$styles = get_styles();
 render('edit');
 ?>
