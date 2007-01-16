@@ -9,6 +9,9 @@ if (is_post()) {
 } else {
 	$post = new Post;
 	$post->name = cookie_get('name');
+	if (isset($_GET['search'])) {
+		$post->category_id = $_GET['search']['category'];
+	}
 	$link_list = url_for($board);
 	$link_cancel = null;
 	render('write');
