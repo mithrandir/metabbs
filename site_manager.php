@@ -31,7 +31,7 @@ class MetaBBS
 		return $post;
 	}
 	function printHead() {
-		global $_skin_dir, $skin_dir;
+		global $_skin_dir, $skin_dir, $style_dir;
 		if (isset($_skin_dir)) {
 			include($_skin_dir . '/_head.php');
 		}
