@@ -164,6 +164,9 @@ class MySQLAdapter
     	$table = new Table($t);
     	$this->query("ALTER TABLE $table->table ADD " . $table->_column($name, $type, $length));
 	}
+	function drop_field($t, $name) {
+		$this->query("ALTER TABLE ".get_table_name($t)." DROP COLUMN $name");
+	}
 	function add_index($t, $name) {
 		$this->query("ALTER TABLE ".get_table_name($t)." ADD INDEX ${t}_$name ($name)");
 	}

@@ -1,5 +1,5 @@
 <?php
-define('METABBS_DB_REVISION', 650);
+define('METABBS_DB_REVISION', 684);
 
 function get_table_name($model) {
 	return METABBS_TABLE_PREFIX . $model;
