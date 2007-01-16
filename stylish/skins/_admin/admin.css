@@ -139,6 +139,8 @@ ul.tabs a {
 }
 
 #skin ul { list-style: none; margin: 0 0 1em 0; padding: 0; }
+.style-name { font-size: 1.1em; font-weight: bold; }
+.creator { font-size: 0.8em; }
 
 #plugins dl { margin: 0; }
 #plugins dt { float: none; }
