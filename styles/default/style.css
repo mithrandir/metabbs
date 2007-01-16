@@ -53,7 +53,7 @@ td.date { width: 9em; }
 .comment {
     padding: 0.5em;
     border: 1px solid #ccc;
-    background: url(../bg.png) repeat-x;
+    background: url(bg.png) repeat-x;
     margin-bottom: 1em;
     width: 98%;
 }

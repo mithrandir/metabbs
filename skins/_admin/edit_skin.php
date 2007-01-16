@@ -1,16 +1,21 @@
 <form method="post" action="?tab=skin">
 <div id="skin">
-<h2><?=i('Skin')?></h2>
-<ul>
-<? foreach ($skins as $skin) { ?>
-<li><input type="radio" name="board[skin]" value="<?=$skin?>" <? if ($board->skin == $skin) { ?>checked="checked"<? } ?> onchange="this.form.submit()" /> <?=$skin?></li>
+<table>
+<? foreach ($styles as $info) { list($style, $name, $creator, $license) = $info; ?>
+<tr<? if ($board->style == $style) { ?> class="current"<? } ?>>
+	<td><input type="radio" name="board[style]" value="<?=$style?>" <? if ($board->style == $style) { ?>checked="checked"<? } ?> onchange="this.form.submit()" /></td>
+	<td>
+	<? if (file_exists('styles/'.$style.'/preview.png')) { ?>
+	<img src="<?=METABBS_BASE_PATH?>styles/<?=$style?>/preview.png" alt="Preview" />
+	<? } ?>
+	</td>
+	<td>
+		<span class="style-name"><?=$name?></span><br />
+		<span class="creator">Created by <?=htmlspecialchars($creator)?></cite><br />
+		<span class="engine">Licensed under <?=array_key_exists($license, $license_mapping)?$license_mapping[$license]:htmlspecialchars($license)?></span>
+	</td>
+</tr>
 <? } ?>
-</ul>
-
-<h2><?=i('Style')?></h2>
-<ul>
-<? foreach ($styles as $style) { ?>
-<li><input type="radio" name="board[style]" value="<?=$style?>" <? if ($board->style == $style) { ?>checked="checked"<? } ?> onchange="this.form.submit()" /> <?=$style?></li>
-<? } ?>
-</ul>
+</table>
+</div>
 </form>

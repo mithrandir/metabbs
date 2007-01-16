@@ -1,10 +1,12 @@
+@import url("base.css");
+
 @media print { #sidebar { display:none; }
                #content { float: none; width:90%; }
                #content pre { color: #000; background: #eee; }
                #content form.comments { display:none; } }
 
 body {
-	background: url(../background.gif) repeat-x left top;
+	background: url(background.gif) repeat-x left top;
 	font: normal 12px "lucida grande", verdana, arial, helvetica, sans-serif;
 }
 
@@ -94,7 +96,7 @@ body {
  --------------------------------------------------------------*/
 
 #header { 
-	background: url(../header_shadow.gif) repeat-x left bottom;
+	background: url(header_shadow.gif) repeat-x left bottom;
 }
 
 #header a:link,
