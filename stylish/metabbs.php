@@ -38,7 +38,12 @@ if (!run_hook_handler($controller, $action)) {
 	include($action_dir . '/' . $action . '.php');
 }
 if (!isset($skin)) {
-	$skin = isset($board->skin) ? $board->skin : 'default';
+	if (isset($board)) {
+		include 'styles/'.$board->style.'/style.php';
+		$style_dir = METABBS_BASE_PATH . 'styles/' . $board->style;
+	} else {
+		$skin = 'default';
+	}
 }
 $__skin = $skin;
 $_skin_dir = 'skins/' . $skin;
