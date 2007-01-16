@@ -2,7 +2,6 @@
 $t = new Table('board');
 $t->column('name', 'string', 45);
 $t->column('posts_per_page', 'integer');
-$t->column('skin', 'string', 45);
 $t->column('style', 'string', 45);
 $t->column('title', 'string', 255);
 $t->column('use_attachment', 'boolean');
