@@ -17,5 +17,7 @@
 </tr>
 <? } ?>
 </table>
+
+<p><input type="submit" value="<?=i('Edit')?>" /></p>
 </div>
 </form>
