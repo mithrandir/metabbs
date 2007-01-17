@@ -14,7 +14,7 @@
 <? foreach ($posts as $post) { $attachments = $post->get_attachments(); ?>
 	<li<? if ($post->is_notice()) { ?> class="notice"<? } ?>>
 	<? if (!$post->is_notice() && $attachments) { ?>
-	<a href="<?=url_for($post)?>" class="thumbnail"><img src="<?=url_for($attachments[0])?>" alt="<?=$post->title?>" /></a>
+	<a href="<?=url_for($post)?>" class="thumbnail"><img src="<?=url_for($attachments[0])?>?thumb=1" alt="<?=$post->title?>" /></a>
 	<? } ?>
 	<? if ($board->use_category && $post->category_id) { ?><span class="category">[<?=link_to_category($post->get_category())?>]</span><? } ?><span class="title"><?=link_to($post->title, $post)?></span>
 	<? if ($count = $post->get_comment_count()) { ?>

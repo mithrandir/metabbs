@@ -17,7 +17,7 @@
 
 .thumbnail { width: 130px; height: 130px; overflow: hidden; border: 5px solid #eee; display: block; margin-bottom: 0.5em; }
 .thumbnail:hover { border-color: #aaa; }
-.thumbnail img { border: none; height: 100%; }
+.thumbnail img { border: none; }
 .comments-count { color: #aaa; }
 
 #comments ul { margin: 0; padding: 0; }
