@@ -1,0 +1,29 @@
+#meta { font: 12px/1.6 Verdana, sans-serif; }
+#meta a { color: #666; }
+
+#gallery { margin: 0; padding: 0; overflow: hidden; }
+#gallery li { float: left; list-style: none; margin: 0 1.2em; }
+#category { margin-bottom: 1.5em; border: 1px solid #ccc; padding: 0.5em; background-color: #f8f8f8; }
+
+.title { font-size: 1.3em; padding-left: 0.5em; font-weight: bold; }
+.post-title h2 { font-weight: normal; margin: 0; }
+.post-title h2 .title { font-size: 1em; padding-left: 0; }
+.category { padding-left: 0.5em; font-size: 0.9em; }
+.info { margin-bottom: 1.5em; }
+.writer { padding-left: 0.5em; }
+
+.thumbnail { width: 130px; height: 130px; overflow: hidden; border: 5px solid #eee; display: block; margin-bottom: 0.5em; }
+.thumbnail:hover { border-color: #aaa; }
+.thumbnail img { border: none; height: 100%; }
+.comments-count { color: #aaa; }
+
+#comments ul { margin: 0; padding: 0; }
+#comments ul ul { margin-left: 1.5em; }
+#comments li { list-style: none; }
+.comment { padding: 0.5em; border: 1px solid #ccc; margin-bottom: 1em; background-color: #f8f8f8; }
+.comment p { margin: 0; }
+
+label { width: 5em; float: left; }
+label.checkbox { display: inline; float: none; }
+
+#gallery-footer { clear: both; margin-top: 1.5em; }
