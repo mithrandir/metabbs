@@ -5,6 +5,7 @@ class Thumbnail extends Plugin {
 	}
 	function on_init() {
 		add_handler('attachment', 'index', array(&$this, 'attachment_hook'), 'before');
+		add_filter('PostDelete', array(&$this, 'delete_thumbnail'), 50);
 	}
 	function attachment_hook() {
 		if (isset($_GET['thumb'])) {
@@ -16,6 +17,12 @@ class Thumbnail extends Plugin {
 					redirect_to(METABBS_BASE_PATH . $thumb_path);
 				}
 			}
+		}
+	}
+	function delete_thumbnail($post) {
+		$attachments = $post->get_attachments();
+		foreach ($attachments as $attachment) {
+			@unlink('data/thumb/'.$attachment->id.'.png');
 		}
 	}
 	function create_thumbnail($path, $dest) {
