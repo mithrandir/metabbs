@@ -26,5 +26,7 @@
 </ul>
 
 <div id="gallery-footer">
+<? print_pages($board); ?>
+
 <a href="<?=$link_new_post?>"><?=i('New Post')?></a>
 </div>
