@@ -2,7 +2,7 @@
 #meta a { color: #666; }
 
 #gallery { margin: 0; padding: 0; overflow: hidden; }
-#gallery li { float: left; list-style: none; margin: 0 1.2em; }
+#gallery li { float: left; list-style: none; margin: 0 1.2em; width: 150px; }
 #category { margin-bottom: 1.5em; border: 1px solid #ccc; padding: 0.5em; background-color: #f8f8f8; }
 
 .title { font-size: 1.3em; padding-left: 0.5em; font-weight: bold; }
