@@ -44,6 +44,7 @@ if (!isset($skin)) {
 		$style_dir = METABBS_BASE_PATH . 'styles/' . $board->style;
 	} else {
 		$skin = 'default';
+		$style_dir = METABBS_BASE_PATH . 'styles/default';
 	}
 }
 $__skin = $skin;
