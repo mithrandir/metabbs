@@ -2,11 +2,6 @@
 if ($board->perm_read > $account->level) {
 	access_denied();
 }
-/*
-내 글 아님 => X
-로그인&&내 글 || 관리자 => O
-!로그인     => ?
-*/
 if ($post->secret) {
 	if ($post->user_id != $account->id && !$account->is_admin()) {
 		access_denied();
