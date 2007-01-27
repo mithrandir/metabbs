@@ -50,8 +50,13 @@ function link_to_user($user) {
     }
 }
 function link_to_post($post) {
-	$params = array('page' => get_requested_page());
-    return link_to(htmlspecialchars($post->title), $post, '', $params);
+	global $account;
+	if ($post->secret && $post->user_id != $account->id && !$account->is_admin()) {
+		return htmlspecialchars($post->title);
+	} else {
+		$params = array('page' => get_requested_page());
+		return link_to(htmlspecialchars($post->title), $post, '', $params);
+	}
 }
 function link_to_category($category) {
 	if ($category->exists()) {

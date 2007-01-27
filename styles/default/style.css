@@ -38,6 +38,7 @@ a#rss-feed:hover { background-color: #fff; }
     padding: 5px;
 }
 #posts td { padding: 0.5em; border-bottom: 1px solid #ddd; }
+.secret { font-size: 0.9em; color: #aaa; }
 .comment-count { font-size: x-small; }
 .views { font-size: x-small; color: #999; }
 #signature { font-size: 90%; border-top: 1px solid #ccc; width: 50em; }

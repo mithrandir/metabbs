@@ -2,6 +2,23 @@
 if ($board->perm_read > $account->level) {
 	access_denied();
 }
+/*
+내 글 아님 => X
+로그인&&내 글 || 관리자 => O
+!로그인     => ?
+*/
+if ($post->secret) {
+	if ($post->user_id != $account->id && !$account->is_admin()) {
+		access_denied();
+	} else if ($post->user_id == 0 && $account->is_guest()) {
+		if (is_post() && md5($_POST['password']) == $post->password) {
+		} else {
+			render('secret');
+			return;
+		}
+	}
+}
+
 if (isset($_GET['search'])) {
 	$board->search = array_merge($board->search, $_GET['search']);
 }

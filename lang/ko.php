@@ -90,3 +90,4 @@ Style=스타일
 Appearance=모양새
 Use trackback=트랙백 허용
 Board URL=게시판 주소
+Secret Post=비밀글

@@ -44,6 +44,9 @@
 			<? if ($board->use_category && $post->category_id) { ?>
 			[<?=link_to_category($post->get_category())?>]
 			<? } ?>
+			<? if ($post->secret) { ?>
+			<span class="secret">[<?=i('Secret Post')?>]</span>
+			<? } ?>
 			<?=link_to_post($post)?>
 			<span class="comment-count"><?=link_to_comments($post)?></span>
 			<span class="views"><?=i('%d views', $post->views)?></span>

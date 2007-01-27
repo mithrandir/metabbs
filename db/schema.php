@@ -25,6 +25,7 @@ $t->column('password', 'string', 32);
 $t->column('created_at', 'timestamp');
 $t->column('type', 'ushort');
 $t->column('views', 'integer');
+$t->column('secret', 'boolean');
 $t->add_index('board_id');
 $t->add_index('category_id');
 $t->add_index('user_id');

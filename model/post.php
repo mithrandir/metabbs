@@ -3,6 +3,7 @@ class Post extends Model {
 	var $model = 'post';
 
 	var $name, $title, $type = 0, $body;
+	var $secret = 0;
 	var $category_id;
 
 	function _init() {
