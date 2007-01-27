@@ -1,6 +1,8 @@
 <?php
-if (is_post() && ($account->level >= $board->perm_delete ||
-		$post->password == md5($_POST['password']))) {
+if ($account->level < $board->perm_delete && $post->user_id != $account->id) {
+	access_denied();
+}
+if (is_post() && $post->password == md5($_POST['password'])) {
 	apply_filters('PostDelete', $post);
 
 	$attachments = $post->get_attachments();

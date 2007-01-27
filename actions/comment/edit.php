@@ -1,7 +1,9 @@
 <?php
 $post = $comment->get_post();
-if (is_post() && ($account->level >= $board->perm_delete ||
-		$comment->password == md5($_POST['password']))) {
+if ($account->level < $board->perm_delete && $comment->user_id != $account->id) {
+	access_denied();
+}
+if (is_post() && $comment->password == md5($_POST['password'])) {
 	$comment->body = $_POST['body'];
 	$comment->update();
 	redirect_to(url_for($post) . '#comment_' . $comment->id);

@@ -1,6 +1,5 @@
 <?php
-if ($post->user_id != 0 && $account->id != $post->user_id
-		&& $board->perm_delete > $account->level) {
+if ($account->id != $post->user_id && $account->level < $board->perm_delete) {
 	access_denied();
 }
 if (is_post()) {
