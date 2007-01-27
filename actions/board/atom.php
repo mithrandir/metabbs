@@ -13,7 +13,9 @@ $posts = feed_render_header($board, 'atom');
 	<entry>
 		<title><![CDATA[<?=$post->title?>]]></title>
 		<id><?=full_url_for($post)?></id>
+<? if (!$post->secret) { ?>
 		<content><![CDATA[<?=format($post->body)?>]]></content>
+<? } ?>
 		<author><name><![CDATA[<?=$post->name?>]]></name></author>
 		<updated><?=meta_format_date_RFC822($post->created_at)?></updated>
 <? if ($board->use_category && $category = $post->get_category()) { ?>
