@@ -1,12 +1,9 @@
 <?php
-function meta_parse_date($now) {
-	return mktime((int)substr($now, 8, 2), (int)substr($now, 10, 2), (int)substr($now, 12, 2), (int)substr($now, 4, 2), (int)substr($now, 6, 2), (int)substr($now, 0, 4));
-}
 function meta_format_date($format, $now) {
-	return strftime($format, meta_parse_date($now));
+	return strftime($format, $now);
 }
 function meta_format_date_RFC822($now) {
-	return date('r', (is_string($now) ? meta_parse_date($now) : $now));
+	return date('r', $now);
 }
 function autolink($string) {
 	return preg_replace_callback("#([a-z]+)://(?:[-0-9a-z_.@:~\\#%=+?/]|&amp;)+#i", 'link_url', $string);

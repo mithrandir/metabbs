@@ -69,17 +69,17 @@ class Board extends Model {
 	}
 	function get_posts($offset, $limit) {
 		$where = $this->get_condition();
-		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->post_table as p WHERE $where ORDER BY type DESC, id DESC LIMIT $offset, $limit", 'Post', $this->search_data);
+		return $this->db->fetchall("SELECT * FROM $this->post_table as p WHERE $where ORDER BY type DESC, id DESC LIMIT $offset, $limit", 'Post', $this->search_data);
 	}
 	function search_posts_with_comment($offset, $limit) {
 		$where = $this->get_condition();
-		return $this->db->fetchall("SELECT p.*, p.created_at+0 as created_at FROM $this->post_table as p, $this->comment_table as c WHERE $where GROUP BY p.id ORDER BY p.type DESC, p.id DESC LIMIT $offset, $limit", 'Post', $this->search_data);
+		return $this->db->fetchall("SELECT p.* FROM $this->post_table as p, $this->comment_table as c WHERE $where GROUP BY p.id ORDER BY p.type DESC, p.id DESC LIMIT $offset, $limit", 'Post', $this->search_data);
 	}
 	function get_posts_in_page($page, $method = 'get_posts') {
 		return $this->$method(($page - 1) * $this->posts_per_page, $this->posts_per_page);
 	}
 	function get_feed_posts($count) {
-		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->post_table WHERE board_id=$this->id ORDER BY id DESC LIMIT $count", 'Post');
+		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE board_id=$this->id ORDER BY id DESC LIMIT $count", 'Post');
 	}
 	function add_post(&$post) {
 		$post->board_id = $this->id;

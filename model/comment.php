@@ -11,10 +11,10 @@ class Comment extends Model {
 	function find($id) {
 		$db = get_conn();
 		$table = get_table_name('comment');
-		return $db->fetchrow("SELECT *, created_at+0 as created_at FROM $table WHERE id=?", 'Comment', array($id));
+		return $db->fetchrow("SELECT * FROM $table WHERE id=?", 'Comment', array($id));
 	}
 	function create() {
-		$this->created_at = model_datetime();
+		$this->created_at = time();
 		$this->password = md5(@$this->password);
 		Model::create();
 	}

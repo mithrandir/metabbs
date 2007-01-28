@@ -16,7 +16,7 @@ class User extends Model {
 		return $db->fetchrow("SELECT * FROM $table WHERE id=?", 'User', array($id));
 	}
 	function get_posts($offset, $limit) {
-		return $this->db->fetchall("SELECT *, created_at+0 as created_at FROM $this->post_table WHERE user_id=$this->id ORDER BY id DESC LIMIT $offset, $limit", 'Post');
+		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE user_id=$this->id ORDER BY id DESC LIMIT $offset, $limit", 'Post');
 	}
 	function get_post_count() {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->post_table WHERE user_id=$this->id");

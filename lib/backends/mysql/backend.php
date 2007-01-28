@@ -5,7 +5,6 @@ $column_type_map = array(
 	'varchar' => 'String',
 	'longtext' => 'String',
 	'text' => 'String',
-	'timestamp' => 'Timestamp',
 	'tinyint' => 'Short',
 	'bool' => 'Boolean'
 	);
@@ -54,11 +53,12 @@ class TextColumn extends Column {
 	}
 }
 class TimestampColumn extends Column {
-	function to_string() {
-		return model_datetime();
+	function TimestampColumn($name) {
+		$this->Column($name);
+		$this->default = time();
 	}
-	function to_spec() {
-		return "`$this->name` timestamp NOT NULL";
+	function to_string() {
+		return $this->value;
 	}
 }
 class BooleanColumn extends Column {
@@ -180,7 +180,10 @@ class MySQLAdapter
 		$fields = array();
 		while (list($name, $type, /*null*/, $key, $default) = mysql_fetch_row($result)) {
 			if ($key == 'PRI') continue;
-			$c = $this->get_field_class_from_type($type);
+			if (substr($name, -3, 3) == '_at')
+				$c = 'TimestampColumn';
+			else
+				$c = $this->get_field_class_from_type($type);
 			$fields[] = new $c($name, $default);
 		}
 		return $fields;
@@ -189,9 +192,6 @@ class MySQLAdapter
 		list($major, $minor) = explode('.', mysql_get_server_info($this->conn), 3);
 		return array($major, $minor);
 	}
-}
-function model_datetime() {
-    return date("YmdHis");
 }
 
 ?>
