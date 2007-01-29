@@ -97,5 +97,11 @@ class Post extends Model {
 		$this->views++;
 		$this->db->query("UPDATE $this->table SET views=views+1, created_at='$this->created_at' WHERE id=$this->id");
 	}
+	function get_newer_post() {
+		return $this->db->fetchrow("SELECT * FROM $this->table WHERE board_id=$this->board_id AND id > $this->id ORDER BY id ASC LIMIT 1", 'Post');
+	}
+	function get_older_post() {
+		return $this->db->fetchrow("SELECT * FROM $this->table WHERE board_id=$this->board_id AND id < $this->id ORDER BY id DESC LIMIT 1", 'Post');
+	}
 }
 ?>

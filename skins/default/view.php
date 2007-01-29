@@ -85,6 +85,14 @@ foreach ($comments as $comment) {
 </form>
 <? } ?>
 
+<div id="neighbor-posts">
+<p>
+<? if ($newer_post->exists()) { ?>&laquo; <?=link_to_post($newer_post)?><? } ?>
+<? if ($newer_post->exists() && $older_post->exists()) { ?> | <? } ?>
+<? if ($older_post->exists()) { ?><?=link_to_post($older_post)?> &raquo;<? } ?>
+</p>
+</div>
+
 <div id="nav">
 <a href="<?=$link_list?>"><?=i('List')?></a> |
 <? if ($link_new_post) { ?><a href="<?=$link_new_post?>"><?=i('New Post')?></a> <? } ?>
