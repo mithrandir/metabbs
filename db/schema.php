@@ -26,6 +26,8 @@ $t->column('created_at', 'timestamp');
 $t->column('type', 'ushort');
 $t->column('views', 'integer');
 $t->column('secret', 'boolean');
+$t->column('edited_at', 'timestamp');
+$t->column('edited_by', 'integer');
 $t->add_index('board_id');
 $t->add_index('category_id');
 $t->add_index('user_id');
