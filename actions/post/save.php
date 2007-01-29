@@ -9,12 +9,7 @@ if (empty($_POST) && empty($_FILES)) {
 	print_notice('Max upload size exceeded', 'Please upload files smaller than ' . $limit . '.');
 }
 
-if (!$account->is_guest()) {
-	$post->user_id = $account->id;
-	$post->name = $account->name;
-} else {
-	cookie_register('name', $post->name);
-}
+cookie_register('name', $post->name);
 
 apply_filters('PostSave', $post);
 

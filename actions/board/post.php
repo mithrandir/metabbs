@@ -4,6 +4,10 @@ if ($board->perm_write > $account->level) {
 }
 if (is_post()) {
 	$post = new Post(@$_POST['post']);
+	if (!$account->is_guest()) {
+		$post->user_id = $account->id;
+		$post->name = $account->name;
+	}
 	define('SECURITY', 1);
 	include 'actions/post/save.php';
 } else {

@@ -60,6 +60,9 @@ class TimestampColumn extends Column {
 	function to_string() {
 		return $this->value;
 	}
+	function to_spec() {
+		return "`$this->name` integer(10) NOT NULL";
+	}
 }
 class BooleanColumn extends Column {
 	function to_string() {

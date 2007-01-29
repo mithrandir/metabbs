@@ -64,6 +64,7 @@ Total %d posts=모두 %d개의 글이 있습니다.
 Date=날짜
 Writer=글쓴이
 Posted by %s at %s=%s 님이 %s에 씀
+Edited by %s at %s=%s 님이 %s에 고침
 Trackbacks=트랙백
 Trackback URL=트랙백 주소
 Comments=댓글

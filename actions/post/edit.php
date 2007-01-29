@@ -11,6 +11,8 @@ if (is_post()) {
 
 	unset($_POST['post']['password']);
 	$post->import($_POST['post']);
+	$post->edited_at = time();
+	$post->edited_by = $account->id;
 	if ($board->use_attachment && isset($_POST['delete'])) {
 		foreach ($_POST['delete'] as $id) {
 			$attachment = Attachment::find($id);

@@ -33,6 +33,9 @@ function openPlayer(id, url) {
 </div>
 
 <div id="body"><?=$post->body?></div>
+<? if ($post->is_edited()) { ?>
+<div id="editinfo"><?=i('Edited by %s at %s', link_to_user(User::find($post->edited_by)), meta_format_date("%Y-%m-%d %H:%M:%S", $post->edited_at))?></div>
+<? } ?>
 <? if (isset($signature)) { ?>
 <div id="signature"><?=$signature?></div>
 <? } ?>

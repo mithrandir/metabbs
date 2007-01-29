@@ -22,14 +22,17 @@ class Post extends Model {
 	}
 	function create() {
 		$this->password = md5($this->password);
+		$this->edited_at = 0;
 		Model::create();
 	}
 	function update() {
-		unset($this->created_at);
 		Model::update();
 	}
 	function is_notice() {
 		return $this->type == 1;
+	}
+	function is_edited() {
+		return $this->edited_at != 0;
 	}
 	function get_board() {
 		return Board::find($this->board_id);
