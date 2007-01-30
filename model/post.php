@@ -42,9 +42,20 @@ class Post extends Model {
 		return $board->get_title();
 	}
 	function get_user() {
-		if (!isset($this->user))
-			$this->user = User::find($this->user_id);
-		return $this->user;
+		if ($this->user_id) {
+			if (!isset($this->user))
+				$this->user = User::find($this->user_id);
+			return $this->user;
+		} else {
+			return new Guest(array('name' => $this->name));
+		}
+	}
+	function get_editor() {
+		if ($this->edited_by) {
+			return User::find($this->edited_by);
+		} else {
+			return new Guest(array('name' => $this->name));
+		}
 	}
 	function get_category() {
 		return $this->category_id ? Category::find($this->category_id) : null;

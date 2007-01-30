@@ -42,7 +42,7 @@ function link_to_comments($post) {
     }
 }
 function link_to_user($user) {
-	$name = htmlspecialchars($user->name);
+	$name = $user->name;
     if ($user->is_guest()) {
         return $name;
     } else {
