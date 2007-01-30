@@ -53,12 +53,8 @@ class TextColumn extends Column {
 	}
 }
 class TimestampColumn extends Column {
-	function TimestampColumn($name) {
-		$this->Column($name);
-		$this->default = time();
-	}
 	function to_string() {
-		return $this->value;
+		return $this->value ? $this->value : time();
 	}
 	function to_spec() {
 		return "`$this->name` integer(10) NOT NULL";
