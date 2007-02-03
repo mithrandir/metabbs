@@ -4,8 +4,8 @@ define('METABBS_DB_REVISION', 702);
 function get_table_name($model) {
 	return METABBS_TABLE_PREFIX . $model;
 }
-function get_column_pair($column) {
-	return "$column->name=" . $column->to_string();
+function get_column_pair($key, $value) {
+	return "$key=$value";
 }
 
 class Model
@@ -33,23 +33,24 @@ class Model
 	}
 	function get_columns() {
 		$columns = $this->db->get_columns($this->table);
-		foreach ($columns as $key => $column) {
-			$columns[$key]->set_value(@$this->{$column->name});
+		$data = array();
+		foreach ($columns as $k) {
+			$data[$k] = "'" . mysql_real_escape_string($this->$k) . "'";
 		}
-		return $columns;
+		return $data;
 	}
 	function create() {
 		$columns = $this->get_columns();
 		$query = "INSERT INTO $this->table";
-		$query .= " (".implode(",", array_map('get_column_name', $columns)).")";
-		$query .= " VALUES(".implode(",", array_map('column_to_string', $columns)).")";
+		$query .= " (".implode(",", array_keys($columns)).")";
+		$query .= " VALUES(".implode(",", array_values($columns)).")";
 		$this->db->query($query);
 		$this->id = $this->db->insertid();
 	}
 	function update() {
 		$columns = $this->get_columns();
 		$query = "UPDATE $this->table SET ";
-		$query .= implode(",", array_map('get_column_pair', $columns));
+		$query .= implode(",", array_map('get_column_pair', array_keys($columns), array_values($columns)));
 		$query .= " WHERE id=$this->id";
 		$this->db->query($query);
 	}

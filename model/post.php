@@ -22,10 +22,12 @@ class Post extends Model {
 	}
 	function create() {
 		$this->password = md5($this->password);
+		$this->created_at = time();
 		$this->edited_at = 0;
 		Model::create();
 	}
 	function update() {
+		$this->edited_at = time();
 		Model::update();
 	}
 	function is_notice() {
