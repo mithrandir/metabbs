@@ -73,7 +73,11 @@ class Model
 	function get_id() {
 		return $this->id;
 	}
-	
+
+	/**
+	 * 컬럼을 가져온다.
+	 * @return 한 컬럼의 내용들이 남긴 배열
+	 */
 	function get_columns() {
 		$columns = $this->db->get_columns($this->table);
 		$data = array();
@@ -82,6 +86,10 @@ class Model
 		}
 		return $data;
 	}
+
+	/**
+	 * 새로운 데이터를 테이블에 삽입한다.
+	 */
 	function create() {
 		$columns = $this->get_columns();
 		$query = "INSERT INTO $this->table";
@@ -90,6 +98,10 @@ class Model
 		$this->db->query($query);
 		$this->id = $this->db->insertid();
 	}
+
+	/**
+	 * 항목의 내용을 개선한다.
+	 */
 	function update() {
 		$columns = $this->get_columns();
 		$query = "UPDATE $this->table SET ";
@@ -97,6 +109,10 @@ class Model
 		$query .= " WHERE id=$this->id";
 		$this->db->query($query);
 	}
+
+	/**
+	 * 항목을 삭제한다.
+	 */
 	function delete() {
 		$this->db->query("DELETE FROM $this->table WHERE id=$this->id");
 	}
