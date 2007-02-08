@@ -49,13 +49,13 @@
 <a name="l00044"></a>00044         $action = 'index';
 <a name="l00045"></a>00045         $id = <a class="code" href="metabbs_8php.html#a28657aaa5fcc7509dd883662f8accbe">$len</a> == 3 ? <a class="code" href="metabbs_8php.html#a8dfa90e1feaffe49fc70696cc75c2f3">$parts</a>[2] : null;
 <a name="l00046"></a>00046 } <span class="keywordflow">else</span> {
-<a name="l00047"></a>00047         print_notice('Requested URL is not valid.', 'Valid URL format is '.full_url_for(<span class="stringliteral">"&lt;em&gt;controller&lt;/em&gt;"</span>, <span class="stringliteral">"&lt;em&gt;action&lt;/em&gt;"</span>).'&lt;br /&gt;If you are administrator, go to '.link_to('administration page', 'admin'));
+<a name="l00047"></a>00047         <a class="code" href="template_8php.html#bfc70dac2d286a569bb0a5836bf00334">print_notice</a>('Requested URL is not valid.', 'Valid URL <a class="code" href="template_8php.html#758da7c5e5c6c848f651e5fb62e6f898">format</a> is '.full_url_for(<span class="stringliteral">"&lt;em&gt;controller&lt;/em&gt;"</span>, <span class="stringliteral">"&lt;em&gt;action&lt;/em&gt;"</span>).'&lt;br /&gt;If you are administrator, go to '.link_to('administration page', '<a class="code" href="account_8php.html#0418d22e14785132c232ef68a32d0659">admin</a>'));
 <a name="l00048"></a>00048 }
 <a name="l00049"></a>00049 
 <a name="l00050"></a><a class="code" href="metabbs_8php.html#da57e7bb7c152edad18fe2f166188691">00050</a> <a class="code" href="metabbs_8php.html#da57e7bb7c152edad18fe2f166188691">$title</a> = '<a class="code" href="class_meta_b_b_s.html">MetaBBS</a>';
 <a name="l00051"></a>00051 @include(<span class="stringliteral">"actions/$controller.php"</span>);
 <a name="l00052"></a><a class="code" href="metabbs_8php.html#65a39c291401a48c191ad603c504f883">00052</a> <a class="code" href="metabbs_8php.html#65a39c291401a48c191ad603c504f883">$action_dir</a> = 'actions/' . $controller;
-<a name="l00053"></a>00053 <span class="keywordflow">if</span> (!run_hook_handler($controller, $action)) {
+<a name="l00053"></a>00053 <span class="keywordflow">if</span> (!<a class="code" href="plugin_8php.html#6b15e662c901504f737a65d77f81b3ed">run_hook_handler</a>($controller, $action)) {
 <a name="l00054"></a>00054         include(<a class="code" href="metabbs_8php.html#65a39c291401a48c191ad603c504f883">$action_dir</a> . <span class="charliteral">'/'</span> . $action . '.php');
 <a name="l00055"></a>00055 }
 <a name="l00056"></a>00056 <span class="keywordflow">if</span> (!isset($skin)) {
@@ -80,7 +80,7 @@
 <a name="l00075"></a>00075         include(<a class="code" href="metabbs_8php.html#6330ce1a9e89c81067e5b707220bfa55">get_layout_path</a>('footer'));
 <a name="l00076"></a>00076 }
 <a name="l00077"></a>00077 ?&gt;
-</pre></div><hr size="1"><address style="align: right;"><small>Generated on Thu Feb 8 17:51:31 2007 for metabbs by&nbsp;
+</pre></div><hr size="1"><address style="align: right;"><small>Generated on Thu Feb 8 20:40:20 2007 for metabbs by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.1-p1 </small></address>
 </body>
