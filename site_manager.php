@@ -4,15 +4,35 @@ if (isset($_GET['redirect'])) { // backward compatibility
 	define("METABBS_BASE_URI", METABBS_BASE_PATH);
 }
 require_once(dirname(__FILE__).'/lib/common.php');
+
+/**
+ * 써드 파티를 위한 API. 게시판의 정보를 제공한다.
+ */
 class MetaBBS
 {
+	/**
+	 * 피드 주소를 결정한다.
+	 */
 	var $feed_link = 'RSS';
+
+	/**
+	 * 생성자. 유저 객체를 가져온다.
+	 */
 	function MetaBBS() {
 		$this->user = UserManager::get_user();
 	}
+
+	/**
+	 * 회원 여부를 확인한다.
+	 * @return 비회원일 경우 true를 리턴한다.
+	 */
 	function isGuest() {
 		return $this->user == null || $this->user->is_guest();
 	}
+
+	/**
+	 * 로그인 폼을 출력한다.
+	 */
 	function printLoginForm() {
 ?>
 <form method="post" action="<?=url_with_referer_for("account", "login")?>">
@@ -22,20 +42,44 @@ class MetaBBS
 </form>
 <?php
 	}
+
+	/**
+	 * 지정한 개수만큼 최근 글을 가져온다.
+	 * @param $board_name 게시판 명
+	 * @param $count 개수
+	 * @return 지정한 개수의 최신글을 리턴한다. 
+	 */
 	function getLatestPosts($board_name, $count) {
 		$board = Board::find_by_name($board_name);
 		return $board->get_feed_posts($count);
 	}
+
+	/**
+	 * 가장 최근글 하나를 가져온다. 
+	 * @param $board_name 게시판 명
+	 * @return 가장 최근 글 하나를 리턴한다.
+	 */
 	function getLatestPost($board_name) {
 		@list($post) = $this->getLatestPosts($board_name, 1);
 		return $post;
 	}
+
+	/**
+	 * 스킨 디렉토리가 설정되어 있다면 해드를 출력한다.
+	 */
 	function printHead() {
 		global $_skin_dir, $skin_dir, $style_dir;
 		if (isset($_skin_dir)) {
 			include($_skin_dir . '/_head.php');
 		}
 	}
+
+	/**
+	 * 가장 최근 글들의 목록을 출력한다.
+	 * @param $board_name 게시판 명
+	 * @param $count 글의 개수
+	 * @param $title_length 제목의 길이
+	 */
 	function printLatestPosts($board_name, $count, $title_length = -1) {
 		$board = Board::find_by_name($board_name);
 ?>
@@ -52,5 +96,9 @@ class MetaBBS
 <?php
 	}
 }
+
+/**
+ * 이 인스턴스를 이용하여 외부 프로그램에서 MetaBBS에 접근한다.
+ */
 $metabbs = new MetaBBS;
 ?>
