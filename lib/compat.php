@@ -7,9 +7,18 @@ if (@ini_get('magic_quotes_runtime')) {
 	set_magic_quotes_runtime(0);
 }
 
+/**
+ * 배열과 변수 모두 슬래쉬를 추가한다.
+ * @param $v 입력. 변수든 배열이든 상관없다.
+ */
 function addslashes_deep($v) {
 	return is_array($v) ? array_map('addslashes_deep', $v) : addslashes($v);
 }
+
+/**
+ * 배열과 변소 모두 슬래쉬를 제거한다.
+ * @param $v. 변수든 배열이든 상관없다.
+ */
 function stripslashes_deep($v) {
 	return is_array($v) ? array_map('stripslashes_deep', $v) : stripslashes($v);
 }
