@@ -7,6 +7,7 @@ class Column {
 	}
 }
 class IntegerColumn extends Column {
+	var $default = 0;
 	function to_spec() {
 		return "`$this->name` integer(10) NOT NULL DEFAULT '$this->default'";
 	}
@@ -22,6 +23,7 @@ class UShortColumn extends IntegerColumn {
 	}
 }
 class StringColumn extends Column {
+	var $default = '';
 	function to_spec($length) {
 		return "`$this->name` varchar($length) NOT NULL DEFAULT '$this->default'";
 	}
