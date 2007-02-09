@@ -1,13 +1,29 @@
 <?php
 require 'lib/common.php';
 
+/**
+ * 원하는 템플릿을 렌더로 지정합니다.
+ * @param $template 지정할 템플릿
+ */
 function render($template) {
 	global $render;
 	$render = $template;
 }
+
+/**
+ * 스킨이 관리자용인지 확인합니다.
+ * @param $skin 스킨 이름
+ * @return 관리자용 여부
+ */
 function is_system_view($skin) {
     return $skin{0} == '_';
 }
+
+/**
+ * 레이아웃을 위한 파일 경로를 알아옵니다.
+ * @param $type 화면에 출력할 타입
+ * @return 파일 경로
+ */
 function get_layout_path($type) {
 	global $config, $_skin_dir, $__skin;
 	$layout = $config->get('global_' . $type);
