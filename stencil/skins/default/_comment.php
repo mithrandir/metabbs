@@ -21,7 +21,7 @@
 	<?
 	$comment_stack[] = $comment;
 	foreach ($comment->comments as $comment) {
-		include($_skin_dir . '/_comment.php');
+		include('_comment.php');
 	}
 	$comment = array_pop($comment_stack);
 	?>

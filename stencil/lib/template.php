@@ -8,6 +8,7 @@ class Style {
 		include 'styles/'.$name.'/style.php';
 		$this->skin = $skin;
 		$this->set('style_dir', METABBS_BASE_PATH . 'styles/' . $name);
+		$this->set('_skin_dir', 'skins/' . $skin);
 		$this->set('skin_dir', METABBS_BASE_PATH . 'skins/' . $skin);
 		$this->set('title', 'MetaBBS');
 	}
@@ -17,9 +18,11 @@ class Style {
 	function render($template) {
 		extract($this->attributes);
 		include $this->header;
+		include 'skins/'.$this->skin.'/header.php';
 		echo '<div id="meta">';
 		include 'skins/'.$this->skin.'/'.$template.'.php';
 		echo '</div>';
+		include 'skins/'.$this->skin.'/footer.php';
 		include $this->footer;
 	}
 }
