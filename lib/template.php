@@ -1,4 +1,27 @@
 <?php
+class Style {
+	var $attributes = array();
+	var $header = 'skins/header.php';
+	var $footer = 'skins/footer.php';
+	function Style($name) {
+		$this->name = $name;
+		include 'styles/'.$name.'/style.php';
+		$this->skin = $skin;
+		$this->set('style_dir', METABBS_BASE_PATH . 'styles/' . $name);
+		$this->set('skin_dir', METABBS_BASE_PATH . 'skins/' . $skin);
+		$this->set('title', 'MetaBBS');
+	}
+	function set($name, $value) {
+		$this->attributes[$name] = $value;
+	}
+	function render($template) {
+		extract($this->attributes);
+		include $this->header;
+		include 'skins/'.$this->skin.'/'.$template.'.php';
+		include $this->footer;
+	}
+}
+
 function meta_format_date($format, $now) {
 	return strftime($format, $now);
 }
