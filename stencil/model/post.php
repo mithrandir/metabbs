@@ -4,7 +4,9 @@ class Post extends Model {
 
 	var $name, $title, $type = 0, $body;
 	var $secret = 0;
-	var $category_id;
+	var $category_id = 0;
+	var $views = 0;
+	var $edited_by = 0;
 
 	function _init() {
 		$this->table = get_table_name('post');

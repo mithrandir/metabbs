@@ -3,6 +3,10 @@ require 'config.php';
 $config = new Config('metabbs.conf.php');
 
 $backend = $config->get('backend', 'mysql');
+
+/**
+ * 테이블의 프리픽스
+ */
 define('METABBS_TABLE_PREFIX', $config->get('prefix', 'meta_'));
 
 require 'model.php';

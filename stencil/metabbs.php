@@ -1,77 +1,9 @@
 <?php
 require 'lib/common.php';
 
-/**
- * 원하는 템플릿을 렌더로 지정합니다.
- * @param $template 지정할 템플릿
- */
-function render($template) {
-	global $render;
-	$render = $template;
-}
-
-/**
- * 스킨이 관리자용인지 확인합니다.
- * @param $skin 스킨 이름
- * @return 관리자용 여부
- */
-function is_system_view($skin) {
-    return $skin{0} == '_';
-}
-
-/**
- * 레이아웃을 위한 파일 경로를 알아옵니다.
- * @param $type 화면에 출력할 타입
- * @return 파일 경로
- */
-function get_layout_path($type) {
-	global $config, $_skin_dir, $__skin;
-	$layout = $config->get('global_' . $type);
-	if (is_system_view($__skin) || !$layout)
-		return $_skin_dir . '/' . $type . '.php';
-	else
-		return $layout;
-}
-
-$parts = explode('/', $_SERVER['PATH_INFO'], 4);
-$len = count($parts);
-if ($len == 4) { // /controller/action/id
-	$controller = $parts[1];
-	$action = $parts[2];
-	$id = $parts[3];
-} else if ($len == 2 || $len == 3) { // /controller/id
-	$controller = $parts[1];
-	$action = 'index';
-	$id = $len == 3 ? $parts[2] : null;
-} else {
-	print_notice('Requested URL is not valid.', 'Valid URL format is '.full_url_for("<em>controller</em>", "<em>action</em>").'<br />If you are administrator, go to '.link_to('administration page', 'admin'));
-}
-
-$title = 'MetaBBS';
-@include("actions/$controller.php");
-$action_dir = 'actions/' . $controller;
-if (!run_hook_handler($controller, $action)) {
-	include($action_dir . '/' . $action . '.php');
-}
-if (!isset($skin)) {
-	if (isset($board)) {
-		if (!$board->style) $board->style = 'default';
-		include 'styles/'.$board->style.'/style.php';
-		$style_dir = METABBS_BASE_PATH . 'styles/' . $board->style;
-	} else {
-		$skin = 'default';
-		$style_dir = METABBS_BASE_PATH . 'styles/default';
-	}
-}
-$__skin = $skin;
-$_skin_dir = 'skins/' . $skin;
-$skin_dir = METABBS_BASE_PATH . $_skin_dir;
-
-if (isset($render)) {
-	include(get_layout_path('header'));
-	echo "<div id=\"meta\">\n";
-	include($_skin_dir . '/' . $render . '.php');
-	echo "</div>\n";
-	include(get_layout_path('footer'));
-}
+$style = $board->get_style();
+// TODO: set global header
+$style->set('board', $board);
+$style->set('account', $account);
+include 'controller/'.$controller.'.php';
 ?>

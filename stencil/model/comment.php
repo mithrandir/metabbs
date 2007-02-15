@@ -2,6 +2,7 @@
 class Comment extends Model {
 	var $model = 'comment';
 	var $comments = array();
+	var $parent = 0;
 
 	function _init() {
 		$this->table = get_table_name('comment');
