@@ -2,13 +2,7 @@
 if ($account->id != $post->user_id && $account->level < $board->perm_delete) {
 	access_denied();
 }
-if (is_post()) {
-	if ($post->user_id == 0 && $board->perm_delete > $account->level) {
-		if ($post->password != md5($_POST['post']['password'])) {
-			redirect_to(url_for($post, 'edit'));
-		}
-	}
-
+if (is_post() && ($account->level >= $board->perm_delete || $post->user_id == 0 && md5($_POST['post']['password']) == $post->password)) {
 	unset($_POST['post']['password']);
 	$post->import($_POST['post']);
 	$post->edited_at = time();
