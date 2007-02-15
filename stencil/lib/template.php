@@ -17,7 +17,9 @@ class Style {
 	function render($template) {
 		extract($this->attributes);
 		include $this->header;
+		echo '<div id="meta">';
 		include 'skins/'.$this->skin.'/'.$template.'.php';
+		echo '</div>';
 		include $this->footer;
 	}
 }

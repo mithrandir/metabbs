@@ -3,7 +3,7 @@ $parts = explode('/', $_SERVER['PATH_INFO']);
 $board = Board::find_by_name($parts[1]);
 if (is_numeric(@$parts[2])) {
 	$id = @$parts[2];
-	$controller = 'show';
+	$controller = 'view';
 } else {
 	$controller = @$parts[2];
 	$id = @$parts[3];
