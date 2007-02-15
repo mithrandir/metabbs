@@ -70,7 +70,7 @@ function openPlayer(id, url) {
 <?
 $comment_stack = array();
 foreach ($comments as $comment) {
-	include($_skin_dir . '/_comment.php');
+	include('_comment.php');
 }
 ?>
 </ul>

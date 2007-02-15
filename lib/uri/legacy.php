@@ -20,7 +20,7 @@ if ($controller == 'board') {
 } else if ($controller == 'post') {
 	$post = Post::find($id);
 	$board = $post->get_board();
-	$controller = 'show';
+	$controller = 'view';
 }
 
 /**
