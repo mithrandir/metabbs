@@ -7,4 +7,3 @@
 	<link rel="stylesheet" href="<?=$style_dir?>/style.css" type="text/css" />
 </head>
 <body>
-<p>Hello, <?=link_to_user($account)?>! :) <? print_nav(get_account_control($account)); ?></p>

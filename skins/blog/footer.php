@@ -49,6 +49,3 @@
 			    styled with <?=$board->style?$board->style:'basic'?></li>
 		</ul>
 	</div>
-</div>
-</body>
-</html>
