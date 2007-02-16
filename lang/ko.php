@@ -92,3 +92,4 @@ Appearance=모양새
 Use trackback=트랙백 허용
 Board URL=게시판 주소
 Secret Post=비밀글
+Delete selected users=선택된 사용자 삭제

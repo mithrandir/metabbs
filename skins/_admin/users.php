@@ -18,5 +18,6 @@
 </table>
 
 <h3><?=i('Mass operation')?></h3>
-<p><?=i('Change levels of selected users to %s', '<input type="text" name="level" value="1" size="3" />')?> (0~255) <input type="submit" value="OK" /></p>
+<p><input type="radio" name="mass_operation" id="mass_operation_level" value="level" /><?=i('Change levels of selected users to %s', '<input type="text" name="level" value="1" size="3" />')?> (0~255) <input type="submit" value="OK" /></p>
+<p><input type="radio" name="mass_operation" id="mass_operation_delete" value="delete" /><?=i('Delete selected users')?> <input type="submit" value="OK" /></p>
 </form>
