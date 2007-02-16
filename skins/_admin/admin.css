@@ -151,3 +151,5 @@ td.enabled { background-color: lightgreen; }
 td.disabled { background-color: pink; }
 
 .empty { border: 2px solid red; }
+
+#operations { margin: 0; padding: 0; list-style: none; }
