@@ -28,7 +28,7 @@ function get_layout_path($type) {
 	global $config, $_skin_dir, $__skin;
 	$layout = $config->get('global_' . $type);
 	if (is_system_view($__skin) || !$layout)
-		return $_skin_dir . '/' . $type . '.php';
+		return 'skins/default_' . $type . '.php';
 	else
 		return $layout;
 }
@@ -63,15 +63,20 @@ if (!isset($skin)) {
 		$style_dir = METABBS_BASE_PATH . 'styles/default';
 	}
 }
+if ($skin == '_admin') {
+	$style_dir = METABBS_BASE_PATH . 'skins/_admin';
+}
 $__skin = $skin;
 $_skin_dir = 'skins/' . $skin;
 $skin_dir = METABBS_BASE_PATH . $_skin_dir;
 
 if (isset($render)) {
 	include(get_layout_path('header'));
+	include($_skin_dir . '/header.php');
 	echo "<div id=\"meta\">\n";
 	include($_skin_dir . '/' . $render . '.php');
 	echo "</div>\n";
+	include($_skin_dir . '/footer.php');
 	include(get_layout_path('footer'));
 }
 ?>
