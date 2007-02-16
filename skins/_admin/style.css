@@ -153,3 +153,17 @@ td.disabled { background-color: pink; }
 .empty { border: 2px solid red; }
 
 #operations { margin: 0; padding: 0; list-style: none; }
+
+#pages { list-style: none; margin: 0; padding: 0.5em; }
+#pages li { display: inline; padding: 0 5px; }
+#pages li.here { font-weight: bold; }
+.first a, .last a, .next a, .prev a {
+    border: 1px solid #ccc;
+    padding: 0 4px;
+    background-color: #eee;
+    text-decoration: none;
+}
+.prev a, .next a { padding: 0 5px; }
+.first a:hover, .last a:hover, .next a:hover, .prev a:hover {
+    background-color: #333;
+}

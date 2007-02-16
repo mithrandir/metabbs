@@ -42,10 +42,15 @@ class User extends Model {
 		$table = get_table_name('user');
 		return $db->fetchrow("SELECT * FROM $table WHERE user=?", 'User', array($user));
 	}
-	function find_all() {
+	function find_all($offset, $limit) {
 		$db = get_conn();
 		$table = get_table_name('user');
-		return $db->fetchall("SELECT * FROM $table", 'User');
+		return $db->fetchall("SELECT * FROM $table LIMIT $offset, $limit", 'User');
+	}
+	function count() {
+		$db = get_conn();
+		$table = get_table_name('user');
+		return $db->fetchone("SELECT COUNT(*) FROM $table");
 	}
 	function is_guest() {
 		return false;

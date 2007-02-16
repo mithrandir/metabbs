@@ -25,14 +25,16 @@ function _url_for($controller, $action = null, $params = null) {
 		if ($action) $url .= $action . '/';
 	}
 
-	if ($params) {
-		$_params = array();
-		foreach ($params as $key => $value)
-			$_params[] = "$key=$value";
-		$url .= '?' . implode('&', $_params);
-	}
+	if ($params) $url .= query_string_for($params);
 
 	return $url;
+}
+
+function query_string_for($params) {
+	$_params = array();
+	foreach ($params as $key => $value)
+		$_params[] = "$key=$value";
+	return '?' . implode('&', $_params);
 }
 
 /**
@@ -53,12 +55,16 @@ function full_url_for($controller, $action = '') {
  * @return 생성된 url 주소
  */
 function url_for($controller, $action = null, $params = array()) {
+	set_default_params($params);
+	return _url_for($controller, $action, $params);
+}
+
+function set_default_params(&$params) {
 	if (isset($_GET['search']) && $_GET['search']) {
 		foreach ($_GET['search'] as $k => $v) {
 			if ($v) $params["search[$k]"] = urlencode($v);
 		}
 	}
-	return _url_for($controller, $action, $params);
 }
 
 /**

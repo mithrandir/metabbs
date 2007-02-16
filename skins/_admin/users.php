@@ -17,6 +17,8 @@
 <? } ?>
 </table>
 
+<? _print_pages($page, $users_count, 10); ?>
+
 <h3><?=i('Mass operation')?></h3>
 <ul id="operations">
 	<li><input type="radio" name="mass_operation" id="mass_operation_level" value="level" /><?=i('Change levels of selected users to %s', '<input type="text" name="level" value="1" size="3" />')?> (0~255)</li>
