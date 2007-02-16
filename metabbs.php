@@ -28,7 +28,7 @@ function get_layout_path($type) {
 	global $config, $_skin_dir, $__skin;
 	$layout = $config->get('global_' . $type);
 	if (is_system_view($__skin) || !$layout)
-		return 'skins/default_' . $type . '.php';
+		return 'skins/common/default_' . $type . '.php';
 	else
 		return $layout;
 }
