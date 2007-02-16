@@ -65,13 +65,12 @@ class MetaBBS
 	}
 
 	/**
-	 * 스킨 디렉토리가 설정되어 있다면 해드를 출력한다.
+	 * <head> 태그 내용을 출력한다.
 	 */
 	function printHead() {
 		global $_skin_dir, $skin_dir, $style_dir;
-		if (isset($_skin_dir)) {
-			include($_skin_dir . '/_head.php');
-		}
+		$head_only = true;
+		include('skins/default_header.php');
 	}
 
 	/**
