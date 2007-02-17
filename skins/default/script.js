@@ -50,18 +50,20 @@ Element.addMethods({
 });
 
 Event.observe(window, 'load', function () {
-	Event.observe('comment-form', 'submit', function (ev) {
-		var data = Form.serialize(this);
-		Form.disable(this);
+	Event.observe('comment-form', 'submit', function () {
+		var form = $('comment-form');
+		var data = Form.serialize(form);
+		form.disable();
 		$('sending').show();
-		new Ajax.Updater('comments-list', this.action, {
+		new Ajax.Updater('comments-list', form.action, {
 			parameters: data,
 			insertion: Insertion.Bottom,
 			onComplete: function () {
-				Form.enable(this);
 				$$('#comments-list li').last().scrollTo().animate(Effect.Pulsar);
+				form.enable();
 				$('sending').hide();
-			}.bind(this)
+			}.bind(form)
 		});
 	});
+	$('comment-form').onsubmit = function () { return false; }
 });
