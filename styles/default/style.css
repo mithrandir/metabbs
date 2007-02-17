@@ -51,12 +51,11 @@ td.date { width: 9em; }
 
 #comments ul { margin: 0; padding: 0; list-style: none; }
 #comments ul ul { margin-left: 2em; }
+#comments li { margin-bottom: 1em; }
 .comment {
     padding: 0.5em;
     border: 1px solid #ccc;
     background: url(bg.png) repeat-x;
-    margin-bottom: 1em;
-    width: 98%;
 }
 .comment .info { padding-bottom: 3px; }
 .comment .body p { margin: 0; }
@@ -86,7 +85,7 @@ span.actions { font-size: 0.9em; }
     background-color: #333;
 }
 
-#sending { display: none; margin: 0 5px; }
+#sending { margin: 0 5px; }
 
 .star { color: red; }
 .flash { background-color: #ffe; border: 1px solid #ddd; padding: 0.5em; }

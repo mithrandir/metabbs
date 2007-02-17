@@ -1,64 +1,67 @@
-function checkForm(form)
-{
-	elements = form.elements ? form.elements : form;
-	valid = true;
-	for (i = elements.length; i > 0; i--) {
-		field = $(elements[i-1]);
-		if (!field.name) continue;
-		if (field.value == '' && !field.hasClassName('ignore')) {
-			field.addClassName('blank').focus();
-			valid = false;
+var Animation = Class.create();
+Animation.prototype = {
+	initialize: function (element) {
+		this.element = $(element);
+	},
+	animate: function () {
+		this.start();
+		this.timer = window.setInterval(this.step.bind(this), this.interval);
+	},
+	stop: function () {
+		window.clearInterval(this.timer);
+	},
+	start: function () {
+		// implement this
+	},
+	step: function () {
+		// implement this
+	}
+};
+
+var Effect = {};
+Effect.Pulsar = Class.create();
+Effect.Pulsar.prototype = Object.extend(Animation.prototype, {
+	interval: 15,
+	pos: 0.0,
+
+	initialize: function (element) {
+		this.element = $(document.createElement('div'));
+		this.element.setStyle({backgroundColor: '#fff', position: 'absolute', opacity: 0.0});
+		document.body.appendChild(this.element);
+		Position.clone($(element), this.element);
+	},
+	step: function () {
+		if (this.pos >= 2.0) {
+			this.stop();
+			this.element.hide();
 		} else {
-			field.removeClassName('blank');
+			this.element.setStyle({opacity: Math.sin(this.pos*Math.PI)});
 		}
-	}
-	return valid;
-}
-
-function sendForm(form, id, func) {
-	if (checkForm(form)) {
-		sendingRequest();
-		$(form).ajax.value = '1';
-		el = new Element('ul');
-		el.setOpacity(0).setStyle('width', '100%').injectInside($(id));
-		$(form).send({onComplete: function () {
-			$(this.options.update).effect('opacity').custom(0, 1);
-			sendingDone();
-			func(); }, update: el});
-	}
-	return false;
-}
-function toggleAll(form, bit) {
-	elements = form.elements ? form.elements : form;
-	for (i = 0; i < elements.length; i++) {
-		el = elements[i];
-		if (el.tagName.toLowerCase() == 'input' && el.type == 'checkbox') {
-			el.checked = bit;
-		}
-	}
-}
-
-function sendingRequest() {
-	$('sending').style.display = 'inline';
-}
-function sendingDone() {
-	$('sending').style.display = 'none';
-}
-
-Element.extend({
-	apply: function (source) {
-		for (attribute in source) this[attribute] = source[attribute];
-		return this;
+		this.pos += 0.01;
 	}
 });
-function addFileEntry() {
-	new Element('input').apply({type: 'file', name: 'upload[]', size: 50}).addClassName('ignore').injectInside(new Element('li').injectInside($('uploads')));
-}
 
-function highlight(id, keyword)
-{
-	if (!keyword) return;
-	document.getElementsBySelector(id).each(function (el) {
-	el.innerHTML = el.innerHTML.replace(new RegExp("("+keyword+")", "gi"), "<span class=\"highlight\">$1</span>");
+Element.addMethods({
+	animate: function (element, effect) {
+		var effect = new effect(element);
+		effect.animate();
+		return element;
+	}
+});
+
+Event.observe(window, 'load', function () {
+	Event.observe('comment-form', 'submit', function (ev) {
+		var data = Form.serialize(this);
+		Form.disable(this);
+		$('sending').show();
+		new Ajax.Updater('comments-list', this.action, {
+			parameters: data,
+			insertion: Insertion.Bottom,
+			onComplete: function () {
+				Form.enable(this);
+				$$('#comments-list li').last().scrollTo().animate(Effect.Pulsar);
+				$('sending').hide();
+			}.bind(this)
+		});
 	});
-}
+});

@@ -16,7 +16,7 @@ if (!$account->is_guest()) {
 apply_filters('PostComment', $comment);
 
 $post->add_comment($comment);
-if ($_POST['ajax']) {
+if (is_xhr()) {
 	apply_filters('PostViewComment', $comment);
 	include("skins/$board->skin/_comment.php");
 	exit;

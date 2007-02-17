@@ -19,7 +19,7 @@ function cookie_is_registered($name) {
  * 쿠키를 등록한다.
  * @param $name 쿠키의 이름
  * @param $value 저장할 값
- * @param $instance 참이면 0을 거짓이면 한달을 설정한다.
+ * @param $instant true이면 브라우저를 닫을 때 쿠키가 만료되고, false이면 한달간 유지된다.
  */
 function cookie_register($name, $value, $instant = false) {
 	setcookie("metabbs_$name", $value, $instant ? 0 : time() + 60*60*24*30, '/');

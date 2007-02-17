@@ -7,6 +7,10 @@ function is_post() {
 	return $_SERVER['REQUEST_METHOD'] == 'POST';
 }
 
+function is_xhr() {
+	return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
+}
+
 /**
  * 요청한 페이지 번호를 가져온다.
  * @return page를 get 호출로 전달한 경우 해당 페이지 번호를 반환한다.
