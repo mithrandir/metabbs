@@ -15,7 +15,8 @@ class EnglishPatient extends Plugin {
 	}
 	function cmt_filter($model) {
 		if (strlen($model->body) > 10 && preg_match($this->pattern, $model->body)) {
-			echo "<h2>English Patient plugin enabled!</h2>";
+			header('HTTP/1.1 406 Not Acceptable');
+			echo "English Patient plugin enabled!\n";
 			echo "you can't post a comment only with ascii characters.";
 			exit;
 		}

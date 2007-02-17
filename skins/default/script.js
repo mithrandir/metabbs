@@ -55,14 +55,20 @@ Event.observe(window, 'load', function () {
 		var data = Form.serialize(form);
 		form.disable();
 		$('sending').show();
-		new Ajax.Updater('comments-list', form.action, {
+		new Ajax.Updater({success: 'comments-list'}, form.action, {
 			parameters: data,
 			insertion: Insertion.Bottom,
-			onComplete: function () {
-				$$('#comments-list li').last().scrollTo().animate(Effect.Pulsar);
-				form.enable();
+			onFailure: function (transport) {
+				alert(transport.responseText);
+			},
+			onComplete: function (transport) {
+				Form.enable($('comment-form'));
 				$('sending').hide();
-			}.bind(form)
+				if (transport.status == 200) {
+					$$('#comments-list li').last().scrollTo().animate(Effect.Pulsar);
+					$('comment_body').value = '';
+				}
+			}
 		});
 	});
 	$('comment-form').onsubmit = function () { return false; }
