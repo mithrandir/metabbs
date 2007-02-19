@@ -13,7 +13,7 @@ if ($post->secret) {
 		}
 	}
 }
-if (is_post() && !isset($_POST['password']) && ($account->id == $post->user_id || $account->level >= $board->perm_delete || $post->user_id == 0 && md5($_POST['post']['password']) == $post->password)) {
+if (is_post() && !isset($_POST['password']) && ($post->user_id != 0 && $account->id == $post->user_id || $account->level >= $board->perm_delete || $post->user_id == 0 && md5($_POST['post']['password']) == $post->password)) {
 	unset($_POST['post']['password']);
 	$post->import($_POST['post']);
 	$post->edited_at = time();

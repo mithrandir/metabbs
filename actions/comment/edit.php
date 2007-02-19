@@ -3,7 +3,7 @@ $post = $comment->get_post();
 if ($account->level < $board->perm_delete && $comment->user_id != $account->id) {
 	access_denied();
 }
-if (is_post() && ($account->id == $comment->user_id || $account->level >= $board->perm_delete || $post->user_id == 0 && $comment->password == md5($_POST['password']))) {
+if (is_post() && ($comment->user_id != 0 && $account->id == $comment->user_id || $account->level >= $board->perm_delete || $post->user_id == 0 && $comment->password == md5($_POST['password']))) {
 	$comment->body = $_POST['body'];
 	$comment->update();
 	redirect_to(url_for($post) . '#comment_' . $comment->id);
