@@ -5,10 +5,15 @@ class Board extends Model {
 	var $search = array('title' => 1, 'body' => 1, 'comment' => 0, 'text' => '', 'category' => 0);
 	var $category;
 	var $title;
-	var $posts_per_page = 10;
+	var $style = 'default';
+
+	var $perm_read = 0, $perm_write = 0, $perm_comment = 0;
 	var $perm_delete = 255;
-	var $skin = 'default';
+	var $posts_per_page = 10;
+	var $use_attachment = 0;
+	var $use_category = 0;
 	var $use_trackback = 1;
+
 	function _init() {
 		$this->table = get_table_name('board');
 		$this->post_table = get_table_name('post');
