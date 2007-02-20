@@ -11,14 +11,14 @@ define('METABBS_TABLE_PREFIX', $config->get('prefix', 'meta_'));
 
 require 'model.php';
 require 'backends/' . $backend . '/backend.php';
-require 'model/board.php';
-require 'model/category.php';
-require 'model/post.php';
-require 'model/comment.php';
-require 'model/trackback.php';
-require 'model/attachment.php';
-require 'model/user.php';
-require 'model/plugin.php';
+require 'app/models/board.php';
+require 'app/models/category.php';
+require 'app/models/post.php';
+require 'app/models/comment.php';
+require 'app/models/trackback.php';
+require 'app/models/attachment.php';
+require 'app/models/user.php';
+require 'app/models/plugin.php';
 
 require 'template.php';
 require 'uri_manager.php';

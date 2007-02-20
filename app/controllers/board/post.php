@@ -9,7 +9,7 @@ if (is_post()) {
 		$post->name = $account->name;
 	}
 	define('SECURITY', 1);
-	include 'actions/post/save.php';
+	include 'app/controllers/post/save.php';
 } else {
 	$post = new Post;
 	$post->name = cookie_get('name');

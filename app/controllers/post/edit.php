@@ -26,7 +26,7 @@ if (is_post() && !isset($_POST['password']) && ($post->user_id != 0 && $account-
 		}
 	}
 	define('SECURITY', 1);
-	include 'actions/post/save.php';
+	include 'app/controllers/post/save.php';
 } else {
 	$link_list = url_for($board);
 	$link_cancel = url_for($post);
