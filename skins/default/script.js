@@ -49,27 +49,24 @@ Element.addMethods({
 	}
 });
 
-Event.observe(window, 'load', function () {
-	Event.observe('comment-form', 'submit', function () {
-		var form = $('comment-form');
-		var data = Form.serialize(form);
-		form.disable();
-		$('sending').show();
-		new Ajax.Updater({success: 'comments-list'}, form.action, {
-			parameters: data,
-			insertion: Insertion.Bottom,
-			onFailure: function (transport) {
-				alert(transport.responseText);
-			},
-			onComplete: function (transport) {
-				Form.enable($('comment-form'));
-				$('sending').hide();
-				if (transport.status == 200) {
-					$$('#comments-list li').last().scrollTo().animate(Effect.Pulsar);
-					$('comment_body').value = '';
-				}
+function addComment(form) {
+	var data = Form.serialize(form);
+	form.disable();
+	$('sending').show();
+	new Ajax.Updater({success: 'comments-list'}, form.action, {
+		parameters: data,
+		insertion: Insertion.Bottom,
+		onFailure: function (transport) {
+			alert(transport.responseText);
+		},
+		onComplete: function (transport) {
+			Form.enable($('comment-form'));
+			$('sending').hide();
+			if (transport.status == 200) {
+				$$('#comments-list li').last().scrollTo().animate(Effect.Pulsar);
+				$('comment_body').value = '';
 			}
-		});
+		}
 	});
-	$('comment-form').onsubmit = function () { return false; }
-});
+	return false;
+}

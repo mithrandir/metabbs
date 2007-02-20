@@ -116,5 +116,8 @@ class Board extends Model {
 	function get_recent_comments($count) {
 		return $this->db->fetchall("SELECT * FROM $this->comment_table WHERE board_id=$this->id ORDER BY id DESC LIMIT $count", "Comment");
 	}
+	function get_style() {
+		return new Style($this->style);
+	}
 }
 ?>

@@ -77,7 +77,7 @@ foreach ($comments as $comment) {
 </div>
 
 <? if ($commentable) { ?>
-<form method="post" action="<?=url_for($post, 'comment')?>" id="comment-form">
+<form method="post" action="<?=url_for($post, 'comment')?>" id="comment-form" onsubmit="return addComment(this)">
 <input type="hidden" name="ajax" value="0" />
 <? if ($account->is_guest()) { ?>
 <p><?=label_tag("Name", "comment", "name")?> <?=text_field("comment", "name", $name)?></p>

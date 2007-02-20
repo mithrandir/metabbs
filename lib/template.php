@@ -1,4 +1,12 @@
 <?php
+class Style {
+	function Style($name) {
+		$this->name = $name;
+		include "styles/$name/style.php";
+		$this->skin = $skin;
+	}
+}
+
 function meta_format_date($format, $now) {
 	return strftime($format, $now);
 }
