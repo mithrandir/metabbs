@@ -19,6 +19,5 @@ if (is_post()) {
 	$config->write_to_file();
 	$flash = i('Setting saved.');
 	$flash_class = 'pass';
-	render('settings');
 }
 ?>

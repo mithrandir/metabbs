@@ -8,7 +8,7 @@ if ($post->secret) {
 	} else if ($post->user_id == 0 && $account->is_guest()) {
 		if (is_post() && md5($_POST['password']) == $post->password) {
 		} else {
-			render('secret');
+			$action = 'secret';
 			return;
 		}
 	}
@@ -50,6 +50,4 @@ $commentable = $board->perm_comment <= $account->level;
 
 $newer_post = $post->get_newer_post();
 $older_post = $post->get_older_post();
-
-render('view');
 ?>

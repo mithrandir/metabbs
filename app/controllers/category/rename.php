@@ -4,5 +4,4 @@ if (is_post()) {
 	$category->update();
 	redirect_to(url_for($category->get_board(), 'edit') . '?tab=category');
 }
-render('rename_category');
 ?>

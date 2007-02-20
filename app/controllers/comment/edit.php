@@ -16,6 +16,5 @@ if (is_post() && ($comment->user_id != 0 && $account->id == $comment->user_id ||
 	} else {
 		$ask_password = true;
 	}
-	render('edit_comment');
 }
 ?>

@@ -12,5 +12,5 @@ if (empty($_POST['name'])) {
 	exit;
 }
 $boards = Board::find_all();
-render('index');
+$action = 'index';
 ?>

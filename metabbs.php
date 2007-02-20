@@ -2,15 +2,6 @@
 require 'lib/common.php';
 
 /**
- * 원하는 템플릿을 렌더로 지정합니다.
- * @param $template 지정할 템플릿
- */
-function render($template) {
-	global $render;
-	$render = $template;
-}
-
-/**
  * 스킨이 관리자용인지 확인합니다.
  * @param $skin 스킨 이름
  * @return 관리자용 여부
@@ -70,13 +61,11 @@ $__skin = $skin;
 $_skin_dir = 'skins/' . $skin;
 $skin_dir = METABBS_BASE_PATH . $_skin_dir;
 
-if (isset($render)) {
-	include(get_layout_path('header'));
-	include($_skin_dir . '/header.php');
-	echo "<div id=\"meta\">\n";
-	include($_skin_dir . '/' . $render . '.php');
-	echo "</div>\n";
-	include($_skin_dir . '/footer.php');
-	include(get_layout_path('footer'));
-}
+include(get_layout_path('header'));
+include($_skin_dir . '/header.php');
+echo "<div id=\"meta\">\n";
+include("app/views/$controller/$action.php");
+echo "</div>\n";
+include($_skin_dir . '/footer.php');
+include(get_layout_path('footer'));
 ?>

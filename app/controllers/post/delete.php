@@ -21,6 +21,5 @@ if (is_post() && ($post->user_id != 0 && $account->id == $post->user_id || $acco
 	} else if ($post->user_id == 0) {
 		$ask_password = true;
 	}
-	render('delete');
 }
 ?>

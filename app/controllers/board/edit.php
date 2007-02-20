@@ -31,7 +31,6 @@ if (is_post()) {
 		}
 		if (isset($flash)) {
 			$skin = '_admin';
-			render('edit');
 			return;
 		}
 	}
@@ -48,5 +47,4 @@ if (is_post()) {
 }
 $skin = '_admin';
 $styles = get_styles();
-render('edit');
 ?>

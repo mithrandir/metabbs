@@ -22,6 +22,4 @@ $posts_count = $board->get_post_count();
 $link_rss = url_for($board, 'rss');
 $link_new_post = ($board->perm_write <= $account->level) ? url_for($board, 'post') : null;
 $massdelete = $board->perm_delete <= $account->level;
-
-render('list');
 ?>

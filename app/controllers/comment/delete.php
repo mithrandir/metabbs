@@ -15,6 +15,5 @@ if (is_post() && ($comment->user_id != 0 && $account->id == $post->user_id || $a
 	} else {
 		$ask_password = true;
 	}
-	render('delete');
 }
 ?>

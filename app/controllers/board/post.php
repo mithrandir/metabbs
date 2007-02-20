@@ -18,6 +18,5 @@ if (is_post()) {
 	}
 	$link_list = url_for($board);
 	$link_cancel = null;
-	render('write');
 }
 ?>

@@ -8,7 +8,7 @@ if ($post->secret) {
 	} else if ($post->user_id == 0 && $account->is_guest()) {
 		if (is_post() && md5($_POST['password']) == $post->password) {
 		} else {
-			render('secret');
+			$action = 'secret';
 			return;
 		}
 	}
@@ -30,7 +30,5 @@ if (is_post() && !isset($_POST['password']) && ($post->user_id != 0 && $account-
 } else {
 	$link_list = url_for($board);
 	$link_cancel = url_for($post);
-	
-	render('write');
 }
 ?>
