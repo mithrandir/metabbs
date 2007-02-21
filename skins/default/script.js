@@ -49,7 +49,30 @@ Element.addMethods({
 	}
 });
 
+function checkForm(form) {
+	var valid = !$(form).getElements().collect(function (el) {
+		if (!el.value && !el.hasClassName('ignore')) {
+			el.addClassName('blank');
+			return false;
+		} else {
+			el.removeClassName('blank');
+			return true;
+		}
+	}).include(false);
+
+	if (!valid) document.getElementsByClassName('blank')[0].focus();
+	
+	return valid;
+}
+
+function toggleAll(form, bit) {
+	$(form).getInputs('checkbox').each(function (el) {
+		el.checked = bit;
+	});
+}
+
 function addComment(form) {
+	if (!checkForm(form)) return false;
 	var data = Form.serialize(form);
 	form.disable();
 	$('sending').show();
