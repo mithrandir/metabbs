@@ -31,7 +31,7 @@
 	<li><input type="file" name="upload[]" size="50" class="ignore" /></li>
 </ol>
 <? } ?>
-<p><?=submit_tag($action == 'post' ? "Post" : "Edit")?> <span id="sending"><?=image_tag("$skin_dir/spin.gif", 'Sending...')?></span></p>
+<p><?=submit_tag($action == 'post' ? "Post" : "Edit")?> <span id="sending" style="display: none"><img src="<?=$skin_dir?>/spin.gif" alt="Sending..." /></span></p>
 </form>
 
 <div id="nav">
