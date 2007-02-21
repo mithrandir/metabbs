@@ -19,7 +19,7 @@ function get_layout_path($type) {
 	global $config, $_skin_dir, $__skin;
 	$layout = $config->get('global_' . $type);
 	if (is_system_view($__skin) || !$layout)
-		return 'skins/common/default_' . $type . '.php';
+		return 'app/views/default_' . $type . '.php';
 	else
 		return $layout;
 }
@@ -47,8 +47,9 @@ if (!run_hook_handler($controller, $action)) {
 if (!isset($skin)) {
 	if (isset($board)) {
 		if (!$board->style) $board->style = 'default';
-		include 'styles/'.$board->style.'/style.php';
-		$style_dir = METABBS_BASE_PATH . 'styles/' . $board->style;
+		$style = $board->get_style();
+		$skin = $style->skin;
+		$style_dir = $style->get_path();
 	} else {
 		$skin = 'default';
 		$style_dir = METABBS_BASE_PATH . 'styles/default';

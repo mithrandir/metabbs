@@ -1,5 +1,5 @@
 <h2><?=i('Edit Comment')?></h2>
-<form method="post">
+<form method="post" onsubmit="return checkForm(this)">
 <? if ($ask_password) { ?>
 <p><?=i("Password")?>: <input type="password" name="password" /></p>
 <? } ?>

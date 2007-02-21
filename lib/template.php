@@ -5,6 +5,9 @@ class Style {
 		include "styles/$name/style.php";
 		$this->skin = $skin;
 	}
+	function get_path() {
+		return METABBS_BASE_PATH . 'styles/' . $this->name;
+	}
 }
 
 function meta_format_date($format, $now) {
