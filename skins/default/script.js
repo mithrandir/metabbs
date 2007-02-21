@@ -49,6 +49,10 @@ Element.addMethods({
 	}
 });
 
+Form.getSubmitButton = function (form) {
+	return form.getInputs('submit')[0];
+}
+
 function checkForm(form) {
 	var valid = !$(form).getElements().collect(function (el) {
 		if (!el.value && !el.hasClassName('ignore')) {
@@ -60,7 +64,12 @@ function checkForm(form) {
 		}
 	}).include(false);
 
-	if (!valid) document.getElementsByClassName('blank')[0].focus();
+	if (valid) {
+		Form.getSubmitButton(form).disable();
+		$('sending').show();
+	} else {
+		document.getElementsByClassName('blank')[0].focus();
+	}
 	
 	return valid;
 }
@@ -72,10 +81,8 @@ function toggleAll(form, bit) {
 }
 
 function addComment(form) {
-	if (!checkForm(form)) return false;
 	var data = Form.serialize(form);
-	form.disable();
-	$('sending').show();
+	if (!checkForm(form)) return false;
 	new Ajax.Updater({success: 'comments-list'}, form.action, {
 		parameters: data,
 		insertion: Insertion.Bottom,
@@ -83,7 +90,7 @@ function addComment(form) {
 			alert(transport.responseText);
 		},
 		onComplete: function (transport) {
-			Form.enable($('comment-form'));
+			Form.getSubmitButton($('comment-form')).enable();
 			$('sending').hide();
 			if (transport.status == 200) {
 				$$('#comments-list li').last().scrollTo().animate(Effect.Pulsar);
@@ -95,13 +102,5 @@ function addComment(form) {
 }
 
 function addFileEntry() {
-    upload_list = $('uploads');
-    list_item = document.createElement("LI");
-    file_field = document.createElement("INPUT");
-    file_field.type = "file";
-    file_field.name = "upload[]";
-    file_field.className = "ignore";
-    file_field.size = 50;
-    list_item.appendChild(file_field);
-    upload_list.appendChild(list_item);
+	new Insertion.Bottom('uploads', '<li><input type="file" name="upload[]" size="50" /></li>');
 }
