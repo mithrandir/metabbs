@@ -126,7 +126,10 @@ class MySQLAdapter
         return mysql_insert_id($this->conn);
     }
     function add_table($t) {
-        $this->query($t->to_sql());
+		$sql = $t->to_sql();
+		if ($this->utf8)
+			$sql .= 'CHARACTER SET utf8 COLLATE utf8_general_ci';
+        $this->query($sql);
     }
     function rename_table($ot, $t) {
         $this->query("RENAME TABLE ".get_table_name($ot)." TO ".get_table_name($t));

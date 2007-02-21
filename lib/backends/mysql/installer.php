@@ -26,9 +26,6 @@ class Table
 		$sql = "CREATE TABLE `$this->table` (\n";
 		$sql .= implode(",\n", $this->columns);
 		$sql .= "\n)\n";
-		if ($db->utf8) {
-			$sql .= 'CHARACTER SET utf8 COLLATE utf8_general_ci';
-		}
 		return $sql;
 	}
 }
