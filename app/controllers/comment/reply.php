@@ -16,8 +16,21 @@ if (is_post()) {
 
 	$post = $comment->get_post();
 	$post->add_comment($_comment);
-	redirect_to(url_for($post));
+
+	if (is_xhr()) {
+		apply_filters('PostViewComment', $comment);
+		$style = $board->get_style();
+		include "skins/$style->skin/_comment.php";
+		exit;
+	} else {
+		redirect_to(url_for($post));
+	}
 } else {
 	$name = cookie_get('name');
+	if (is_xhr()) {
+		$style = $board->get_style();
+		include "skins/$style->skin/reply.php";
+		exit;
+	}
 }
 ?>

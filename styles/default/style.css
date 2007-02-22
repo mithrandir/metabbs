@@ -51,11 +51,11 @@ td.date { width: 9em; }
 
 #comments ul { margin: 0; padding: 0; list-style: none; }
 #comments ul ul { margin-left: 2em; }
-#comments li { margin-bottom: 1em; }
 .comment {
     padding: 0.5em;
     border: 1px solid #ccc;
     background: url(bg.png) repeat-x;
+	margin-bottom: 1em;
 }
 .comment .info { padding-bottom: 3px; }
 .comment .body p { margin: 0; }

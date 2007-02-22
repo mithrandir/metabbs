@@ -80,6 +80,15 @@ function toggleAll(form, bit) {
 	});
 }
 
+function loadReplyForm(id, url) {
+	var form = $('reply-form');
+	if (form) { form.hide(); form.remove(); }
+	new Ajax.Updater($(id).getElementsByClassName('comment')[0], url, {
+		method: 'GET',
+		insertion: Insertion.After
+	});
+}
+
 function addComment(form) {
 	var data = Form.serialize(form);
 	if (!checkForm(form)) return false;
@@ -95,6 +104,26 @@ function addComment(form) {
 			if (transport.status == 200) {
 				$$('#comments-list li').last().scrollTo().animate(Effect.Pulsar);
 				$('comment_body').value = '';
+			}
+		}
+	});
+	return false;
+}
+
+function replyComment(form, id) {
+	var data = Form.serialize(form);
+	if (!checkForm(form)) return false;
+	new Ajax.Updater({success: id}, form.action, {
+		parameters: data,
+		insertion: Insertion.Bottom,
+		onFailure: function (transport) {
+			alert(transport.responseText);
+		},
+		onComplete: function (transport) {
+			Form.getSubmitButton(form).enable();
+			$('sending').hide();
+			if (transport.status == 200) {
+				$('reply-form').remove();
 			}
 		}
 	});
