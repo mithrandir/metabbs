@@ -18,6 +18,7 @@ if (is_post()) {
 	$post->add_comment($_comment);
 
 	if (is_xhr()) {
+		$comment = $_comment;
 		apply_filters('PostViewComment', $comment);
 		$style = $board->get_style();
 		include "skins/$style->skin/_comment.php";
