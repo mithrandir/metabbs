@@ -122,5 +122,8 @@ class Post extends Model {
 	function get_older_post() {
 		return $this->db->fetchrow("SELECT * FROM $this->table WHERE board_id=$this->board_id AND id < $this->id ORDER BY id DESC LIMIT 1", 'Post');
 	}
+	function valid() {
+		return !empty($this->name) && !empty($this->title) && !empty($this->body);
+	}
 }
 ?>
