@@ -1,4 +1,14 @@
 <h2><?=i('Users')?></h2>
+
+<form method="get" action="<?=url_for('admin', 'users')?>">
+<p>
+<select name="key">
+	<?=option_tag('name', i('Name'), !isset($_GET['key']) || $_GET['key'] == 'name')?>
+	<?=option_tag('user', i('User ID'), isset($_GET['key']) && $_GET['key'] == 'user')?>
+</select>
+<input type="text" name="query" value="<?=isset($_GET['query']) ? $_GET['query'] : ''?>" /> <input type="submit" value="<?=i('Search')?>" /></p>
+</form>
+
 <form method="post" action="<?=url_for('user', 'edit')?>">
 <table id="users">
 <tr>
@@ -21,8 +31,9 @@
 
 <h3><?=i('Mass operation')?></h3>
 <ul id="operations">
-	<li><input type="radio" name="mass_operation" id="mass_operation_level" value="level" /><?=i('Change levels of selected users to %s', '<input type="text" name="level" value="1" size="3" />')?> (0~255)</li>
+	<li><input type="radio" name="mass_operation" id="mass_operation_level" value="level" checked="checked" /><?=i('Change levels of selected users to %s', '<input type="text" name="level" value="1" size="3" />')?> (0~255)</li>
 	<li><input type="radio" name="mass_operation" id="mass_operation_delete" value="delete" /><?=i('Delete selected users')?></li>
 </ul>
 <p><input type="submit" value="OK" /></p>
 </form>
+

@@ -47,6 +47,11 @@ class User extends Model {
 		$table = get_table_name('user');
 		return $db->fetchall("SELECT * FROM $table LIMIT $offset, $limit", 'User');
 	}
+	function search($key, $value) {
+		$db = get_conn();
+		$table = get_table_name('user');
+		return $db->fetchall("SELECT * FROM $table WHERE ! LIKE '%!%'", 'User', array($key, $value));
+	}
 	function count() {
 		$db = get_conn();
 		$table = get_table_name('user');

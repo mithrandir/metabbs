@@ -3,16 +3,16 @@
 <? } ?>
 <form method="post">
 <p>
-	<label>ID:</label>
+	<label><?=i('User ID')?>:</label>
 	<input type="text" name="user" />
 </p>
 <p>
-	<label>Password:</label>
+	<label><?=i('Password')?>:</label>
 	<input type="password" name="password" />
 </p>
 <p>
 	<label for="autologin"><input type="checkbox" name="autologin" value="1" id="autologin" /></label>
-	Auto Login
+	<?=i('Auto Login')?>
 </p>
 <p><input type="submit" value="Login" /> <?=signup()?></p>
 </form>
