@@ -65,8 +65,9 @@ function checkForm(form) {
 	}).include(false);
 
 	if (valid) {
-		Form.getSubmitButton(form).disable();
-		$('sending').show();
+		var submitButton = Form.getSubmitButton(form);
+		submitButton.disable();
+		new Insertion.After(submitButton, '<span id="sending">Sending...</span>');
 	} else {
 		document.getElementsByClassName('blank')[0].focus();
 	}
@@ -99,8 +100,8 @@ function addComment(form) {
 			alert(transport.responseText);
 		},
 		onComplete: function (transport) {
+			$('sending').remove();
 			Form.getSubmitButton($('comment-form')).enable();
-			$('sending').hide();
 			if (transport.status == 200) {
 				$$('#comments-list li').last().scrollTo().animate(Effect.Pulsar);
 				$('comment_body').value = '';
@@ -121,7 +122,7 @@ function replyComment(form, id) {
 		},
 		onComplete: function (transport) {
 			Form.getSubmitButton(form).enable();
-			$('sending').hide();
+			$('sending').remove();
 			if (transport.status == 200) {
 				$('reply-form').remove();
 			}
