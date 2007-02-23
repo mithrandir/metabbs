@@ -26,7 +26,7 @@ Effect.Pulsar.prototype = Object.extend(Animation.prototype, {
 
 	initialize: function (element) {
 		this.element = $(document.createElement('div'));
-		this.element.setStyle({backgroundColor: '#fff', position: 'absolute', opacity: 0.0});
+		this.element.setStyle({backgroundColor: '#fff', position: 'absolute', opacity: 0.0, padding: '1px'});
 		document.body.appendChild(this.element);
 		Position.clone($(element), this.element);
 	},

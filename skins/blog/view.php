@@ -23,7 +23,7 @@
 
 <h5><a name="comments"><?=i('Comments')?></a></h5>
 <div id="comments_div">
-<ol id="comments" class="comments">
+<ol id="comments-list" class="comments">
 <?
 $comment_stack = array();
 foreach ($comments as $comment) {
@@ -34,7 +34,7 @@ foreach ($comments as $comment) {
 </div>
 
 <? if ($commentable) { ?>
-<form method="post" action="<?=url_for($post, 'comment')?>" id="commentform" class="comments">
+<form method="post" action="<?=url_for($post, 'comment')?>" id="comment-form" class="comments" onsubmit="return addComment(this)">
 <fieldset>
 	<legend>Comments</legend>
 <? if ($account->is_guest()) { ?>
