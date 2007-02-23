@@ -29,3 +29,4 @@ $posts = feed_render_header($board, 'rss');
 <? } ?>
 	</channel>
 </rss>
+<? exit; ?>

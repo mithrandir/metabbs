@@ -24,3 +24,4 @@ $posts = feed_render_header($board, 'atom');
 	</entry>
 <? } ?>
 </feed>
+<? exit; ?>
