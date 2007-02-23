@@ -11,17 +11,15 @@
 	</p>
 	<div class="content">
 	<div class="attachments">
-	<ul>
 	<? foreach ($post->get_attachments() as $attachment) { ?>
 	<? if (!$attachment->file_exists()) { ?>
-		<li>Attachment: <del><?=$attachment->filename?></del></li>
+		<p>Attachment: <del><?=$attachment->filename?></del></p>
 	<? } else if ($attachment->is_image()) { ?>
-		<li><img src="<?=url_for($attachment)?>" alt="<?=$attachment->filename?>" /></li>
+		<p><img src="<?=url_for($attachment)?>" alt="<?=$attachment->filename?>" /></p>
 	<? } else { ?>
-		<li>Attachment: <?=link_to($attachment->filename, $attachment)?> (<?=human_readable_size($attachment->get_size())?>)</li>
+		<p>Attachment: <?=link_to($attachment->filename, $attachment)?> (<?=human_readable_size($attachment->get_size())?>)</p>
 	<? } ?>
 	<? } ?>
-	</ul>
 	</div>
 
 	<?=format($post->body)?>
