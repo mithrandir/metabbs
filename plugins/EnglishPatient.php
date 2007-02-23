@@ -4,7 +4,7 @@ class EnglishPatient extends Plugin {
 	var $description = 'ASCII 문자로만 작성된 글/댓글/트랙백을 막습니다.'; 
 	var $pattern = '/^[\\x{00}-\\x{7F}]*$/u';
 	function on_init() {
-		add_filter('PostTrackback', array(&$this, 'tb_filter'), 10);
+		add_filter('PostTrackback', array(&$this, 'tb_filter'), 20);
 		add_filter('PostComment', array(&$this, 'cmt_filter'), 20);
 		add_filter('PostSave', array(&$this, 'post_filter'), 20);
 	}
