@@ -1,5 +1,5 @@
 <?php
-define('METABBS_DB_REVISION', 769);
+define('METABBS_DB_REVISION', 771);
 
 /**
  * 모델 명칭으로부터 DB 테이블의 이름을 만든다.
@@ -18,6 +18,10 @@ function get_table_name($model) {
  */
 function get_column_pair($key, $value) {
 	return "$key=$value";
+}
+
+function surround_backquote($k) {
+	return "`$k`";
 }
 
 /**
@@ -93,7 +97,7 @@ class Model
 	function create() {
 		$columns = $this->get_columns();
 		$query = "INSERT INTO $this->table";
-		$query .= " (".implode(",", array_keys($columns)).")";
+		$query .= " (".implode(",", array_map('surround_backquote', array_keys($columns))).")";
 		$query .= " VALUES(".implode(",", array_values($columns)).")";
 		$this->db->query($query);
 		$this->id = $this->db->insertid();

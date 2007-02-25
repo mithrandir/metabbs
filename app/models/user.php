@@ -3,6 +3,7 @@ class User extends Model {
 	var $model = 'user';
 
 	var $email, $url;
+	var $admin = false;
 	var $level = 1;
 	var $posts_per_page = 10;
 	function _init() {
@@ -42,10 +43,12 @@ class User extends Model {
 		$table = get_table_name('user');
 		return $db->fetchrow("SELECT * FROM $table WHERE user=?", 'User', array($user));
 	}
-	function find_all($offset, $limit) {
+	function find_all($offset = null, $limit = null) {
 		$db = get_conn();
 		$table = get_table_name('user');
-		return $db->fetchall("SELECT * FROM $table LIMIT $offset, $limit", 'User');
+		$query = "SELECT * FROM $table";
+		if (func_num_args() == 2) $query .= " LIMIT $offset, $limit";
+		return $db->fetchall($query, 'User');
 	}
 	function search($key, $value) {
 		$db = get_conn();
