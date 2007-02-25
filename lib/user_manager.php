@@ -10,7 +10,8 @@ class UserManager
 	 */
 	function get_user() {
 		if (session_is_registered('user_id')) {
-			return User::find($_SESSION['user_id']);
+			$user = User::find($_SESSION['user_id']);
+			if ($user->exists()) return $user;
 		} else {
 			if (cookie_is_registered('user_id') && cookie_is_registered('token')) {
 				$user = User::find(cookie_get('user_id'));
@@ -38,7 +39,7 @@ class UserManager
 			$_SESSION['user_id'] = $user->id;
 			if ($autologin) {
 				cookie_register('user_id', $user->id);
-				$token = md5(microtime().uniqid(rand(), true));
+				$token = md5(microtime() . uniqid(rand(), true));
 				cookie_register('token', $token);
 				$user->set_token($token);
 			} else {
@@ -57,8 +58,12 @@ class UserManager
 	 * @return 성공, 실패 여부를 참과 거짓으로 반환.
 	 */
 	function logout() {
-		if (UserManager::get_user()) {
+		$user = UserManager::get_user();
+		if ($user) {
 			session_destroy();
+			cookie_unregister('user_id');
+			cookie_unregister('token');
+			$user->unset_token();
 			return true;
 		} else {
 			return false;
