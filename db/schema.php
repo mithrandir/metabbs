@@ -70,6 +70,7 @@ $t->column('email', 'string', 255);
 $t->column('url', 'string', 255);
 $t->column('level', 'integer');
 $t->column('signature', 'text');
+$t->column('token', 'string', 32);
 $conn->add_table($t);
 
 $t = new Table('category');

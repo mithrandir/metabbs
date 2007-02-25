@@ -77,6 +77,12 @@ class User extends Model {
 	function is_owner_of($model) {
 		return $model->user_id == $this->id;
 	}
+	function set_token($token) {
+		$this->db->query("UPDATE $this->table SET token='$token' WHERE id=$this->id");
+	}
+	function unset_token() {
+		$this->set_token('');
+	}
 }
 
 class Guest extends Model

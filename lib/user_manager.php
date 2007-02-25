@@ -9,9 +9,18 @@ class UserManager
 	 * @return 쿠키에 로그인 정보가 있는 경우 해당 사용자 객체를 반환 없는 경우 null 반환.
 	 */
 	function get_user() {
-		if (cookie_is_registered('user') && cookie_is_registered('password')) {
-			return User::auth(cookie_get('user'), cookie_get('password'));
+		if (session_is_registered('user_id')) {
+			return User::find($_SESSION['user_id']);
 		} else {
+			if (cookie_is_registered('user_id') && cookie_is_registered('token')) {
+				$user = User::find(cookie_get('user_id'));
+				if ($user->token == cookie_get('token')) {
+					$_SESSION['user_id'] = $user->id;
+					return $user;
+				} else {
+					return null;
+				}
+			}
 			return null;
 		}
 	}
@@ -26,8 +35,17 @@ class UserManager
 	function login($user, $password, $autologin) {
 		$user = User::auth($user, md5($password));
 		if ($user->exists()) {
-			cookie_register("user", $user->user, !$autologin);
-			cookie_register("password", $user->password, !$autologin);
+			$_SESSION['user_id'] = $user->id;
+			if ($autologin) {
+				cookie_register('user_id', $user->id);
+				$token = md5(microtime().uniqid(rand(), true));
+				cookie_register('token', $token);
+				$user->set_token($token);
+			} else {
+				cookie_unregister('user_id');
+				cookie_unregister('token');
+				$user->unset_token();
+			}
 			return true;
 		} else {
 			return false;
@@ -40,8 +58,7 @@ class UserManager
 	 */
 	function logout() {
 		if (UserManager::get_user()) {
-			cookie_unregister('user');
-			cookie_unregister('password');
+			session_destroy();
 			return true;
 		} else {
 			return false;

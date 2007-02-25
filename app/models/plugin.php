@@ -43,8 +43,7 @@ function get_plugins() {
 	$dp = opendir(METABBS_DIR . '/plugins');
 	$plugins = array();
 	while ($file = readdir($dp)) {
-		@list($name, $ext) = explode('.', $file);
-		if ($ext == 'php') {
+		if (strrchr($file, '.') == '.php') {
 			include_once(METABBS_DIR . '/plugins/' . $file);
 		}
 	}

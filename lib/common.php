@@ -25,6 +25,14 @@ require("tag_helper.php");
 require("user_manager.php");
 require("plugin.php");
 
+$session_dir = METABBS_DIR . '/data/session';
+if (file_exists($session_dir)) {
+	session_save_path($session_dir);
+} else {
+	mkdir($session_dir, 0707);
+}
+session_start();
+
 $account = UserManager::get_user();
 if (!$account) { 
 	$account = new Guest;

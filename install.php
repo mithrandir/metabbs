@@ -297,7 +297,7 @@ if (!isset($_POST['config'])) {
 		fail('Please verify password');
 	}
 
-	$dirs = array('data', 'data/uploads');
+	$dirs = array('data', 'data/uploads', 'data/session');
 	foreach ($dirs as $dir) {
 		mkdir($dir, 0707);
 	}

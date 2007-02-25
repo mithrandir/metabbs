@@ -3,7 +3,7 @@ if (!isset($_SERVER['REQUEST_URI'])) { // workaround for CGI environment
 	$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
 }
 
-if (@ini_get('magic_quotes_runtime')) {
+if (ini_get('magic_quotes_runtime')) {
 	set_magic_quotes_runtime(0);
 }
 
@@ -23,7 +23,7 @@ function stripslashes_deep($v) {
 	return is_array($v) ? array_map('stripslashes_deep', $v) : stripslashes($v);
 }
 
-if (@ini_get('register_globals')) {
+if (ini_get('register_globals')) {
 	foreach ($_REQUEST as $k => $v) {
 		unset($$k);
 	}
