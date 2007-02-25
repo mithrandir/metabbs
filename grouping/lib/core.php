@@ -19,6 +19,8 @@ require 'app/models/trackback.php';
 require 'app/models/attachment.php';
 require 'app/models/user.php';
 require 'app/models/plugin.php';
+require 'app/models/group.php';
+require 'app/models/permission.php';
 
 require 'template.php';
 require 'uri_manager.php';
