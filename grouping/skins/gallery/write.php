@@ -1,5 +1,5 @@
 <form method="post" enctype="multipart/form-data">
-<? if ($account->is_guest() || $post->exists() && $post->user_id == 0 && $account->level < $board->perm_delete) { ?>
+<? if ($account->is_guest()) { ?>
 <p><?=label_tag("Name", "post", "name")?> <?=text_field("post", "name", $post->name)?></p>
 <p><?=label_tag("Password", "post", "password")?> <?=password_field("post", "password")?></p>
 <? } ?>

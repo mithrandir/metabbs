@@ -1,5 +1,5 @@
 <?php
-if ($board->perm_read > $account->level) {
+if (!$account->has_perm($board, 'read')) {
 	access_denied();
 }
 if ($post->secret) {
@@ -38,15 +38,15 @@ apply_filters('PostView', $post);
 apply_filters_array('PostViewComment', $comments);
 
 $link_list = url_for($board, '', array('page' => get_requested_page()));
-$link_new_post = ($account->level >= $board->perm_write) ? url_for($board, 'post') : null;
+$link_new_post = $account->has_perm($board, 'write') ? url_for($board, 'post') : null;
 
-$owner = $post->user_id == 0 || $account->id == $post->user_id || $account->level >= $board->perm_delete;
+$owner = $post->user_id == 0 || $account->id == $post->user_id || $account->has_perm($board, 'moderate');
 if ($owner) {
 	$link_edit = url_for($post, 'edit');
 	$link_delete = url_for($post, 'delete');
 }
 
-$commentable = $board->perm_comment <= $account->level;
+$commentable = $account->has_perm($board, 'comment');
 
 $newer_post = $post->get_newer_post();
 $older_post = $post->get_older_post();

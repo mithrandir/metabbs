@@ -1,5 +1,5 @@
 <?php
-if ($board->perm_read > $account->level) {
+if (!$account->has_perm($board, 'read')) {
 	access_denied();
 }
 if (isset($_GET['search'])) {
@@ -20,6 +20,6 @@ apply_filters_array('PostList', $posts);
 
 $posts_count = $board->get_post_count();
 $link_rss = url_for($board, 'rss');
-$link_new_post = ($board->perm_write <= $account->level) ? url_for($board, 'post') : null;
-$massdelete = $board->perm_delete <= $account->level;
+$link_new_post = $account->has_perm($board, 'write') ? url_for($board, 'post') : null;
+$massdelete = $account->has_perm($board, 'moderate');
 ?>

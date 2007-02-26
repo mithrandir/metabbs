@@ -2,7 +2,7 @@
 $trackback = Trackback::find($id);
 $post = $trackback->get_post();
 $board = $post->get_board();
-if ($account->level < $board->perm_delete) {
+if (!$account->has_perm($board, 'moderate')) {
 	access_denied();
 }
 $trackback->delete();

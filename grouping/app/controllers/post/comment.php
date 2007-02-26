@@ -1,6 +1,6 @@
 <?php
 $comment = new Comment($_POST['comment']);
-if ($account->level < $board->perm_comment) {
+if (!$account->has_perm($board, 'comment')) {
 	redirect_to(url_for($post));
 }
 if (!$comment->valid()) {
@@ -19,6 +19,7 @@ $post->add_comment($comment);
 if (is_xhr()) {
 	apply_filters('PostViewComment', $comment);
 	$style = $board->get_style();
+	$commentable = $account->has_perm($board, 'comment');
 	include("skins/$style->skin/_comment.php");
 	exit;
 } else {

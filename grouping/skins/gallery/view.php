@@ -34,7 +34,7 @@
 -->
 <ul>
 <? foreach ($trackbacks as $trackback) { ?>
-	<li><?=link_text($trackback->url, $trackback->title)?> from <?=$trackback->blog_name?> <? if ($account->level >= $board->perm_delete) { echo link_with_dialog_to('<strong>X</strong>', $trackback, 'delete'); } ?></li>
+	<li><?=link_text($trackback->url, $trackback->title)?> from <?=$trackback->blog_name?> <? if ($account->has_perm($board, 'moderate')) { echo link_with_dialog_to('<strong>X</strong>', $trackback, 'delete'); } ?></li>
 <? } ?>
 </ul>
 </div>

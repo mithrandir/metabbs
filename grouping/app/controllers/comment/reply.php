@@ -1,5 +1,5 @@
 <?php
-if ($account->level < $board->perm_comment) {
+if (!$account->has_perm($board, 'comment')) {
 	access_denied();
 }
 if (is_post()) {
