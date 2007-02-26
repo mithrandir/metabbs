@@ -99,3 +99,5 @@ span.actions { font-size: 0.9em; }
 	margin-bottom: 10px;
 }
 #profile .name { font-size: 1.1em; }
+
+fieldset { border: none; margin: 0; padding: 0; }
