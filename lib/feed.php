@@ -1,5 +1,5 @@
 <?php
-if ($board->perm_read > $account->level) {
+if (!$account->has_perm($board, 'read')) {
 	exit;
 }
 

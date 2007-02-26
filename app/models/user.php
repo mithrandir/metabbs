@@ -3,13 +3,13 @@ class User extends Model {
 	var $model = 'user';
 
 	var $email, $url;
-	var $admin = false;
-	var $level = 1;
+	var $admin = 0;
 	var $posts_per_page = 10;
 	function _init() {
 		$this->table = get_table_name('user');
 		$this->post_table = get_table_name('post');
 		$this->comment_table = get_table_name('comment');
+		$this->perm_table = get_table_name('permission');
 	}
 	function find($id) {
 		$db = get_conn();
@@ -64,7 +64,7 @@ class User extends Model {
 		return false;
 	}
 	function is_admin() {
-		return $this->level == 255;
+		return (bool)$this->admin;
 	}
 	function valid() {
 		$user = User::find_by_user($this->user);
@@ -86,6 +86,10 @@ class User extends Model {
 	function unset_token() {
 		$this->set_token('');
 	}
+	function has_perm($board, $action) {
+		$perm = $this->db->fetchrow("SELECT * FROM $this->perm_table WHERE board_id=$board->id AND group_id=$this->group_id");
+		return $perm->$action;
+	}
 }
 
 class Guest extends Model
@@ -96,11 +100,18 @@ class Guest extends Model
 	var $name = 'guest';
 	var $email, $url;
 	var $signature;
+	var $group_id = 0;
+	function _init() {
+		$this->perm_table = get_table_name('permission');
+	}
 	function is_guest() {
 		return true;
 	}
 	function is_admin() {
 		return false;
+	}
+	function has_perm($board, $action) {
+		return User::has_perm($board, $action);
 	}
 }
 ?>

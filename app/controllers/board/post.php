@@ -1,5 +1,5 @@
 <?php
-if ($board->perm_write > $account->level) {
+if ($account->has_perm($board, 'write')) {
 	access_denied();
 }
 if (is_post()) {

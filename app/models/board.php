@@ -7,8 +7,6 @@ class Board extends Model {
 	var $title;
 	var $style = 'default';
 
-	var $perm_read = 0, $perm_write = 0, $perm_comment = 0;
-	var $perm_delete = 255;
 	var $posts_per_page = 10;
 	var $use_attachment = 0;
 	var $use_category = 0;
