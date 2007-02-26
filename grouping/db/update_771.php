@@ -11,15 +11,21 @@ $conn->add_field('user', 'admin', 'boolean');
 
 $groups = array();
 $users = User::find_all();
+
+$groups[0] = new Group(array('id' => 0));
+
+$groups[1] = new Group;
+$groups[1]->name = 'Users';
+$groups[1]->create();
+
+$groups[255] = new Group;
+$groups[255]->name = 'Administrators';
+$groups[255]->create();
+
 foreach ($users as $user) {
 	if (!array_key_exists($user->level, $groups)) {
 		$group = new Group;
-		if ($user->level == 255)
-			$group->name = "Administrators";
-		else if ($user->level == 1)
-			$group->name = "Users";
-		else
-			$group->name = "Level $user->level";
+		$group->name = "Level $user->level";
 		$group->create();
 		$groups[$user->level] = $group;
 	}
@@ -27,8 +33,6 @@ foreach ($users as $user) {
 	if ($user->level == 255) $user->admin = true;
 	$user->update();
 }
-
-$conn->drop_field('user', 'level');
 
 $t = new Table('permission');
 $t->column('board_id', 'integer');
@@ -63,6 +67,7 @@ foreach ($boards as $board) {
 	}
 }
 
+$conn->drop_field('user', 'level');
 $conn->drop_field('board', 'perm_read');
 $conn->drop_field('board', 'perm_write');
 $conn->drop_field('board', 'perm_comment');
