@@ -10,6 +10,21 @@ class Style {
 	}
 }
 
+function get_header_paths() {
+	global $__skin, $_skin_dir, $config;
+	if ($__skin != '_admin')
+		return array($config->get('global_header', 'elements/default_header.php'), $_skin_dir . '/header.php');
+	else
+		return array('elements/admin_header.php');
+}
+function get_footer_paths() {
+	global $__skin, $_skin_dir, $config;
+	if ($__skin != '_admin')
+		return array($_skin_dir . '/footer.php', $config->get('global_footer', 'elements/default_footer.php'));
+	else
+		return array('elements/admin_footer.php');
+}
+
 function meta_format_date($format, $now) {
 	return strftime($format, $now);
 }

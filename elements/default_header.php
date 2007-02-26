@@ -7,13 +7,9 @@
 	<title><?=$title?></title>
 <? } ?>
 	<link rel="stylesheet" href="<?=$style_dir?>/style.css" type="text/css" />
-	<script type="text/javascript" src="<?=METABBS_BASE_PATH?>app/views/prototype.js"></script>
-<? if ($skin[0] == '_') { ?>
-	<script type="text/javascript" src="<?=METABBS_BASE_PATH?>skins/_admin/script.js"></script>
-<? } else { ?>
-	<script type="text/javascript" src="<?=METABBS_BASE_PATH?>app/views/script.js"></script>
-<? } ?>
-<? if (isset($board) && $skin[0] != '_') { ?>
+	<script type="text/javascript" src="<?=METABBS_BASE_PATH?>elements/prototype.js"></script>
+	<script type="text/javascript" src="<?=METABBS_BASE_PATH?>elements/script.js"></script>
+<? if (isset($board)) { ?>
 	<link rel="alternate" href="<?=url_for($board, 'rss')?>" type="application/rss+xml" title="RSS" /> 
 <? } ?>
 <? if (!isset($head_only)) { ?>
