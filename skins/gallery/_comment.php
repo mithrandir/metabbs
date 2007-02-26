@@ -5,7 +5,7 @@
 		<span class="date"><?=meta_format_date("%Y-%m-%d %H:%M", $comment->created_at)?></span>
 		<span class="actions">
 		<? if ($board->perm_comment <= $account->level) { ?>
-			<?=link_to(i('Reply'), $comment, 'reply')?>
+			<a href="<?=url_for($comment, 'reply')?>" onclick="loadReplyForm('comment_<?=$comment->id?>', this.href); return false"><?=i('Reply')?></a>
 		<? } ?>
 		<? if ($board->perm_delete <= $account->level || $account->id == $comment->user_id) { ?>
 			| <span class="delete"><?=link_to(i('Delete'), $comment, 'delete')?></span>
@@ -16,8 +16,8 @@
 	<div class="body"><?=format($comment->body)?></div>
 	</div>
 	
+	<ul id="comments-list-<?=$comment->id?>">
 	<? if ($comment->comments) { apply_filters_array('PostViewComment', $comment->comments); ?>
-	<ul>
 	<?
 	$comment_stack[] = $comment;
 	foreach ($comment->comments as $comment) {
@@ -25,6 +25,6 @@
 	}
 	$comment = array_pop($comment_stack);
 	?>
-	</ul>
 	<? } ?>
+	</ul>
 </li>

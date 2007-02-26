@@ -70,7 +70,7 @@ class MetaBBS
 	function printHead() {
 		global $_skin_dir, $skin_dir, $style_dir;
 		$head_only = true;
-		include('app/views/default_header.php');
+		include 'elements/default_header.php';
 	}
 
 	/**

@@ -42,7 +42,7 @@
 
 <div id="comments">
 <h3><?=i('Comments')?></h3>
-<ul>
+<ul id="comments-list">
 <?
 $comment_stack = array();
 foreach ($comments as $comment) {
@@ -53,7 +53,7 @@ foreach ($comments as $comment) {
 </div>
 
 <? if ($commentable) { ?>
-<form method="post" action="<?=url_for($post, 'comment')?>">
+<form method="post" action="<?=url_for($post, 'comment')?>" onsubmit="return addComment(this)" id="comment-form">
 <? if ($account->is_guest()) { ?>
 <p><?=label_tag("Name", "comment", "name")?> <?=text_field("comment", "name", $name)?></p>
 <p><?=label_tag("Password", "comment", "password")?> <?=password_field("comment", "password")?></p>

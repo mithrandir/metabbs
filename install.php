@@ -124,7 +124,7 @@ a:hover {
 }
 #title {
     border-bottom: 1px solid #ccc;
-    background: url(skins/_admin/bg.png) repeat-x top left;
+    background: url(elements/bg.png) repeat-x top left;
 }
 #contents, #footer {
     margin: 1.5em;
