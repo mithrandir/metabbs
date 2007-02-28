@@ -21,4 +21,5 @@ if ($board->use_trackback) {
 	echo "<message>Trackback is disabled</message>\n";
 }
 echo '</response>';
+exit;
 ?>

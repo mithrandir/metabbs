@@ -12,6 +12,9 @@ class SimpleSpam extends Plugin {
 		add_filter('PostSave', array(&$this, 'filter'), 10);
 		add_filter('PostComment', array(&$this, 'filter'), 10);
 	}
+	function on_uninstall() {
+		@unlink('data/spam.txt');
+	}
 	function on_settings() {
 		echo '<h2>SimpleSpam</h2>';
 		if (is_post()) {
