@@ -1,6 +1,6 @@
 <?php
 class Thumbnail extends Plugin {
-	var $description = 'Generate thumbnail images in gallery skin.';
+	var $description = 'Generate thumbnail images for gallery skin.';
 	function on_install() {
 		@mkdir('data/thumb', 0707);
 	}

@@ -1,4 +1,4 @@
-<h1>Board: <?=$title?></h1>
+<h1><?=$title?></h1>
 <? if ($board->use_category) { ?>
 <? if (isset($category)) { ?>
 <h2><?=i('Category')?> '<?=$category->name?>'</h2>

@@ -13,7 +13,7 @@
 </select>
 <? } ?>
 <? if ($board->use_attachment && !$post->exists()) { ?>
-<p><?=label_tag("Image", "post", "upload")?> <input type="file" name="upload[]" size="50" id="post_upload" /></p>
+<p><?=label_tag("Image", "post", "upload")?> <input type="file" name="upload[]" size="50" id="post_upload"<? if ($account->is_admin()) { ?> class="ignore"<? } ?>/></p>
 <? } ?>
 <p><?=text_area("post", "body", 6, 50, $post->body)?></p>
 

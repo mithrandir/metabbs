@@ -104,3 +104,4 @@ Password length must be longer than 5=암호 길이는 5글자보다 길어야 �
 Two password fields' content must be same=입력하신 두 암호가 일치하지 않습니다
 Move=옮기기
 Moved=옮겨짐
+Auto Login=자동 로그인

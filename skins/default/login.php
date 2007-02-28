@@ -14,5 +14,5 @@
 	<label for="autologin"><input type="checkbox" name="autologin" value="1" id="autologin" /></label>
 	<?=i('Auto Login')?>
 </p>
-<p><input type="submit" value="Login" /> <?=signup()?></p>
+<p><input type="submit" value="<?=i('Login')?>" /> <?=signup()?></p>
 </form>
