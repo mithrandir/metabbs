@@ -61,6 +61,7 @@ class MetaBBS
 	 */
 	function getLatestPost($board_name) {
 		@list($post) = $this->getLatestPosts($board_name, 1);
+		if ($post->secret) $post->body = "";
 		return $post;
 	}
 
