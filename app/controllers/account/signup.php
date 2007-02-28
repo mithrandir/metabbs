@@ -17,7 +17,7 @@ if (is_post()) {
 
 		if ($account->valid()) {
 			$account->create();
-			redirect_back();
+			redirect_to(url_with_referer_for('account', 'login'));
 		} else {
 			$account = new Guest($info);
 			$account->user = $account->password = "";
