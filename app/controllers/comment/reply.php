@@ -6,6 +6,9 @@ if (is_post()) {
 	$_comment = new Comment($_POST['comment']);
 	$_comment->user_id = $account->id;
 	$_comment->parent = $comment->id;
+	if (!$_comment->valid()) {
+		exit;
+	}
 	if (!$account->is_guest()) {
 		$_comment->name = $account->name;
 	} else {
