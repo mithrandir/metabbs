@@ -69,30 +69,5 @@ class UserManager
 			return false;
 		}
 	}
-
-	/**
-	 * 가입한다.
-	 * @param $user_id 사용자 아이디
-	 * @param $password 사용자 암호
-	 * @param $name 사용자 이름
-	 * @param $email 이메일 주소
-	 * @param $url 사이트 url
-	 * @return 성공했을 경우 유저 객체를 실패한 경우 null을 반환.
-	 */
-	function signup($user_id, $password, $name, $email, $url) {
-		$user = new User;
-		$user->user = $user_id;
-		$user->password = md5($password);
-		$user->name = $name;
-		$user->email = $email;
-		$user->url = $url;
-
-		if ($user->valid()) {
-			$user->create();
-			return $user;
-		} else {
-			return null;
-		}
-	}
 }
 ?>
