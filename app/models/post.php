@@ -8,6 +8,7 @@ class Post extends Model {
 	var $category_id = 0;
 	var $views = 0;
 	var $edited_by = 0;
+	var $moved_to = 0;
 
 	function _init() {
 		$this->table = get_table_name('post');
@@ -124,6 +125,14 @@ class Post extends Model {
 	}
 	function valid() {
 		return !empty($this->name) && !empty($this->title) && !empty($this->body);
+	}
+	function move_to($board) {
+		$_id = $this->id;
+		$this->id = null;
+		$this->category_id = 0;
+		$this->board_id = $board->id;
+		$this->create();
+		$this->db->query("UPDATE $this->table SET moved_to=$this->id WHERE id=$_id");
 	}
 }
 ?>

@@ -28,6 +28,7 @@ $t->column('views', 'integer');
 $t->column('secret', 'boolean');
 $t->column('edited_at', 'timestamp');
 $t->column('edited_by', 'integer');
+$t->column('moved_to', 'integer');
 $t->add_index('board_id');
 $t->add_index('category_id');
 $t->add_index('user_id');

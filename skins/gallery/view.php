@@ -70,4 +70,7 @@ foreach ($comments as $comment) {
 | <a href="<?=$link_edit?>"><?=i('Edit')?></a>
 | <a href="<?=$link_delete?>"><?=i('Delete')?></a>
 <? } ?>
+<? if ($account->is_admin()) { ?>
+| <a href="<?=url_for($post, 'move')?>"><?=i('Move')?></a>
+<? } ?>
 </div>

@@ -47,6 +47,9 @@
 			<? if ($post->secret) { ?>
 			<span class="secret">[<?=i('Secret Post')?>]</span>
 			<? } ?>
+			<? if ($post->moved_to) { ?>
+			<?=i('Moved')?>:
+			<? } ?>
 			<?=link_to_post($post)?>
 			<span class="comment-count"><?=link_to_comments($post)?></span>
 			<span class="views"><?=i('%d views', $post->views)?></span>
