@@ -57,7 +57,7 @@ function logout() {
  * @return 가입 링크
  */
 function signup() {
-	return link_to_account(i('Sign Up'), 'signup', 'link-signup');
+	return link_to_account(i('Sign up'), 'signup', 'link-signup');
 }
 
 /**
