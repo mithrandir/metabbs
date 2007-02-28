@@ -62,7 +62,8 @@ function url_for($controller, $action = null, $params = array()) {
 function set_default_params(&$params) {
 	if (isset($_GET['search']) && $_GET['search']) {
 		foreach ($_GET['search'] as $k => $v) {
-			if ($v) $params["search[$k]"] = urlencode($v);
+			$k = "search[$k]";
+			if ($v && !isset($params[$k])) $params[$k] = urlencode($v);
 		}
 	}
 }
