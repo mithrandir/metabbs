@@ -132,5 +132,5 @@ function replyComment(form, id) {
 }
 
 function addFileEntry() {
-	new Insertion.Bottom('uploads', '<li><input type="file" name="upload[]" size="50" /></li>');
+	new Insertion.Bottom('uploads', '<li><input type="file" name="upload[]" size="50" class="ignore" /></li>');
 }
