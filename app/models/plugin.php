@@ -39,17 +39,6 @@ class Plugin extends Model {
 	function on_install() { }
 	function on_uninstall() { }
 }
-function get_plugins() {
-	$dp = opendir(METABBS_DIR . '/plugins');
-	$plugins = array();
-	while ($file = readdir($dp)) {
-		if (strrchr($file, '.') == '.php') {
-			include_once(METABBS_DIR . '/plugins/' . $file);
-		}
-	}
-	closedir($dp);
-	return $GLOBALS['__plugins'];
-}
 function get_enabled_plugins() {
 	$db = get_conn();
 	$table = get_table_name('plugin');

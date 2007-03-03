@@ -168,11 +168,28 @@ function run_before_handler($controller, $action) {
 	}
 }
 
-include('plugins/_base.php'); // import base plugin
-foreach (get_enabled_plugins() as $plugin) {
-	$path = "plugins/$plugin->name.php";
-	if (file_exists($path)) {
-		include($path);
+function get_plugins() {
+	$dir = METABBS_DIR . '/plugins/';
+	$dp = opendir($dir);
+	$plugins = array();
+	while ($file = readdir($dp)) {
+		list($name, ) = explode('.', $file);
+		import_plugin($name);
 	}
+	closedir($dp);
+	return $GLOBALS['__plugins'];
+}
+
+function import_plugin($plugin) {
+	if (file_exists("plugins/$plugin.php")) {
+		include_once("plugins/$plugin.php");
+	} else if (file_exists("plugins/$plugin/plugin.php")) {
+		include_once("plugins/$plugin/plugin.php");
+	}
+}
+
+import_plugin('_base');
+foreach (get_enabled_plugins() as $plugin) {
+	import_plugin($plugin->name);
 }
 ?>
