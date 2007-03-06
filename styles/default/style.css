@@ -85,6 +85,7 @@ span.actions { font-size: 0.9em; }
     background-color: #333;
 }
 
+#reply-form { margin-left: 2em; }
 #sending { margin: 0 5px; background: url(spin.gif) no-repeat; padding-left: 16px; color: #fff; }
 
 .star { color: red; }

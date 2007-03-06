@@ -83,7 +83,12 @@ function toggleAll(form, bit) {
 
 function loadReplyForm(id, url) {
 	var form = $('reply-form');
-	if (form) { form.hide(); form.remove(); }
+	if (form) {
+		form.hide();
+		var hide = form.parentNode.id == id;
+		form.remove();
+		if (hide) return false;
+	}
 	new Ajax.Updater($(id).getElementsByClassName('comment')[0], url, {
 		method: 'GET',
 		insertion: Insertion.After
