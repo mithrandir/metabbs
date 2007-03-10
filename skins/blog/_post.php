@@ -7,7 +7,7 @@
 	</h2>
 	<p class="author">
 		Posted by <cite><?=$post->name?></cite>
-		<abbr class="published" title="<?=meta_format_date_RFC822($post->created_at)?>"><?=meta_format_date("%Y-%m-%d %H:%M:%S", $post->created_at)?></abbr>
+		<abbr class="published" title="<?=meta_format_date_RFC822($post->created_at)?>"><?=strftime("%Y-%m-%d %H:%M:%S", $post->created_at)?></abbr>
 	</p>
 	<div class="content">
 	<div class="attachments">

@@ -16,13 +16,13 @@ if (!defined('METABBS_BASE_URI')) {
  */
 function _url_for($controller, $action = null, $params = null) {
 	$url = METABBS_BASE_URI;
-	if (is_a($controller, 'Model')) {
+	if (is_string($controller)) {
+		$url .= $controller . '/';
+		if ($action) $url .= $action . '/';
+	} else {
 		$url .= $controller->model . '/';
 		if ($action) $url .= $action . '/';
 		$url .= $controller->get_id();
-	} else {
-		$url .= $controller . '/';
-		if ($action) $url .= $action . '/';
 	}
 
 	if ($params) $url .= query_string_for($params);

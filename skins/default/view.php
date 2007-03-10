@@ -7,7 +7,7 @@ function openPlayer(id, url) {
 
 <div class="post-title">
     <div class="info">
-		<?=i('Posted by %s at %s', $post->name, meta_format_date("%Y-%m-%d %H:%M:%S", $post->created_at))?>
+		<?=i('Posted by %s at %s', $post->name, strftime("%Y-%m-%d %H:%M:%S", $post->created_at))?>
 		| <?=i('%d views', $post->views)?>
 <? if ($board->use_category && $post->category_id) { ?>
 		| <?=i('Category')?>: <?=link_to_category($post->get_category())?>
@@ -34,7 +34,7 @@ function openPlayer(id, url) {
 
 <div id="body"><?=$post->body?></div>
 <? if ($post->is_edited()) { ?>
-<div id="editinfo"><?=i('Edited by %s at %s', link_to_user($post->get_editor()), meta_format_date("%Y-%m-%d %H:%M:%S", $post->edited_at))?></div>
+<div id="editinfo"><?=i('Edited by %s at %s', link_to_user($post->get_editor()), strftime("%Y-%m-%d %H:%M:%S", $post->edited_at))?></div>
 <? } ?>
 <? if (isset($signature)) { ?>
 <div id="signature"><?=$signature?></div>

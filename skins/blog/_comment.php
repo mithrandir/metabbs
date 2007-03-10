@@ -2,7 +2,7 @@
 <div class="comment">
 	<div class="author">
 		<cite><?=$comment->name?></cite>
-		<abbr title="<?=meta_format_date_rfc822($comment->created_at)?>"><?=meta_format_date("%Y-%m-%d %H:%M", $comment->created_at)?></abbr>
+		<abbr title="<?=meta_format_date_rfc822($comment->created_at)?>"><?=strftime("%Y-%m-%d %H:%M", $comment->created_at)?></abbr>
 		<span class="actions">
 		<? if ($board->perm_comment <= $account->level) { ?>
 			<a href="<?=url_for($comment, 'reply')?>" onclick="loadReplyForm('comment_<?=$comment->id?>', this.href); return false"><?=i('Reply')?></a>

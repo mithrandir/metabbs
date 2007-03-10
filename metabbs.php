@@ -16,7 +16,7 @@ if ($len == 4) { // /controller/action/id
 }
 
 $title = 'MetaBBS';
-@include("app/controllers/$controller.php");
+@include "app/controllers/$controller.php";
 $action_dir = 'app/controllers/' . $controller;
 if (!run_hook_handler($controller, $action)) {
 	include($action_dir . '/' . $action . '.php');

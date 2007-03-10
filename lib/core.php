@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require METABBS_DIR . '/lib/config.php';
 $config = new Config('metabbs.conf.php');
 
 $backend = $config->get('backend', 'mysql');
@@ -9,18 +9,18 @@ $backend = $config->get('backend', 'mysql');
  */
 define('METABBS_TABLE_PREFIX', $config->get('prefix', 'meta_'));
 
-require 'model.php';
-require 'backends/' . $backend . '/backend.php';
-require 'app/models/board.php';
-require 'app/models/category.php';
-require 'app/models/post.php';
-require 'app/models/comment.php';
-require 'app/models/trackback.php';
-require 'app/models/attachment.php';
-require 'app/models/user.php';
-require 'app/models/plugin.php';
+require METABBS_DIR . '/lib/model.php';
+require METABBS_DIR . '/lib/backends/' . $backend . '/backend.php';
+require METABBS_DIR . '/app/models/board.php';
+require METABBS_DIR . '/app/models/category.php';
+require METABBS_DIR . '/app/models/post.php';
+require METABBS_DIR . '/app/models/comment.php';
+require METABBS_DIR . '/app/models/trackback.php';
+require METABBS_DIR . '/app/models/attachment.php';
+require METABBS_DIR . '/app/models/user.php';
+require METABBS_DIR . '/app/models/plugin.php';
 
-require 'template.php';
-require 'uri_manager.php';
-require 'account.php';
+require METABBS_DIR . '/lib/template.php';
+require METABBS_DIR . '/lib/uri_manager.php';
+require METABBS_DIR . '/lib/account.php';
 ?>

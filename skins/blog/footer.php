@@ -33,7 +33,7 @@
 		<h3>Recent Comments</h3>
 		<ul id="recent-comments">
 		<? foreach ($board->get_recent_comments(5) as $comment) { ?>
-			<li><?=link_to(htmlspecialchars(utf8_strcut($comment->body, 16)), $comment)?> <cite><?=$comment->name?></cite> <abbr title="<?=meta_format_date_rfc822($comment->created_at)?>"><?=meta_format_date("%m/%d", $comment->created_at)?></abbr></li>
+			<li><?=link_to(htmlspecialchars(utf8_strcut($comment->body, 16)), $comment)?> <cite><?=$comment->name?></cite> <abbr title="<?=meta_format_date_rfc822($comment->created_at)?>"><?=strftime("%m/%d", $comment->created_at)?></abbr></li>
 		<? } ?>
 		</ul>
 

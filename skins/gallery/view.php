@@ -3,7 +3,7 @@
 	<? if ($board->use_category && $post->category_id) { ?>[<?=link_to_category($post->get_category())?>]<? } ?>
 	<span class="title"><?=htmlspecialchars($post->title)?></span>
 	</h2>
-    <div class="info"><?=$post->name?>, <?=meta_format_date("%Y-%m-%d %H:%M:%S", $post->created_at)?></div>
+    <div class="info"><?=$post->name?>, <?=strftime("%Y-%m-%d %H:%M:%S", $post->created_at)?></div>
 </div>
 
 <div id="attachments">

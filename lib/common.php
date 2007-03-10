@@ -2,7 +2,9 @@
 header("Content-Type: text/html; charset=utf-8");
 
 if (!defined('METABBS_BASE_PATH')) {
-	define('METABBS_BASE_PATH', substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/') + 1));
+	$path = dirname($_SERVER['SCRIPT_NAME']);
+	if ($path == '\\' || $path == '/') $path = '';
+	define('METABBS_BASE_PATH', $path . '/');
 }
 
 if (!defined('METABBS_DIR')) {
@@ -14,23 +16,21 @@ if (!file_exists(METABBS_DIR . '/metabbs.conf.php')) {
 	exit;
 }
 
-ini_set("include_path", METABBS_DIR . PATH_SEPARATOR . METABBS_DIR . '/lib' . PATH_SEPARATOR . ini_get("include_path"));
+ini_set('include_path', METABBS_DIR . PATH_SEPARATOR . ini_get('include_path'));
 
-require('compat.php');
-require("core.php");
-require("request.php");
-require("i18n.php");
-require("cookie.php");
-require("tag_helper.php");
-require("user_manager.php");
-require("plugin.php");
+require METABBS_DIR . '/lib/compat.php';
+require METABBS_DIR . '/lib/core.php';
+require METABBS_DIR . '/lib/request.php';
+require METABBS_DIR . '/lib/i18n.php';
+require METABBS_DIR . '/lib/cookie.php';
+require METABBS_DIR . '/lib/tag_helper.php';
+require METABBS_DIR . '/lib/plugin.php';
 
 $session_dir = METABBS_DIR . '/data/session';
-if (file_exists($session_dir)) {
-	session_save_path($session_dir);
-} else {
+if (!file_exists($session_dir)) {
 	mkdir($session_dir, 0707);
 }
+session_save_path($session_dir);
 session_start();
 
 $account = UserManager::get_user();

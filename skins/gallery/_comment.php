@@ -2,7 +2,7 @@
 	<div class="comment">
 	<div class="info">
 		<span class="name"><?=$comment->name?></span>
-		<span class="date"><?=meta_format_date("%Y-%m-%d %H:%M", $comment->created_at)?></span>
+		<span class="date"><?=strftime("%Y-%m-%d %H:%M", $comment->created_at)?></span>
 		<span class="actions">
 		<? if ($board->perm_comment <= $account->level) { ?>
 			<a href="<?=url_for($comment, 'reply')?>" onclick="loadReplyForm('comment_<?=$comment->id?>', this.href); return false"><?=i('Reply')?></a>
