@@ -322,7 +322,7 @@ if (!isset($_POST['config'])) {
 	$backend = $config->get('backend');
 	require_once "lib/backends/$backend/backend.php";
 	require_once 'app/models/user.php';
-	require_once 'lib/user_manager.php';
+	require_once 'lib/account.php';
 	$user = new User;
 	$user->user = $_POST['admin_id'];
 	$user->name = $_POST['admin_name'];
