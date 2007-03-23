@@ -1,5 +1,5 @@
 <?php
-define('METABBS_DB_REVISION', 783);
+define('METABBS_DB_REVISION', 806);
 
 /**
  * 모델 명칭으로부터 DB 테이블의 이름을 만든다.

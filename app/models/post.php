@@ -1,4 +1,35 @@
 <?php
+class PostMeta {
+	function PostMeta(&$post) {
+		$this->post = $post;
+		$this->db = get_conn();
+		$this->table = get_table_name('post_meta');
+		$this->attributes = array();
+		$this->loaded = false;
+	}
+	function load() {
+		if ($this->loaded) return;
+		$result = $this->db->get_result("SELECT * FROM $this->table WHERE post_id={$this->post->id}");
+		while ($data = $result->fetch()) {
+			$this->attributes[$data['key']] = $data['value'];
+		}
+	}
+	function get($key) {
+		return $this->attributes[$key];
+	}
+	function set($key, $value) {
+		if (!array_key_exists($key, $this->attributes)) {
+			$this->db->query("INSERT INTO $this->table (post_id, `key`, value) VALUES({$this->post->id}, ?, ?)", array($key, $value));
+		} else {
+			$this->db->query("UPDATE $this->table SET value=? WHERE post_id={$this->post->id} AND `key`=?", array($value, $key));
+		}
+		$this->attributes[$key] = $value;
+	}
+	function reset() {
+		$this->db->query("DELETE FROM $this->table WHERE post_id={$this->post->id}");
+	}
+}
+
 class Post extends Model {
 	var $model = 'post';
 
@@ -18,6 +49,8 @@ class Post extends Model {
 		$this->comment_table = get_table_name('comment');
 		$this->trackback_table = get_table_name('trackback');
 		$this->attachment_table = get_table_name('attachment');
+
+		$this->metadata = new PostMeta($this);
 	}
 	function find($id) {
 		$db = get_conn();
@@ -133,6 +166,17 @@ class Post extends Model {
 		$this->board_id = $board->id;
 		$this->create();
 		$this->db->query("UPDATE $this->table SET moved_to=$this->id WHERE id=$_id");
+	}
+	function get_attribute($key) {
+		if ($this->exists()) $this->metadata->load();
+		return $this->metadata->get($key);
+	}
+	function get_attributes() {
+		if ($this->exists()) $this->metadata->load();
+		return $this->metadata->attributes;
+	}
+	function set_attribute($key, $value) {
+		$this->metadata->set($key, $value);
 	}
 }
 ?>

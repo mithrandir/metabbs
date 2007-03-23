@@ -54,4 +54,14 @@ if (function_exists('mb_substr')) {
 		return preg_replace('/^(.{'.$len.'}).+$/su', "$1...", $str);
 	}
 }
+
+if (!function_exists('array_combine')) {
+	function array_combine($keys, $vals) {
+		$r = array();
+		foreach ($keys as $i => $k) {
+			$r[$k] = $vals[$i];
+		}
+		return $r;
+	}
+}
 ?>

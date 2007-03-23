@@ -34,6 +34,13 @@ $t->add_index('category_id');
 $t->add_index('user_id');
 $conn->add_table($t);
 
+$t = new Table('post_meta');
+$t->column('post_id', 'integer');
+$t->column('key', 'string', 45);
+$t->column('value', 'string', 255);
+$t->add_index('post_id');
+$conn->add_table($t);
+
 $t = new Table('comment');
 $t->column('board_id', 'integer');
 $t->column('post_id', 'integer');

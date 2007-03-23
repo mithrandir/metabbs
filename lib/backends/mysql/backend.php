@@ -104,6 +104,9 @@ class MySQLAdapter
 		}
 		return implode('', $tokens);
 	}
+	function get_result($query) {
+		return new MySQLResult($this->query($query));
+	}
 	function fetchall($query, $model = 'Model', $data = null, $assoc = false) {
 		$results = array();
 		$result = $this->query($query, $data);
@@ -161,4 +164,12 @@ class MySQLAdapter
 	}
 }
 
+class MySQLResult {
+	function MySQLResult($result) {
+		$this->result = $result;
+	}
+	function fetch() {
+		return mysql_fetch_assoc($this->result);
+	}
+}
 ?>
