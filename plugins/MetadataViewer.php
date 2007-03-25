@@ -5,13 +5,15 @@ class MetadataViewer extends Plugin {
 	}
 	function print_metadata(&$post) {
 		ob_start();
+		$attributes = $post->get_attributes();
+		if (!$attributes) return;
 ?>
 <table class="metadata">
 <tr>
 	<th>Key</th>
 	<th>Value</th>
 </tr>
-<? foreach ($post->get_attributes() as $key => $value) { ?>
+<? foreach ($attributes as $key => $value) { ?>
 <tr>
 	<td><?=htmlspecialchars($key)?></td>
 	<td><?=htmlspecialchars($value)?></td>

@@ -1,6 +1,18 @@
 <?php
 function get_column_name($column) { return $column->name; }
 function column_to_string($column) { return $column->to_string(); }
+if (substr(PHP_VERSION, 1) == '5') {
+	function mysql_fetch_object_(&$result, $class_name) {
+		return mysql_fetch_object($result, $class_name);
+	}
+} else {
+	function mysql_fetch_object_(&$result, $class_name) {
+		$data = mysql_fetch_assoc($result);
+		if (!$data) return false;
+		else return new $class_name($data);
+	}
+}
+
 class Column {
 	function Column($name) {
 		$this->name = $name;
@@ -110,16 +122,18 @@ class MySQLAdapter
 	function fetchall($query, $model = 'Model', $data = null, $assoc = false) {
 		$results = array();
 		$result = $this->query($query, $data);
-		while ($data = mysql_fetch_assoc($result)) {
+		while ($data = mysql_fetch_object_($result, $model)) {
 			if ($assoc)
-				$results[$data['id']] = new $model($data);
+				$results[$data->id] = $data;
 			else
-				$results[] = new $model($data);
+				$results[] = $data;
 		}
 		return $results;
 	}
 	function fetchrow($query, $model = 'Model', $data = null) {
-		return new $model(mysql_fetch_assoc($this->query($query, $data)));
+		$object = mysql_fetch_object_($this->query($query, $data), $model);
+		if (!$object) return new $model;
+		else return $object;
 	}
 	function fetchone($query, $data = null) {
 		list($result) = mysql_fetch_row($this->query($query, $data));
