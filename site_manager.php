@@ -8,7 +8,7 @@ require_once(dirname(__FILE__).'/lib/common.php');
 /**
  * 써드 파티를 위한 API. 게시판의 정보를 제공한다.
  */
-class MetaBBS
+class SiteManager
 {
 	/**
 	 * 피드 주소를 결정한다.
@@ -100,5 +100,5 @@ class MetaBBS
 /**
  * 이 인스턴스를 이용하여 외부 프로그램에서 MetaBBS에 접근한다.
  */
-$metabbs = new MetaBBS;
+$metabbs = new SiteManager;
 ?>
