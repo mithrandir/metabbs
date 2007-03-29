@@ -4,6 +4,13 @@ $attachment = Attachment::find($id);
 if (!$attachment->exists() || !$attachment->file_exists()) {
 	print_notice('Attachment not found', "Attachment #$id is not exist or broken.<br />Please check the attachment id.");
 }
+if (isset($_GET['thumb'])) {
+	include 'lib/thumbnail.php';
+	$thumb_path = 'data/thumb/'.$attachment->id.'.png';
+	if (create_thumbnail('data/uploads/'.$attachment->id, $thumb_path)) {
+		redirect_to(METABBS_BASE_PATH . $thumb_path);
+	}
+}
 $filename = 'data/uploads/' .$attachment->id;
 header('Content-Type: ' . $attachment->get_content_type());
 header('Content-Length: ' . filesize($filename));

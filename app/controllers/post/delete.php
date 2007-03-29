@@ -8,6 +8,9 @@ if (is_post() && ($post->user_id != 0 && $account->id == $post->user_id || $acco
 	$attachments = $post->get_attachments();
 	foreach ($attachments as $attachment) {
 		@unlink($attachment->get_filename());
+		if (file_exists('data/thumb/'.$attachment->id.'.png')) {
+			@unlink('data/thumb/'.$attachment->id.'.png');
+		}
 		$attachment->delete();
 	}
 	$post->delete();
