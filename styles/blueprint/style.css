@@ -1,0 +1,92 @@
+#meta { font-size: 13px; font-family: Verdana, sans-serif; }
+
+#meta p, #meta li { line-height: 1.5; }
+#meta img { border: none; vertical-align: middle; }
+#meta a { color: #36c; }
+#meta form { margin: 0; }
+
+#meta h1 { font-size: 1.8em; margin: 0.3em 0; }
+#meta h2, #meta h3 { font-weight: normal; }
+#meta h2 { font-size: 1.5em; margin: 0; }
+#meta h3 { font-size: 1.2em; border-bottom: 1px solid #ccc; padding: 3px; }
+
+/* list */
+#board-info { padding: 1em 0.5em; font-size: 0.95em; float: left; }
+#meta-account { float: right; padding: 1em; font-size: 0.95em; color: #ccc; }
+#rss-feed { padding-left: 0.5em; }
+#posts { clear: both; border-collapse: collapse; width: 100%; border-top: 4px solid #06e; }
+
+#posts tr.notice { background-color: #ffffee; }
+#posts td { padding: 5px; border-bottom: 1px solid #ddd; }
+#posts td.meta { width: 12em; padding-left: 10px; }
+.massdelete { width: 30px; text-align: center; }
+
+div.writer { font-weight: bold; }
+div.date { font-size: 10px; }
+div.meta { font-size: 11px; padding-top: 0.5em; font-family: Dotum, Verdana, sans-serif; color: #777; }
+
+.secret { font-size: 0.9em; color: #aaa; }
+.comment-count { font-size: x-small; }
+.views { font-size: x-small; color: #999; }
+
+#meta-actions { padding: 0.5em; float: left; }
+#meta-nav { float: right; text-align: right; }
+#pages { list-style: none; margin: 0; padding: 0.5em; }
+#pages li { display: inline; padding: 0 2px; }
+#pages li.here { font-weight: bold; }
+.first a, .last a, .next a, .prev a {
+    border: 1px solid #ccc;
+    padding: 0 4px;
+    background-color: #eee;
+    text-decoration: none;
+}
+.prev a, .next a { padding: 0 5px; }
+.first a:hover, .last a:hover, .next a:hover, .prev a:hover {
+    background-color: #333;
+}
+
+/* view */
+.post-title { border-bottom: 1px solid #666; padding: 5px; }
+.post-title h2 { font-weight: bold; font-size: 1.2em; display: inline; }
+.post-title .info { font-size: 12px; padding: 3px; float: right; }
+#signature { font-size: 90%; border-top: 1px solid #ccc; width: 50em; }
+
+#comments ul { margin: 0; padding: 0; list-style: none; }
+#comments ul ul { margin-left: 2em; }
+.comment {
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    background: url(bg.png) repeat-x;
+	margin-bottom: 1em;
+}
+.comment .info { padding-bottom: 3px; }
+.comment .body p { margin: 0; }
+span.name { font-weight: bold; }
+span.date { font-size: x-small; }
+span.actions { font-size: 0.9em; }
+
+#attachments { clear: both; }
+#attachments ul { list-style: none; margin: 0; padding: 0; }
+#attachments ul li { margin-bottom: 1em; }
+
+.blank { border: 2px solid red; }
+#meta textarea, #meta input { padding: 1px; font-family: verdana, sans-serif; }
+#meta textarea { font-size: 13px; line-height: 1.5; }
+
+#reply-form { margin-left: 2em; }
+#sending { margin: 0 5px; background: url(spin.gif) no-repeat; padding-left: 16px; color: #fff; }
+
+.star { color: red; }
+.flash { background-color: #ffe; border: 1px solid #ddd; padding: 0.5em; }
+.flash p { margin: 0; }
+.highlight { background-color: yellow; }
+
+#profile {
+	background-color: lightyellow;
+	border: 1px solid #ccc;
+	padding: 0 1em;
+	margin-bottom: 10px;
+}
+#profile .name { font-size: 1.1em; }
+
+fieldset { border: none; margin: 0; padding: 0; }

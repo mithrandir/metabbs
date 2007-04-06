@@ -106,3 +106,4 @@ Move=옮기기
 Moved=옮겨짐
 Auto Login=자동 로그인
 All=전체 보기
+%d comments=댓글 %d개
