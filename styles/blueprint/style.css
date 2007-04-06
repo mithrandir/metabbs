@@ -16,7 +16,7 @@
 #rss-feed { padding-left: 0.5em; }
 #posts { clear: both; border-collapse: collapse; width: 100%; border-top: 4px solid #06e; }
 
-#posts tr.notice { background-color: #ffffee; }
+#posts tr.notice { background-color: #eff7ff; }
 #posts td { padding: 5px; border-bottom: 1px solid #ddd; }
 #posts td.meta { width: 12em; padding-left: 10px; }
 .massdelete { width: 30px; text-align: center; }

@@ -10,7 +10,6 @@
 <div id="meta-account">
 <? print_nav(get_account_control($account)); ?>
 </div>
-<form method="post" action="<?=url_for($board, 'massdelete')?>" onsubmit="return confirm('<?=i('Are you sure?')?>')">
 <table id="posts">
 <? foreach ($posts as $post) { ?>
 <? if ($post->is_notice()) { ?>
@@ -18,9 +17,6 @@
 <? } else { ?>
 	<tr>
 <? } ?>
-	<? if ($massdelete) { ?>
-		<td class="massdelete"><input type="checkbox" name="delete[]" value="<?=$post->id?>" /></td>
-	<? } ?>
 		<td class="meta">
 			<div class="writer"><?=$post->name?></div>
 			<div class="date"><?=strftime("%Y-%m-%d %H:%M", $post->created_at)?></div>
@@ -47,11 +43,7 @@
 
 <div id="meta-actions">
 <? if ($link_new_post) { ?><a href="<?=$link_new_post?>"><?=i('New Post')?></a><? } ?>
-<? if ($massdelete) { ?>
-<input type="submit" value="<?=i('Delete selected posts')?>" />
-<? } ?>
 </div>
-</form>
 
 <div id="meta-nav">
 <? print_pages($board); ?>
