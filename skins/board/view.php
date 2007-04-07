@@ -6,13 +6,13 @@ function openPlayer(id, url) {
 <div id="post">
 
 <div class="post-title">
+    <h2><?=htmlspecialchars($post->title)?></h2>
     <div class="info">
 		<?=i('Posted by %s at %s', $post->name, strftime("%Y-%m-%d %H:%M:%S", $post->created_at))?>
 		| <?=i('%d views', $post->views)?>
 <? if ($board->use_category && $post->category_id) { ?>
 		| <?=i('Category')?>: <?=link_to_category($post->get_category())?>
 <? } ?></div>
-    <h2><?=htmlspecialchars($post->title)?></h2>
 </div>
 
 <div id="attachments">
@@ -32,15 +32,18 @@ function openPlayer(id, url) {
 </ul>
 </div>
 
-<div id="body"><?=$post->body?></div>
-<? if ($post->is_edited()) { ?>
-<div id="editinfo"><?=i('Edited by %s at %s', link_to_user($post->get_editor()), strftime("%Y-%m-%d %H:%M:%S", $post->edited_at))?></div>
-<? } ?>
+<div id="body">
+<?=$post->body?>
 <? if (isset($signature)) { ?>
 <div id="signature"><?=$signature?></div>
 <? } ?>
+
+<? if ($post->is_edited()) { ?>
+<div id="editinfo"><?=i('Edited by %s at %s', link_to_user($post->get_editor()), strftime("%Y-%m-%d %H:%M:%S", $post->edited_at))?></div>
+<? } ?>
 </div>
 
+<div id="responses">
 <? if ($board->use_trackback) { ?>
 <div id="trackbacks">
 <h3><?=i('Trackbacks')?></h3>
@@ -87,6 +90,8 @@ foreach ($comments as $comment) {
 <p><?=submit_tag("Comment")?></p>
 </form>
 <? } ?>
+</div>
+</div>
 
 <div id="neighbor-posts">
 <p>
@@ -96,7 +101,7 @@ foreach ($comments as $comment) {
 </p>
 </div>
 
-<div id="nav">
+<div id="meta-actions">
 <a href="<?=$link_list?>"><?=i('List')?></a> |
 <? if ($link_new_post) { ?><a href="<?=$link_new_post?>"><?=i('New Post')?></a> <? } ?>
 <? if ($owner) { ?>

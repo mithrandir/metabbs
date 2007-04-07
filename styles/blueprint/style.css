@@ -3,12 +3,8 @@
 #meta p, #meta li { line-height: 1.5; }
 #meta img { border: none; vertical-align: middle; }
 #meta a { color: #36c; }
-#meta form { margin: 0; }
-
-#meta h1 { font-size: 1.8em; margin: 0.3em 0; }
-#meta h2, #meta h3 { font-weight: normal; }
-#meta h2 { font-size: 1.5em; margin: 0; }
-#meta h3 { font-size: 1.2em; border-bottom: 1px solid #ccc; padding: 3px; }
+#meta a:hover { text-decoration: none; }
+#meta form { margin: 0; clear: both; }
 
 /* list */
 #board-info { padding: 1em 0.5em; font-size: 0.95em; float: left; }
@@ -25,7 +21,7 @@ div.writer { font-weight: bold; }
 div.date { font-size: 10px; }
 div.meta { font-size: 11px; padding-top: 0.5em; font-family: Dotum, Verdana, sans-serif; color: #777; }
 
-.secret { font-size: 0.9em; color: #aaa; }
+.secret { font-size: 12px; color: #aaa; }
 .comment-count { font-size: x-small; }
 .views { font-size: x-small; color: #999; }
 
@@ -46,24 +42,45 @@ div.meta { font-size: 11px; padding-top: 0.5em; font-family: Dotum, Verdana, san
 }
 
 /* view */
-.post-title { border-bottom: 1px solid #666; padding: 5px; }
-.post-title h2 { font-weight: bold; font-size: 1.2em; display: inline; }
-.post-title .info { font-size: 12px; padding: 3px; float: right; }
+.post-title { background-color: #eff7ff; padding: 0.5em; border-bottom: 1px solid #ccc; border-top: 4px solid #06e; }
+.post-title h2 { font-size: 1em; color: #06c; margin: 0.2em 0.5em; }
+.post-title .info { font-size: 12px; padding: 0.4em; }
+#body { margin: 1em; }
+#editinfo { color: #999; font-size: 12px; text-align: right; }
 #signature { font-size: 90%; border-top: 1px solid #ccc; width: 50em; }
 
-#comments ul { margin: 0; padding: 0; list-style: none; }
+#responses {
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ddd;
+	background-color: #f8f8f8;
+	padding: 1em;
+	font-size: 12px;
+}
+#responses h3 {
+	font-size: 1em;
+	margin-top: 0;
+	margin-bottom: 0.5em;
+	color: #06c;
+}
+
+#trackbacks {
+	padding-bottom: 1em;
+}
+
+#comments ul { margin-left: 0; padding-left: 0; list-style: none; }
 #comments ul ul { margin-left: 2em; }
 .comment {
-    padding: 0.5em;
-    border: 1px solid #ccc;
-    background: url(bg.png) repeat-x;
-	margin-bottom: 1em;
+    border-top: 1px dotted #999;
+	overflow: hidden;
+	display: inline-block;
+	padding: 0.5em;
 }
-.comment .info { padding-bottom: 3px; }
+.comment .info div { display: inline; }
+.comment .body { padding: 0.5em 0; }
 .comment .body p { margin: 0; }
-span.name { font-weight: bold; }
-span.date { font-size: x-small; }
-span.actions { font-size: 0.9em; }
+.comment .name { font-weight: bold; }
+.comment .date { font-size: x-small; }
+.comment .actions { margin-left: 0.5em; font-size: 11px; font-family: Dotum, Verdana, sans-serif; color: #777; }
 
 #attachments { clear: both; }
 #attachments ul { list-style: none; margin: 0; padding: 0; }
