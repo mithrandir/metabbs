@@ -107,3 +107,4 @@ Moved=옮겨짐
 Auto Login=자동 로그인
 All=전체 보기
 %d comments=댓글 %d개
+Max upload size=최대 업로드 가능 크기

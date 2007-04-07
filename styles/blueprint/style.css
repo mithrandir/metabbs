@@ -10,6 +10,10 @@
 #board-info { padding: 1em 0.5em; font-size: 0.95em; float: left; }
 #meta-account { float: right; padding: 1em; font-size: 0.95em; color: #ccc; }
 #rss-feed { padding-left: 0.5em; }
+#categories { clear: both; padding-bottom: 1em; padding-left: 0.5em; }
+#categories strong { font-size: 0.95em; }
+.category { padding-left: 0.5em; }
+.category .posts-count { font-size: 0.8em; color: #999; }
 #posts { clear: both; border-collapse: collapse; width: 100%; border-top: 4px solid #06e; }
 
 #posts tr.notice { background-color: #eff7ff; }
@@ -86,11 +90,23 @@ div.meta { font-size: 11px; padding-top: 0.5em; font-family: Dotum, Verdana, san
 #attachments ul { list-style: none; margin: 0; padding: 0; }
 #attachments ul li { margin-bottom: 1em; }
 
-.blank { border: 2px solid red; }
-#meta textarea, #meta input { padding: 1px; font-family: verdana, sans-serif; }
+#reply-form { margin-left: 2em; }
+
+/* write */
+#postform { border-top: 4px solid #06e; border-collapse: collapse; background-color: #eff7ff; width: 50em; }
+#postform td { padding: 0.8em 0.5em; }
+#postform th { width: 6em; color: #06c; font-size: 12px; }
+#postform td.name { width: 11em; }
+#postform .body { text-align: center; padding-top: 1em; padding-bottom: 1em; }
+#postform .options td { padding: 0 0.5em; }
+#post_title { width: 95%; }
+#post_body { width: 96.5%; }
+
+.blank { border: 1px solid red; }
+#postform, #meta select, #meta textarea, #meta input { font-family: verdana, sans-serif; font-size: 12px; }
+#postform input, #postform textarea { padding: 2px; }
 #meta textarea { font-size: 13px; line-height: 1.5; }
 
-#reply-form { margin-left: 2em; }
 #sending { margin: 0 5px; background: url(spin.gif) no-repeat; padding-left: 16px; color: #fff; }
 
 .star { color: red; }

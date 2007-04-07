@@ -1,8 +1,3 @@
-<? if ($board->use_category) { ?>
-<? foreach ($categories as $_category) { ?>
-<?=option_tag($_category->id, $_category->name, isset($category) && $category->id == $_category->id)?>
-<? } ?>
-<? } ?>
 <div id="board-info">
 	<?=i('Total %d posts', $board->get_post_count())?>
 	<?=link_with_id_to("rss-feed", image_tag("$skin_dir/feed.png", "RSS Feed"), $board, 'rss')?>
@@ -10,6 +5,15 @@
 <div id="meta-account">
 <? print_nav(get_account_control($account)); ?>
 </div>
+<? if ($board->use_category) { ?>
+<div id="categories">
+<strong><?=i('Category')?>:</strong>
+<a href="?" class="category"><?=i('All')?></a>
+<? foreach ($categories as $_category) { ?>
+<span class="category"><a href="?search[category]=<?=$_category->id?>"><?=$_category->name?></a> <span class="posts-count">(<?=$_category->get_post_count()?>)</span></a>
+<? } ?>
+</div>
+<? } ?>
 <table id="posts">
 <? foreach ($posts as $post) { ?>
 <? if ($post->is_notice()) { ?>
