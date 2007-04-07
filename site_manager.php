@@ -95,6 +95,28 @@ class SiteManager
 </div>
 <?php
 	}
+
+	function getMetaLatestPosts($boards, $count) {
+		$db = get_conn();
+		$query = "SELECT p.* FROM ".get_table_name('board')." b, ".get_table_name('post')." p WHERE b.id=p.board_id AND b.name IN ('".implode("','", $boards)."') ORDER BY p.id DESC LIMIT $count";
+		return $db->fetchall($query, 'Post');
+	}
+
+	function printMetaLatestPosts($boards, $count, $title_length = -1) {
+		$posts = $this->getMetaLatestPosts($boards, $count);
+?>
+<div id="latest-meta" class="latest-posts">
+<ul>
+<? foreach ($posts as $post) {
+	$post->board = $post->get_board();
+	if ($title_length > 0) $post->title = utf8_strcut($post->title, $title_length);
+?>
+	<li>[<?=htmlspecialchars($post->name)?>] <?=link_to_post($post)?> <span class="comment-count"><?=link_to_comments($post)?></span> @ <?=link_to($post->board->get_title(), $post->board)?></li>
+<? } ?>
+</ul>
+</div>
+<?php
+	}
 }
 
 /**
