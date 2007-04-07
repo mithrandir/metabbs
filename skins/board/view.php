@@ -15,13 +15,14 @@ function openPlayer(id, url) {
 <? } ?></div>
 </div>
 
+<? if ($attachments) { ?>
 <div id="attachments">
 <ul>
 <? foreach ($attachments as $attachment): ?>
 <? if (!$attachment->file_exists()) { ?>
-	<li>Attachment: <del><?=$attachment->filename?></del></li>
+	<li><del><?=$attachment->filename?></del></li>
 <? } else { ?>
-	<li>Attachment: <?=link_to($attachment->filename, $attachment)?> (<?=human_readable_size($attachment->get_size())?>)
+	<li><?=link_to($attachment->filename, $attachment)?> (<?=human_readable_size($attachment->get_size())?>)
 <? if ($attachment->is_image()) { ?>
 	<br /><img src="<?=url_for($attachment)?>" alt="<?=$attachment->filename?>" />
 <? } else if ($attachment->is_music()) { ?>
@@ -31,6 +32,7 @@ function openPlayer(id, url) {
 <? } endforeach; ?>
 </ul>
 </div>
+<? } ?>
 
 <div id="body">
 <?=$post->body?>
@@ -93,14 +95,6 @@ foreach ($comments as $comment) {
 </div>
 </div>
 
-<div id="neighbor-posts">
-<p>
-<? if ($newer_post->exists()) { ?>&laquo; <?=link_to_post($newer_post)?><? } ?>
-<? if ($newer_post->exists() && $older_post->exists()) { ?> | <? } ?>
-<? if ($older_post->exists()) { ?><?=link_to_post($older_post)?> &raquo;<? } ?>
-</p>
-</div>
-
 <div id="meta-actions">
 <a href="<?=$link_list?>"><?=i('List')?></a> |
 <? if ($link_new_post) { ?><a href="<?=$link_new_post?>"><?=i('New Post')?></a> <? } ?>
@@ -111,4 +105,10 @@ foreach ($comments as $comment) {
 <? if ($account->is_admin()) { ?>
 | <a href="<?=url_for($post, 'move')?>"><?=i('Move')?></a>
 <? } ?>
+</div>
+
+<div id="meta-nav">
+<? if ($newer_post->exists()) { ?>&laquo; <?=link_to_post($newer_post)?><? } ?>
+<? if ($newer_post->exists() && $older_post->exists()) { ?> | <? } ?>
+<? if ($older_post->exists()) { ?><?=link_to_post($older_post)?> &raquo;<? } ?>
 </div>

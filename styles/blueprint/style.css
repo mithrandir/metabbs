@@ -1,3 +1,4 @@
+body { margin: 1em; }
 #meta { font-size: 13px; font-family: Verdana, sans-serif; }
 
 #meta p, #meta li { line-height: 1.5; }
@@ -30,7 +31,7 @@ div.meta { font-size: 11px; padding-top: 0.5em; font-family: Dotum, Verdana, san
 .views { font-size: x-small; color: #999; }
 
 #meta-actions { padding: 0.5em; float: left; }
-#meta-nav { float: right; text-align: right; }
+#meta-nav { float: right; text-align: right; padding: 0.5em; margin-bottom: 2em; }
 #pages { list-style: none; margin: 0; padding: 0.5em; }
 #pages li { display: inline; padding: 0 2px; }
 #pages li.here { font-weight: bold; }
@@ -49,6 +50,12 @@ div.meta { font-size: 11px; padding-top: 0.5em; font-family: Dotum, Verdana, san
 .post-title { background-color: #eff7ff; padding: 0.5em; border-bottom: 1px solid #ccc; border-top: 4px solid #06e; }
 .post-title h2 { font-size: 1em; color: #06c; margin: 0.2em 0.5em; }
 .post-title .info { font-size: 12px; padding: 0.4em; }
+
+#attachments { padding: 0.5em; }
+#attachments ul { list-style: none; margin: 0; padding: 0; }
+#attachments ul li { margin-bottom: 1em; background: url(attach.png) no-repeat left 3px; padding-left: 20px; }
+#attachments ul li img { margin-top: 10px; margin-left: -10px; }
+
 #body { margin: 1em; }
 #editinfo { color: #999; font-size: 12px; text-align: right; }
 #signature { font-size: 90%; border-top: 1px solid #ccc; width: 50em; }
@@ -85,11 +92,6 @@ div.meta { font-size: 11px; padding-top: 0.5em; font-family: Dotum, Verdana, san
 .comment .name { font-weight: bold; }
 .comment .date { font-size: x-small; }
 .comment .actions { margin-left: 0.5em; font-size: 11px; font-family: Dotum, Verdana, sans-serif; color: #777; }
-
-#attachments { clear: both; }
-#attachments ul { list-style: none; margin: 0; padding: 0; }
-#attachments ul li { margin-bottom: 1em; }
-
 #reply-form { margin-left: 2em; }
 
 /* write */
@@ -106,7 +108,22 @@ div.meta { font-size: 11px; padding-top: 0.5em; font-family: Dotum, Verdana, san
 #postform, #meta select, #meta textarea, #meta input { font-family: verdana, sans-serif; font-size: 12px; }
 #postform input, #postform textarea { padding: 2px; }
 #meta textarea { font-size: 13px; line-height: 1.5; }
-
+#upload {
+	border-top: 1px dotted #aaa;
+	border-bottom: 1px solid #ddd;
+	background-color: #f8f8f8;
+	padding: 1em;
+	font-size: 12px;
+	width: 48em;
+}
+#upload h3 {
+	font-size: 1em;
+	margin: 0;
+}
+#upload h3 a {
+	font-weight: normal;
+	margin-left: 0.5em;
+}
 #sending { margin: 0 5px; background: url(spin.gif) no-repeat; padding-left: 16px; color: #fff; }
 
 .star { color: red; }

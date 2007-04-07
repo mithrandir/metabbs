@@ -17,8 +17,8 @@
 	<th></th>
 	<td colspan="3">
 		<? if ($board->use_category) { ?>
-		<select name="post[category_id]" id="post_category_id" class="ignore">
-			<option><?=i('Select category')?></option>
+		<select name="post[category_id]" id="post_category_id">
+			<option value=""><?=i('Select category')?></option>
 		<? foreach ($board->get_categories() as $category) { ?>
 			<?=option_tag($category->id, $category->name, $category->id == $post->category_id)?>
 		<? } ?>
@@ -34,6 +34,7 @@
 </table>
 
 <? if ($board->use_attachment) { ?>
+<div id="upload">
 <h3><?=i('Attachments')?> <span class="info"><a href="#" onclick="addFileEntry(); return false">+ <?=i('Add file...')?></a></span></h3>
 <p><?=i('Max upload size')?>: <?=get_upload_size_limit()?></p>
 <ol id="uploads">
@@ -45,11 +46,12 @@
 <? } ?>
 	<li><input type="file" name="upload[]" size="50" class="ignore" /></li>
 </ol>
+</div>
 <? } ?>
 <p><?=submit_tag($action == 'post' ? "Post" : "Edit")?></p>
 </form>
 
-<div id="nav">
+<div id="meta-actions">
 <a href="<?=$link_list?>"><?=i('List')?></a>
 <? if ($link_cancel) { ?>| <a href="<?=$link_cancel?>"><?=i('Cancel')?></a><? } ?>
 </div>
