@@ -18,7 +18,7 @@ class SiteManager
 	/**
 	 * 생성자. 유저 객체를 가져온다.
 	 */
-	function MetaBBS() {
+	function SiteManager() {
 		$this->user = UserManager::get_user();
 	}
 
