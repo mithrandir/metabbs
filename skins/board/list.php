@@ -36,8 +36,9 @@
 			<?=i('Moved')?>:
 			<? } ?>
 			<?=link_to_post($post)?>
+			<span class="comments-count"><?=link_to_comments($post)?></span>
 			<div class="meta">
-			<?=i('%d comments', $post->get_comment_count())?>,
+			<?=i('%d trackbacks', $post->get_trackback_count())?>,
 			<?=i('%d views', $post->views)?>
 			</div>
 		</td>

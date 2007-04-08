@@ -27,12 +27,12 @@ div.date { font-size: 10px; }
 div.meta { font-size: 11px; padding-top: 0.5em; font-family: Dotum, Verdana, sans-serif; color: #777; }
 
 .secret { font-size: 12px; color: #aaa; }
-.comment-count { font-size: x-small; }
+.comments-count { font-size: xx-small; }
 .views { font-size: x-small; color: #999; }
 
 #meta-actions { padding: 0.5em; float: left; }
 #meta-nav { float: right; text-align: right; padding: 0.5em; margin-bottom: 2em; }
-#pages { list-style: none; margin: 0; padding: 0.5em; }
+#pages { list-style: none; margin: 0; padding-bottom: 1em; }
 #pages li { display: inline; padding: 0 2px; }
 #pages li.here { font-weight: bold; }
 .first a, .last a, .next a, .prev a {
