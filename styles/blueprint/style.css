@@ -131,6 +131,10 @@ div.meta { font-size: 11px; padding-top: 0.5em; font-family: Dotum, Verdana, san
 .flash p { margin: 0; }
 .highlight { background-color: yellow; }
 
+/* login form */
+#loginform th, #loginform td { padding: 0.3em; }
+#loginform th.autologin { text-align: right; padding-right: 0; }
+
 #profile {
 	background-color: lightyellow;
 	border: 1px solid #ccc;

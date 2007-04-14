@@ -7,6 +7,7 @@
 	<?=submit_tag(i("Delete"))?>
 </p>
 </form>
-<div id="nav">
+
+<div id="meta-actions">
 <a href="<?=$link_cancel?>"><?=i('Cancel')?></a>
 </div>

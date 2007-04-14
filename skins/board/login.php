@@ -2,17 +2,22 @@
 <p><?=$flash?></p>
 <? } ?>
 <form method="post">
-<p>
-	<label><?=i('User ID')?>:</label>
-	<input type="text" name="user" />
-</p>
-<p>
-	<label><?=i('Password')?>:</label>
-	<input type="password" name="password" />
-</p>
-<p>
-	<label for="autologin"><input type="checkbox" name="autologin" value="1" id="autologin" /></label>
-	<?=i('Auto Login')?>
-</p>
-<p><input type="submit" value="<?=i('Login')?>" /> <?=signup()?></p>
+<table id="loginform">
+<tr>
+	<th><?=i('User ID')?></th>
+	<td><input type="text" name="user" /></td>
+</tr>
+<tr>
+	<th><?=i('Password')?></th>
+	<td><input type="password" name="password" /></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="checkbox" name="autologin" value="1" id="autologin" /> <label for="autologin"><?=i('Auto Login')?></label></td>
+</tr>
+<tr>
+	<td></td>
+	<td><input type="submit" value="<?=i('Login')?>" /> <?=signup()?></td>
+</tr>
+</table>
 </form>
