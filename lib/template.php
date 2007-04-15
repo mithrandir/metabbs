@@ -12,6 +12,7 @@ class Style {
 class Layout {
 	var $stylesheets = array();
 	var $javascripts = array();
+	var $header, $footer;
 
 	function add_stylesheet($path) {
 		$this->stylesheets[] = $path;
@@ -26,6 +27,10 @@ class Layout {
 		foreach ($this->javascripts as $javascript) {
 			echo '<script type="text/javascript" src="' . $javascript . '"></script>';
 		}
+	}
+	function wrap($header, $footer) {
+		$this->header .= $header;
+		$this->footer = $footer . $this->footer;
 	}
 }
 

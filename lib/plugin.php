@@ -187,9 +187,4 @@ function import_plugin($plugin) {
 		include_once("plugins/$plugin/plugin.php");
 	}
 }
-
-import_plugin('_base');
-foreach (get_enabled_plugins() as $plugin) {
-	import_plugin($plugin->name);
-}
 ?>

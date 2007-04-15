@@ -18,6 +18,13 @@ if ($len == 4) { // /controller/action/id
 $layout = new Layout;
 $title = 'MetaBBS';
 $view = 'default';
+
+// import plugins
+import_plugin('_base');
+foreach (get_enabled_plugins() as $plugin) {
+	import_plugin($plugin->name);
+}
+
 @include "app/controllers/$controller.php";
 $action_dir = 'app/controllers/' . $controller;
 if (!run_hook_handler($controller, $action)) {
@@ -41,14 +48,16 @@ $layout->add_javascript(METABBS_BASE_PATH . 'elements/prototype.js');
 if ($view == 'admin') {
 	$layout->add_stylesheet(METABBS_BASE_PATH . 'elements/style.css');
 	$layout->add_javascript(METABBS_BASE_PATH . 'elements/admin.js');
+	$layout->header = $layout->footer = '';
 } else {
 	$layout->add_stylesheet($style_dir . '/style.css');
 	$layout->add_javascript(METABBS_BASE_PATH . 'elements/script.js');
+	$layout->wrap('<div id="meta">', '</div>');
 }
 
 foreach (get_header_paths() as $header) include $header;
-echo "<div id=\"meta\">\n";
+echo $layout->header;
 include "app/views/$controller/$action.php";
-echo "</div>\n";
+echo $layout->footer;
 foreach (get_footer_paths() as $footer) include $footer;
 ?>
