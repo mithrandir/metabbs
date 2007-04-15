@@ -139,3 +139,12 @@ function replyComment(form, id) {
 function addFileEntry() {
 	new Insertion.Bottom('uploads', '<li><input type="file" name="upload[]" size="50" class="ignore" /></li>');
 }
+
+function setPostAttribute(form, key, value) {
+	var attr = $(form).getInputs(null, 'meta['+key+']');
+	if (attr[0]) {
+		attr[0].value = value;
+	} else {
+		new Insertion.Bottom(form, '<input type="hidden" name="meta['+key+']" value="'+value+'" />');
+	}
+}

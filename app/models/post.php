@@ -15,7 +15,7 @@ class PostMeta {
 		}
 	}
 	function get($key) {
-		return $this->attributes[$key];
+		return array_key_exists($key, $this->attributes) ? $this->attributes[$key] : '';
 	}
 	function set($key, $value) {
 		if (!array_key_exists($key, $this->attributes)) {

@@ -1,5 +1,4 @@
 <?php
-if (UserManager::logout()) {
-	redirect_back();
-}
+UserManager::logout();
+redirect_back();
 ?>

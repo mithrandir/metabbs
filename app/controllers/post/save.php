@@ -41,5 +41,11 @@ if (isset($attachments)) {
 	}
 }
 
+if (isset($_POST['meta'])) {
+	foreach ($_POST['meta'] as $k => $v) {
+		$post->set_attribute($k, $v);
+	}
+}
+
 redirect_to(url_for($post));
 ?>
