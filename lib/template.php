@@ -9,20 +9,39 @@ class Style {
 		return METABBS_BASE_PATH . 'styles/' . $this->name;
 	}
 }
+class Layout {
+	var $stylesheets = array();
+	var $javascripts = array();
+
+	function add_stylesheet($path) {
+		$this->stylesheets[] = $path;
+	}
+	function add_javascript($path) {
+		$this->javascripts[] = $path;
+	}
+	function print_head() {
+		foreach ($this->stylesheets as $stylesheet) {
+			echo '<link rel="stylesheet" href="'.$stylesheet.'" type="text/css" />';
+		}
+		foreach ($this->javascripts as $javascript) {
+			echo '<script type="text/javascript" src="' . $javascript . '"></script>';
+		}
+	}
+}
 
 function get_header_paths() {
-	global $__skin, $_skin_dir, $config;
-	if ($__skin != '_admin')
-		return array($config->get('global_header', 'elements/default_header.php'), $_skin_dir . '/header.php');
-	else
+	global $view, $_skin_dir, $config;
+	if ($view == 'admin')
 		return array('elements/admin_header.php');
+	else
+		return array($config->get('global_header', 'elements/default_header.php'), $_skin_dir . '/header.php');
 }
 function get_footer_paths() {
-	global $__skin, $_skin_dir, $config;
-	if ($__skin != '_admin')
-		return array($_skin_dir . '/footer.php', $config->get('global_footer', 'elements/default_footer.php'));
-	else
+	global $view, $_skin_dir, $config;
+	if ($view == 'admin')
 		return array('elements/admin_footer.php');
+	else
+		return array($_skin_dir . '/footer.php', $config->get('global_footer', 'elements/default_footer.php'));
 }
 
 function meta_format_date($format, $now) {

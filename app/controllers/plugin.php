@@ -5,5 +5,5 @@ if (!$account->is_admin()) {
 require_once('lib/backends/'.$config->get('backend').'/installer.php');
 import_plugin($id);
 $plugin = $__plugins[$id];
-$skin = '_admin';
+$view = 'admin';
 ?>

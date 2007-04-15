@@ -4,9 +4,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title><?=$title?></title>
-	<link rel="stylesheet" href="<?=METABBS_BASE_PATH?>elements/style.css" type="text/css" />
-	<script type="text/javascript" src="<?=METABBS_BASE_PATH?>elements/prototype.js"></script>
-	<script type="text/javascript" src="<?=METABBS_BASE_PATH?>elements/admin.js"></script>
+	<?php $layout->print_head(); ?>
 </head>
 <body>
 <div id="meta-admin">

@@ -69,9 +69,8 @@ class SiteManager
 	 * <head> 태그 내용을 출력한다.
 	 */
 	function printHead() {
-		global $_skin_dir, $skin_dir, $style_dir;
-		$head_only = true;
-		include 'elements/default_header.php';
+		global $layout;
+		$layout->print_head();
 	}
 
 	/**

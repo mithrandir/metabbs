@@ -15,7 +15,9 @@ if ($len == 4) { // /controller/action/id
 	print_notice('Requested URL is not valid.', 'Valid URL format is '.full_url_for("<em>controller</em>", "<em>action</em>").'<br />If you are administrator, go to '.link_to('administration page', 'admin'));
 }
 
+$layout = new Layout;
 $title = 'MetaBBS';
+$view = 'default';
 @include "app/controllers/$controller.php";
 $action_dir = 'app/controllers/' . $controller;
 if (!run_hook_handler($controller, $action)) {
@@ -32,9 +34,17 @@ if (!isset($skin)) {
 		$style_dir = METABBS_BASE_PATH . 'styles/default';
 	}
 }
-$__skin = $skin;
 $_skin_dir = 'skins/' . $skin;
 $skin_dir = METABBS_BASE_PATH . $_skin_dir;
+
+$layout->add_javascript(METABBS_BASE_PATH . 'elements/prototype.js');
+if ($view == 'admin') {
+	$layout->add_stylesheet(METABBS_BASE_PATH . 'elements/style.css');
+	$layout->add_javascript(METABBS_BASE_PATH . 'elements/admin.js');
+} else {
+	$layout->add_stylesheet($style_dir . '/style.css');
+	$layout->add_javascript(METABBS_BASE_PATH . 'elements/script.js');
+}
 
 foreach (get_header_paths() as $header) include $header;
 echo "<div id=\"meta\">\n";
