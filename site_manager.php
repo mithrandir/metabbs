@@ -70,7 +70,8 @@ class SiteManager
 	 */
 	function printHead() {
 		global $layout;
-		if (isset($layout)) $layout->print_head();
+		if (isset($layout) && is_a($layout, 'Layout'))
+			$layout->print_head();
 	}
 
 	/**
