@@ -1,8 +1,10 @@
+<div id="loginform">
+<h2><?=i('Login')?></h2>
 <? if (isset($flash)) { ?>
 <p><?=$flash?></p>
 <? } ?>
 <form method="post">
-<table id="loginform">
+<table>
 <tr>
 	<th><?=i('User ID')?></th>
 	<td><input type="text" name="user" /></td>
@@ -21,3 +23,4 @@
 </tr>
 </table>
 </form>
+</div>
