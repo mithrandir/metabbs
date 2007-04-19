@@ -66,8 +66,8 @@ function checkForm(form) {
 
 	if (valid) {
 		var submitButton = Form.getSubmitButton(form);
-		submitButton.disable();
 		new Insertion.After(submitButton, '<span id="sending">Sending...</span>');
+		submitButton.disable();
 	} else {
 		document.getElementsByClassName('blank')[0].focus();
 	}
