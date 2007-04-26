@@ -1,5 +1,4 @@
-<h2><?=i('Edit Comment')?></h2>
-<form method="post" onsubmit="return checkForm(this)">
+<form method="post" action="<?=url_for($comment, 'edit')?>" onsubmit="return checkForm(this)">
 <table id="commentform">
 <? if ($ask_password) { ?>
 <tr>

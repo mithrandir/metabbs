@@ -16,5 +16,10 @@ if (is_post() && ($comment->user_id != 0 && $account->id == $comment->user_id ||
 	} else {
 		$ask_password = true;
 	}
+	if (is_xhr()) {
+		$style = $board->get_style();
+		include "skins/$style->skin/edit_comment.php";
+		exit;
+	}
 }
 ?>

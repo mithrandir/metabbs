@@ -9,7 +9,7 @@
 		<? } ?>
 		<? if ($board->perm_delete <= $account->level || $account->id == $comment->user_id) { ?>
 			| <span class="delete"><?=link_to(i('Delete'), $comment, 'delete')?></span>
-			| <span class="edit"><?=link_to(i('Edit'), $comment, 'edit')?></span>
+			| <span class="edit"><a href="<?=url_for($comment, 'edit')?>" onclick="editComment('comment_<?=$comment->id?>', this.href); return false"><?=i('Edit')?></a></span>
 		<? } ?>
 		</span>
 	</div>
