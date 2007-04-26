@@ -143,6 +143,7 @@ class Post extends Model {
 	}
 	function delete() {
 		Model::delete();
+		$this->db->query("DELETE FROM $this->table WHERE moved_to=$this->id");
 		$this->db->query("DELETE FROM $this->comment_table WHERE post_id=$this->id");
 		$this->db->query("DELETE FROM $this->trackback_table WHERE post_id=$this->id");
 	}
@@ -165,7 +166,11 @@ class Post extends Model {
 		$this->category_id = 0;
 		$this->board_id = $board->id;
 		$this->create();
+		$this->db->query("DELETE FROM $this->table WHERE moved_to=$_id");
 		$this->db->query("UPDATE $this->table SET moved_to=$this->id WHERE id=$_id");
+		$this->db->query("UPDATE $this->comment_table SET post_id=$this->id WHERE post_id=$_id");
+		$this->db->query("UPDATE $this->trackback_table SET post_id=$this->id WHERE post_id=$_id");
+		$this->db->query("UPDATE $this->attachment_table SET post_id=$this->id WHERE post_id=$_id");
 	}
 	function get_attribute($key) {
 		if ($this->exists()) $this->metadata->load();
