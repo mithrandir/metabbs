@@ -15,8 +15,12 @@ if (is_post()) {
 	if ($settings['always_use_default_language']) {
 		$lang = I18N::import($default_language = $settings['default_language']);
 	}
+	$config->set('timezone', $settings['timezone']);
+	Timezone::set($settings['timezone']);
 	$config->write_to_file();
 	$flash = i('Setting saved.');
 	$flash_class = 'pass';
 }
+
+$current_tz = Timezone::get();
 ?>

@@ -41,4 +41,7 @@ if (!$account) {
 	$guest = false;
 }
 $admin = $account->is_admin();
+
+$tz = $config->get('timezone');
+if ($tz) Timezone::set($tz);
 ?>

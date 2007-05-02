@@ -16,10 +16,18 @@
 		<?=option_tag('en', 'English', $default_language == 'en')?>
 		<?=option_tag('ko', '한국어', $default_language == 'ko')?>
 		</select>
+		<?=check_box('settings', 'always_use_default_language', $config->get('always_use_default_language', false))?>
+		<?=label_tag(i('Always use default language'), 'settings', 'always_use_default_language')?>
 	</dd>
 
-	<dt><?=label_tag(i('Always use default language'), 'settings', 'always_use_default_language')?></dt>
-	<dd><?=check_box('settings', 'always_use_default_language', $config->get('always_use_default_language', false))?></dd>
+	<dt><?=label_tag(i('Timezone'), 'settings', 'timezone')?></dt>
+	<dd>
+		<select name="settings[timezone]" id="settings_timezone">
+		<? foreach (Timezone::getList() as $timezone) { ?>
+		<?=option_tag($timezone, $timezone, $timezone == $current_tz)?>
+		<? } ?>
+		</select>
+	</dd>
 </dl>
 
 <p><input type="submit" value="OK" /></p>

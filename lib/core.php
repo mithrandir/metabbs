@@ -23,4 +23,5 @@ require METABBS_DIR . '/app/models/plugin.php';
 require METABBS_DIR . '/lib/template.php';
 require METABBS_DIR . '/lib/uri_manager.php';
 require METABBS_DIR . '/lib/account.php';
+require METABBS_DIR . '/lib/timezone.php';
 ?>
