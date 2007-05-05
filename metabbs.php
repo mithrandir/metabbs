@@ -25,8 +25,8 @@ foreach (get_enabled_plugins() as $plugin) {
 	import_plugin($plugin->name);
 }
 
+@include 'app/controllers/' . $controller . '.php';
 $action_dir = 'app/controllers/' . $controller;
-@include $action_dir . '.php';
 if (!run_hook_handler($controller, $action)) {
 	include($action_dir . '/' . $action . '.php');
 }
