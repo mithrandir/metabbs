@@ -37,7 +37,8 @@ class Model
 	 * @param $attributes 어티리뷰트의 집합
 	 */
 	function Model($attributes = null) {
-		$this->db = get_conn();
+		global $__db;
+		$this->db = $__db;
 		$this->import($attributes);
 		$this->_init();
 	}

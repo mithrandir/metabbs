@@ -9,6 +9,10 @@ class Style {
 		return METABBS_BASE_PATH . 'styles/' . $this->name;
 	}
 }
+
+define('DEFAULT_VIEW', 0);
+define('ADMIN_VIEW', 1);
+
 class Layout {
 	var $stylesheets = array();
 	var $javascripts = array();
@@ -36,14 +40,14 @@ class Layout {
 
 function get_header_paths() {
 	global $view, $_skin_dir, $config;
-	if ($view == 'admin')
+	if ($view == ADMIN_VIEW)
 		return array('elements/admin_header.php');
 	else
 		return array($config->get('global_header', 'elements/default_header.php'), $_skin_dir . '/header.php');
 }
 function get_footer_paths() {
 	global $view, $_skin_dir, $config;
-	if ($view == 'admin')
+	if ($view == ADMIN_VIEW)
 		return array('elements/admin_footer.php');
 	else
 		return array($_skin_dir . '/footer.php', $config->get('global_footer', 'elements/default_footer.php'));

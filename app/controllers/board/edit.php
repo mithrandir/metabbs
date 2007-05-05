@@ -30,7 +30,7 @@ if (is_post()) {
 			$flash = "Board '$_board->name' already exists.";
 		}
 		if (isset($flash)) {
-			$view = 'admin';
+			$view = ADMIN_VIEW;
 			return;
 		}
 	}
@@ -45,6 +45,6 @@ if (is_post()) {
 	}
 	redirect_to(url_for($board, 'edit', array('tab'=>$_GET['tab'])));
 }
-$view = 'admin';
+$view = ADMIN_VIEW;
 $styles = get_styles();
 ?>

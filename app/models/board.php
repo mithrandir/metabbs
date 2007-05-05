@@ -5,7 +5,7 @@ class Board extends Model {
 	var $search = array('title' => 1, 'body' => 1, 'comment' => 0, 'text' => '', 'category' => 0);
 	var $category;
 	var $title;
-	var $style = 'default';
+	var $style = 'blueprint';
 
 	var $perm_read = 0, $perm_write = 0, $perm_comment = 0;
 	var $perm_delete = 255;

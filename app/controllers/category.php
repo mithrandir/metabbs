@@ -2,6 +2,6 @@
 if (!$account->is_admin()) {
 	access_denied();
 }
-$view = 'admin';
+$view = ADMIN_VIEW;
 $category = Category::find($id);
 ?>

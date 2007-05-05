@@ -25,6 +25,7 @@ require METABBS_DIR . '/lib/i18n.php';
 require METABBS_DIR . '/lib/cookie.php';
 require METABBS_DIR . '/lib/tag_helper.php';
 require METABBS_DIR . '/lib/plugin.php';
+require METABBS_DIR . '/lib/metadata.php';
 
 $session_dir = METABBS_DIR . '/data/session';
 if (!file_exists($session_dir)) {

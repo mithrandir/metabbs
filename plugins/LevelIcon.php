@@ -33,6 +33,8 @@ class LevelIcon extends Plugin {
 	function user_info_level_icon_filter(&$user) {
 		$user->name = $this->prepend_level_icon($user->level, htmlspecialchars($user->name));
 	}
+	function on_settings() {
+	}
 }
 
 register_plugin('LevelIcon');

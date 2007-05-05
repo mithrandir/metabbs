@@ -17,7 +17,7 @@ if ($len == 4) { // /controller/action/id
 
 $layout = new Layout;
 $title = 'MetaBBS';
-$view = 'default';
+$view = DEFAULT_VIEW;
 
 // import plugins
 import_plugin('_base');
@@ -25,8 +25,8 @@ foreach (get_enabled_plugins() as $plugin) {
 	import_plugin($plugin->name);
 }
 
-@include "app/controllers/$controller.php";
 $action_dir = 'app/controllers/' . $controller;
+@include $action_dir . '.php';
 if (!run_hook_handler($controller, $action)) {
 	include($action_dir . '/' . $action . '.php');
 }
@@ -45,7 +45,7 @@ $_skin_dir = 'skins/' . $skin;
 $skin_dir = METABBS_BASE_PATH . $_skin_dir;
 
 $layout->add_javascript(METABBS_BASE_PATH . 'elements/prototype.js');
-if ($view == 'admin') {
+if ($view == ADMIN_VIEW) {
 	$layout->add_stylesheet(METABBS_BASE_PATH . 'elements/style.css');
 	$layout->add_javascript(METABBS_BASE_PATH . 'elements/admin.js');
 	$layout->header = $layout->footer = '';

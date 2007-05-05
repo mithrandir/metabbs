@@ -33,8 +33,21 @@
 </tr>
 </table>
 
+<? if ($extra_attributes) { ?>
+<div id="metadata" class="form-section">
+<table>
+<? foreach ($extra_attributes as $attr) { ?>
+<tr>
+	<th><?=htmlspecialchars($attr->name)?></th>
+	<td><? $attr->render($post->get_attribute($attr->key)); ?></td>
+</tr>
+<? } ?>
+</table>
+</div>
+<? } ?>
+
 <? if ($board->use_attachment) { ?>
-<div id="upload">
+<div id="upload" class="form-section">
 <h3><?=i('Attachments')?> <span class="info"><a href="#" onclick="addFileEntry(); return false">+ <?=i('Add file...')?></a></span></h3>
 <p><?=i('Max upload size')?>: <?=get_upload_size_limit()?></p>
 <ol id="uploads">

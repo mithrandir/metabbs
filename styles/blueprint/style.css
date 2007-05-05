@@ -108,22 +108,24 @@ div.meta { font-size: 11px; padding-top: 0.5em; font-family: Dotum, Verdana, san
 #postform, #meta select, #meta textarea, #meta input { font-family: verdana, sans-serif; font-size: 12px; }
 #postform input, #postform textarea { padding: 2px; }
 #meta textarea { font-size: 13px; line-height: 1.5; }
-#upload {
+.form-section {
 	border-top: 1px dotted #aaa;
-	border-bottom: 1px solid #ddd;
 	background-color: #f8f8f8;
 	padding: 1em;
 	font-size: 12px;
 	width: 48em;
 }
-#upload h3 {
+.form-section h3 {
 	font-size: 1em;
 	margin: 0;
 }
-#upload h3 a {
+.form-section h3 a {
 	font-weight: normal;
 	margin-left: 0.5em;
 }
+#metadata table { border-collapse: collapse; }
+#metadata td { padding: 0.5em; }
+#metadata th { width: 6em; font-size: 12px; }
 #sending { margin: 0 5px; background: url(spin.gif) no-repeat; padding-left: 16px; color: #fff; }
 
 .star { color: red; }

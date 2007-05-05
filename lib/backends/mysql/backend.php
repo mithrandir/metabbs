@@ -46,17 +46,16 @@ class BooleanColumn extends Column {
 }
 
 function &get_conn() {
-	static $conn;
-	global $config;
-	if (!isset($conn)) {
-		$conn = new MySQLAdapter;
-		$conn->connect($config->get('host'), $config->get('user'), $config->get('password'));
-		$conn->selectdb($config->get('dbname'));
+	global $config, $__db;
+	if (!isset($__db)) {
+		$__db = new MySQLAdapter;
+		$__db->connect($config->get('host'), $config->get('user'), $config->get('password'));
+		$__db->selectdb($config->get('dbname'));
 		if ($config->get('force_utf8') == '1') {
-			$conn->enable_utf8();
+			$__db->enable_utf8();
 		}
 	}
-	return $conn;
+	return $__db;
 }
 
 class MySQLAdapter
