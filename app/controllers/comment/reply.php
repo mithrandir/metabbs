@@ -5,6 +5,7 @@ if ($account->level < $board->perm_comment) {
 if (is_post()) {
 	$_comment = new Comment($_POST['comment']);
 	$_comment->user_id = $account->id;
+	$_comment->post_id = $comment->post_id;
 	$_comment->parent = $comment->id;
 	if (!$_comment->valid()) {
 		exit;

@@ -29,6 +29,10 @@ class Comment extends Model {
 		$post = $this->get_post();
 		return $post->get_board();
 	}
+	function get_parent() {
+		if ($this->parent) return Comment::find($this->parent);
+		else return null;
+	}
 	function valid() {
 		return !empty($this->body);
 	}

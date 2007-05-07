@@ -83,7 +83,7 @@ class Model
 		$columns = $this->db->get_columns($this->table);
 		$data = array();
 		foreach ($columns as $k) {
-			$data[$k] = "'" . mysql_real_escape_string($this->$k) . "'";
+			$data["`$k`"] = "'" . mysql_real_escape_string($this->$k) . "'";
 		}
 		return $data;
 	}
