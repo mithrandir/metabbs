@@ -69,6 +69,8 @@ function get_backends() {
  */
 function capture_errors($errno, $errstr, $errfile, $errline) {
 	if ($errno & (E_ERROR | E_USER_ERROR)) {
+		global $safe;
+		$safe = true;
 		fail($errstr);
 	}
 }
