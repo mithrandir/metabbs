@@ -10,7 +10,7 @@ class LevelIcon extends Plugin {
 		copy(dirname(__FILE__).'/icons/guest.png', 'data/icons/0.png');
 	}
 	function on_init() {
-		if (!file_exists('data/icons'))
+		if (!file_exists(METABBS_DIR . '/data/icons'))
 			$this->on_install();
 
 		add_filter('PostView', array(&$this, 'prepend_level_icon_filter'), 50);
@@ -19,7 +19,7 @@ class LevelIcon extends Plugin {
 		add_filter('UserInfo', array(&$this, 'user_info_level_icon_filter'), 50);
 	}
 	function cache_icons() {
-		$dir = opendir('data/icons');
+		$dir = opendir(METABBS_DIR.'/data/icons');
 		while ($f = readdir($dir)) {
 			if (preg_match('/^[0-9]+/', $f, $matches)) {
 				$this->icons[$matches[0]] = $f;

@@ -86,8 +86,7 @@ class SiteManager
 	 * @param $title_length 제목의 길이
 	 */
 	function printLatestPosts($board_name, $count, $title_length = -1) {
-		$board = new Board;
-		$board->name = $board_name;
+		$board = Board::find_by_name($board_name);
 ?>
 <div id="latest-<?=$board_name?>" class="latest-posts">
 <div class="board-title"><?=link_to(htmlspecialchars($board->title), $board)?> <span class="feed"><?=link_to($this->feed_link, $board, 'rss')?></span></div>
