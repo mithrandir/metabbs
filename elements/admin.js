@@ -21,3 +21,8 @@ function addNewBoard(form) {
 	});
 	return false;
 }
+function checkAll(form, bit) {
+	$(form).getInputs('checkbox').each(function (el) {
+		el.checked = bit;
+	});
+}

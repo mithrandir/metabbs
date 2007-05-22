@@ -29,6 +29,30 @@ class Table
 		return $sql;
 	}
 }
+class SQLExporter {
+	function SQLExporter() {
+		$this->db = get_conn();
+	}
+	function to_sql($t) {
+		$sql = array();
+		$columns = $this->db->get_columns($t);
+		array_unshift($columns, 'id');
+		$_columns = array();
+		foreach ($columns as $c) {
+			$_columns[] = "`$c`";
+		}
+		$prefix = "INSERT INTO $t (".implode(",", $_columns).") VALUES(";
+		$result = $this->db->get_result("SELECT * FROM $t");
+		while ($data = $result->fetch()) {
+			$values = array();
+			foreach ($columns as $c) {
+				$values[] = "'".$this->db->escape($data[$c])."'";
+			}
+			$sql[] = $prefix . implode(",", $values) . ");";
+		}
+		return implode("\n", $sql)."\n\n";
+	}
+}
 function db_info_form() {
 	field('host', 'Hostname', 'localhost', 'text', 'Host이름을 입력합니다. 대부분 localhost입니다.');
 	field('user', 'User ID', 'root', 'text', 'Database 사용자의 아이디를 입력합니다.');

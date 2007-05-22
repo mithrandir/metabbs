@@ -94,6 +94,9 @@ class MySQLAdapter
 		}
 		return $result;
 	}
+	function escape($query) {
+		return mysql_real_escape_string($query, $this->conn);
+	}
 	function _q($query, $data) {
 		$tokens = preg_split('/([?!])/', $query, -1, PREG_SPLIT_DELIM_CAPTURE);
 		foreach ($tokens as $i => $token) {
@@ -161,6 +164,14 @@ class MySQLAdapter
 	function get_server_version() {
 		list($major, $minor) = explode('.', mysql_get_server_info($this->conn), 3);
 		return array($major, $minor);
+	}
+	function get_created_tables() {
+		$result = $this->get_result("SHOW TABLES LIKE '".METABBS_TABLE_PREFIX."%'");
+		$tables = array();
+		while ($data = $result->fetch()) {
+			$tables[] = array_shift($data);
+		}
+		return $tables;
 	}
 }
 

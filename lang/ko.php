@@ -109,3 +109,6 @@ All=전체 보기
 %d comments=댓글 %d개
 %d trackbacks=트랙백 %d개
 Max upload size=최대 업로드 가능 크기
+Backup and Restore=백업 및 복원
+Backup=백업
+Restore=복원
