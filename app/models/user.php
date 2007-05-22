@@ -4,7 +4,7 @@ class User extends Model {
 
 	var $email, $url;
 	var $level = 1;
-	var $posts_per_page = 10;
+	var $token;
 	function _init() {
 		$this->table = get_table_name('user');
 		$this->post_table = get_table_name('post');

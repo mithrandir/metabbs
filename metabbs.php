@@ -19,11 +19,7 @@ $layout = new Layout;
 $title = 'MetaBBS';
 $view = DEFAULT_VIEW;
 
-// import plugins
-import_plugin('_base');
-foreach (get_enabled_plugins() as $plugin) {
-	import_plugin($plugin->name);
-}
+import_enabled_plugins();
 
 @include 'app/controllers/' . $controller . '.php';
 $action_dir = 'app/controllers/' . $controller;

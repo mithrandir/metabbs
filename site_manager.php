@@ -4,6 +4,7 @@ if (isset($_GET['redirect'])) { // backward compatibility
 	define("METABBS_BASE_URI", METABBS_BASE_PATH);
 }
 require_once(dirname(__FILE__).'/lib/common.php');
+import_enabled_plugins();
 
 /**
  * 써드 파티를 위한 API. 게시판의 정보를 제공한다.
@@ -51,7 +52,9 @@ class SiteManager
 	 */
 	function getLatestPosts($board_name, $count) {
 		$board = Board::find_by_name($board_name);
-		return $board->get_feed_posts($count);
+		$posts = $board->get_feed_posts($count);
+		apply_filters_array('PostList', $posts);
+		return $posts;
 	}
 
 	/**
@@ -60,8 +63,10 @@ class SiteManager
 	 * @return 가장 최근 글 하나를 리턴한다.
 	 */
 	function getLatestPost($board_name) {
-		@list($post) = $this->getLatestPosts($board_name, 1);
+		$board = Board::find_by_name($board_name);
+		@list($post) = $board->get_feed_posts(1);
 		if ($post->secret) $post->body = "";
+		apply_filters('PostView', $post);
 		return $post;
 	}
 
@@ -81,15 +86,16 @@ class SiteManager
 	 * @param $title_length 제목의 길이
 	 */
 	function printLatestPosts($board_name, $count, $title_length = -1) {
-		$board = Board::find_by_name($board_name);
+		$board = new Board;
+		$board->name = $board_name;
 ?>
 <div id="latest-<?=$board_name?>" class="latest-posts">
 <div class="board-title"><?=link_to(htmlspecialchars($board->title), $board)?> <span class="feed"><?=link_to($this->feed_link, $board, 'rss')?></span></div>
 <ul>
-<? foreach ($board->get_feed_posts($count) as $post) {
+<? foreach ($this->getLatestPosts($board_name, $count) as $post) {
 	if ($title_length > 0) $post->title = utf8_strcut($post->title, $title_length);
 ?>
-	<li>[<?=htmlspecialchars($post->name)?>] <?=link_to_post($post)?> <span class="comment-count"><?=link_to_comments($post)?></span></li>
+	<li>[<?=$post->name?>] <?=link_to_post($post)?> <span class="comment-count"><?=link_to_comments($post)?></span></li>
 <? } ?>
 </ul>
 </div>
@@ -104,6 +110,7 @@ class SiteManager
 
 	function printMetaLatestPosts($boards, $count, $title_length = -1) {
 		$posts = $this->getMetaLatestPosts($boards, $count);
+		apply_filters_array('PostList', $posts);
 ?>
 <div id="latest-meta" class="latest-posts">
 <ul>
@@ -111,7 +118,7 @@ class SiteManager
 	$post->board = $post->get_board();
 	if ($title_length > 0) $post->title = utf8_strcut($post->title, $title_length);
 ?>
-	<li>[<?=htmlspecialchars($post->name)?>] <?=link_to_post($post)?> <span class="comment-count"><?=link_to_comments($post)?></span> @ <?=link_to($post->board->get_title(), $post->board)?></li>
+	<li>[<?=$post->name?>] <?=link_to_post($post)?> <span class="comment-count"><?=link_to_comments($post)?></span> @ <?=link_to($post->board->get_title(), $post->board)?></li>
 <? } ?>
 </ul>
 </div>

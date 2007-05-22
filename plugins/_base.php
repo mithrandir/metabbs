@@ -10,5 +10,6 @@ add_filter('PostViewComment', 'format_body', 500);
 function sanitize(&$post) {
 	$post->name = htmlspecialchars($post->name);
 }
+add_filter('PostList', 'sanitize', 0);
 add_filter('PostView', 'sanitize', 0);
 ?>
