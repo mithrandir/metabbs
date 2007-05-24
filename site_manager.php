@@ -4,7 +4,7 @@ if (isset($_GET['redirect'])) { // backward compatibility
 	define("METABBS_BASE_URI", METABBS_BASE_PATH);
 }
 require_once(dirname(__FILE__).'/lib/common.php');
-$layout = new Layout;
+if (!isset($layout)) $layout = new Layout;
 import_enabled_plugins();
 
 /**
