@@ -119,7 +119,7 @@ class Post extends Model {
 		$comment->create();
 	}
 	function get_comment_count() {
-		return $this->db->fetchone("SELECT COUNT(*) FROM $this->comment_table WHERE post_id=$this->id");
+		return $this->db->fetchone("SELECT COUNT(*) FROM $this->comment_table WHERE post_id=$this->id AND user_id != -1");
 	}
 	function get_trackbacks() {
 		return $this->db->fetchall("SELECT * FROM $this->trackback_table WHERE post_id=$this->id", 'Trackback');

@@ -4,6 +4,10 @@ if ($account->level < $board->perm_delete && $comment->user_id != $account->id) 
 	access_denied();
 }
 if (is_post() && ($comment->user_id != 0 && $account->id == $comment->user_id || $account->level >= $board->perm_delete || $comment->user_id == 0 && $comment->password == md5($_POST['password']))) {
+	if ($account->is_guest())
+		$comment->deleted_by = $comment->name;
+	else
+		$comment->deleted_by = $account->name;
 	$comment->delete();
 	redirect_to(url_for($post));
 } else {
