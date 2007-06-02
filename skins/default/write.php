@@ -18,6 +18,15 @@
 <p><?=label_tag("Secret Post", "post", "secret")?> <?=check_box("post", "secret", $post->secret)?></p>
 <p><?=text_area("post", "body", 12, 60, $post->body)?></p>
 
+<? if ($extra_attributes) { ?>
+<div id="metadata">
+<h3>추가 정보</h3>
+<? foreach ($extra_attributes as $attr) { ?>
+<p><label><?=htmlspecialchars($attr->name)?></label> <? $attr->render($post->get_attribute($attr->key)); ?></p>
+<? } ?>
+</div>
+<? } ?>
+
 <? if ($board->use_attachment) { ?>
 <h3><?=i('Attachments')?> <span class="info"><a href="#" onclick="addFileEntry(); return false">+ <?=i('Add file...')?></a></span></h3>
 <p>Max upload size: <?=get_upload_size_limit()?></p>

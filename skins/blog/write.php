@@ -13,6 +13,13 @@
 <? } ?></p>
 <p><?=text_area("post", "body", 12, 60, $post->body, array('id' => 'post_body'))?></p>
 
+<? if ($extra_attributes) { ?>
+<h5>추가 정보</h5>
+<? foreach ($extra_attributes as $attr) { ?>
+<p><label><?=htmlspecialchars($attr->name)?></label> <? $attr->render($post->get_attribute($attr->key)); ?></p>
+<? } ?>
+<? } ?>
+
 <? if ($board->use_attachment) { ?>
 <h5><?=i('Attachments')?></h5>
 <p>Max upload size: <?=ini_get('upload_max_filesize')?> <a href="#" onclick="addFileEntry()">+</a></p>

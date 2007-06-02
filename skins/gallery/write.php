@@ -21,6 +21,15 @@
 <p><?=check_box("post", "type", $post->type)?> <label for="post_type" class="checkbox"><?=i('Notice')?></label></p>
 <? } ?>
 
+<? if ($extra_attributes) { ?>
+<div id="metadata">
+<h3>추가 정보</h3>
+<? foreach ($extra_attributes as $attr) { ?>
+<p><label><?=htmlspecialchars($attr->name)?></label> <? $attr->render($post->get_attribute($attr->key)); ?></p>
+<? } ?>
+</div>
+<? } ?>
+
 <p><?=submit_tag($action == 'post' ? "Post" : "Edit")?></p>
 </form>
 

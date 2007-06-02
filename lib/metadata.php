@@ -45,4 +45,6 @@ class Checkbox extends Attribute {
 		echo check_box('meta', $this->key, $value == 1);
 	}
 }
+$c = new Attribute('tst');
+$c->add();
 ?>
