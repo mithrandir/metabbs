@@ -54,8 +54,7 @@ function link_to_post($post) {
 	if ($post->secret && $post->user_id != $account->id && !$account->is_admin()) {
 		return htmlspecialchars($post->title);
 	} else {
-		$params = array('page' => get_requested_page());
-		return link_to(htmlspecialchars($post->title), $post, '', $params);
+		return link_to(htmlspecialchars($post->title), $post, '');
 	}
 }
 function link_to_category($category) {

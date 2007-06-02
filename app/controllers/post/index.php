@@ -37,7 +37,9 @@ if ($post->user_id) {
 apply_filters('PostView', $post);
 apply_filters_array('PostViewComment', $comments);
 
-$link_list = url_for($board, '', array('page' => get_requested_page()));
+$link_list = url_for($board, '', array(
+	'page' => 1 + floor($board->get_post_count_with_condition("id > ? AND type >= ?", array($post->id, $post->type)) / $board->posts_per_page)
+));
 $link_new_post = ($account->level >= $board->perm_write) ? url_for($board, 'post') : null;
 
 $owner = $post->user_id == 0 || $account->id == $post->user_id || $account->level >= $board->perm_delete;

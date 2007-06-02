@@ -45,7 +45,7 @@ class Board extends Model {
 	function get_title() {
 		return $this->title ? $this->title : @$this->name;
 	}
-	function get_condition() {
+	function get_condition($extra = null, $extra_params = array()) {
 		$cond = "p.board_id=$this->id";
 		$data = array();
 		if ($text = $this->search['text']) {
@@ -68,6 +68,16 @@ class Board extends Model {
 		if ($this->search['category']) {
 			$cond .= " AND p.category_id=?";
 			$data[] = $this->search['category'];
+		}
+		if (is_string($extra) and strlen(trim($extra))) {
+			$cond = " ($cond) AND ($extra) ";
+			if (is_array($extra_params)) {
+				$data = array_merge($data, $extra_params);
+			}
+		}
+		else if(is_array($extra) and count($extra)) {
+			$cond = " ($cond) AND (" . implode(" = ?) AND (", array_keys($extra)) . " = ?) ";
+			$data = array_merge($data, array_values($extra));
 		}
 		$this->search_data = $data;
 		return $cond;
@@ -93,11 +103,11 @@ class Board extends Model {
 	function get_post_count() {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->post_table WHERE board_id=$this->id");
 	}
-	function get_post_count_with_condition() {
+	function get_post_count_with_condition($extra = null, $extra_params = array()) {
 		$query = "SELECT COUNT(*) FROM $this->post_table as p";
 		if ($this->search['comment'])
 			$query .= ", $this->comment_table as c";
-		return $this->db->fetchone($query . " WHERE ".$this->get_condition(), $this->search_data);
+		return $this->db->fetchone($query . " WHERE ".$this->get_condition($extra, $extra_params), $this->search_data);
 	}
 	function get_categories() {
 		return $this->db->fetchall("SELECT * FROM $this->category_table WHERE board_id=$this->id", 'Category');
