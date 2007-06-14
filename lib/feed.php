@@ -1,7 +1,5 @@
 <?php
-if ($board->perm_read > $account->level) {
-	exit;
-}
+authz_require($account, 'list', $board);
 
 /**
  * 피드의 해더를 꾸며준다.
