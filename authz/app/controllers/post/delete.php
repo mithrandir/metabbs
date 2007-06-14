@@ -1,8 +1,7 @@
 <?php
-if ($account->level < $board->perm_delete && $post->user_id != $account->id) {
-	access_denied();
-}
-if (is_post() && ($post->user_id != 0 && $account->id == $post->user_id || $account->level >= $board->perm_delete || $post->user_id == 0 && $post->password == md5($_POST['password']))) {
+authz_require($account, 'delete', $post);
+
+if (is_post()) {
 	apply_filters('PostDelete', $post);
 
 	$attachments = $post->get_attachments();
@@ -17,12 +16,6 @@ if (is_post() && ($post->user_id != 0 && $account->id == $post->user_id || $acco
 	redirect_to(url_for($board));
 } else {
 	$link_cancel = url_for($post);
-
-	if ($post->user_id != 0 && $post->user_id == $account->id ||
-		$account->level >= $board->perm_delete) {
-		$ask_password = false;
-	} else if ($post->user_id == 0) {
-		$ask_password = true;
-	}
+	$ask_password = false; // backward compatibility
 }
 ?>

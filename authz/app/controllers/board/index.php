@@ -1,7 +1,6 @@
 <?php
-if ($board->perm_read > $account->level) {
-	access_denied();
-}
+authz_require($account, 'list', $board);
+
 if (isset($_GET['search'])) {
 	$board->search = array_merge($board->search, $_GET['search']);
 }
