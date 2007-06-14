@@ -20,14 +20,40 @@ function authz_require($user, $perm, $object) {
 					authz_reject();
 			}
 		break;
+		case 'write':
+			if ($user->level < $object->perm_write) {
+				authz_reject();
+			} else {
+				authz_success();
+			}
+		break;
 		case 'delete':
 			$board = $object->get_board();
-			if ($user->level >= $board->perm_delete || $user->is_admin()) {
-				authz_success();
-			} else if ($object->user_id == 0 && $user->is_guest()) {
+			if ($object->user_id == 0 && $user->is_guest()) {
 				authz_ask_password($object);
+			} else if ($user->id == $object->user_id || $user->level >= $board->perm_delete || $user->is_admin()) {
+				authz_success();
 			} else {
 				authz_reject();
+			}
+		break;
+		case 'edit':
+			$board = $object->get_board();
+			if (isset($object->secret) && $object->secret && $object->user_id == 0 && $user->is_guest()) {
+				authz_ask_password($object);
+			} else if ($user->id == $object->user_id || $user->level >= $board->perm_delete || $user->is_admin()) {
+				// XXX: 익명 사용자 글이라도 일단 허용한다.
+				authz_success();
+			} else {
+				authz_reject();
+			}
+		break;
+		case 'comment':
+			$board = $object->get_board();
+			if ($user->level < $board->perm_comment) {
+				authz_reject();
+			} else {
+				authz_success();
 			}
 		break;
 	}

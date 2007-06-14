@@ -1,7 +1,6 @@
 <?php
-if ($board->perm_write > $account->level) {
-	access_denied();
-}
+authz_require($account, 'write', $board);
+
 if (is_post()) {
 	$post = new Post(@$_POST['post']);
 	if (!$account->is_guest()) {

@@ -1,9 +1,8 @@
 <?php
+authz_require($account, 'delete', $comment);
+
 $post = $comment->get_post();
-if ($account->level < $board->perm_delete && $comment->user_id != $account->id) {
-	access_denied();
-}
-if (is_post() && ($comment->user_id != 0 && $account->id == $comment->user_id || $account->level >= $board->perm_delete || $comment->user_id == 0 && $comment->password == md5($_POST['password']))) {
+if (is_post()) {
 	if ($account->is_guest())
 		$comment->deleted_by = $comment->name;
 	else
@@ -12,12 +11,6 @@ if (is_post() && ($comment->user_id != 0 && $account->id == $comment->user_id ||
 	redirect_to(url_for($post));
 } else {
 	$link_cancel = url_for($post);
-
-	if ($comment->user_id != 0 && $comment->user_id == $account->id ||
-		$account->level >= $board->perm_delete) {
-		$ask_password = false;
-	} else {
-		$ask_password = true;
-	}
+	$ask_password = false; // backward compatibility
 }
 ?>

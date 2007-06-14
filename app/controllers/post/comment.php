@@ -1,8 +1,7 @@
 <?php
+authz_require($account, 'comment', $post);
+
 $comment = new Comment($_POST['comment']);
-if ($account->level < $board->perm_comment) {
-	redirect_to(url_for($post));
-}
 if (!$comment->valid()) {
 	exit;
 }
