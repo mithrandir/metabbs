@@ -1,4 +1,7 @@
 <?php
+if (isset($_POST['post']['password'])) {
+	$_POST['_auth_password'] = $_POST['post']['password'];
+}
 authz_require($account, 'edit', $post);
 
 if (is_post() && isset($_POST['post']) && (!$account->is_guest() || $post->password == md5($_POST['post']['password']))) {

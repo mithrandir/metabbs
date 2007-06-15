@@ -1,6 +1,6 @@
 <form method="post" enctype="multipart/form-data" onsubmit="return checkForm(this)">
 <table id="postform">
-<? if ($account->is_guest() || $post->exists() && $post->user_id == 0 && $account->level < $board->perm_delete) { ?>
+<? if ($account->is_guest()) { ?>
 <tr>
 	<th><?=label_tag("Name", "post", "name")?></th>
 	<td class="name"><?=text_field("post", "name", $post->name)?></td>

@@ -1,60 +1,79 @@
 <?php
-function authz_require($user, $perm, $object) {
+define('AUTHZ_REJECT', 0);
+define('AUTHZ_ASK_PASSWORD', 1);
+define('AUTHZ_SUCCESS', 2);
+
+function authz_has_perm($user, $perm, $object) {
 	switch ($perm) {
 		case 'list':
 			if ($user->level < $object->perm_read) {
-				authz_reject();
+				return AUTHZ_REJECT;
 			}
 		break;
 		case 'read':
 			$board = $object->get_board();
 			if ($user->level < $board->perm_read) {
-				authz_reject();
+				return AUTHZ_REJECT;
 			}
 			if ($object->secret) {
 				if ($object->user_id == 0 && $user->is_guest())
-					authz_ask_password($object);
+					return AUTHZ_ASK_PASSWORD;
 				else if ($object->user_id == $user->id || $user->is_admin())
-					authz_success();
+					return AUTHZ_SUCCESS;
 				else
-					authz_reject();
+					return AUTHZ_REJECT;
 			}
 		break;
 		case 'write':
 			if ($user->level < $object->perm_write) {
-				authz_reject();
-			} else {
-				authz_success();
+				return AUTHZ_REJECT;
 			}
 		break;
 		case 'delete':
 			$board = $object->get_board();
 			if ($object->user_id == 0 && $user->is_guest()) {
-				authz_ask_password($object);
+				return AUTHZ_ASK_PASSWORD;
 			} else if ($user->id == $object->user_id || $user->level >= $board->perm_delete || $user->is_admin()) {
-				authz_success();
+				return AUTHZ_SUCCESS;
 			} else {
-				authz_reject();
+				return AUTHZ_REJECT;
 			}
 		break;
 		case 'edit':
 			$board = $object->get_board();
 			if (isset($object->secret) && $object->secret && $object->user_id == 0 && $user->is_guest()) {
-				authz_ask_password($object);
+				return AUTHZ_ASK_PASSWORD;
 			} else if ($user->id == $object->user_id || $user->level >= $board->perm_delete || $user->is_admin()) {
 				// XXX: 익명 사용자 글이라도 일단 허용한다.
-				authz_success();
+				return AUTHZ_SUCCESS;
 			} else {
-				authz_reject();
+				return AUTHZ_REJECT;
 			}
 		break;
 		case 'comment':
 			$board = $object->get_board();
 			if ($user->level < $board->perm_comment) {
-				authz_reject();
-			} else {
-				authz_success();
+				return AUTHZ_REJECT;
 			}
+		break;
+		case 'admin':
+			if ($user->level < $object->perm_delete || !$user->is_admin()) {
+				return AUTHZ_REJECT;
+			}
+		break;
+	}
+	return AUTHZ_SUCCESS;
+}
+function authz_require($user, $perm, $object) {
+	switch (authz_has_perm($user, $perm, $object)) {
+		case AUTHZ_REJECT:
+			authz_reject();
+		break;
+		case AUTHZ_ASK_PASSWORD:
+			authz_ask_password($object);
+		break;
+		case AUTHZ_SUCCESS:
+			authz_success();
 		break;
 	}
 }

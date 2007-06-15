@@ -1,11 +1,13 @@
 		</div>
 		
 		<div id="sidebar">
-		<? if ($guest || $board->perm_write <= $account->level) { ?>
+		<? if ($guest || $account->has_perm('write', $board)) { ?>
 		<h3>Admin</h3>
 		<ul>
 		<? if ($guest) { ?>
 			<li><?=login()?></li>
+		<? } else { ?>
+			<li><?=logout()?></li>
 		<? } ?>
 		<? if ($account->is_admin()) { ?>
 			<li><?=admin()?></li>
