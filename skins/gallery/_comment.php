@@ -4,12 +4,14 @@
 		<span class="name"><?=$comment->name?></span>
 		<span class="date"><?=strftime("%Y-%m-%d %H:%M", $comment->created_at)?></span>
 		<span class="actions">
-		<? if ($board->perm_comment <= $account->level) { ?>
+		<? if ($account->has_perm('comment', $post)) { ?>
 			<a href="<?=url_for($comment, 'reply')?>" onclick="loadReplyForm('comment_<?=$comment->id?>', this.href); return false"><?=i('Reply')?></a>
 		<? } ?>
-		<? if ($board->perm_delete <= $account->level || $account->id == $comment->user_id) { ?>
+		<? if ($account->has_perm('delete', $comment)) { ?>
 			| <span class="delete"><?=link_to(i('Delete'), $comment, 'delete')?></span>
-			| <span class="edit"><?=link_to(i('Edit'), $comment, 'edit')?></span>
+		<? } ?>
+		<? if ($account->has_perm('edit', $comment)) { ?>
+			| <span class="edit"><a href="<?=url_for($comment, 'edit')?>" onclick="editComment('comment_<?=$comment->id?>', this.href); return false"><?=i('Edit')?></a></span>
 		<? } ?>
 		</span>
 	</div>

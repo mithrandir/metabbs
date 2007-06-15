@@ -27,15 +27,11 @@ apply_filters_array('PostViewComment', $comments);
 $link_list = url_for($board, '', array(
 	'page' => 1 + floor($board->get_post_count_with_condition("id > ? AND type >= ?", array($post->id, $post->type)) / $board->posts_per_page)
 ));
-$link_new_post = ($account->level >= $board->perm_write) ? url_for($board, 'post') : null;
-
-$owner = $post->user_id == 0 || $account->id == $post->user_id || $account->level >= $board->perm_delete;
-if ($owner) {
-	$link_edit = url_for($post, 'edit');
-	$link_delete = url_for($post, 'delete');
-}
-
-$commentable = $board->perm_comment <= $account->level;
+$link_new_post = $account->has_perm('write', $board) ? url_for($board, 'post') : null;
+$link_edit = $account->has_perm('edit', $post) ? url_for($post, 'edit') : null;
+$link_delete = $account->has_perm('delete', $post) ? url_for($post, 'delete') : null;
+$owner = $link_edit && $link_delete;
+$commentable = $account->has_perm('comment', $post);
 
 $newer_post = $post->get_newer_post();
 $older_post = $post->get_older_post();

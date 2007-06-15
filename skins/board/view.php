@@ -63,7 +63,7 @@ function openPlayer(id, url) {
 -->
 <ul>
 <? foreach ($trackbacks as $trackback) { ?>
-	<li><?=link_text($trackback->url, $trackback->title)?> from <?=$trackback->blog_name?> <? if ($account->level >= $board->perm_delete) { echo link_with_dialog_to('<strong>X</strong>', $trackback, 'delete'); } ?></li>
+	<li><?=link_text($trackback->url, $trackback->title)?> from <?=$trackback->blog_name?> <? if ($account->has_perm('admin', $board)) { echo link_with_dialog_to('<strong>X</strong>', $trackback, 'delete'); } ?></li>
 <? } ?>
 </ul>
 </div>
@@ -90,15 +90,11 @@ foreach ($comments as $comment) {
 </div>
 
 <div id="meta-actions">
-<a href="<?=$link_list?>"><?=i('List')?></a> |
-<? if ($link_new_post) { ?><a href="<?=$link_new_post?>"><?=i('New Post')?></a> <? } ?>
-<? if ($owner) { ?>
-| <a href="<?=$link_edit?>"><?=i('Edit')?></a>
-| <a href="<?=$link_delete?>"><?=i('Delete')?></a>
-<? } ?>
-<? if ($account->is_admin()) { ?>
-| <a href="<?=url_for($post, 'move')?>"><?=i('Move')?></a>
-<? } ?>
+<a href="<?=$link_list?>"><?=i('List')?></a>
+<? if ($link_new_post) { ?>| <a href="<?=$link_new_post?>"><?=i('New Post')?></a> <? } ?>
+<? if ($link_edit) { ?> | <a href="<?=$link_edit?>"><?=i('Edit')?></a><? } ?>
+<? if ($link_delete) { ?> | <a href="<?=$link_delete?>"><?=i('Delete')?></a><? } ?>
+<? if ($account->is_admin()) { ?> | <a href="<?=url_for($post, 'move')?>"><?=i('Move')?></a><? } ?>
 </div>
 
 <div id="meta-nav">

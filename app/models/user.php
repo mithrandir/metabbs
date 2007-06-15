@@ -83,6 +83,9 @@ class User extends Model {
 	function unset_token() {
 		$this->set_token('');
 	}
+	function has_perm($perm, $object) {
+		return authz_has_perm($this, $perm, $object);
+	}
 }
 
 class Guest extends Model
@@ -98,6 +101,9 @@ class Guest extends Model
 	}
 	function is_admin() {
 		return false;
+	}
+	function has_perm($perm, $object) {
+		return authz_has_perm($this, $perm, $object);
 	}
 }
 ?>

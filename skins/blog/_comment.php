@@ -4,11 +4,13 @@
 		<cite><?=$comment->name?></cite>
 		<abbr title="<?=meta_format_date_rfc822($comment->created_at)?>"><?=strftime("%Y-%m-%d %H:%M", $comment->created_at)?></abbr>
 		<span class="actions">
-		<? if ($board->perm_comment <= $account->level) { ?>
+		<? if ($account->has_perm('comment', $post)) { ?>
 			<a href="<?=url_for($comment, 'reply')?>" onclick="loadReplyForm('comment_<?=$comment->id?>', this.href); return false"><?=i('Reply')?></a>
 		<? } ?>
-		<? if ($board->perm_delete <= $account->level || $account->id == $comment->user_id) { ?>
+		<? if ($account->has_perm('delete', $comment)) { ?>
 			| <?=link_to(i('Delete'), $comment, 'delete')?>
+		<? } ?>
+		<? if ($account->has_perm('edit', $comment)) { ?>
 			| <?=link_to(i('Edit'), $comment, 'edit')?>
 		<? } ?>
 		</span>

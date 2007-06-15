@@ -51,7 +51,7 @@ function link_to_user($user) {
 }
 function link_to_post($post) {
 	global $account;
-	if ($post->secret && $post->user_id != $account->id && !$account->is_admin()) {
+	if (!$account->has_perm('read', $post)) {
 		return htmlspecialchars($post->title);
 	} else {
 		return link_to(htmlspecialchars($post->title), $post, '');
