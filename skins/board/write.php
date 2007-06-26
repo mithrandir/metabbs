@@ -24,7 +24,7 @@
 		<? } ?>
 		</select>
 		<? } ?>
-		<? if ($account->is_admin()) { ?><?=check_box("post", "type", $post->type)?> <?=label_tag("Notice", "post", "type")?><? } ?>
+		<? if ($account->is_admin()) { ?><?=check_box("post", "notice", (int) $post->notice)?> <?=label_tag("Notice", "post", "notice")?><? } ?>
 		<?=check_box("post", "secret", $post->secret)?> <?=label_tag("Secret Post", "post", "secret")?>
 	</td>
 </tr>

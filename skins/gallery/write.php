@@ -18,7 +18,7 @@
 <p><?=text_area("post", "body", 6, 50, $post->body)?></p>
 
 <? if ($account->is_admin()) { ?>
-<p><?=check_box("post", "type", $post->type)?> <label for="post_type" class="checkbox"><?=i('Notice')?></label></p>
+<p><?=check_box("post", "notice", $post->notice)?> <label for="post_notice" class="checkbox"><?=i('Notice')?></label></p>
 <? } ?>
 
 <? if ($extra_attributes) { ?>

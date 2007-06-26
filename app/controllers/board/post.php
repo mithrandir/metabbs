@@ -8,6 +8,9 @@ if (is_post()) {
 		$post->user_id = $account->id;
 		$post->name = $account->name;
 	}
+	if (!$account->is_admin()) {
+		$post->notice = false;
+	}
 	define('SECURITY', 1);
 	include 'app/controllers/post/save.php';
 } else {

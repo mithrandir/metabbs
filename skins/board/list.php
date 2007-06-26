@@ -16,7 +16,7 @@
 <? } ?>
 <table id="posts">
 <? foreach ($posts as $post) { ?>
-<? if ($post->is_notice()) { ?>
+<? if ($post->notice) { ?>
 	<tr class="notice">
 <? } else { ?>
 	<tr>

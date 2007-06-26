@@ -13,7 +13,7 @@
 </select>
 <? } ?>
 <? if ($account->is_admin()) { ?>
-<p><?=label_tag("Notice", "post", "type")?> <?=check_box("post", "type", $post->type)?></p>
+<p><?=label_tag("Notice", "post", "notice")?> <?=check_box("post", "notice", $post-notice)?></p>
 <? } ?>
 <p><?=label_tag("Secret Post", "post", "secret")?> <?=check_box("post", "secret", $post->secret)?></p>
 <p><?=text_area("post", "body", 12, 60, $post->body)?></p>

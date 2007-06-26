@@ -33,7 +33,7 @@ class PostMeta {
 class Post extends Model {
 	var $model = 'post';
 
-	var $name, $title, $type = 0, $body;
+	var $name, $title, $notice = false, $body;
 	var $user_id = 0;
 	var $secret = 0;
 	var $category_id = 0;
@@ -68,7 +68,8 @@ class Post extends Model {
 		Model::update();
 	}
 	function is_notice() {
-		return $this->type == 1;
+		# deprecated
+		return (bool) $this->notice;
 	}
 	function is_edited() {
 		return $this->edited_at != 0;
