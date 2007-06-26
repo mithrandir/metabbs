@@ -17,6 +17,9 @@ if ($post->secret) {
 }
 if (is_post() && isset($_POST['post']) && ($post->user_id != 0 && $account->id == $post->user_id || $account->level >= $board->perm_delete || $post->user_id == 0 && md5($_POST['post']['password']) == $post->password)) {
 	unset($_POST['post']['password']);
+	if (!$account->is_admin()) {
+		unset($_POST['post']['notice']);
+	}
 	$post->import($_POST['post']);
 	$post->edited_at = time();
 	$post->edited_by = $account->id;
