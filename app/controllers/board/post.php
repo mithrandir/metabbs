@@ -3,13 +3,13 @@ if ($board->perm_write > $account->level) {
 	access_denied();
 }
 if (is_post()) {
+	if (!$account->is_admin()) {
+		unset($_POST['post']['notice']);
+	}
 	$post = new Post(@$_POST['post']);
 	if (!$account->is_guest()) {
 		$post->user_id = $account->id;
 		$post->name = $account->name;
-	}
-	if (!$account->is_admin() && !$post->notice) {
-		$post->notice = false;
 	}
 	define('SECURITY', 1);
 	include 'app/controllers/post/save.php';
