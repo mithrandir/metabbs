@@ -8,7 +8,7 @@ if (is_post()) {
 		$post->user_id = $account->id;
 		$post->name = $account->name;
 	}
-	if (!$account->is_admin()) {
+	if (!$account->is_admin() && !$post->notice) {
 		$post->notice = false;
 	}
 	define('SECURITY', 1);
