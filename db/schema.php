@@ -23,7 +23,7 @@ $t->column('title', 'string', 255);
 $t->column('body', 'text');
 $t->column('password', 'string', 32);
 $t->column('created_at', 'timestamp');
-$t->column('type', 'ushort');
+$t->column('notice', 'boolean');
 $t->column('views', 'integer');
 $t->column('secret', 'boolean');
 $t->column('edited_at', 'timestamp');
