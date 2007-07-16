@@ -19,7 +19,12 @@ if (is_post()) {
 	if (isset($_GET['search'])) {
 		$post->category_id = $_GET['search']['category'];
 	}
-	$link_list = url_for($board);
-	$link_cancel = null;
+
+	$template = $board->get_style()->get_template('write');
+	$template->set('board', $board);
+	$template->set('post', $post);
+	$template->set('extra_attributes', $extra_attributes);
+	$template->set('link_list', url_for($board));
+	$template->set('link_cancel', '');
 }
 ?>

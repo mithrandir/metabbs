@@ -67,18 +67,12 @@ function openPlayer(id, url) {
 <div id="comments">
 <h3><?=i('Comments')?></h3>
 <ul id="comments-list">
-<?
-$comment_stack = array();
-foreach ($comments as $comment) {
-	include($_skin_dir . '/_comment.php');
-}
-?>
+<? print_comment_tree($comments); ?>
 </ul>
 </div>
 
 <? if ($commentable) { ?>
 <form method="post" action="<?=url_for($post, 'comment')?>" id="comment-form" onsubmit="return addComment(this)">
-<input type="hidden" name="ajax" value="0" />
 <? if ($account->is_guest()) { ?>
 <p><?=label_tag("Name", "comment", "name")?> <?=text_field("comment", "name", $name)?></p>
 <p><?=label_tag("Password", "comment", "password")?> <?=password_field("comment", "password")?></p>
@@ -97,8 +91,8 @@ foreach ($comments as $comment) {
 </div>
 
 <div id="nav">
-<a href="<?=$link_list?>"><?=i('List')?></a> |
-<? if ($link_new_post) { ?><a href="<?=$link_new_post?>"><?=i('New Post')?></a> <? } ?>
+<a href="<?=$link_list?>"><?=i('List')?></a>
+<? if ($link_new_post) { ?>| <a href="<?=$link_new_post?>"><?=i('New Post')?></a> <? } ?>
 <? if ($owner) { ?>
 | <a href="<?=$link_edit?>"><?=i('Edit')?></a>
 | <a href="<?=$link_delete?>"><?=i('Delete')?></a>

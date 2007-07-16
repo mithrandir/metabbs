@@ -8,7 +8,8 @@ if ($post->secret) {
 	} else if ($post->user_id == 0 && $account->is_guest()) {
 		if (is_post() && md5($_POST['password']) == $post->password) {
 		} else {
-			$action = 'secret';
+			$template = $board->get_style()->get_template('secret');
+			$template->set('board', $board);
 			return;
 		}
 	}
@@ -24,32 +25,35 @@ if (!in_array($post->id, $seen_posts)) {
 	cookie_register('seen_posts', implode(',', $seen_posts));
 }
 
-$comments = $post->get_comments();
-$attachments = $post->get_attachments();
-$trackbacks = $post->get_trackbacks();
+$template = $board->get_style()->get_template('view');
+$template->set('attachments', $post->get_attachments());
+$template->set('trackbacks', $post->get_trackbacks());
+$template->set('name', cookie_get('name'));
 
-$name = cookie_get('name');
 if ($post->user_id) {
 	$user = $post->get_user();
 	if ($user->exists() && $user->signature)
-		$signature = format_plain($user->signature);
+		$template->set('signature', format_plain($user->signature));
 }
 apply_filters('PostView', $post);
+$template->set('board', $board);
+$template->set('post', $post);
+
+$comments = $post->get_comments();
 apply_filters_array('PostViewComment', $comments);
+$template->set('comments', $comments);
 
-$link_list = url_for($board, '', array(
-	'page' => 1 + floor($board->get_post_count_with_condition("id > ? AND notice >= ?", array($post->id, (int) $post->type)) / $board->posts_per_page)
-));
-$link_new_post = ($account->level >= $board->perm_write) ? url_for($board, 'post') : null;
+$template->set('link_list', url_for($board, '', array('page' => $post->get_page())));
+$template->set('link_new_post', ($account->level >= $board->perm_write) ? url_for($board, 'post') : null);
 
-$owner = $post->user_id == 0 || $account->id == $post->user_id || $account->level >= $board->perm_delete;
+$template->set('owner', $owner = $post->user_id == 0 || $account->id == $post->user_id || $account->level >= $board->perm_delete);
 if ($owner) {
-	$link_edit = url_for($post, 'edit');
-	$link_delete = url_for($post, 'delete');
+	$template->set('link_edit', url_for($post, 'edit'));
+	$template->set('link_delete', url_for($post, 'delete'));
 }
 
-$commentable = $board->perm_comment <= $account->level;
+$template->set('commentable', $board->perm_comment <= $account->level);
 
-$newer_post = $post->get_newer_post();
-$older_post = $post->get_older_post();
+$template->set('newer_post', $post->get_newer_post());
+$template->set('older_post', $post->get_older_post());
 ?>

@@ -33,7 +33,11 @@ if (is_post() && isset($_POST['post']) && ($post->user_id != 0 && $account->id =
 	define('SECURITY', 1);
 	include 'app/controllers/post/save.php';
 } else {
-	$link_list = url_for($board);
-	$link_cancel = url_for($post);
+	$template = $board->get_style()->get_template('write');
+	$template->set('board', $board);
+	$template->set('post', $post);
+	$template->set('extra_attributes', $extra_attributes);
+	$template->set('link_list', url_for($board));
+	$template->set('link_cancel', url_for($post));
 }
 ?>

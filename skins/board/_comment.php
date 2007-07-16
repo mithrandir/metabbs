@@ -19,14 +19,6 @@
 	</div>
 	
 	<ul id="comments-list-<?=$comment->id?>">
-	<? if ($comment->comments) { apply_filters_array('PostViewComment', $comment->comments); ?>
-	<?
-	$comment_stack[] = $comment;
-	foreach ($comment->comments as $comment) {
-		include($_skin_dir . '/_comment.php');
-	}
-	$comment = array_pop($comment_stack);
-	?>
-	<? } ?>
+	<? print_comment_tree($comment); ?>
 	</ul>
 </li>

@@ -22,19 +22,21 @@ if (is_post()) {
 	$post->add_comment($_comment);
 
 	if (is_xhr()) {
-		$comment = $_comment;
-		apply_filters('PostViewComment', $comment);
-		$style = $board->get_style();
-		include "skins/$style->skin/_comment.php";
+		apply_filters('PostViewComment', $_comment);
+		$template = $board->get_style()->get_template('_comment');
+		$template->set('board', $board);
+		$template->set('comment', $_comment);
+		$template->render();
 		exit;
 	} else {
 		redirect_to(url_for($post));
 	}
 } else {
-	$name = cookie_get('name');
+	$template = $board->get_style()->get_template('reply');
+	$template->set('comment', $comment);
+	$template->set('name', cookie_get('name'));
 	if (is_xhr()) {
-		$style = $board->get_style();
-		include "skins/$style->skin/reply.php";
+		$template->render();
 		exit;
 	}
 }

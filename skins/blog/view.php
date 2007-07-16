@@ -24,12 +24,7 @@
 <h5><a name="comments"><?=i('Comments')?></a></h5>
 <div id="comments_div">
 <ol id="comments-list" class="comments">
-<?
-$comment_stack = array();
-foreach ($comments as $comment) {
-	include($_skin_dir . '/_comment.php');
-}
-?>
+<? print_comment_tree($comments); ?>
 </ol>
 </div>
 

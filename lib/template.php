@@ -1,12 +1,68 @@
 <?php
+function get_global_template_vars() {
+	return array(
+		'account' => $GLOBALS['account'],
+		'action' => $GLOBALS['action'],
+	);
+}
+
+function print_comment_tree($comments) {
+	global $template;
+	if (!is_array($comments)) {
+		if (!$comments->comments) return;
+		$comments = $comments->comments;
+		apply_filters_array('PostViewComment', $comments);
+	}
+	$template->view = '_comment';
+	foreach ($comments as $comment) {
+		$template->set('comment', $comment);
+		$template->render();
+	}
+}
+
+class Template {
+	function Template($path, $view) {
+		$this->path = $path;
+		$this->view = $view;
+		$this->vars = get_global_template_vars();
+	}
+	function set($key, $value) {
+		$this->vars[$key] = $value;
+	}
+	function render() {
+		extract($this->vars);
+		include "$this->path/$this->view.php";
+	}
+}
+
+class Skin {
+	function Skin($name) {
+		$this->name = $name;
+	}
+	function get_template($view) {
+		$template = new Template($this->get_path(), $view);
+		$template->set('skin_dir', METABBS_BASE_PATH.$this->get_path());
+		$template->set('_skin_dir', $this->get_path());
+		return $template;
+	}
+	function get_path() {
+		return "skins/$this->name";
+	}
+}
+
 class Style {
 	function Style($name) {
 		$this->name = $name;
 		include "styles/$name/style.php";
-		$this->skin = $skin;
+		$this->skin = new Skin($skin);
 	}
 	function get_path() {
 		return METABBS_BASE_PATH . 'styles/' . $this->name;
+	}
+	function get_template($view) {
+		$template = $this->skin->get_template($view);
+		$template->set('style_dir', $this->get_path());
+		return $template;
 	}
 }
 

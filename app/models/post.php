@@ -184,5 +184,11 @@ class Post extends Model {
 	function set_attribute($key, $value) {
 		$this->metadata->set($key, $value);
 	}
+	function get_page() {
+		$board = $this->get_board();
+		if ($this->is_notice()) $notice_cond = ' AND notice=true';
+		else $notice_cond = ' OR notice=true';
+		return 1 + floor($board->get_post_count_with_condition("id > ?$notice_cond", array($this->id)) / $board->posts_per_page);
+	}
 }
 ?>

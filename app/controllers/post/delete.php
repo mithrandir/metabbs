@@ -16,13 +16,15 @@ if (is_post() && ($post->user_id != 0 && $account->id == $post->user_id || $acco
 	$post->delete();
 	redirect_to(url_for($board));
 } else {
-	$link_cancel = url_for($post);
-
 	if ($post->user_id != 0 && $post->user_id == $account->id ||
 		$account->level >= $board->perm_delete) {
 		$ask_password = false;
 	} else if ($post->user_id == 0) {
 		$ask_password = true;
 	}
+
+	$template = $board->get_style()->get_template('delete');
+	$template->set('ask_password', $ask_password);
+	$template->set('link_cancel', url_for($post));
 }
 ?>

@@ -26,19 +26,15 @@ $action_dir = 'app/controllers/' . $controller;
 if (!run_hook_handler($controller, $action)) {
 	include($action_dir . '/' . $action . '.php');
 }
-if (!isset($skin)) {
-	if (isset($board)) {
-		if (!$board->style) $board->style = 'default';
-		$style = $board->get_style();
-		$skin = $style->skin;
-		$style_dir = $style->get_path();
-	} else {
-		$skin = 'default';
-		$style_dir = METABBS_BASE_PATH . 'styles/default';
-	}
+if (isset($board)) {
+	$style = $board->get_style();
+	$style_dir = $style->get_path();
+	$_skin_dir = $style->skin->get_path();
+	$skin_dir = METABBS_BASE_PATH.$_skin_dir;
+} else {
+	$_skin_dir = 'skins/default';
+	$style_dir = METABBS_BASE_PATH.'styles/default';
 }
-$_skin_dir = 'skins/' . $skin;
-$skin_dir = METABBS_BASE_PATH . $_skin_dir;
 
 $layout->add_javascript(METABBS_BASE_PATH . 'elements/prototype.js');
 if ($view == ADMIN_VIEW) {
@@ -53,7 +49,10 @@ if ($view == ADMIN_VIEW) {
 
 foreach (get_header_paths() as $header) include $header;
 echo $layout->header;
-include "app/views/$controller/$action.php";
+if (isset($template)) {
+	$template->set('title', $title);
+	$template->render();
+} else include "app/views/$controller/$action.php";
 echo $layout->footer;
 foreach (get_footer_paths() as $footer) include $footer;
 ?>

@@ -18,8 +18,10 @@ apply_filters('PostComment', $comment);
 $post->add_comment($comment);
 if (is_xhr()) {
 	apply_filters('PostViewComment', $comment);
-	$style = $board->get_style();
-	include("skins/$style->skin/_comment.php");
+	$template = $board->get_style()->get_template('_comment');
+	$template->set('board', $board);
+	$template->set('comment', $comment);
+	$template->render();
 	exit;
 } else {
 	redirect_to(url_for($post));
