@@ -1,10 +1,10 @@
 <?php
 class IPBlock extends Plugin {
 	function on_init() {
-		if (!file_exists('data/ipblock.txt')) {
-			fclose(fopen('data/ipblock.txt', 'w'));
+		if (!file_exists(METABBS_DIR.'data/ipblock.txt')) {
+			fclose(fopen(METABBS_DIR.'data/ipblock.txt', 'w'));
 		} else {
-			$fp = fopen('data/ipblock.txt', 'r');
+			$fp = fopen(METABBS_DIR.'data/ipblock.txt', 'r');
 			while (!feof($fp)) {
 				$ip = rtrim(fgets($fp, 20));
 				if (preg_match('/^'.str_replace('*', '.*', str_replace('.', '\.', $ip)).'$/', $_SERVER['REMOTE_ADDR'])) {

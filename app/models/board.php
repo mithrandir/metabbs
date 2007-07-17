@@ -105,9 +105,13 @@ class Board extends Model {
 	}
 	function get_post_count_with_condition($extra = null, $extra_params = array()) {
 		$query = "SELECT COUNT(*) FROM $this->post_table as p";
-		if ($this->search['comment'])
+		if ($this->search['comment']) {
 			$query .= ", $this->comment_table as c";
-		return $this->db->fetchone($query . " WHERE ".$this->get_condition($extra, $extra_params), $this->search_data);
+			$grouping = " GROUP BY p.id";
+		} else {
+			$grouping = "";
+		}
+		return $this->db->fetchone($query . " WHERE ".$this->get_condition($extra, $extra_params).$grouping, $this->search_data);
 	}
 	function get_categories() {
 		return $this->db->fetchall("SELECT * FROM $this->category_table WHERE board_id=$this->id", 'Category');
