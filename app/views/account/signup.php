@@ -4,11 +4,13 @@
 <fieldset>
 <p>
 	<label><?=i('User ID')?><span class="star">*</span></label>
-<? if (isset($flash) && $error_field == 'user') { // error ?>
-	<input type="text" name="user[user]" class="blank" value="<?=$account->user?>" /> <?=$flash?>
-<? } else { ?>
 	<input type="text" name="user[user]" value="<?=$account->user?>" />
+	<span id="notification">
+<? if (isset($flash) && $error_field == 'user') { // error ?>
+	<?=$flash?>
 <? } ?>
+</span>
+	<input type="button" value="중복 확인" onclick="checkUserID(this.form['user[user]'])" />
 </p>
 <p>
 	<label><?=i('Password')?><span class="star">*</span></label>

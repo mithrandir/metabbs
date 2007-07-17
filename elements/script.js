@@ -103,3 +103,12 @@ function setPostAttribute(form, key, value) {
 		new Insertion.Bottom(form, '<input type="hidden" name="meta['+key+']" value="'+value+'" />');
 	}
 }
+
+function checkUserID(field) {
+	var id = $F(field);
+	if (!id) return;
+	new Ajax.Updater('notification', location.href, {
+		method: 'get',
+		parameters: { user: id }
+	});
+}
