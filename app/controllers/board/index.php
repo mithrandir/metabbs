@@ -14,7 +14,7 @@ if ($board->use_category) {
 		$template->set('category', Category::find($board->search['category']));
 	$template->set('categories', $board->get_categories());
 }
-if ($board->search['comment']) {
+if ($board->search['comment'] && $board->search['text']) {
 	$posts = $board->get_posts_in_page(get_requested_page(), 'search_posts_with_comment');
 } else {
 	$posts = $board->get_posts_in_page(get_requested_page());
