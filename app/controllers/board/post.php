@@ -19,7 +19,7 @@ if (is_post()) {
 		$post->category_id = $_GET['search']['category'];
 	}
 
-	$template = $board->get_style()->get_template('write');
+	$template = get_template($board, 'write');
 	$template->set('board', $board);
 	$template->set('post', $post);
 	$template->set('extra_attributes', $extra_attributes);

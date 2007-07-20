@@ -22,7 +22,7 @@ if (is_post()) {
 
 	if (is_xhr()) {
 		apply_filters('PostViewComment', $_comment);
-		$template = $board->get_style()->get_template('_comment');
+		$template = get_template($board, '_comment');
 		$template->set('board', $board);
 		$template->set('comment', $_comment);
 		$template->render();
@@ -31,7 +31,7 @@ if (is_post()) {
 		redirect_to(url_for($post));
 	}
 } else {
-	$template = $board->get_style()->get_template('reply');
+	$template = get_template($board, 'reply');
 	$template->set('comment', $comment);
 	$template->set('name', cookie_get('name'));
 	if (is_xhr()) {

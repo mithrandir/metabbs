@@ -11,7 +11,7 @@ if (!in_array($post->id, $seen_posts)) {
 	cookie_register('seen_posts', implode(',', $seen_posts));
 }
 
-$template = $board->get_style()->get_template('view');
+$template = get_template($board, 'view');
 $template->set('attachments', $post->get_attachments());
 $template->set('trackbacks', $post->get_trackbacks());
 $template->set('name', cookie_get('name'));

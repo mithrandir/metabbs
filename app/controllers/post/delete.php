@@ -15,7 +15,7 @@ if (is_post()) {
 	$post->delete();
 	redirect_to(url_for($board));
 } else {
-	$template = $board->get_style()->get_template('delete');
+	$template = get_template($board, 'delete');
 	$template->set('ask_password', false);
 	$template->set('link_cancel', url_for($post));
 }

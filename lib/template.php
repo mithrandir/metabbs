@@ -20,6 +20,11 @@ function print_comment_tree($comments) {
 	}
 }
 
+function get_template($board, $view) {
+	$style = $board->get_style();
+	return $style->get_template($view);
+}
+
 class Template {
 	function Template($path, $view) {
 		$this->path = $path;

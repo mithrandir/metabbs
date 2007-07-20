@@ -19,7 +19,7 @@ if (is_post() && isset($_POST['post']) && (!$account->is_guest() || $post->passw
 	define('SECURITY', 1);
 	include 'app/controllers/post/save.php';
 } else {
-	$template = $board->get_style()->get_template('write');
+	$template = get_template($board, 'write');
 	$template->set('board', $board);
 	$template->set('post', $post);
 	$template->set('extra_attributes', $extra_attributes);
