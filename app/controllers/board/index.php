@@ -1,7 +1,6 @@
 <?php
-if ($board->perm_read > $account->level) {
-	access_denied();
-}
+permission_required('list', $board);
+
 if (isset($_GET['search'])) {
 	$board->search = array_merge($board->search, $_GET['search']);
 }
@@ -24,6 +23,6 @@ apply_filters_array('PostList', $posts);
 $template->set('posts', $posts);
 $template->set('posts_count', $board->get_post_count());
 $template->set('link_rss', url_for($board, 'rss'));
-$template->set('link_new_post', ($board->perm_write <= $account->level) ? url_for($board, 'post') : null);
-$template->set('massdelete', $board->perm_delete <= $account->level);
+$template->set('link_new_post', $account->has_perm('write', $board) ? url_for($board, 'post') : null);
+$template->set('massdelete', $account->has_perm('admin', $board));
 ?>

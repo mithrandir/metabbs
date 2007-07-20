@@ -1,7 +1,7 @@
 		</div>
 		
 		<div id="sidebar">
-		<? if ($guest || $board->perm_write <= $account->level) { ?>
+		<? if ($guest || $account->has_perm('write', $board)) { ?>
 		<h3>Admin</h3>
 		<ul>
 		<? if ($guest) { ?>
@@ -13,8 +13,10 @@
 		<? if (isset($link_new_post) && $link_new_post) { ?>
 			<li><a href="<?=$link_new_post?>"><?=i('New Post')?></a></li>
 		<? } ?>
-		<? if (isset($owner) && $owner) { ?>
+		<? if (isset($link_edit) && $link_edit) { ?>
 			<li><a href="<?=$link_edit?>"><?=i('Edit')?></a></li>
+		<? } ?>
+		<? if (isset($link_delete) && $link_delete) { ?>
 			<li><a href="<?=$link_delete?>"><?=i('Delete')?></a></li>
 		<? } ?>
 		</ul>

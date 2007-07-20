@@ -1,5 +1,5 @@
 <form method="post" enctype="multipart/form-data" onsubmit="return checkForm(this)">
-<? if ($account->is_guest() || $post->exists() && $post->user_id == 0 && $account->level < $board->perm_delete) { ?>
+<? if ($account->is_guest()) { ?>
 <p><?=label_tag("Name", "post", "name")?> <?=text_field("post", "name", $post->name)?></p>
 <p><?=label_tag("Password", "post", "password")?> <?=password_field("post", "password")?></p>
 <? } ?>
@@ -13,11 +13,11 @@
 </select>
 <? } ?>
 <? if ($board->use_attachment && !$post->exists()) { ?>
-<p><?=label_tag("Image", "post", "upload")?> <input type="file" name="upload[]" size="50" id="post_upload"<? if ($account->is_admin()) { ?> class="ignore"<? } ?>/></p>
+<p><?=label_tag("Image", "post", "upload")?> <input type="file" name="upload[]" size="50" id="post_upload"<? if ($account->has_perm('admin', $board)) { ?> class="ignore"<? } ?>/></p>
 <? } ?>
 <p><?=text_area("post", "body", 6, 50, $post->body)?></p>
 
-<? if ($account->is_admin()) { ?>
+<? if ($account->has_perm('admin', $board)) { ?>
 <p><?=check_box("post", "notice", $post->notice)?> <label for="post_notice" class="checkbox"><?=i('Notice')?></label></p>
 <? } ?>
 

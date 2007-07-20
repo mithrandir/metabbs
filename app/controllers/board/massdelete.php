@@ -1,5 +1,7 @@
 <?php
-if (is_post() && $account->level >= $board->perm_delete) {
+permission_required('admin', $board);
+
+if (is_post()) {
 	foreach ($_POST['delete'] as $post_id) {
 		$post = Post::find($post_id);
 		$attachments = $post->get_attachments();

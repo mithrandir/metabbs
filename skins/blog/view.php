@@ -16,7 +16,7 @@
 -->
 <ol id="trackbacks">
 <? foreach ($trackbacks as $trackback) { ?>
-	<li><?=link_text($trackback->url, $trackback->title)?> from <?=$trackback->blog_name?></li>
+	<li><?=link_text($trackback->url, $trackback->title)?> from <?=$trackback->blog_name?> <? if ($account->has_perm('delete', $trackback)) { echo link_with_dialog_to('<strong>X</strong>', $trackback, 'delete'); } ?></li>
 <? } ?>
 </ol>
 <? } ?>

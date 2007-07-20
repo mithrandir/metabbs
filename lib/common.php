@@ -20,6 +20,7 @@ ini_set('include_path', METABBS_DIR . PATH_SEPARATOR . ini_get('include_path'));
 
 require METABBS_DIR . '/lib/compat.php';
 require METABBS_DIR . '/lib/core.php';
+require METABBS_DIR . '/lib/permission.php';
 require METABBS_DIR . '/lib/request.php';
 require METABBS_DIR . '/lib/i18n.php';
 require METABBS_DIR . '/lib/cookie.php';

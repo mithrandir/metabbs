@@ -1,19 +1,5 @@
 <?php
-if ($board->perm_read > $account->level) {
-	access_denied();
-}
-if ($post->secret) {
-	if ($post->user_id != $account->id && !$account->is_admin()) {
-		access_denied();
-	} else if ($post->user_id == 0 && $account->is_guest()) {
-		if (is_post() && md5($_POST['password']) == $post->password) {
-		} else {
-			$template = $board->get_style()->get_template('secret');
-			$template->set('board', $board);
-			return;
-		}
-	}
-}
+permission_required('read', $post);
 
 if (isset($_GET['search'])) {
 	$board->search = array_merge($board->search, $_GET['search']);
@@ -44,15 +30,14 @@ apply_filters_array('PostViewComment', $comments);
 $template->set('comments', $comments);
 
 $template->set('link_list', url_for($board, '', array('page' => $post->get_page())));
-$template->set('link_new_post', ($account->level >= $board->perm_write) ? url_for($board, 'post') : null);
+$template->set('link_new_post', $account->has_perm('write', $board) ? url_for($board, 'post') : null);
 
-$template->set('owner', $owner = $post->user_id == 0 || $account->id == $post->user_id || $account->level >= $board->perm_delete);
-if ($owner) {
+if ($account->has_perm('edit', $post))
 	$template->set('link_edit', url_for($post, 'edit'));
+if ($account->has_perm('delete', $post))
 	$template->set('link_delete', url_for($post, 'delete'));
-}
 
-$template->set('commentable', $board->perm_comment <= $account->level);
+$template->set('commentable', $account->has_perm('comment', $post));
 
 $template->set('newer_post', $post->get_newer_post());
 $template->set('older_post', $post->get_older_post());

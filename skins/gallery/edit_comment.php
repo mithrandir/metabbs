@@ -1,5 +1,5 @@
 <h2><?=i('Edit Comment')?></h2>
-<form method="post">
+<form method="post" action="<?=url_for($comment, 'edit')?>">
 <? if ($ask_password) { ?>
 <p><?=i("Password")?>: <input type="password" name="password" /></p>
 <? } ?>

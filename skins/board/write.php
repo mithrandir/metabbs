@@ -1,6 +1,6 @@
 <form method="post" enctype="multipart/form-data" onsubmit="return checkForm(this)">
 <table id="postform">
-<? if ($account->is_guest() || $post->exists() && $post->user_id == 0 && $account->level < $board->perm_delete) { ?>
+<? if ($account->is_guest()) { ?>
 <tr>
 	<th><?=label_tag("Name", "post", "name")?></th>
 	<td class="name"><?=text_field("post", "name", $post->name)?></td>
@@ -24,7 +24,7 @@
 		<? } ?>
 		</select>
 		<? } ?>
-		<? if ($account->is_admin()) { ?><?=check_box("post", "notice", (int) $post->notice)?> <?=label_tag("Notice", "post", "notice")?><? } ?>
+		<? if ($account->has_perm('admin', $board)) { ?><?=check_box("post", "notice", (int) $post->notice)?> <?=label_tag("Notice", "post", "notice")?><? } ?>
 		<?=check_box("post", "secret", $post->secret)?> <?=label_tag("Secret Post", "post", "secret")?>
 	</td>
 </tr>

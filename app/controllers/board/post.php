@@ -1,9 +1,8 @@
 <?php
-if ($board->perm_write > $account->level) {
-	access_denied();
-}
+permission_required('write', $board);
+
 if (is_post()) {
-	if (!$account->is_admin()) {
+	if (!$account->has_perm('admin', $board)) {
 		unset($_POST['post']['notice']);
 	}
 	$post = new Post(@$_POST['post']);

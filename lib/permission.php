@@ -1,8 +1,13 @@
 <?php
+define('ASK_PASSWORD', 2);
+
 function permission_required($action, $object) {
 	global $account;
-	if (!$account->has_perm($action, $object))
+	$result = $account->has_perm($action, $object);
+	if (!$result)
 		access_denied();
+	else if ($result === ASK_PASSWORD)
+		ask_password_of($object);
 }
 function ask_password_of($object, $retry = false) {
 	global $account;

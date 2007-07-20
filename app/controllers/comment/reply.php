@@ -1,7 +1,6 @@
 <?php
-if ($account->level < $board->perm_comment) {
-	access_denied();
-}
+permission_required('reply', $comment);
+
 if (is_post()) {
 	$_comment = new Comment($_POST['comment']);
 	$_comment->user_id = $account->id;
