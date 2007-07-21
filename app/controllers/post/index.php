@@ -32,10 +32,8 @@ $template->set('comments', $comments);
 $template->set('link_list', url_for($board, '', array('page' => $post->get_page())));
 $template->set('link_new_post', $account->has_perm('write', $board) ? url_for($board, 'post') : null);
 
-if ($account->has_perm('edit', $post))
-	$template->set('link_edit', url_for($post, 'edit'));
-if ($account->has_perm('delete', $post))
-	$template->set('link_delete', url_for($post, 'delete'));
+$template->set('link_edit', $account->has_perm('edit', $post) ? url_for($post, 'edit') : '');
+$template->set('link_delete', $account->has_perm('delete', $post) ? url_for($post, 'delete') : '');
 
 $template->set('commentable', $account->has_perm('comment', $post));
 

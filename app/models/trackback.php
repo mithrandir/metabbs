@@ -15,6 +15,10 @@ class Trackback extends Model {
 	function get_post() {
 		return Post::find($this->post_id);
 	}
+	function get_board() {
+		$post = $this->get_post();
+		return $post->get_board();
+	}
 	function validate() {
 		return $this->valid && !empty($this->url);
 	}

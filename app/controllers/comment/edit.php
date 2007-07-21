@@ -1,5 +1,5 @@
 <?php
-permission_required($account, 'edit', $comment);
+permission_required('edit', $comment);
 
 $post = $comment->get_post();
 if (is_post() && (!$account->is_guest() || $comment->password == md5($_POST['password']))) {

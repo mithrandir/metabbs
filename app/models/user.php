@@ -81,7 +81,36 @@ class User extends Model {
 		$this->set_token('');
 	}
 	function has_perm($action, $object) {
-		return true; // XXX
+		if ($this->is_admin()) return true;
+		switch ($action) {
+			case 'list':
+				return $this->level >= $object->perm_read;
+			break;
+			case 'read':
+				$board = $object->get_board();
+				return $this->level >= $board->perm_read;
+			break;
+			case 'admin':
+				return $this->is_admin(); //XXX
+			break;
+			case 'write':
+				return $this->level >= $object->perm_write;
+			break;
+			case 'delete':
+			case 'edit':
+				if (!is_a($object, 'Board'))
+					$board = $object->get_board();
+				else
+					$board = $object;
+				return $this->level >= $board->perm_delete ||
+					(isset($object->user_id) && $object->user_id == $this->id);
+			break;
+			case 'reply':
+			case 'comment':
+				$board = $object->get_board();
+				return $this->level >= $board->perm_comment;
+			break;
+		}
 	}
 }
 
@@ -100,7 +129,39 @@ class Guest extends Model
 		return false;
 	}
 	function has_perm($action, $object) {
-		return true; // XXX
+		switch ($action) {
+			case 'list':
+				return $this->level >= $object->perm_read;
+			break;
+			case 'read':
+				$board = $object->get_board();
+				return $this->level >= $board->perm_read;
+			break;
+			case 'admin':
+				return false;
+			break;
+			case 'write':
+				return $this->level >= $object->perm_write;
+			break;
+			case 'delete':
+			case 'edit':
+				if (!is_a($object, 'Board'))
+					$board = $object->get_board();
+				else
+					$board = $object;
+				if ($this->level >= $board->perm_delete)
+					return true;
+				if (isset($object->user_id) && $object->user_id == 0)
+					return ASK_PASSWORD;
+				else
+					return false;
+			break;
+			case 'reply':
+			case 'comment':
+				$board = $object->get_board();
+				return $this->level >= $board->perm_comment;
+			break;
+		}
 	}
 }
 ?>
