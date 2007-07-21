@@ -138,9 +138,11 @@ ul.tabs a {
 	padding: 3px;
 }
 
-#skin td { line-height: 1.6; }
-#skin tr.current { background-color: #efc; }
 .style-name { font-size: 1.2em; font-weight: bold; }
+#change-style { margin-top: 1em; }
+#change-style ul { margin: 1em 0; padding: 0; overflow: hidden; display: inline-block; }
+#change-style li { list-style: none; float: left; margin-right: 1.5em; text-align: center; font-size: 1.1em; }
+#change-style img { border: 1px solid #000; text-decoration: none; }
 
 #plugins dl { margin: 0; }
 #plugins dt { float: none; }

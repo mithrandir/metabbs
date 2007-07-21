@@ -1,23 +1,34 @@
-<form method="post" action="?tab=skin">
-<div id="skin">
+<div id="current-style">
+<h2>현재 사용중인 모양새</h2>
 <table>
-<? foreach ($styles as $info) { list($style, $name, $creator, $license) = $info; ?>
-<tr<? if ($board->style == $style) { ?> class="current"<? } ?>>
-	<td><input type="radio" name="board[style]" value="<?=$style?>" <? if ($board->style == $style) { ?>checked="checked"<? } ?> onchange="this.form.submit()" /></td>
+<tr>
 	<td>
-	<? if (file_exists('styles/'.$style.'/preview.png')) { ?>
-	<img src="<?=METABBS_BASE_PATH?>styles/<?=$style?>/preview.png" alt="Preview" />
+	<? if (file_exists('styles/'.$board->style.'/preview.png')) { ?>
+	<img src="<?=$current_style->get_path()?>/preview.png" alt="Preview" />
 	<? } ?>
 	</td>
 	<td>
-		<span class="style-name"><?=$name?></span><br />
-		<span class="creator">Created by <?=htmlspecialchars($creator)?></cite><br />
-		<span class="engine">Licensed under <?=array_key_exists($license, $license_mapping)?$license_mapping[$license]:htmlspecialchars($license)?></span>
+		<span class="style-name"><?=$current_style->fullname?></span><br />
+		<span class="creator">Created by <?=htmlspecialchars($current_style->creator)?></cite><br />
+		<span class="engine">Licensed under <?=array_key_exists($current_style->license, $license_mapping)?$license_mapping[$current_style->license]:htmlspecialchars($current_style->license)?></span>
 	</td>
 </tr>
-<? } ?>
 </table>
-
-<p><input type="submit" value="<?=i('Edit')?>" /></p>
 </div>
-</form>
+<div id="change-style">
+<h2>모양새 바꾸기</h2>
+<ul>
+<? foreach ($styles as $style) { ?>
+<? if ($style->name != $current_style->name) { ?>
+	<li>
+	<a href="?tab=skin&amp;style=<?=$style->name?>">
+	<? if (file_exists('styles/'.$style->name.'/preview.png')) { ?>
+	<img src="<?=$style->get_path()?>/preview.png" alt="Preview" /><br />
+	<? } ?>
+	<?=$style->fullname?>
+	</a>
+	</li>
+<? } ?>
+<? } ?>
+</ul>
+</div>

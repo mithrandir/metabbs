@@ -60,6 +60,9 @@ class Style {
 		$this->name = $name;
 		include "styles/$name/style.php";
 		$this->skin = new Skin($skin);
+		$this->fullname = $style_name;
+		$this->creator = $style_creator;
+		$this->license = $style_license;
 	}
 	function get_path() {
 		return METABBS_BASE_PATH . 'styles/' . $this->name;

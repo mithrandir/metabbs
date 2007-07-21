@@ -133,5 +133,9 @@ class Board extends Model {
 	function get_style() {
 		return new Style($this->style);
 	}
+	function change_style($style) {
+		$this->db->query("UPDATE $this->table SET style=? WHERE id=$this->id", array($style));
+		$this->style = $style;
+	}
 }
 ?>

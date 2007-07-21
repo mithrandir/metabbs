@@ -3,24 +3,27 @@ if (!$account->is_admin()) {
 	access_denied();
 }
 function get_styles() {
-	$skins = array();
+	$styles = array();
 	$dir = @opendir('styles');
 	if ($dir) {
 		while ($file = readdir($dir)) {
 			$path = 'styles/' . $file;
 			if ($file[0] != '.' && is_dir($path)) {
-				include $path.'/style.php';
-				$skins[] = array($file, $style_name, $style_creator, $style_license);
+				$styles[] = new Style($file);
 			}
 		}
 		closedir($dir);
 	}
-	return $skins;
+	return $styles;
 }
 $license_mapping = array(
 	'GPL' => '<a href="http://www.opensource.org/licenses/gpl-license.php">GNU General Public License (GPL)</a>',
 	'MIT' => '<a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>'
 );
+if (isset($_GET['style'])) {
+	$board->change_style($_GET['style']);
+	redirect_to('?tab=skin');
+}
 if (is_post()) {
 	if ($_GET['tab'] == 'general') {
 		$_board = new Board($_POST['board']);
@@ -47,4 +50,5 @@ if (is_post()) {
 }
 $view = ADMIN_VIEW;
 $styles = get_styles();
+$current_style = $board->get_style();
 ?>
