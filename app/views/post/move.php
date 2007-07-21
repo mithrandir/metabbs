@@ -11,5 +11,7 @@
 </select>
 <input type="submit" value="<?=i('Move')?>" />
 </p>
+<p><input type="checkbox" value="1" name="track" id="track" checked="checked" /> <label for="track">글 옮길 때 흔적 남기기</a></p>
+</p>
 <p><?=link_to(i('Cancel'), $post)?></p>
 </form>

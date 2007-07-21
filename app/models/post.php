@@ -161,14 +161,17 @@ class Post extends Model {
 	function valid() {
 		return !empty($this->name) && !empty($this->title) && !empty($this->body);
 	}
-	function move_to($board) {
+	function move_to($board, $track = true) {
 		$_id = $this->id;
 		$this->id = null;
 		$this->category_id = 0;
 		$this->board_id = $board->id;
 		$this->create();
 		$this->db->query("DELETE FROM $this->table WHERE moved_to=$_id");
-		$this->db->query("UPDATE $this->table SET moved_to=$this->id WHERE id=$_id");
+		if ($track)
+			$this->db->query("UPDATE $this->table SET moved_to=$this->id WHERE id=$_id");
+		else
+			$this->db->query("DELETE FROM $this->table WHERE id=$_id");
 		$this->db->query("UPDATE $this->comment_table SET post_id=$this->id WHERE post_id=$_id");
 		$this->db->query("UPDATE $this->trackback_table SET post_id=$this->id WHERE post_id=$_id");
 		$this->db->query("UPDATE $this->attachment_table SET post_id=$this->id WHERE post_id=$_id");
