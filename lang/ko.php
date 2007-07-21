@@ -112,3 +112,4 @@ Max upload size=최대 업로드 가능 크기
 Backup and Restore=백업 및 복원
 Backup=백업
 Restore=복원
+Timezone=시간대

@@ -17,6 +17,7 @@ if (is_post()) {
 	}
 	$config->set('timezone', $settings['timezone']);
 	Timezone::set($settings['timezone']);
+	$config->set('force_fancy_url', $settings['force_fancy_url']);
 	$config->write_to_file();
 	$flash = i('Setting saved.');
 	$flash_class = 'pass';

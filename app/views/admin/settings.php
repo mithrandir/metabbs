@@ -30,5 +30,8 @@
 	</dd>
 </dl>
 
+<h2>고급 설정</h2>
+<p><?=check_box('settings', 'force_fancy_url', $config->get('force_fancy_url', false))?> <?=label_tag('Fancy URL 강제 적용', 'settings', 'force_fancy_url')?></p>
+
 <p><input type="submit" value="OK" /></p>
 </form>
