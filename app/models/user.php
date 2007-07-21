@@ -88,6 +88,9 @@ class User extends Model {
 			break;
 			case 'read':
 				$board = $object->get_board();
+				if ($object->secret && $object->user_id != $this->id &&
+					!$this->has_perm('admin', $board))
+					return false;
 				return $this->level >= $board->perm_read;
 			break;
 			case 'admin':
@@ -135,6 +138,12 @@ class Guest extends Model
 			break;
 			case 'read':
 				$board = $object->get_board();
+				if ($object->secret) {
+					if ($object->user_id == 0)
+						return ASK_PASSWORD;
+					else
+						return false;
+				}
 				return $this->level >= $board->perm_read;
 			break;
 			case 'admin':
@@ -149,10 +158,15 @@ class Guest extends Model
 					$board = $object->get_board();
 				else
 					$board = $object;
+
 				if ($this->level >= $board->perm_delete)
 					return true;
-				if (isset($object->user_id) && $object->user_id == 0)
+				else if (isset($object->secret) && $object->secret &&
+					$action == 'edit')
 					return ASK_PASSWORD;
+				else if (isset($object->user_id) && $object->user_id == 0)
+					// edit 액션일 때는 고치기 폼에서 암호를 입력함.
+					return $action == 'edit' ? true : ASK_PASSWORD;
 				else
 					return false;
 			break;
