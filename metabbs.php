@@ -47,12 +47,12 @@ if ($view == ADMIN_VIEW) {
 	$layout->wrap('<div id="meta">', '</div>');
 }
 
-foreach (get_header_paths() as $header) include $header;
+include get_header_path();
 echo $layout->header;
 if (isset($template)) {
 	$template->set('title', $title);
 	$template->render();
 } else include "app/views/$controller/$action.php";
 echo $layout->footer;
-foreach (get_footer_paths() as $footer) include $footer;
+include get_footer_path();
 ?>

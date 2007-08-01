@@ -1,10 +1,9 @@
 		</div>
 		
 		<div id="sidebar">
-		<? if ($guest || $account->has_perm('write', $board)) { ?>
 		<h3>Admin</h3>
 		<ul>
-		<? if ($guest) { ?>
+		<? if ($account->is_guest()) { ?>
 			<li><?=login()?></li>
 		<? } ?>
 		<? if ($account->is_admin()) { ?>
@@ -20,7 +19,6 @@
 			<li><a href="<?=$link_delete?>"><?=i('Delete')?></a></li>
 		<? } ?>
 		</ul>
-		<? } ?>
 
 		<? if ($board->use_category) { ?>
 		<h3>Category</h3>

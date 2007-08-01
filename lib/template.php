@@ -108,19 +108,19 @@ class Layout {
 	}
 }
 
-function get_header_paths() {
-	global $view, $_skin_dir, $config;
+function get_header_path() {
+	global $view, $config;
 	if ($view == ADMIN_VIEW)
-		return array('elements/admin_header.php');
+		return 'elements/admin_header.php';
 	else
-		return array($config->get('global_header', 'elements/default_header.php'));
+		return $config->get('global_header', 'elements/default_header.php');
 }
-function get_footer_paths() {
-	global $view, $_skin_dir, $config;
+function get_footer_path() {
+	global $view, $config;
 	if ($view == ADMIN_VIEW)
-		return array('elements/admin_footer.php');
+		return 'elements/admin_footer.php';
 	else
-		return array($config->get('global_footer', 'elements/default_footer.php'));
+		return $config->get('global_footer', 'elements/default_footer.php');
 }
 
 function meta_format_date($format, $now) {
