@@ -13,7 +13,7 @@ if (is_post() && (!$account->is_guest() || $comment->password == md5($_POST['pas
 	$template->set('link_cancel', url_for($post));
 
 	if (is_xhr()) {
-		$template->render();
+		$template->render_partial();
 		exit;
 	}
 }

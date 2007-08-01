@@ -20,7 +20,7 @@ if (is_xhr()) {
 	$template = get_template($board, '_comment');
 	$template->set('board', $board);
 	$template->set('comment', $comment);
-	$template->render();
+	$template->render_partial();
 	exit;
 } else {
 	redirect_to(url_for($post));

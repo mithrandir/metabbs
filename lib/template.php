@@ -16,7 +16,7 @@ function print_comment_tree($comments) {
 	$template->view = '_comment';
 	foreach ($comments as $comment) {
 		$template->set('comment', $comment);
-		$template->render();
+		$template->render_partial();
 	}
 }
 
@@ -35,6 +35,12 @@ class Template {
 		$this->vars[$key] = $value;
 	}
 	function render() {
+		extract($this->vars);
+		include "$this->path/header.php";
+		include "$this->path/$this->view.php";
+		include "$this->path/footer.php";
+	}
+	function render_partial() {
 		extract($this->vars);
 		include "$this->path/$this->view.php";
 	}
@@ -107,14 +113,14 @@ function get_header_paths() {
 	if ($view == ADMIN_VIEW)
 		return array('elements/admin_header.php');
 	else
-		return array($config->get('global_header', 'elements/default_header.php'), $_skin_dir . '/header.php');
+		return array($config->get('global_header', 'elements/default_header.php'));
 }
 function get_footer_paths() {
 	global $view, $_skin_dir, $config;
 	if ($view == ADMIN_VIEW)
 		return array('elements/admin_footer.php');
 	else
-		return array($_skin_dir . '/footer.php', $config->get('global_footer', 'elements/default_footer.php'));
+		return array($config->get('global_footer', 'elements/default_footer.php'));
 }
 
 function meta_format_date($format, $now) {

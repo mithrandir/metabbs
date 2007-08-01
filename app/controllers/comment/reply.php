@@ -25,7 +25,7 @@ if (is_post()) {
 		$template = get_template($board, '_comment');
 		$template->set('board', $board);
 		$template->set('comment', $_comment);
-		$template->render();
+		$template->render_partial();
 		exit;
 	} else {
 		redirect_to(url_for($post));
@@ -35,7 +35,7 @@ if (is_post()) {
 	$template->set('comment', $comment);
 	$template->set('name', cookie_get('name'));
 	if (is_xhr()) {
-		$template->render();
+		$template->render_partial();
 		exit;
 	}
 }
