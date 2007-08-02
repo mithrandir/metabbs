@@ -84,7 +84,10 @@ class Board extends Model {
 	}
 	function get_posts($offset, $limit) {
 		$where = $this->get_condition();
-		return $this->db->fetchall("SELECT * FROM $this->post_table as p WHERE $where ORDER BY notice DESC, id DESC LIMIT $offset, $limit", 'Post', $this->search_data);
+		$fields = "id, board_id, user_id, category_id, name, title, created_at, notice, views, secret, moved_to";
+		if ($this->get_post_body)
+			$fields .= ', body';
+		return $this->db->fetchall("SELECT $fields FROM $this->post_table as p WHERE $where ORDER BY notice DESC, id DESC LIMIT $offset, $limit", 'Post', $this->search_data);
 	}
 	function search_posts_with_comment($offset, $limit) {
 		$where = $this->get_condition();

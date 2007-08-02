@@ -30,9 +30,11 @@ class Skin {
 		$this->name = $name;
 		if (file_exists("skins/$name/skin.php")) {
 			include "skins/$name/skin.php";
-			$this->engine = $skin_engine;
+			$this->engine = $template_engine;
+			$this->options = $options;
 		} else {
 			$this->engine = 'default';
+			$this->options = array();
 		}
 		require_once "lib/template_engines/$this->engine.php";
 		$this->template_class = $this->engine.'Template';
@@ -45,6 +47,13 @@ class Skin {
 	}
 	function get_path() {
 		return "skins/$this->name";
+	}
+	function get_option($key, $default = null) {
+		if (array_key_exists($key, $this->options)) {
+			return $this->options[$key];
+		} else {
+			return $default;
+		}
 	}
 }
 
