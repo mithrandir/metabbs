@@ -25,33 +25,20 @@ function get_template($board, $view) {
 	return $style->get_template($view);
 }
 
-class Template {
-	function Template($path, $view) {
-		$this->path = $path;
-		$this->view = $view;
-		$this->vars = get_global_template_vars();
-	}
-	function set($key, $value) {
-		$this->vars[$key] = $value;
-	}
-	function render() {
-		extract($this->vars);
-		include "$this->path/header.php";
-		include "$this->path/$this->view.php";
-		include "$this->path/footer.php";
-	}
-	function render_partial() {
-		extract($this->vars);
-		include "$this->path/$this->view.php";
-	}
-}
-
 class Skin {
 	function Skin($name) {
 		$this->name = $name;
+		if (file_exists("skins/$name/skin.php")) {
+			include "skins/$name/skin.php";
+			$this->engine = $skin_engine;
+		} else {
+			$this->engine = 'default';
+		}
+		require_once "lib/template_engines/$this->engine.php";
+		$this->template_class = $this->engine.'Template';
 	}
 	function get_template($view) {
-		$template = new Template($this->get_path(), $view);
+		$template = new $this->template_class($this->get_path(), $view);
 		$template->set('skin_dir', METABBS_BASE_PATH.$this->get_path());
 		$template->set('_skin_dir', $this->get_path());
 		return $template;
