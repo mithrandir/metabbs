@@ -75,7 +75,7 @@ class Post extends Model {
 		return $this->edited_at != 0;
 	}
 	function get_board() {
-		return Board::find($this->board_id);
+		return find_and_cache('board', $this->board_id);
 	}
 	function get_board_name() {
 		$board = $this->get_board();

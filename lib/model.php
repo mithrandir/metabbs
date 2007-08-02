@@ -1,6 +1,8 @@
 <?php
 define('METABBS_DB_REVISION', 869);
 
+$__cache = array();
+
 /**
  * 모델 명칭으로부터 DB 테이블의 이름을 만든다.
  * @param $model 모델 명
@@ -18,6 +20,18 @@ function get_table_name($model) {
  */
 function get_column_pair($key, $value) {
 	return "$key=$value";
+}
+
+function find_and_cache($model, $id) {
+	global $__cache;
+	$key = $model.'_'.$id;
+	if (!isset($__cache[$key])) {
+		$o = call_user_func(array($model, 'find'), $id);
+		$__cache[$key] = $o;
+	} else {
+		$o = $__cache[$key];
+	}
+	return $o;
 }
 
 /**

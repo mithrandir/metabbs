@@ -104,7 +104,9 @@ class Board extends Model {
 		$post->create();
 	}
 	function get_post_count() {
-		return $this->db->fetchone("SELECT COUNT(*) FROM $this->post_table WHERE board_id=$this->id");
+		if (!isset($this->_count))
+			$this->_count = $this->db->fetchone("SELECT COUNT(*) FROM $this->post_table WHERE board_id=$this->id");
+		return $this->_count;
 	}
 	function get_post_count_with_condition($extra = null, $extra_params = array()) {
 		$query = "SELECT COUNT(*) FROM $this->post_table as p";

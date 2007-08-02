@@ -23,7 +23,7 @@ class Comment extends Model {
 		return User::find($this->user_id);
 	}
 	function get_post() {
-		return Post::find($this->post_id);
+		return find_and_cache('post', $this->post_id);
 	}
 	function get_board() {
 		$post = $this->get_post();
