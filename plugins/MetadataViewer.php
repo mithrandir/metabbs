@@ -1,9 +1,11 @@
 <?php
 class MetadataViewer extends Plugin {
 	function on_init() {
+		add_filter('PostList', array(&$this, 'print_metadata'), 10000);
 		add_filter('PostView', array(&$this, 'print_metadata'), 10000);
 	}
 	function print_metadata(&$post) {
+		if (!$post->body) return;
 		ob_start();
 		$attributes = $post->get_attributes();
 		if (!$attributes) return;

@@ -21,10 +21,12 @@ class Emoticon extends Plugin {
 		'8-|' => 'face-glasses.png'
 	);
 	function on_init() {
+		add_filter('PostList', array(&$this, 'emote_filter'), 1000);
 		add_filter('PostView', array(&$this, 'emote_filter'), 1000);
 		add_filter('PostViewComment', array(&$this, 'emote_filter'), 1000);
 	}
 	function emote_filter(&$model) {
+		if (!$model->body) return;
 		foreach ($this->mapping as $k => $v) {
 			$model->body = str_replace($k, image_tag(METABBS_BASE_PATH.'plugins/emotes/'.$v), $model->body);
 		}
