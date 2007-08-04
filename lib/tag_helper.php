@@ -54,12 +54,12 @@ function link_to_post($post) {
 	if ($post->secret && !$account->has_perm('read', $post)) {
 		return htmlspecialchars($post->title);
 	} else {
-		return link_to(htmlspecialchars($post->title), $post, '');
+		return link_to(htmlspecialchars($post->title), $post, '', get_search_params());
 	}
 }
 function link_to_category($category) {
 	if ($category->exists()) {
-		return link_to(htmlspecialchars($category->name), $category->get_board(), '', array('search[category]' => $category->id));
+		return link_to(htmlspecialchars($category->name), $category->get_board(), '', array('category' => $category->id));
 	} else {
 		return 'Unknown';
 	}

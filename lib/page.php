@@ -8,8 +8,8 @@
  * $text가 있는 경우에는 텍스트를 없는 경우엔 페이지 번호를 텍스트로 삼는다.
  */
 function link_to_page($page, $text = null) {
-	$params = array('page' => $page);
-	set_default_params($params);
+	$params = get_search_params();
+	$params['page'] = $page;
 	return link_text(query_string_for($params), $text ? $text : $page);
 }
 
@@ -20,7 +20,7 @@ function link_to_page($page, $text = null) {
  */
 function print_pages($board, $padding = 2) {
 	$page = get_requested_page();
-	$count = $board->get_post_count_with_condition();
+	$count = $board->finder->get_post_count();
 	_print_pages($page, $count, $board->posts_per_page, $padding);
 }
 

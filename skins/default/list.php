@@ -4,7 +4,7 @@
 <h2><?=i('Category')?> '<?=$category->name?>'</h2>
 <? } ?>
 <form method="get" action="<?=url_for($board)?>">
-<select name="search[category]" onchange="this.form.submit()">
+<select name="category" onchange="this.form.submit()">
 <option value="0"><?=i('Select category')?></option>
 <? foreach ($categories as $_category) { ?>
 <?=option_tag($_category->id, $_category->name, isset($category) && $category->id == $_category->id)?>
@@ -66,12 +66,12 @@
 
 <? print_pages($board); ?>
 
-<form method="get" action="?">
+<form method="get" action="">
 <p>
-<?=check_box("search", "title", $board->search['title'])?> <?=i('Title')?>
- <?=check_box("search", "body", $board->search['body'])?> <?=i('Body')?>
- <?=check_box("search", "comment", $board->search['comment'])?> <?=i('Comments')?>
- <?=text_field("search", "text", $board->search['text'])?> <?=submit_tag("Search")?> <?=link_text("?", i("Return"))?>
+<input type="checkbox" name="title" id="search_title" value="1" <?=$title_checked?> /> <label for="search_title"><?=i('Title')?></label> 
+<input type="checkbox" name="body" id="search_body" value="1" <?=$body_checked?> /> <label for="search_body"><?=i('Body')?></label> 
+<input type="text" name="keyword" value="<?=$keyword?>" />
+<input type="submit" value="<?=i('Search')?>" />
 </p>
 </form>
 

@@ -56,17 +56,27 @@ function full_url_for($controller, $action = '') {
  * @return 생성된 url 주소
  */
 function url_for($controller, $action = null, $params = array()) {
-	set_default_params($params);
 	return _url_for($controller, $action, $params);
 }
 
-function set_default_params(&$params) {
-	if (isset($_GET['search']) && $_GET['search']) {
-		foreach ($_GET['search'] as $k => $v) {
-			$k = "search[$k]";
-			if ($v && !isset($params[$k])) $params[$k] = urlencode($v);
-		}
+function get_search_params() {
+	$params = array();
+	$keys = array();
+	if (isset($_GET['category']) && $_GET['category']) {
+		$keys[] = 'category';
 	}
+	if (isset($_GET['keyword']) && $_GET['keyword']) {
+		$keys[] = 'keyword';
+		$keys[] = 'title';
+		$keys[] = 'body';
+	}
+	if ($keys) $keys[] = 'page';
+		
+	foreach ($keys as $k) {
+		if (isset($_GET[$k]) && $_GET[$k])
+			$params[$k] = urlencode($_GET[$k]);
+	}
+	return $params;
 }
 
 /**

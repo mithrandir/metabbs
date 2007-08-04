@@ -1,26 +1,48 @@
 <?php
 permission_required('list', $board);
 
-if (isset($_GET['search'])) {
-	$board->search = array_merge($board->search, $_GET['search']);
-}
-
 $style = $board->get_style();
 $template = $style->get_template('list');
 $template->set('board', $board);
 
-$board->get_post_body = $style->skin->get_option('get_body_in_the_list', true);
+if (isset($_GET['search'])) {
+	// backward compatibility
+	$_GET['search']['keyword'] = $_GET['search']['text'];
+	unset($_GET['search']['text']);
+	redirect_to(query_string_for($_GET['search']));
+}
+
+$finder = new PostFinder($board);
+$board->finder = $finder;
+$finder->set_page(get_requested_page());
+$finder->get_post_body = $style->skin->get_option('get_body_in_the_list', true);
+
+if (isset($_GET['keyword']) && $_GET['keyword']) {
+	$keyword = $_GET['keyword'];
+	$finder->set_keyword($keyword);
+	$template->set('keyword', $keyword);
+	foreach (array('title', 'body') as $key) {
+		if (isset($_GET[$key]) && $_GET[$key]) {
+			$finder->add_condition($key);
+			$template->set($key.'_checked', 'checked="checked"');
+		} else {
+			$template->set($key.'_checked', '');
+		}
+	}
+} else {
+	$template->set('keyword', '');
+	$template->set('title_checked', 'checked="checked"');
+	$template->set('body_checked', '');
+}
 
 if ($board->use_category) {
-	if ($board->search['category'])
-		$template->set('category', Category::find($board->search['category']));
 	$template->set('categories', $board->get_categories());
+	if (isset($_GET['category'])) {
+		$category = Category::find($_GET['category']);
+		$finder->set_category($category);
+	}
 }
-if ($board->search['comment'] && $board->search['text']) {
-	$posts = $board->get_posts_in_page(get_requested_page(), 'search_posts_with_comment');
-} else {
-	$posts = $board->get_posts_in_page(get_requested_page());
-}
+$posts = $finder->get_posts();
 apply_filters_array('PostList', $posts);
 
 $template->set('posts', $posts);

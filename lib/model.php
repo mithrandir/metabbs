@@ -34,6 +34,12 @@ function find_and_cache($model, $id) {
 	return $o;
 }
 
+function find($model, $key, $value) {
+	global $__db;
+	$table = get_table_name($model);
+	return $__db->fetchrow("SELECT * FROM $table WHERE $key=?", $model, array($value));
+}
+
 /**
  * 모델 객체
  * DB 입출력 등의 일을 자동화 한다.
@@ -54,6 +60,8 @@ class Model
 		global $__db;
 		$this->db = $__db;
 		$this->import($attributes);
+		if (isset($this->model))
+			$this->table = get_table_name($this->model);
 		$this->_init();
 	}
 
@@ -78,11 +86,11 @@ class Model
 	 * id의 존재 여부를 확인
 	 */
 	function exists() {
-		return !!$this->id;
+		return (bool) $this->id;
 	}
 
 	/**
-	 * id를 가져온다.
+	 * URL에서 사용할 ID를 가져온다.
 	 * @return id
 	 */
 	function get_id() {
@@ -116,7 +124,7 @@ class Model
 	}
 
 	/**
-	 * 항목의 내용을 개선한다.
+	 * 항목의 내용을 바꾼한다.
 	 */
 	function update() {
 		$columns = $this->get_columns();

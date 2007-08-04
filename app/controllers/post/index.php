@@ -29,7 +29,10 @@ $comments = $post->get_comments();
 apply_filters_array('PostViewComment', $comments);
 $template->set('comments', $comments);
 
-$template->set('link_list', url_for($board, '', array('page' => $post->get_page())));
+$params = get_search_params();
+if (!isset($params['page']))
+	$params['page'] = $post->get_page();
+$template->set('link_list', url_for($board, '', $params));
 $template->set('link_new_post', $account->has_perm('write', $board) ? url_for($board, 'post') : null);
 
 $template->set('link_edit', $account->has_perm('edit', $post) ? url_for($post, 'edit') : '');

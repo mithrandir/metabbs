@@ -10,7 +10,7 @@
 <strong><?=i('Category')?>:</strong>
 <a href="?" class="category"><?=i('All')?></a>
 <? foreach ($categories as $_category) { ?>
-<span class="category"><a href="?search[category]=<?=$_category->id?>"><?=$_category->name?></a> <span class="posts-count">(<?=$_category->get_post_count()?>)</span></a>
+<span class="category"><?=link_to_category($_category)?> <span class="posts-count">(<?=$_category->get_post_count()?>)</span></a>
 <? } ?>
 </div>
 <? } ?>
@@ -53,7 +53,10 @@
 <div id="meta-nav">
 <? print_pages($board); ?>
 
-<form method="get" action="?search[title]=1&amp;search[body]=1" id="searchform">
-<?=text_field("search", "text", $board->search['text'])?> <?=submit_tag("Search")?> <? if ($board->search['text']) { ?><a href="?"><?=i('Cancel')?></a><? } ?>
+<form method="get" action="">
+<input type="checkbox" name="title" id="search_title" value="1" <?=$title_checked?> /> <label for="search_title"><?=i('Title')?></label> 
+<input type="checkbox" name="body" id="search_body" value="1" <?=$body_checked?> /> <label for="search_body"><?=i('Body')?></label> 
+<input type="text" name="keyword" value="<?=$keyword?>" />
+<input type="submit" value="<?=i('Search')?>" />
 </form>
 </div>

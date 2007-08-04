@@ -2,8 +2,6 @@
 class Board extends Model {
 	var $model = 'board';
 
-	var $search = array('title' => 1, 'body' => 1, 'comment' => 0, 'text' => '', 'category' => 0);
-	var $category;
 	var $title;
 	var $style = 'blueprint';
 
@@ -15,7 +13,6 @@ class Board extends Model {
 	var $use_trackback = 1;
 
 	function _init() {
-		$this->table = get_table_name('board');
 		$this->post_table = get_table_name('post');
 		$this->comment_table = get_table_name('comment');
 		$this->category_table = get_table_name('category');
@@ -24,14 +21,10 @@ class Board extends Model {
 		return $this->name;
 	}
 	function find($id) {
-		$db = get_conn();
-		$table = get_table_name('board');
-		return $db->fetchrow("SELECT * FROM $table WHERE id=?", 'Board', array($id));
+		return find('board', 'id', $id);
 	}
 	function find_by_name($name) {
-		$db = get_conn();
-		$table = get_table_name('board');
-		return $db->fetchrow("SELECT * FROM $table WHERE name=?", 'Board', array($name));
+		return find('board', 'name', $name);
 	}
 	function find_all() {
 		$db = get_conn();
@@ -45,56 +38,14 @@ class Board extends Model {
 	function get_title() {
 		return $this->title ? $this->title : @$this->name;
 	}
-	function get_condition($extra = null, $extra_params = array()) {
-		$cond = "p.board_id=$this->id";
-		$data = array();
-		if ($text = $this->search['text']) {
-			$text = '%' . $text . '%';
-			$search = array();
-			if ($this->search['comment']) {
-				$search[] = "(p.id=c.post_id AND c.body LIKE ?)";
-				$data[] = $text;
-			}
-			if ($this->search['title']) {
-				$search[] = "p.title LIKE ?";
-				$data[] = $text;
-			}
-			if ($this->search['body']) {
-				$search[] = "p.body LIKE ?";
-				$data[] = $text;
-			}
-			$cond .= " AND (" . implode(" OR ", $search) . ")";
-		}
-		if ($this->search['category']) {
-			$cond .= " AND p.category_id=?";
-			$data[] = $this->search['category'];
-		}
-		if (is_string($extra) and strlen(trim($extra))) {
-			$cond = " ($cond) AND ($extra) ";
-			if (is_array($extra_params)) {
-				$data = array_merge($data, $extra_params);
-			}
-		}
-		else if(is_array($extra) and count($extra)) {
-			$cond = " ($cond) AND (" . implode(" = ?) AND (", array_keys($extra)) . " = ?) ";
-			$data = array_merge($data, array_values($extra));
-		}
-		$this->search_data = $data;
-		return $cond;
-	}
 	function get_posts($offset, $limit) {
-		$where = $this->get_condition();
 		$fields = "id, board_id, user_id, category_id, name, title, created_at, notice, views, secret, moved_to";
 		if ($this->get_post_body)
 			$fields .= ', body';
-		return $this->db->fetchall("SELECT $fields FROM $this->post_table as p WHERE $where ORDER BY notice DESC, id DESC LIMIT $offset, $limit", 'Post', $this->search_data);
+		return $this->db->fetchall("SELECT $fields FROM $this->post_table as p WHERE board_id=$this->id ORDER BY notice DESC, id DESC LIMIT $offset, $limit", 'Post');
 	}
-	function search_posts_with_comment($offset, $limit) {
-		$where = $this->get_condition();
-		return $this->db->fetchall("SELECT p.* FROM $this->post_table as p, $this->comment_table as c WHERE $where GROUP BY p.id ORDER BY p.notice DESC, p.id DESC LIMIT $offset, $limit", 'Post', $this->search_data);
-	}
-	function get_posts_in_page($page, $method = 'get_posts') {
-		return $this->$method(($page - 1) * $this->posts_per_page, $this->posts_per_page);
+	function get_posts_in_page($page) {
+		return $this->get_posts(($page - 1) * $this->posts_per_page, $this->posts_per_page);
 	}
 	function get_feed_posts($count) {
 		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE board_id=$this->id ORDER BY id DESC LIMIT $count", 'Post');
@@ -107,16 +58,6 @@ class Board extends Model {
 		if (!isset($this->_count))
 			$this->_count = $this->db->fetchone("SELECT COUNT(*) FROM $this->post_table WHERE board_id=$this->id");
 		return $this->_count;
-	}
-	function get_post_count_with_condition($extra = null, $extra_params = array()) {
-		$query = "SELECT COUNT(*) FROM $this->post_table as p";
-		if ($this->search['comment']) {
-			$query .= ", $this->comment_table as c";
-			$grouping = " GROUP BY p.id";
-		} else {
-			$grouping = "";
-		}
-		return $this->db->fetchone($query . " WHERE ".$this->get_condition($extra, $extra_params).$grouping, $this->search_data);
 	}
 	function get_categories() {
 		return $this->db->fetchall("SELECT * FROM $this->category_table WHERE board_id=$this->id", 'Category');
@@ -141,6 +82,58 @@ class Board extends Model {
 	function change_style($style) {
 		$this->db->query("UPDATE $this->table SET style=? WHERE id=$this->id", array($style));
 		$this->style = $style;
+	}
+}
+
+class PostFinder {
+	var $order = 'id DESC';
+	var $keyword = '';
+	var $category = null;
+
+	function PostFinder($board) {
+		$this->board = $board;
+		$this->db = $GLOBALS['__db'];
+		$this->table = get_table_name('post');
+		$this->conditions = array('title' => false, 'body' => false);
+	}
+	function set_keyword($keyword) {
+		$this->keyword = $keyword;
+	}
+	function add_condition($key) {
+		$this->conditions[$key] = true;
+	}
+	function order_by($field) {
+		$this->order = $field;
+	}
+	function set_page($page) {
+		$this->page = $page;
+	}
+	function set_category($category) {
+		$this->category = $category;
+	}
+	function get_condition() {
+		$and_parts = array('board_id='.$this->board->id);
+		$or_parts = array();
+		foreach ($this->conditions as $k => $v) {
+			if ($v) $or_parts[] = "$k LIKE '%".$this->db->escape($this->keyword)."%'";
+		}
+		if ($or_parts)
+			$and_parts[] = '('.implode(' OR ', $or_parts).')';
+		if ($this->category)
+			$and_parts[] = 'category_id='.$this->category->id;
+		return implode(' AND ', $and_parts);
+	}
+	function get_posts() {
+		$fields = "id, board_id, user_id, category_id, name, title, created_at, notice, views, secret, moved_to";
+		if ($this->get_post_body) $fields .= ', body';
+		$offset = ($this->page - 1) * $this->board->posts_per_page;
+		$limit = $this->board->posts_per_page;
+		$condition = $this->get_condition();
+		return $this->db->fetchall("SELECT $fields FROM $this->table WHERE $condition ORDER BY notice DESC, $this->order LIMIT $offset, $limit", 'Post');
+	}
+	function get_post_count() {
+		$condition = $this->get_condition();
+		return $this->db->fetchone("SELECT COUNT(*) FROM $this->table WHERE $condition");
 	}
 }
 ?>
