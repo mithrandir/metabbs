@@ -13,7 +13,7 @@
 </select>
 <? } ?>
 <? if ($account->has_perm('admin', $board)) { ?>
-<p><?=label_tag("Notice", "post", "notice")?> <?=check_box("post", "notice", $post-notice)?></p>
+<p><?=label_tag("Notice", "post", "notice")?> <?=check_box("post", "notice", $post->notice)?></p>
 <? } ?>
 <p><?=label_tag("Secret Post", "post", "secret")?> <?=check_box("post", "secret", $post->secret)?></p>
 <p><?=text_area("post", "body", 12, 60, $post->body)?></p>
