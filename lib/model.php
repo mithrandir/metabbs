@@ -1,6 +1,4 @@
 <?php
-define('METABBS_DB_REVISION', 869);
-
 $__cache = array();
 
 /**

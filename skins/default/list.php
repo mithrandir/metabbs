@@ -68,8 +68,8 @@
 
 <form method="get" action="">
 <p>
-<input type="checkbox" name="title" id="search_title" value="1" <?=$title_checked?> /> <label for="search_title"><?=i('Title')?></label> 
-<input type="checkbox" name="body" id="search_body" value="1" <?=$body_checked?> /> <label for="search_body"><?=i('Body')?></label> 
+<input type="checkbox" name="title" value="1" <?=$title_checked?> /> <?=i('Title')?> 
+<input type="checkbox" name="body" value="1" <?=$body_checked?> /> <?=i('Body')?> 
 <input type="text" name="keyword" value="<?=$keyword?>" />
 <input type="submit" value="<?=i('Search')?>" />
 </p>

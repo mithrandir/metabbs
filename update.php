@@ -1,7 +1,9 @@
 <?php
 define('METABBS_DIR', '.');
-require_once("lib/core.php");
-require_once("lib/backends/$backend/installer.php");
+require_once "lib/core.php";
+require_once "lib/backends/$backend/installer.php";
+include 'db/schema.php';
+
 $conn = get_conn();
 if (isset($_GET['rev'])) {
 	$current = $_GET['rev'];

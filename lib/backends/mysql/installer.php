@@ -71,6 +71,6 @@ function init_db() {
 		$config->write_to_file();
 		$conn->enable_utf8();
 	}
-	include("db/schema.php");
+	run($conn);
 }
 ?>

@@ -304,6 +304,8 @@ if (!isset($_POST['config'])) {
 		mkdir($dir, 0707);
 	}
 
+	include 'db/schema.php';
+
 	pass("Creating directories");
 	$config->config = $_POST['config'];
 	$config->set('backend', $backend);
