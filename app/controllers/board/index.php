@@ -37,10 +37,18 @@ if (isset($_GET['keyword']) && $_GET['keyword']) {
 }
 
 if ($board->use_category) {
-	$template->set('categories', $board->get_categories());
+	$categories = $board->get_categories();
+	$un = new UncategorizedPosts($board);
+	if ($un->exists())
+		array_unshift($categories, $un);
+	$template->set('categories', $categories);
 	if (isset($_GET['category'])) {
-		$category = Category::find($_GET['category']);
+		if ($_GET['category'] == 0)
+			$category = new UncategorizedPosts($board);
+		else
+			$category = Category::find($_GET['category']);
 		$finder->set_category($category);
+		$template->set('category', $category);
 	}
 }
 $posts = $finder->get_posts();

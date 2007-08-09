@@ -11,6 +11,7 @@ class Board extends Model {
 	var $use_attachment = 0;
 	var $use_category = 0;
 	var $use_trackback = 1;
+	var $order_by = '';
 
 	function _init() {
 		$this->post_table = get_table_name('post');

@@ -114,3 +114,4 @@ Backup=백업
 Restore=복원
 Timezone=시간대
 Sorting=정렬
+Uncategorized Posts=분류 없음

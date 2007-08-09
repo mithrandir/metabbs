@@ -62,7 +62,7 @@ function url_for($controller, $action = null, $params = array()) {
 function get_search_params() {
 	$params = array();
 	$keys = array();
-	if (isset($_GET['category']) && $_GET['category']) {
+	if (isset($_GET['category']) && $_GET['category'] !== '') {
 		$keys[] = 'category';
 	}
 	if (isset($_GET['keyword']) && $_GET['keyword']) {
@@ -73,7 +73,7 @@ function get_search_params() {
 	if ($keys) $keys[] = 'page';
 		
 	foreach ($keys as $k) {
-		if (isset($_GET[$k]) && $_GET[$k])
+		if (isset($_GET[$k]) && $_GET[$k] !== '')
 			$params[$k] = urlencode($_GET[$k]);
 	}
 	return $params;
