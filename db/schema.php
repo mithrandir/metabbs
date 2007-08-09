@@ -1,5 +1,5 @@
 <?php
-define('METABBS_DB_REVISION', 869);
+define('METABBS_DB_REVISION', 896);
 
 function run($conn) {
 	$t = new Table('board');
@@ -14,6 +14,7 @@ function run($conn) {
 	$t->column('perm_write', 'ushort');
 	$t->column('perm_comment', 'ushort');
 	$t->column('perm_delete', 'ushort');
+	$t->column('order_by', 'string', 20);
 	$t->add_index('name');
 	$conn->add_table($t);
 
@@ -32,6 +33,7 @@ function run($conn) {
 	$t->column('edited_at', 'timestamp');
 	$t->column('edited_by', 'integer');
 	$t->column('moved_to', 'integer');
+	$t->column('last_update_at', 'timestamp');
 	$t->add_index('board_id');
 	$t->add_index('category_id');
 	$t->add_index('user_id');

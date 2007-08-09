@@ -113,3 +113,4 @@ Backup and Restore=백업 및 복원
 Backup=백업
 Restore=복원
 Timezone=시간대
+Sorting=정렬

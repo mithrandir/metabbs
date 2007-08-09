@@ -30,6 +30,7 @@ class Post extends Model {
 		$this->password = md5($this->password);
 		$this->created_at = time();
 		$this->edited_at = 0;
+		$this->last_update_at = $this->created_at;
 		Model::create();
 	}
 	function update() {
@@ -87,6 +88,7 @@ class Post extends Model {
 		$comment->board_id = $this->board_id;
 		$comment->post_id = $this->id;
 		$comment->create();
+		$this->db->query("UPDATE $this->table SET last_update_at=$comment->created_at WHERE id=$this->id");
 	}
 	function get_comment_count() {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->comment_table WHERE post_id=$this->id AND user_id != -1");
@@ -158,7 +160,10 @@ class Post extends Model {
 	}
 	function get_page() {
 		$board = $this->get_board();
-		$query = "SELECT COUNT(*) FROM $this->table WHERE board_id=$board->id AND id > $this->id ".($this->notice ? 'AND' : 'OR')." notice=1";
+		if ($board->order_by == 'last_update_at DESC')
+			$query = "SELECT COUNT(*) FROM $this->table WHERE board_id=$board->id AND last_update_at > $this->last_update_at ".($this->notice ? 'AND' : 'OR')." notice=1";
+		else
+			$query = "SELECT COUNT(*) FROM $this->table WHERE board_id=$board->id AND id > $this->id ".($this->notice ? 'AND' : 'OR')." notice=1";
 		return 1 + floor($this->db->fetchone($query)/$board->posts_per_page);
 	}
 }
