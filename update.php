@@ -1,7 +1,5 @@
 <?php
-define('METABBS_DIR', '.');
-require_once "lib/core.php";
-require_once "lib/request.php";
+require_once "lib/common.php";
 require_once "lib/backends/$backend/installer.php";
 include 'db/schema.php';
 
@@ -34,7 +32,7 @@ if (isset($_GET['rev'])) {
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>MetaBBS Updater</title>
-	<link rel="stylesheet" href="/metabbs/elements/style.css" type="text/css" />
+	<link rel="stylesheet" href="<?=METABBS_BASE_PATH?>elements/style.css" type="text/css" />
 </head>
 <body>
 <div id="meta-admin">
