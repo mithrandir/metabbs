@@ -41,20 +41,26 @@ if (isset($_GET['rev'])) {
 <?php
 if ($current < METABBS_DB_REVISION) {
 	if (is_post()) {
-		echo '<ul>';
 		// find updates
+		$revs = array();
 		$dh = opendir('db');
 		while ($f = readdir($dh)) {
 			if (preg_match('/^update_([0-9]+)\.php$/', $f, $matches)) {
 				if ($matches[1] > $current) {
-					echo "<li>Applying patch: r$matches[1]";
-					include "db/$f";
-					if (isset($description)) echo " ($description)";
-					echo "</li>";
+					$revs[] = $matches[1];
 				}
 			}
 		}
 		closedir($dh);
+
+		sort($revs);
+		echo '<ul>';
+		foreach ($revs as $r) {
+			echo "<li>Applying patch: r$r";
+			include "db/update_$r.php";
+			if (isset($description)) echo " ($description)";
+			echo "</li>";
+		}
 		$config->set('revision', METABBS_DB_REVISION);
 		$config->write_to_file();
 		echo '</ul><p>done.</p>';
