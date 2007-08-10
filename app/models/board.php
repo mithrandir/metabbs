@@ -87,7 +87,7 @@ class Board extends Model {
 	function get_admins() {
 		if (!isset($this->_admins)) {
 			$table = get_table_name('user');
-			return $this->db->fetchall("SELECT u.* FROM $this->admin_table a, $table u WHERE u.level=255 OR (a.board_id=$this->id AND a.user_id=u.id) GROUP BY u.id", "User");
+			$this->_admins = $this->db->fetchall("SELECT u.* FROM $this->admin_table a, $table u WHERE u.level=255 OR (a.board_id=$this->id AND a.user_id=u.id) GROUP BY u.id", "User");
 		}
 		return $this->_admins;
 	}
