@@ -2,7 +2,7 @@
 <h2>현재 사용중인 모양새</h2>
 <table>
 <tr>
-	<td>
+	<td class="preview-image">
 	<? if (file_exists('styles/'.$board->style.'/preview.png')) { ?>
 	<img src="<?=$current_style->get_path()?>/preview.png" alt="Preview" />
 	<? } ?>
@@ -21,12 +21,12 @@
 <? foreach ($styles as $style) { ?>
 <? if ($style->name != $current_style->name) { ?>
 	<li>
-	<a href="?tab=skin&amp;style=<?=$style->name?>">
+	<div class="preview-image" onclick="location.href=this.next('a').href">
 	<? if (file_exists('styles/'.$style->name.'/preview.png')) { ?>
-	<img src="<?=$style->get_path()?>/preview.png" alt="Preview" /><br />
+	<img src="<?=$style->get_path()?>/preview.png" alt="Preview" />
 	<? } ?>
-	<?=$style->fullname?>
-	</a>
+	</div>
+	<a href="?tab=skin&amp;style=<?=$style->name?>"><?=$style->fullname?></a>
 	</li>
 <? } ?>
 <? } ?>

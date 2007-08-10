@@ -5,7 +5,7 @@
 <? } ?>
 <form method="get" action="<?=url_for($board)?>">
 <select name="category" onchange="this.form.submit()">
-<option value="0"><?=i('Select category')?></option>
+<option value=""><?=i('Select category')?></option>
 <? foreach ($categories as $_category) { ?>
 <?=option_tag($_category->id, $_category->name, isset($category) && $category->id == $_category->id)?>
 <? } ?>

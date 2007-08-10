@@ -6,7 +6,6 @@ class Board extends Model {
 	var $style = 'blueprint';
 
 	var $perm_read = 0, $perm_write = 0, $perm_comment = 0;
-	var $perm_delete = 255;
 	var $posts_per_page = 10;
 	var $use_attachment = 0;
 	var $use_category = 0;
@@ -14,6 +13,7 @@ class Board extends Model {
 	var $order_by = '';
 
 	function _init() {
+		$this->admin_table = get_table_name('board_admin');
 		$this->post_table = get_table_name('post');
 		$this->comment_table = get_table_name('comment');
 		$this->category_table = get_table_name('category');
@@ -83,6 +83,28 @@ class Board extends Model {
 	function change_style($style) {
 		$this->db->query("UPDATE $this->table SET style=? WHERE id=$this->id", array($style));
 		$this->style = $style;
+	}
+	function get_admins() {
+		if (!isset($this->_admins)) {
+			$table = get_table_name('user');
+			return $this->db->fetchall("SELECT u.* FROM $this->admin_table a, $table u WHERE u.level=255 OR (a.board_id=$this->id AND a.user_id=u.id) GROUP BY u.id", "User");
+		}
+		return $this->_admins;
+	}
+	function is_admin($user) {
+		foreach ($this->get_admins() as $admin) {
+			if ($admin->id == $user->id) return true;
+		}
+		return false;
+	}
+	function add_admin($user) {
+		foreach ($this->get_admins() as $admin) {
+			if ($admin->id == $user->id) return;
+		}
+		$this->db->query("INSERT INTO $this->admin_table (board_id, user_id) VALUES($this->id, $user->id)");
+	}
+	function drop_admin($admin) {
+		$this->db->query("DELETE FROM $this->admin_table WHERE board_id=$this->id AND user_id=$admin->id");
 	}
 }
 ?>

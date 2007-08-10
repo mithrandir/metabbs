@@ -94,7 +94,7 @@ class User extends Model {
 				return $this->level >= $board->perm_read;
 			break;
 			case 'admin':
-				return $this->is_admin(); //XXX
+				return $object->is_admin($this);
 			break;
 			case 'write':
 				return $this->level >= $object->perm_write;
@@ -105,7 +105,7 @@ class User extends Model {
 					$board = $object->get_board();
 				else
 					$board = $object;
-				return $this->level >= $board->perm_delete ||
+				return $this->has_perm('admin', $board) ||
 					(isset($object->user_id) && $object->user_id == $this->id);
 			break;
 			case 'reply':
@@ -159,9 +159,7 @@ class Guest extends Model
 				else
 					$board = $object;
 
-				if ($this->level >= $board->perm_delete)
-					return true;
-				else if (isset($object->secret) && $object->secret &&
+				if (isset($object->secret) && $object->secret &&
 					$action == 'edit')
 					return ASK_PASSWORD;
 				else if (isset($object->user_id) && $object->user_id == 0)

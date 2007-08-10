@@ -42,7 +42,7 @@ if ($board->use_category) {
 	if ($un->exists())
 		array_unshift($categories, $un);
 	$template->set('categories', $categories);
-	if (isset($_GET['category'])) {
+	if (isset($_GET['category']) && $_GET['category'] !== '') {
 		if ($_GET['category'] == 0)
 			$category = new UncategorizedPosts($board);
 		else

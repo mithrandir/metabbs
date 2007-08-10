@@ -10,15 +10,16 @@
 
 	<dt><?=label_tag("Posts per page", "board", "posts_per_page")?></dt>
 	<dd><?=text_field('board', 'posts_per_page', $board->posts_per_page)?></dd>
-	
+</dl>
+<dl>
 	<dt><?=label_tag("Use attachment", "board", "use_attachment")?></dt>
 	<dd><?=check_box('board', 'use_attachment', $board->use_attachment)?></dd>
-
 	<dt><?=label_tag("Use category", "board", "use_category")?></dt>
 	<dd><?=check_box('board', 'use_category', $board->use_category)?></dd>
 	<dt><?=label_tag("Use trackback", "board", "use_trackback")?></dt>
 	<dd><?=check_box('board', 'use_trackback', $board->use_trackback)?></dd>
-
+</dl>
+<dl>
 	<dt><?=label_tag("Sorting", "board", "order_by")?></dt>
 	<dd>
 		<select name="board[order_by]">

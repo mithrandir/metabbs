@@ -115,3 +115,5 @@ Restore=복원
 Timezone=시간대
 Sorting=정렬
 Uncategorized Posts=분류 없음
+Administrators=관리자
+Add=추가
