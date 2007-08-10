@@ -15,5 +15,7 @@ while ($row = $result->fetch()) {
 	$conn->query("INSERT INTO $table (board_id, user_id) VALUES($row[board_id], $row[user_id])");
 }
 
+$conn->query("INSERT INTO $table (board_id, user_id) VALUES(0, 0)"); // insert dummy data
+
 $conn->drop_field('board', 'perm_delete');
 ?>
