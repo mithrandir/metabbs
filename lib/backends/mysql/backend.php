@@ -182,5 +182,8 @@ class MySQLResult {
 	function fetch() {
 		return mysql_fetch_assoc($this->result);
 	}
+	function count() {
+		return mysql_num_rows($this->result);
+	}
 }
 ?>
