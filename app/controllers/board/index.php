@@ -34,6 +34,7 @@ if (isset($_GET['keyword']) && $_GET['keyword']) {
 	$template->set('keyword', '');
 	$template->set('title_checked', 'checked="checked"');
 	$template->set('body_checked', '');
+	$template->set('comment_checked', '');
 }
 
 if ($board->use_category) {

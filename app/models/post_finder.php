@@ -30,13 +30,17 @@ class PostFinder {
 		$and_parts = array('p.board_id='.$this->board->id);
 		$or_parts = array();
 		foreach ($this->conditions as $k => $v) {
-			if ($k == 'comment')
-				continue;
-			if ($v)
-				$or_parts[] = "p.$k LIKE '%$keyword%'";
+			if ($v) {
+				switch ($k) {
+					case 'comment':
+						$or_parts[] = "c.post_id = p.id AND c.body LIKE '%$keyword%'";
+					break;
+					default:
+						$or_parts[] = "p.$k LIKE '%$keyword%'";
+					break;
+				}
+			}
 		}
-		if($this->conditions['comment'])
-			$or_parts[] = "c.post_id = p.id AND c.body LIKE '%$keyword%'";
 		if ($or_parts)
 			$and_parts[] = '('.implode(' OR ', $or_parts).')';
 		if ($this->category)
@@ -50,20 +54,8 @@ class PostFinder {
 		);
 	}
 	function get_posts() {
-		$fields = trim('
-			p.id as id,
-			p.board_id as board_id,
-			p.user_id as user_id,
-			p.category_id as category_id,
-			p.name as name,
-			p.title as title,
-			p.created_at as created_at,
-			p.notice as notice,
-			p.views as views,
-			p.secret as secret,
-			p.moved_to as moved_to
-		');
-		if ($this->get_post_body) $fields .= ', p.body as body';
+		$fields = 'p.id, p.board_id, p.user_id, p.category_id, p.name, p.title, p.created_at, p.notice, p.views, p.secret, p.moved_to';
+		if ($this->get_post_body) $fields .= ', p.body';
 		$from = $this->get_from();
 		$offset = ($this->page - 1) * $this->board->posts_per_page;
 		$limit = $this->board->posts_per_page;
