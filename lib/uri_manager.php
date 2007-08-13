@@ -74,7 +74,9 @@ function get_search_params() {
 	if ($keys) $keys[] = 'page';
 		
 	foreach ($keys as $k) {
-		if (isset($_GET[$k]) && $_GET[$k] !== '')
+		if ($k == 'page')
+			$params['page'] = get_requested_page();
+		else if (isset($_GET[$k]) && $_GET[$k] !== '')
 			$params[$k] = urlencode($_GET[$k]);
 	}
 	return $params;
