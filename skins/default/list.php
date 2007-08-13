@@ -70,6 +70,7 @@
 <p>
 <input type="checkbox" name="title" value="1" <?=$title_checked?> /> <?=i('Title')?> 
 <input type="checkbox" name="body" value="1" <?=$body_checked?> /> <?=i('Body')?> 
+<input type="checkbox" name="comment" value="1" <?=$comment_checked?> /> <?=i('Comments')?> 
 <input type="text" name="keyword" value="<?=$keyword?>" />
 <input type="submit" value="<?=i('Search')?>" />
 </p>

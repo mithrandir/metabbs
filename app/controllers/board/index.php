@@ -22,7 +22,7 @@ if (isset($_GET['keyword']) && $_GET['keyword']) {
 	$keyword = $_GET['keyword'];
 	$finder->set_keyword($keyword);
 	$template->set('keyword', $keyword);
-	foreach (array('title', 'body') as $key) {
+	foreach (array('title', 'body', 'comment') as $key) {
 		if (isset($_GET[$key]) && $_GET[$key]) {
 			$finder->add_condition($key);
 			$template->set($key.'_checked', 'checked="checked"');
