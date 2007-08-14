@@ -39,7 +39,7 @@ if (isset($_GET['rev'])) {
 <h1>MetaBBS Updater</h1>
 <div id="body">
 <?php
-if ($current <= METABBS_DB_REVISION) {
+if ($current < METABBS_DB_REVISION) {
 	if (is_post()) {
 		// find updates
 		$revs = array();
