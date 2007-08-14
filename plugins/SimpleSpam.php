@@ -2,12 +2,12 @@
 class SimpleSpam extends Plugin {
 	var $description = 'Block posts containing bad words.';
 	function on_init() {
-		if (!file_exists('data/spam.txt')) {
-			$fp = fopen('data/spam.txt', 'w');
+		if (!file_exists(METABBS_DIR.'/data/spam.txt')) {
+			$fp = fopen(METABBS_DIR.'/data/spam.txt', 'w');
 			fwrite($fp, implode("\n", array('casino', 'poker', 'porn', 'blackjack', 'roulette', 'viagra', 'phentermine', '[url=')));
 			fclose($fp);
 		}
-		$this->spam_words = array_map('rtrim', file('data/spam.txt'));
+		$this->spam_words = array_map('rtrim', file(METABBS_DIR.'/data/spam.txt'));
 		add_filter('PostTrackback', array(&$this, 'tb_filter'), 10);
 		add_filter('PostSave', array(&$this, 'filter'), 10);
 		add_filter('PostComment', array(&$this, 'filter'), 10);
