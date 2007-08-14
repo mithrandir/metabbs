@@ -59,5 +59,5 @@ $template->set('posts', $posts);
 $template->set('posts_count', $board->get_post_count());
 $template->set('link_rss', url_for($board, 'rss'));
 $template->set('link_new_post', $account->has_perm('write', $board) ? url_for($board, 'post') : null);
-$template->set('massdelete', $account->has_perm('admin', $board));
+$template->set('admin', $account->has_perm('admin', $board));
 ?>

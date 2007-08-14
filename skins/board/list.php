@@ -14,12 +14,16 @@
 <? } ?>
 </div>
 <? } ?>
+<form method="post" action="<?=url_for($board, 'manage')?>" id="manage-posts">
 <table id="posts">
 <? foreach ($posts as $post) { ?>
 <? if ($post->notice) { ?>
 	<tr class="notice">
 <? } else { ?>
 	<tr>
+<? } ?>
+<? if ($admin) { ?>
+		<td class="manage"><input type="checkbox" name="posts[]" value="<?=$post->id?>" /></td>
 <? } ?>
 		<td class="meta">
 			<div class="writer"><?=$post->name?></div>
@@ -46,9 +50,15 @@
 <? } ?>
 </table>
 
+<? if ($admin) { ?>
+<? include 'manage.php'; ?>
+<? } ?>
+
 <div id="meta-actions">
+<? if ($admin) { ?><input type="submit" value="선택한 글 관리" /> | <? } ?>
 <? if ($link_new_post) { ?><a href="<?=$link_new_post?>"><?=i('New Post')?></a><? } ?>
 </div>
+</form>
 
 <div id="meta-nav">
 <? print_pages($board); ?>
