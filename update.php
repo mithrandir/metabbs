@@ -39,7 +39,7 @@ if (isset($_GET['rev'])) {
 <h1>MetaBBS Updater</h1>
 <div id="body">
 <?php
-if ($current < METABBS_DB_REVISION) {
+if ($current <= METABBS_DB_REVISION) {
 	if (is_post()) {
 		// find updates
 		$revs = array();
@@ -69,7 +69,7 @@ if ($current < METABBS_DB_REVISION) {
 ?>
 <form method="post" action="">
 <p>New update is available.</p>
-<? if (!is_writable('metabbs.conf.php')) { ?>
+<? if (!is_writable('metabbs.conf.php') && !@chmod('metabbs.conf.php', 0707)) { ?>
 <p>Configuration file is not writable. To continue the process, please change the permission of <code>metabbs.conf.php</code> to <code>0707</code>.</p>
 <? } else { ?>
 <p><input type="submit" value="Update now" /></p>
