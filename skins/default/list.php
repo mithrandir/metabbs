@@ -13,7 +13,7 @@
 <input type="submit" value="Go" />
 </form>
 <? } ?>
-<form method="post" action="<?=url_for($board, 'massdelete')?>" onsubmit="return confirm('<?=i('Are you sure?')?>')">
+<form method="post" action="<?=url_for($board, 'manage')?>" id="manage-posts">
 <table id="posts">
 	<caption>
         <?=i('Total %d posts', $board->get_post_count())?>
@@ -21,7 +21,7 @@
     </caption>
 	<thead>
 	<tr>
-	<? if ($massdelete) { ?>
+	<? if ($admin) { ?>
 		<th class="massdelete"><input type="checkbox" onclick="toggleAll(this.form, this.checked)" /></th>
 	<? } ?>
 		<th class="name"><?=i('Writer')?></th>
@@ -36,8 +36,8 @@
 <? } else { ?>
 	<tr>
 <? } ?>
-	<? if ($massdelete) { ?>
-		<td class="massdelete"><input type="checkbox" name="delete[]" value="<?=$post->id?>" /></td>
+	<? if ($admin) { ?>
+		<td class="massdelete"><input type="checkbox" name="posts[]" value="<?=$post->id?>" /></td>
 	<? } ?>
 		<td class="name"><?=$post->name?></td>
 		<td class="title">
@@ -59,8 +59,9 @@
 <? } ?>
 	</tbody>
 </table>
-<? if ($massdelete) { ?>
-<p><input type="submit" value="<?=i('Delete selected posts')?>" /></p>
+<? if ($admin) { ?>
+<p><input type="submit" value="<?=i('Manage selected posts')?>" /></p>
+<? include 'manage.php'; ?>
 <? } ?>
 </form>
 

@@ -55,7 +55,7 @@
 <? } ?>
 
 <div id="meta-actions">
-<? if ($admin) { ?><input type="submit" value="선택한 글 관리" /> | <? } ?>
+<? if ($admin) { ?><input type="submit" value="<?=i('Manage selected posts')?>" /> | <? } ?>
 <? if ($link_new_post) { ?><a href="<?=$link_new_post?>"><?=i('New Post')?></a><? } ?>
 </div>
 </form>
