@@ -140,10 +140,11 @@ ul.tabs a {
 
 .style-name { font-size: 1.2em; font-weight: bold; }
 #change-style { margin-top: 1em; }
-#change-style ul { margin: 0; padding: 0; overflow: hidden; display: inline-block; list-style: none; }
+#change-style ul { margin: 0; padding: 0; overflow: hidden; display: inline-block; list-style: none; width: 700px; }
 #change-style li {  float: left; margin-right: 1.5em; margin-top: 1em; text-align: center; font-size: 1.1em; }
 #change-style img { border: none; text-decoration: none; }
 div.preview-image { width: 100px; height: 100px; border: 1px solid #000; cursor: pointer; }
+div.preview-image:hover { border: 1px solid #7a0; }
 #current-style td.preview-image { width: 100px; height: 100px; }
 
 #plugins dl { margin: 0; }
