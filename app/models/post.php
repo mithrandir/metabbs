@@ -9,6 +9,7 @@ class Post extends Model {
 	var $views = 0;
 	var $edited_by = 0;
 	var $moved_to = 0;
+	var $comment_count = 0;
 
 	function _init() {
 		$this->table = get_table_name('post');
@@ -68,7 +69,7 @@ class Post extends Model {
 		}
 	}
 	function get_category() {
-		return $this->category_id ? Category::find($this->category_id) : null;
+		return $this->category_id ? find_and_cache('category', $this->category_id) : null;
 	}
 	function get_comments() {
 		$_comments = $this->db->fetchall("SELECT * FROM $this->comment_table WHERE post_id=$this->id ORDER BY id", 'Comment', array(), true);
@@ -90,8 +91,15 @@ class Post extends Model {
 		$comment->create();
 		$this->db->query("UPDATE $this->table SET last_update_at=$comment->created_at WHERE id=$this->id");
 	}
-	function get_comment_count() {
+	function get_real_comment_count() {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->comment_table WHERE post_id=$this->id AND user_id != -1");
+	}
+	function get_comment_count() {
+		return $this->comment_count;
+	}
+	function update_comment_count() {
+		$this->comment_count = $this->get_real_comment_count();
+		$this->db->query("UPDATE $this->table SET comment_count=$this->comment_count WHERE id=$this->id");
 	}
 	function get_trackbacks() {
 		return $this->db->fetchall("SELECT * FROM $this->trackback_table WHERE post_id=$this->id", 'Trackback');

@@ -13,7 +13,7 @@ class Category extends Model {
 		return $db->fetchrow("SELECT * FROM $table WHERE id=$id", 'Category');
 	}
 	function get_board() {
-		return Board::find($this->board_id);
+		return find_and_cache('board', $this->board_id);
 	}
 	function get_posts() {
 		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE category_id=$this->id", 'Post');

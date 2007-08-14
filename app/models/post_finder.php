@@ -54,7 +54,7 @@ class PostFinder {
 		);
 	}
 	function get_posts() {
-		$fields = 'p.id, p.board_id, p.user_id, p.category_id, p.name, p.title, p.created_at, p.notice, p.views, p.secret, p.moved_to';
+		$fields = 'p.id, p.board_id, p.user_id, p.category_id, p.name, p.title, p.created_at, p.notice, p.views, p.secret, p.moved_to, p.comment_count';
 		if ($this->get_post_body) $fields .= ', p.body';
 		$from = $this->get_from();
 		$offset = ($this->page - 1) * $this->board->posts_per_page;

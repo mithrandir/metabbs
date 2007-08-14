@@ -35,10 +35,11 @@ function link_list_tab($link, $name, $text) {
 	return block_tag('li', $anchor, array('id' => "tab-$name", 'class' => $_GET['tab']==$name ? "selected" : null));
 }
 function link_to_comments($post) {
-    if ($post->get_comment_count() > 0) {
-        return link_text(url_for($post) . "#comments", "[" . $post->get_comment_count() . "]");
-    } else {
-        return "";
+	$count = $post->get_comment_count();
+    if ($count == 0) {
+		return "";
+	} else {
+        return "<a href=\"".url_for($post)."#comments\">[$count]</a>";
     }
 }
 function link_to_user($user) {
@@ -58,11 +59,7 @@ function link_to_post($post) {
 	}
 }
 function link_to_category($category) {
-	if ($category->exists()) {
-		return link_to(htmlspecialchars($category->name), $category->get_board(), '', array('category' => $category->id));
-	} else {
-		return 'Unknown';
-	}
+	return link_to(htmlspecialchars($category->name), $category->get_board(), '', array('category' => $category->id));
 }
 
 function image_tag($src, $alt = "", $options = array()) {

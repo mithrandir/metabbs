@@ -1,5 +1,5 @@
 <?php
-define('METABBS_DB_REVISION', 898);
+define('METABBS_DB_REVISION', 912);
 
 function run($conn) {
 	$t = new Table('board');
@@ -39,6 +39,7 @@ function run($conn) {
 	$t->column('edited_by', 'integer');
 	$t->column('moved_to', 'integer');
 	$t->column('last_update_at', 'timestamp');
+	$t->column('comment_count', 'integer');
 	$t->add_index('board_id');
 	$t->add_index('category_id');
 	$t->add_index('user_id');

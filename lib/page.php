@@ -35,21 +35,23 @@ function _print_pages($page, $count, $per_page, $padding = 2) {
 	
 	echo '<ul id="pages">';
 	if ($prev_page > 0) {
-		echo block_tag('li', link_to_page($prev_page, '&lsaquo;'), array('class' => 'prev'));
+		echo '<li class="prev">'.link_to_page($prev_page, '&lsaquo;').'</li>';
 	}
 	if ($page_group_start > 1) {
-		echo block_tag('li', link_to_page(1));
-		if ($page_group_start > 2) echo block_tag('li', '...');
+		echo '<li>'.link_to_page(1).'</li>';
+		if ($page_group_start > 2) echo '<li>...</li>';
 	}
 	for ($p = $page_group_start; $p <= $page_group_end; $p++) {
-		echo block_tag('li', link_to_page($p), $p == $page ? array('class' => 'here') : array());
+		if ($p == $page) echo '<li class="here">';
+		else echo '<li>';
+		echo link_to_page($p) . '</li>';
 	}
 	if ($page_group_end != $page_count) {
-		if ($page_group_end < ($page_count - 1)) echo block_tag('li', '...');
-		echo block_tag('li', link_to_page($page_count));
+		if ($page_group_end < ($page_count - 1)) echo '<li>...</li>';
+		echo '<li>'.link_to_page($page_count).'</li>';
 	}
 	if ($next_page <= $page_count) {
-		echo block_tag('li', link_to_page($next_page, '&rsaquo;'), array('class' => 'next'));
+		echo '<li class="next">'.link_to_page($next_page, '&rsaquo;').'</li>';
 	}
 	echo "</ul>";
 }

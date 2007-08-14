@@ -49,7 +49,7 @@ function &get_conn() {
 	global $config, $__db;
 	if (!isset($__db)) {
 		$__db = new MySQLAdapter;
-		$__db->connect($config->get('host'), $config->get('user'), $config->get('password'));
+		$__db->connect($config->get('host'), $config->get('user'), $config->get('password'), $config->get('pconn'));
 		$__db->selectdb($config->get('dbname'));
 		if ($config->get('force_utf8') == '1') {
 			$__db->enable_utf8();
@@ -63,9 +63,10 @@ class MySQLAdapter
 	var $conn;
 	var $utf8 = false;
 
-	function connect($host, $user, $password) {
-		$this->conn = mysql_connect($host, $user, $password) or trigger_error("mysql - Can't connect database",E_USER_ERROR);
-		register_shutdown_function(array(&$this, 'disconnect'));
+	function connect($host, $user, $password, $persistence = false) {
+		$func = $persistence ? 'mysql_pconnect' : 'mysql_connect';
+		$this->conn = $func($host, $user, $password) or trigger_error("mysql - Can't connect database",E_USER_ERROR);
+		//register_shutdown_function(array(&$this, 'disconnect'));
 	}
 	function disconnect() {
 		mysql_close($this->conn);

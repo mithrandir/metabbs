@@ -84,6 +84,7 @@ function add_filter($event, $callback, $priority, $collision = META_FILTER_OVERW
 	} else {
 		$filters[$event][$priority] = $callback;
 	}
+	ksort($filters[$event]);
 }
 
 /**
@@ -106,7 +107,6 @@ function remove_filter($event, $callback) {
 function apply_filters($event, &$model) {
 	global $filters;
 	if (isset($filters[$event])) {
-		ksort($filters[$event]);
 		foreach ($filters[$event] as $callback) {
 			call_user_func_array($callback, array(&$model));
 		}

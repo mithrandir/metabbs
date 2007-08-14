@@ -22,9 +22,7 @@ function get_account_control($account) {
  * @param $id 아이디
  * @return 생성된 링크 문자열
  */
-function link_to_account($text, $action, $id) {
-	global $board;
-	$controller = $action == 'login' && isset($board) ? $board : 'account';
+function link_to_account($text, $action, $id, $controller = 'account') {
 	return link_text(url_with_referer_for($controller, $action), $text, array('id' => $id));
 }
 
@@ -41,7 +39,8 @@ function admin() {
  * @return 로그인 링크
  */
 function login() {
-	return link_to_account(i('Login'), 'login', 'link-login');
+	global $board;
+	return link_to_account(i('Login'), 'login', 'link-login', isset($board) ? $board : 'account');
 }
 
 /**

@@ -6,12 +6,12 @@
  */
 function i() {
 	global $lang;
-	if (func_num_args() > 1) {
-		$args = func_get_args();
-		return vsprintf($lang->get(array_shift($args)), $args);
-	} else {
+	if (func_num_args() == 1) {
 		$arg = func_get_arg(0);
 		return $lang->get($arg);
+	} else {
+		$args = func_get_args();
+		return vsprintf($lang->get(array_shift($args)), $args);
 	}
 }
 

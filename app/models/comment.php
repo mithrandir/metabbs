@@ -18,6 +18,8 @@ class Comment extends Model {
 		$this->created_at = time();
 		$this->password = md5(@$this->password);
 		Model::create();
+		$post = $this->get_post();
+		$post->update_comment_count();
 	}
 	function get_user() {
 		return User::find($this->user_id);
@@ -50,6 +52,8 @@ class Comment extends Model {
 		} else {
 			Model::delete();
 		}
+		$post = $this->get_post();
+		$post->update_comment_count();
 	}
 }
 ?>
