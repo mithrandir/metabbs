@@ -27,11 +27,11 @@ if (form) {
 			border: '5px solid #ccc',
 			backgroundColor: '#fff',
 			padding: '0.5em 1.5em',
-			width: '15em',
+			width: '15em'
 		});
 		dialog.setStyle({
 			marginLeft: (-dialog.getWidth()/2) + 'px',
-			marginTop: (-dialog.getHeight()/2) + 'px',
+			marginTop: (-dialog.getHeight()/2) + 'px'
 		});
 		dialog.show();
 		Event.stop(event);
