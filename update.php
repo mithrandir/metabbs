@@ -69,7 +69,11 @@ if ($current < METABBS_DB_REVISION) {
 ?>
 <form method="post" action="">
 <p>New update is available.</p>
+<? if (!is_writable('metabbs.conf.php')) { ?>
+<p>Configuration file is not writable. To continue the process, please change the permission of <code>metabbs.conf.php</code> to <code>0707</code>.</p>
+<? } else { ?>
 <p><input type="submit" value="Update now" /></p>
+<? } ?>
 </form>
 <?php
 	}
