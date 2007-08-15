@@ -19,8 +19,9 @@ function link_to_page($page, $text = null) {
  * @param $padding 앞뒤로 필요한 간격
  */
 function print_pages($board, $padding = 2) {
+	global $finder;
 	$page = get_requested_page();
-	$count = $board->finder->get_post_count();
+	$count = $finder->get_post_count();
 	_print_pages($page, $count, $board->posts_per_page, $padding);
 }
 
