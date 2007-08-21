@@ -3,12 +3,13 @@ class PostFinder {
 	var $order = 'p.id DESC';
 	var $keyword = '';
 	var $category = null;
+	var $page = 1;
+	var $conditions = array('title' => false, 'body' => false, 'comment' => false)
 
 	function PostFinder($board) {
 		$this->board = $board;
 		$this->db = $GLOBALS['__db'];
 		$this->table = get_table_name('post');
-		$this->conditions = array('title' => false, 'body' => false, 'comment' => false);
 	}
 	function set_keyword($keyword) {
 		$this->keyword = $keyword;

@@ -172,7 +172,7 @@ class Post extends Model {
 	function get_page() {
 		$board = $this->get_board();
 		if ($board->order_by == 'last_update_at DESC')
-			$query = "SELECT COUNT(*) FROM $this->table WHERE board_id=$board->id AND last_update_at > $this->last_update_at ".($this->notice ? 'AND' : 'OR')." notice=1";
+			$query = "SELECT COUNT(*) FROM $this->table WHERE board_id=$board->id AND (last_update_at > $this->last_update_at ".($this->notice ? 'AND' : 'OR')." notice=1)";
 		else
 			$query = "SELECT COUNT(*) FROM $this->table WHERE board_id=$board->id AND (id > $this->id ".($this->notice ? 'AND' : 'OR')." notice=1)";
 		return 1 + floor($this->db->fetchone($query)/$board->posts_per_page);
