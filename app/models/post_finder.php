@@ -4,7 +4,7 @@ class PostFinder {
 	var $keyword = '';
 	var $category = null;
 	var $page = 1;
-	var $conditions = array('title' => false, 'body' => false, 'comment' => false)
+	var $conditions = array('title' => false, 'body' => false, 'comment' => false);
 
 	function PostFinder($board) {
 		$this->board = $board;
