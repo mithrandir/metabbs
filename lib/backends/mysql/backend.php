@@ -62,10 +62,12 @@ class MySQLAdapter
 {
 	var $conn;
 	var $utf8 = false;
+	var $real_escape = true;
 
 	function connect($host, $user, $password, $persistence = false) {
 		$func = $persistence ? 'mysql_pconnect' : 'mysql_connect';
 		$this->conn = $func($host, $user, $password) or trigger_error("mysql - Can't connect database",E_USER_ERROR);
+		$this->real_escape = function_exists('mysql_real_escape_string') && mysql_real_escape_string('ㅋ') == 'ㅋ';
 		//register_shutdown_function(array(&$this, 'disconnect'));
 	}
 	function disconnect() {
@@ -96,13 +98,17 @@ class MySQLAdapter
 		return $result;
 	}
 	function escape($query) {
-		return mysql_real_escape_string($query, $this->conn);
+		if ($this->real_escape) {
+			return mysql_real_escape_string($query, $this->conn);
+		} else {
+			return mysql_escape_string($query);
+		}
 	}
 	function _q($query, $data) {
 		$tokens = preg_split('/([?!])/', $query, -1, PREG_SPLIT_DELIM_CAPTURE);
 		foreach ($tokens as $i => $token) {
 			if ($token == '?')
-				$tokens[$i] = "'".mysql_real_escape_string(array_shift($data), $this->conn)."'";
+				$tokens[$i] = "'".$this->escape(array_shift($data))."'";
 			else if ($token == '!')
 				$tokens[$i] = array_shift($data);
 		}

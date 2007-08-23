@@ -104,7 +104,7 @@ class Model
 		$data = array();
 		foreach ($columns as $k) {
 			if (is_bool($this->$k)) $this->$k = (int)$this->$k;
-			$data["`$k`"] = "'" . mysql_real_escape_string($this->$k) . "'";
+			$data["`$k`"] = "'" . $this->db->escape($this->$k) . "'";
 		}
 		return $data;
 	}
