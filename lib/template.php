@@ -133,7 +133,14 @@ function link_url($match) {
 	if (is_image($url)) {
 		return image_tag($url);
 	} else {
-		return link_text($url);
+		return link_text($url, shorten_path($url));
+	}
+}
+function shorten_path($path) {
+	if (strlen($path) > 55) {
+		return substr($path, 0, 39).' &hellip; '.substr($path, -10);
+	} else {
+		return $path;
 	}
 }
 function is_image($path) {

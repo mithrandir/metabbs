@@ -17,13 +17,14 @@ function openPlayer(id, url) {
 
 <div id="attachments">
 <ul>
-<? foreach ($attachments as $attachment): ?>
+<? foreach ($attachments as $attachment):
+$filename = shorten_path($attachment->filename); ?>
 <? if (!$attachment->file_exists()) { ?>
-	<li>Attachment: <del><?=$attachment->filename?></del></li>
+	<li>Attachment: <del><?=$filename?></del></li>
 <? } else { ?>
-	<li>Attachment: <?=link_to($attachment->filename, $attachment)?> (<?=human_readable_size($attachment->get_size())?>)
+	<li>Attachment: <?=link_to($filename, $attachment)?> (<?=human_readable_size($attachment->get_size())?>)
 <? if ($attachment->is_image()) { ?>
-	<br /><img src="<?=url_for($attachment)?>" alt="<?=$attachment->filename?>" />
+	<br /><img src="<?=url_for($attachment)?>" alt="<?=$filename?>" />
 <? } else if ($attachment->is_music()) { ?>
 	<a href="<?=url_for($attachment)?>" onclick="openPlayer('player-<?=$attachment->id?>', this.href); return false">Listen</a><div id="player-<?=$attachment->id?>"></div>
 <? } ?>

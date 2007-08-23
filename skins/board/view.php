@@ -18,11 +18,12 @@ function openPlayer(id, url) {
 <? if ($attachments) { ?>
 <div id="attachments">
 <ul>
-<? foreach ($attachments as $attachment): ?>
+<? foreach ($attachments as $attachment):
+$filename = shorten_path($attachment->filename); ?>
 <? if (!$attachment->file_exists()) { ?>
-	<li><del><?=$attachment->filename?></del></li>
+	<li><del><?=$filename?></del></li>
 <? } else { ?>
-	<li><?=link_to($attachment->filename, $attachment)?> (<?=human_readable_size($attachment->get_size())?>)
+	<li><?=link_to($filename, $attachment)?> (<?=human_readable_size($attachment->get_size())?>)
 <? if ($attachment->is_image()) { ?>
 	<br /><img src="<?=url_for($attachment)?>" alt="<?=$attachment->filename?>" />
 <? } else if ($attachment->is_music()) { ?>

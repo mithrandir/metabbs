@@ -11,13 +11,14 @@
 	</p>
 	<div class="content">
 	<div class="attachments">
-	<? foreach ($post->get_attachments() as $attachment) { ?>
+	<? foreach ($post->get_attachments() as $attachment) {
+		$filename = shorten_path($attachment->filename); ?>
 	<? if (!$attachment->file_exists()) { ?>
-		<p>Attachment: <del><?=$attachment->filename?></del></p>
+		<p>Attachment: <del><?=$filename?></del></p>
 	<? } else if ($attachment->is_image()) { ?>
-		<p><img src="<?=url_for($attachment)?>" alt="<?=$attachment->filename?>" /></p>
+		<p><img src="<?=url_for($attachment)?>" alt="<?=$filename?>" /></p>
 	<? } else { ?>
-		<p>Attachment: <?=link_to($attachment->filename, $attachment)?> (<?=human_readable_size($attachment->get_size())?>)</p>
+		<p>Attachment: <?=link_to($filename, $attachment)?> (<?=human_readable_size($attachment->get_size())?>)</p>
 	<? } ?>
 	<? } ?>
 	</div>

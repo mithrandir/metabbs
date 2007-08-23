@@ -56,8 +56,36 @@ $posts = $finder->get_posts();
 apply_filters_array('PostList', $posts);
 
 $template->set('posts', $posts);
-$template->set('posts_count', $board->get_post_count());
+$template->set('post_count', $count = $board->get_post_count());
+$template->set('posts_count', $count); // backward compatibility
 $template->set('link_rss', url_for($board, 'rss'));
 $template->set('link_new_post', $account->has_perm('write', $board) ? url_for($board, 'post') : null);
 $template->set('admin', $account->has_perm('admin', $board));
+
+$count = $finder->get_post_count();
+$page_count = $count ? ceil($count / $board->posts_per_page) : 1;
+$page = get_requested_page();
+$prev_page = $page - 1;
+$next_page = $page + 1;
+$page_group_start = $page - 5;
+if ($page_group_start < 1) $page_group_start = 1;
+$page_group_end = $page + 5;
+if ($page_group_end > $page_count) $page_group_end = $page_count;
+
+$template->set('link_prev_page', $prev_page > 0 ? url_for_page($prev_page) : null);
+$template->set('link_next_page', $next_page <= $page_count ? url_for_page($next_page) : null);
+$pages = array();	
+if ($page_group_start > 1) {
+	$pages[] = link_to_page(1);
+	if ($page_group_start > 2) $pages[] = '...';
+}
+for ($p = $page_group_start; $p <= $page_group_end; $p++) {
+	if ($p == $page) $pages[] = '<span class="here">'.link_to_page($p).'</span>';
+	else $pages[] = link_to_page($p);
+}
+if ($page_group_end != $page_count) {
+	if ($page_group_end < ($page_count - 1)) $pages[] = '...';
+	$pages[] = link_to_page($page_count);
+}
+$template->set('pages', $pages);
 ?>
