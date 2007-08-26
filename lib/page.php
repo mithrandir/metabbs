@@ -13,6 +13,12 @@ function link_to_page($page, $text = null) {
 	return link_text(query_string_for($params), $text ? $text : $page);
 }
 
+function url_for_page($page) {
+	$params = get_search_params();
+	$params['page'] = $page;
+	return query_string_for($params);
+}
+
 /**
  * 실제 페이지를 출력한다.
  * @param $board 게시판명
