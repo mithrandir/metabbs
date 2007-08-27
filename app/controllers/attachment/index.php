@@ -6,9 +6,11 @@ if (!$attachment->exists() || !$attachment->file_exists()) {
 }
 if (isset($_GET['thumb'])) {
 	include 'lib/thumbnail.php';
-	$thumb_path = 'data/thumb/'.$attachment->id.'.png';
-	if (create_thumbnail('data/uploads/'.$attachment->id, $thumb_path)) {
-		redirect_to(METABBS_BASE_PATH . $thumb_path);
+	$orig_path = 'data/uploads/'.$attachment->id;
+	$ext = get_image_extension($orig_path);
+	$thumb_path = 'data/thumb/'.$attachment->id.'-small.'.$ext;
+	if (create_thumbnail($orig_path, $thumb_path)) {
+		redirect_to(METABBS_BASE_PATH.$thumb_path);
 	}
 }
 $filename = 'data/uploads/' .$attachment->id;
