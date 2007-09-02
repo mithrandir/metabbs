@@ -23,6 +23,6 @@ function addNewBoard(form) {
 }
 function checkAll(form, bit) {
 	$(form).getInputs('checkbox').each(function (el) {
-		el.checked = bit;
+		if (!el.disabled) el.checked = bit;
 	});
 }
