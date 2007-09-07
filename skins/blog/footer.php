@@ -23,7 +23,7 @@
 		<? if ($board->use_category) { ?>
 		<h3>Category</h3>
 		<ul>
-			<li><a href="?"><?=i('All')?></a></li>
+			<li><a href="<?=url_for($board)?>"><?=i('All')?></a></li>
 		<? foreach ($board->get_categories() as $category) { ?>
 			<li><?=link_to_category($category)?> (<?=$category->get_post_count()?>)</li>
 		<? } ?>
