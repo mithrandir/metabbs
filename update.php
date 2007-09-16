@@ -58,7 +58,10 @@ if ($current < METABBS_DB_REVISION) {
 		foreach ($revs as $r) {
 			echo "<li>Applying patch: r$r";
 			include "db/update_$r.php";
-			if (isset($description)) echo " ($description)";
+			if (isset($description)) {
+				echo " ($description)";
+				unset($description);
+			}
 			echo "</li>";
 		}
 		$config->set('revision', METABBS_DB_REVISION);

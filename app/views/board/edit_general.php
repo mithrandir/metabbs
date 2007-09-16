@@ -33,6 +33,13 @@
 		</select>
 	</dd>
 </dl>
+<dl>
+	<dt><?=label_tag('Header Path', 'board', 'header')?></dt>
+	<dd><?=text_field('board', 'header', $board->header, 50)?></dd>
+
+	<dt><?=label_tag('Footer Path', 'board', 'footer')?></dt>
+	<dd><?=text_field('board', 'footer', $board->footer, 50)?></dd>
+</dl>
 </div>
 <p><input type="submit" value="OK" /></p>
 </form>
