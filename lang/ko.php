@@ -117,3 +117,5 @@ Sorting=정렬
 Uncategorized Posts=분류 없음
 Administrators=관리자
 Add=추가
+Header Path=머리말 경로
+Footer Path=꼬리말 경로

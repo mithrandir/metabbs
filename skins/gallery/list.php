@@ -17,6 +17,9 @@
 	<a href="<?=url_for($post)?>" class="thumbnail"><img src="<?=url_for($attachments[0])?>?thumb=1" alt="<?=$post->title?>" /></a>
 	<? } ?>
 	<? if ($board->use_category && $post->category_id) { ?><span class="category">[<?=link_to_category($post->get_category())?>]</span><? } ?><span class="title"><?=link_to($post->title, $post)?></span>
+	<? if (count($attachments) > 1) { ?>
+	<small>(<?=count($attachments)?> images)</small>
+	<? } ?>
 	<? if ($count = $post->get_comment_count()) { ?>
 	<span class="comments-count">*<?=$count?></span>
 	<? } ?>

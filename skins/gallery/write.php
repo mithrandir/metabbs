@@ -12,13 +12,26 @@
 <? } ?>
 </select>
 <? } ?>
-<? if ($board->use_attachment && !$post->exists()) { ?>
-<p><?=label_tag("Image", "post", "upload")?> <input type="file" name="upload[]" size="50" id="post_upload"<? if ($account->has_perm('admin', $board)) { ?> class="ignore"<? } ?>/></p>
-<? } ?>
+
 <p><?=text_area("post", "body", 6, 50, $post->body)?></p>
 
 <? if ($account->has_perm('admin', $board)) { ?>
 <p><?=check_box("post", "notice", $post->notice)?> <label for="post_notice" class="checkbox"><?=i('Notice')?></label></p>
+<? } ?>
+
+<? if ($board->use_attachment) { ?>
+<h3>Upload Images</h3>
+<p>Max upload size: <?=get_upload_size_limit()?></p>
+<ol id="uploads">
+<? if ($post->exists()) { ?>
+<? foreach ($post->get_attachments() as $attachment) { ?>
+<? if (!$attachment->file_exists()) $attachment->filename = "<del>$attachment->filename</del>"; ?>
+	<li><?=$attachment->filename?> <label><input type="checkbox" name="delete[]" value="<?=$attachment->id?>" /> Delete</li>
+<? } ?>
+<? } ?>
+	<li><input type="file" name="upload[]" size="50" class="ignore" /></li>
+</ol>
+<p><a href="#" onclick="addFileEntry(); return false">+ <?=i('Add file...')?></a></p>
 <? } ?>
 
 <? if ($extra_attributes) { ?>

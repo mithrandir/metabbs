@@ -7,9 +7,11 @@
 </div>
 
 <div id="attachments">
+<ul id="gallery">
 <? foreach ($attachments as $attachment) { ?>
-<img src="<?=url_for($attachment)?>" alt="<?=$attachment->filename?>" />
+	<li><a href="<?=url_for($attachment)?>" class="thumbnail" rel="lightbox[images]"><img src="<?=url_for($attachment)?>?thumb=1" alt="<?=$attachment->filename?>" /></a></li>
 <? } ?>
+</ul>
 </div>
 
 <div id="body"><?=$post->body?></div>
@@ -67,3 +69,10 @@
 | <a href="<?=url_for($post, 'move')?>"><?=i('Move')?></a>
 <? } ?>
 </div>
+<script type="text/javascript">
+var MetaBBS = {
+	skinPath: '<?=$skin_dir?>'
+}
+</script>
+<script type="text/javascript" src="<?=$skin_dir?>/lightbox/scriptaculous.js?load=effects"></script>
+<script type="text/javascript" src="<?=$skin_dir?>/lightbox/lightbox.js"></script>
