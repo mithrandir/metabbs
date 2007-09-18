@@ -112,3 +112,37 @@ function checkUserID(field) {
 		parameters: { user: id }
 	});
 }
+
+function highlightText(text, element) {
+	element.descendants().each(function (el) {
+		$A(el.childNodes).each(function (node) {
+			if (node.nodeType == 3) {
+				var value = node.nodeValue;
+				var re = new RegExp("("+text+")", "ig");
+				var offset = 0;
+				var lastNode = node;
+				while (true) {
+					var match = re.exec(value);
+					if (!match) break;
+					var a = lastNode.splitText(match.index - offset);
+					var b = a.splitText(match[0].length);
+					var span = document.createElement('span');
+					span.appendChild(document.createTextNode(match[0]));
+					span.style.backgroundColor = '#ff0';
+					a.parentNode.replaceChild(span, b.previousSibling);
+					lastNode = b;
+					offset = re.lastIndex;
+				}
+			}
+		});
+	});
+}
+function highlightSearchKeyword() {
+	var kw = location.search.toQueryParams()['keyword'];
+	if (!kw) return;
+	highlightText(kw, $('body'));
+}
+
+Event.observe(window, 'load', function () {
+	highlightSearchKeyword();
+});
