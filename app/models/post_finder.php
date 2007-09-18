@@ -1,6 +1,6 @@
 <?php
 class PostFinder {
-	var $order = 'p.id DESC';
+	var $order = 'id DESC';
 	var $keyword = '';
 	var $category = null;
 	var $page = 1;
@@ -28,16 +28,26 @@ class PostFinder {
 	}
 	function get_condition() {
 		$keyword = $this->db->escape($this->keyword);
-		$and_parts = array('p.board_id='.$this->board->id);
+		$and_parts = array('board_id='.$this->board->id);
 		$or_parts = array();
 		foreach ($this->conditions as $k => $v) {
 			if ($v) {
 				switch ($k) {
 					case 'comment':
-						$or_parts[] = "c.post_id = p.id AND c.body LIKE '%$keyword%'";
+						$result = $this->db->get_result("SELECT post_id FROM ".get_table_name('comment')." WHERE board_id={$this->board->id} AND body LIKE '%$keyword%'");
+						// TODO: subquery
+						$ids = array();
+						if ($result->count()) {
+							while ($data = $result->fetch()) {
+								$ids[] = $data['post_id'];
+							}
+							$or_parts[] = "id IN (".implode(',', $ids).")";
+						} else {
+							$or_parts[] = "0";
+						}
 					break;
 					default:
-						$or_parts[] = "p.$k LIKE '%$keyword%'";
+						$or_parts[] = "$k LIKE '%$keyword%'";
 					break;
 				}
 			}
@@ -45,36 +55,20 @@ class PostFinder {
 		if ($or_parts)
 			$and_parts[] = '('.implode(' OR ', $or_parts).')';
 		if ($this->category)
-			$and_parts[] = 'p.category_id='.$this->category->id;
+			$and_parts[] = 'category_id='.$this->category->id;
 		return implode(' AND ', $and_parts);
 	}
-	function get_from() {
-		return "$this->table as p".(
-			$this->conditions['comment'] ?
-			', '.get_table_name('comment').' as c' : ''
-		);
-	}
 	function get_posts() {
-		$fields = 'p.id, p.board_id, p.user_id, p.category_id, p.name, p.title, p.created_at, p.notice, p.views, p.secret, p.moved_to, p.comment_count';
-		if ($this->get_post_body) $fields .= ', p.body';
-		$from = $this->get_from();
+		$fields = 'id, board_id, user_id, category_id, name, title, created_at, notice, views, secret, moved_to, comment_count';
+		if ($this->get_post_body) $fields .= ', body';
 		$offset = ($this->page - 1) * $this->board->posts_per_page;
 		$limit = $this->board->posts_per_page;
 		$condition = $this->get_condition();
-		return $this->db->fetchall("SELECT $fields FROM $from WHERE $condition GROUP BY p.id ORDER BY p.notice DESC, $this->order LIMIT $offset, $limit", 'Post');
+		return $this->db->fetchall("SELECT $fields FROM $this->table WHERE $condition GROUP BY id ORDER BY notice DESC, $this->order LIMIT $offset, $limit", 'Post');
 	}
 	function get_post_count() {
-		$fields = $this->conditions['comment'] ? 'p.id' : 'COUNT(*)';
-		$from = $this->get_from();
 		$condition = $this->get_condition();
-		$query = "SELECT $fields FROM $from WHERE $condition".($this->conditions['comment'] ? ' GROUP BY p.id' : '');
-		if(!$this->conditions['comment'])
-			return $this->db->fetchone($query);
-		list($major, $minor) = $this->db->get_server_version();
-		if ($major == 4 && $minor >= 1 || $major > 4)
-			return $this->db->fetchone("SELECT COUNT(*) FROM ($query) as q");
-		$result = $this->db->get_result($query);
-		return $result->count();
+		return $this->db->fetchone("SELECT COUNT(*) FROM $this->table WHERE $condition");
 	}
 }
 ?>
