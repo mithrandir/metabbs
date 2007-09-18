@@ -18,7 +18,7 @@ if ($board->order_by) $finder->order_by($board->order_by);
 $finder->set_page(get_requested_page());
 $finder->get_post_body = $style->skin->get_option('get_body_in_the_list', true);
 
-if (isset($_GET['keyword']) && $_GET['keyword']) {
+if (isset($_GET['keyword']) && trim($_GET['keyword'])) {
 	$keyword = $_GET['keyword'];
 	$finder->set_keyword($keyword);
 	$template->set('keyword', $keyword);

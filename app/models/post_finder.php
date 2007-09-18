@@ -64,7 +64,7 @@ class PostFinder {
 		$offset = ($this->page - 1) * $this->board->posts_per_page;
 		$limit = $this->board->posts_per_page;
 		$condition = $this->get_condition();
-		return $this->db->fetchall("SELECT $fields FROM $this->table WHERE $condition GROUP BY id ORDER BY notice DESC, $this->order LIMIT $offset, $limit", 'Post');
+		return $this->db->fetchall("SELECT $fields FROM $this->table WHERE $condition ORDER BY notice DESC, $this->order LIMIT $offset, $limit", 'Post');
 	}
 	function get_post_count() {
 		$condition = $this->get_condition();

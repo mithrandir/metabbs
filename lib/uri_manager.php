@@ -65,7 +65,7 @@ function get_search_params() {
 	if (isset($_GET['category']) && $_GET['category'] !== '') {
 		$keys[] = 'category';
 	}
-	if (isset($_GET['keyword']) && $_GET['keyword']) {
+	if (isset($_GET['keyword']) && trim($_GET['keyword'])) {
 		$keys[] = 'keyword';
 		$keys[] = 'title';
 		$keys[] = 'body';
