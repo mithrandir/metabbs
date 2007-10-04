@@ -1,0 +1,31 @@
+<?php
+function openid_form() {
+	return '<form method="post" action="' . url_with_referer_for('openid', 'login') . '" style="font-size: 12px">
+<p><input type="text" name="openid_identifier" style="background: #fff url(' . METABBS_BASE_PATH . 'plugins/OpenID/login-bg.gif) no-repeat 0 50%; padding-left: 18px;" /> <input type="submit" value="' . i('Login') . '" /><br />
+<input type="checkbox" name="autologin" value="1" id="openid_autologin" /> <label for="openid_autologin">'.i('Auto Login').'</label></p>
+</form>';
+}
+class OpenID extends Plugin {
+	function add_include_path() {
+		ini_set("include_path", dirname(__FILE__) . PATH_SEPARATOR . ini_get("include_path"));
+	}
+	function on_init() {
+		global $account, $controller, $action, $layout;
+		$this->add_include_path();
+		add_filter('AfterLogout', array(&$this, 'unset_cookie'), 50);
+		if ($account->is_guest()) {
+			if (cookie_is_registered('openid') && $controller != 'openid') {
+				redirect_to(url_with_referer_for('openid', 'login').'&openid_identifier='.urlencode(cookie_get('openid')));
+			}
+			if ($controller != 'account' && $action != 'login') {
+				$layout->header .= openid_form();
+			}
+		}
+	}
+	function unset_cookie() {
+		cookie_unregister('openid');
+	}
+}
+
+register_plugin('OpenID');
+?>

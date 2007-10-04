@@ -1,0 +1,69 @@
+@charset "utf-8";
+
+body {
+	font-family: Verdana, 굴림, sans-serif;
+	font-size: 0.8em;
+	color: black;
+	background-color: white;
+}
+
+#wrap {
+	width: 500px;
+	margin: 0 auto;
+}
+
+h2 {
+	font-size: 1.2em;
+	padding-bottom: 0;
+	border-bottom: 1px solid #ddd;
+}
+
+#step {
+    font-size: 0.8em;
+    font-weight: normal;
+    color: #c00;
+}
+
+label {
+	display: block;
+	float: left;
+	width: 12em;
+}
+
+p {
+	margin: 0.2em;
+}
+
+input[type=text] {
+	border: 1px solid #ddd;
+}
+
+#copyright {
+	text-align: right;
+	color: #999;
+	font-size: 0.8em;
+}
+
+.hidden { display:none; }
+
+.msg {
+	padding: 4px;
+	margin: 4px;
+	border: 1px solid #999;
+	background-color: #f4f4f4;
+}
+
+.error {
+	border-color: #c00;
+	background-color: #fcc;
+}
+
+.warning {
+	border-color: #cc0;
+	background-color: #ffc;
+}
+
+.ok {
+	border-color: #0c0;
+	background-color: #cfc;
+}
