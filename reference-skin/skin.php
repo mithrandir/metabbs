@@ -46,5 +46,16 @@ if (!defined('MODERN_SKIN')) {
 		}
 	}
 	add_filter('PostView', 'modern_view_filter', 42);
+
+	function modern_comment_filter(&$comment) {
+		global $account;
+		$comment->author = $comment->name;
+		$comment->date = date('Y-m-d H:i:s', $comment->created_at);
+		if ($account->has_perm('delete', $comment))
+			$comment->delete_url = url_for($comment, 'delete');
+		if ($account->has_perm('edit', $comment))
+			$comment->edit_url = url_for($comment, 'edit');
+	}
+	add_filter('PostViewComment', 'modern_comment_filter', 42);
 }
 ?>

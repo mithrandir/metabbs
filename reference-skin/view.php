@@ -37,11 +37,13 @@
 <? endif; ?>
 	</dl>
 
+<? if ($attachments): ?>
 	<ul id="attachments">
 	<? foreach ($attachments as $attachment): ?>
 		<li><a href="<?=$attachment->url?>"><?=$attachment->filename?></a> (<?=$attachment->size?>)</li>
 	<? endforeach; ?>
 	</ul>
+<? endif; ?>
 
 	<!-- 글 내용 -->
 	<div class="body"><?=$post->body?></div>
@@ -53,6 +55,21 @@
 
 <? if ($trackbacks): ?>
 <? endif; ?>
+
+<h2>댓글</h2>
+<ol id="comments">
+<? foreach ($comments as $comment): ?>
+	<li class="comment">
+		<span class="author"><?=$comment->author?></span>
+		<span class="date"><?=$comment->date?></span>
+		<span class="actions">
+		<? if ($comment->delete_url): ?><a href="<?=$comment->delete_url?>">지우기</a><? endif; ?>
+		<? if ($comment->edit_url): ?><a href="<?=$comment->edit_url?>">고치기</a><? endif; ?>
+		</span>
+		<div class="body"><?=$comment->body?></div>
+	</li>
+<? endforeach; ?>
+</ol>
 </div>
 
 <div id="meta-nav">
