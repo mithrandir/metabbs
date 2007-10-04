@@ -49,13 +49,13 @@ if ($view == ADMIN_VIEW) {
 
 include get_header_path();
 echo $layout->header;
-if (isset($board) && $board->header)
+if ($view == DEFAULT_VIEW && isset($board) && $board->header)
 	include $board->header;
 if (isset($template)) {
 	$template->set('title', $title);
 	$template->render();
 } else include "app/views/$controller/$action.php";
-if (isset($board) && $board->footer)
+if ($view == DEFAULT_VIEW && isset($board) && $board->footer)
 	include $board->footer;
 echo $layout->footer;
 include get_footer_path();
