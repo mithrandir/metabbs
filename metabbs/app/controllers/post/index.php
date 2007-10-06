@@ -11,7 +11,8 @@ if (!in_array($post->id, $seen_posts)) {
 	cookie_register('seen_posts', implode(',', $seen_posts));
 }
 
-$template = get_template($board, 'view');
+$style = $board->get_style();
+$template = $style->get_template('view');
 $template->set('attachments', $post->get_attachments());
 $template->set('trackbacks', $post->get_trackbacks());
 $template->set('name', cookie_get('name'));
@@ -25,7 +26,7 @@ apply_filters('PostView', $post);
 $template->set('board', $board);
 $template->set('post', $post);
 
-$comments = $post->get_comments();
+$comments = $post->get_comments($style->skin->get_option('build_comment_tree', true));
 apply_filters_array('PostViewComment', $comments);
 $template->set('comments', $comments);
 
