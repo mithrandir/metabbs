@@ -13,8 +13,10 @@
 		<dt>조회수</dt>
 		<dd><?=$post->views?></dd>
 
+<? if ($post->trackback_url): ?>
 		<dt>트랙백 주소</dt>
 		<dd><?=$post->trackback_url?></dd>
+<? endif; ?>
 
 <? if ($post->category): ?>
 		<dt>분류</dt>
@@ -38,6 +40,7 @@
 	</dl>
 
 <? if ($attachments): ?>
+	<h2>첨부 파일</h2>
 	<ul id="attachments">
 	<? foreach ($attachments as $attachment): ?>
 		<li><a href="<?=$attachment->url?>"><?=$attachment->filename?></a> (<?=$attachment->size?>)</li>
@@ -54,22 +57,47 @@
 <? endif; ?>
 
 <? if ($trackbacks): ?>
+	<h2>트랙백</h2>
+	<ol id="trackbacks">
+	<? foreach ($trackbacks as $trackback): ?>
+		<li><a href="<?=$trackback->url?>"><?=$trackback->title?></a> from <?=$trackback->blog_name?></li>
+	<? endforeach; ?>
+	</ol>
 <? endif; ?>
 
-<h2>댓글</h2>
-<ol id="comments">
-<? foreach ($comments as $comment): ?>
-	<li class="comment">
-		<span class="author"><?=$comment->author?></span>
-		<span class="date"><?=$comment->date?></span>
-		<span class="actions">
-		<? if ($comment->delete_url): ?><a href="<?=$comment->delete_url?>">지우기</a><? endif; ?>
-		<? if ($comment->edit_url): ?><a href="<?=$comment->edit_url?>">고치기</a><? endif; ?>
-		</span>
-		<div class="body"><?=$comment->body?></div>
-	</li>
-<? endforeach; ?>
-</ol>
+	<h2>댓글</h2>
+	<ol id="comments">
+	<? foreach ($comments as $comment): ?>
+		<li class="comment">
+			<span class="author"><?=$comment->author?></span>
+			<span class="date"><?=$comment->date?></span>
+			<span class="actions">
+			<? if ($comment->delete_url): ?><a href="<?=$comment->delete_url?>">지우기</a><? endif; ?>
+			<? if ($comment->edit_url): ?><a href="<?=$comment->edit_url?>">고치기</a><? endif; ?>
+			</span>
+			<div class="body"><?=$comment->body?></div>
+		</li>
+	<? endforeach; ?>
+	</ol>
+
+<? if ($comment_url): ?>
+	<form method="post" action="<?=$comment_url?>">
+	<dl>
+	<? if ($guest): ?>
+		<dt>이름</dt>
+		<dd><input type="text" name="comment[name]" /></dd>
+
+		<dt>암호</dt>
+		<dd><input type="password" name="comment[password]" /></dd>
+	<? endif; ?>
+
+		<dt>내용</dt>
+		<dd><textarea name="comment[body]" cols="30" rows="5"></textarea></dd>
+	</dl>
+
+	<p><input type="submit" value="댓글 달기" /></p>
+	</form>
+<? endif; ?>
 </div>
 
 <div id="meta-nav">

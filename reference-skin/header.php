@@ -5,9 +5,15 @@ if (isset($categories)) {
 		$categories[$k]->url = url_for($board, '', array('category' => $c->id));
 		$categories[$k]->post_count = $c->get_post_count();
 	}
+} else {
+	$categories = null;
 }
 
 // for view.php
+if (isset($post) && !$board->use_trackback) {
+	$post->trackback_url = null;
+	$trackbacks = array();
+}
 if (isset($newer_post)) {
 	if (!$newer_post->exists()) {
 		$newer_post = null;
@@ -25,11 +31,17 @@ if (isset($older_post)) {
 	}
 }
 if (isset($attachments)) {
-	foreach ($attachments as $k => $v) {
+	if (!$board->use_attachment) {
+		$attachments = array();
+	} else foreach ($attachments as $k => $v) {
 		$attachments[$k]->filename = shorten_path(htmlspecialchars($v->filename));
 		$attachments[$k]->url = htmlspecialchars(url_for($v));
 		$attachments[$k]->size = human_readable_size($v->get_size());
 	}
+}
+if (isset($post) && $account->has_perm('comment', $post)) {
+	$comment_url = url_for($post, 'comment');
+	$guest = $account->is_guest();
 }
 if (!isset($signature)) $signature = '';
 ?>

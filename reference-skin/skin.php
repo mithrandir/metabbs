@@ -1,6 +1,6 @@
 <?php
 $template_engine = 'default';
-$options = array('get_body_in_the_list' => false);
+$options = array('get_body_in_the_list' => false, 'build_comment_tree' => false);
 
 /*
 TODO:
@@ -51,10 +51,16 @@ if (!defined('MODERN_SKIN')) {
 		global $account;
 		$comment->author = $comment->name;
 		$comment->date = date('Y-m-d H:i:s', $comment->created_at);
-		if ($account->has_perm('delete', $comment))
+		if ($account->has_perm('delete', $comment)) {
 			$comment->delete_url = url_for($comment, 'delete');
-		if ($account->has_perm('edit', $comment))
+		} else {
+			$comment->delete_url = null;
+		}
+		if ($account->has_perm('edit', $comment)) {
 			$comment->edit_url = url_for($comment, 'edit');
+		} else {
+			$comment->edit_url = null;
+		}
 	}
 	add_filter('PostViewComment', 'modern_comment_filter', 42);
 }
