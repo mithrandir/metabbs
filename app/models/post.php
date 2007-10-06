@@ -71,19 +71,23 @@ class Post extends Model {
 	function get_category() {
 		return $this->category_id ? find_and_cache('category', $this->category_id) : null;
 	}
-	function get_comments() {
+	function get_comments($build_tree = true) {
 		$_comments = $this->db->fetchall("SELECT * FROM $this->comment_table WHERE post_id=$this->id ORDER BY id", 'Comment', array(), true);
-		$comments = array();
-		foreach ($_comments as $id => $comment) {
-			if ($comment->parent) {
-				$_comments[$comment->parent]->comments[] = &$_comments[$id];
-				//echo 'adding child ('.$id.'->'.$comment->parent.')<br>';
-			} else {
-				$comments[] = &$_comments[$id];
-				//echo 'adding root comment ('.$id.')<br>';
+		if ($build_tree) {
+			$comments = array();
+			foreach ($_comments as $id => $comment) {
+				if ($comment->parent) {
+					$_comments[$comment->parent]->comments[] = &$_comments[$id];
+					//echo 'adding child ('.$id.'->'.$comment->parent.')<br>';
+				} else {
+					$comments[] = &$_comments[$id];
+					//echo 'adding root comment ('.$id.')<br>';
+				}
 			}
+			return $comments;
+		} else {
+			return $_comments;
 		}
-		return $comments;
 	}
 	function add_comment(&$comment) {
 		$comment->board_id = $this->board_id;
