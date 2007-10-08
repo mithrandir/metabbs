@@ -25,6 +25,7 @@ if (isset($_GET['style'])) {
 	redirect_to('?tab=skin');
 }
 if (is_post()) {
+	$sorting_changed = false;
 	if ($_GET['tab'] == 'general') {
 		$_board = new Board($_POST['board']);
 		if (empty($_board->name)) {
@@ -32,6 +33,7 @@ if (is_post()) {
 		} else if ($_board->name != $board->name && !$_board->validate()) {
 			$flash = "Board '$_board->name' already exists.";
 		}
+		$sorting_changed = $_board->order_by != $board->order_by;
 		if (isset($flash)) {
 			$view = ADMIN_VIEW;
 			return;
@@ -39,6 +41,7 @@ if (is_post()) {
 	}
 	$board->import($_POST['board']);
 	$board->update();
+	if ($sorting_changed) $board->reset_sort_keys();
 	if ($_GET['tab'] == 'category') {
 		foreach ($_POST['categories'] as $_category) {
 			if (!empty($_category)) {

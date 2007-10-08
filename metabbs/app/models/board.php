@@ -43,13 +43,13 @@ class Board extends Model {
 		$fields = "id, board_id, user_id, category_id, name, title, created_at, notice, views, secret, moved_to";
 		if ($this->get_post_body)
 			$fields .= ', body';
-		return $this->db->fetchall("SELECT $fields FROM $this->post_table as p WHERE board_id=$this->id ORDER BY notice DESC, id DESC LIMIT $offset, $limit", 'Post');
+		return $this->db->fetchall("SELECT $fields FROM $this->post_table as p WHERE board_id=$this->id ORDER BY sort_key, id DESC LIMIT $offset, $limit", 'Post');
 	}
 	function get_posts_in_page($page) {
 		return $this->get_posts(($page - 1) * $this->posts_per_page, $this->posts_per_page);
 	}
 	function get_feed_posts($count) {
-		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE board_id=$this->id AND NOT moved_to ORDER BY id DESC LIMIT $count", 'Post');
+		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE board_id=$this->id AND NOT moved_to ORDER BY $this->order_by LIMIT $count", 'Post');
 	}
 	function add_post(&$post) {
 		$post->board_id = $this->id;
@@ -105,6 +105,16 @@ class Board extends Model {
 	}
 	function drop_admin($admin) {
 		$this->db->query("DELETE FROM $this->admin_table WHERE board_id=$this->id AND user_id=$admin->id");
+	}
+	function reset_sort_keys() {
+		if (!$this->order_by) $this->order_by = 'id DESC';
+		$this->db->query("UPDATE $this->post_table SET sort_key=-id WHERE notice=1");
+		preg_match('/^(.+?) (ASC|DESC)?$/', $this->order_by, $matches);
+		list(, $key, $order) = $matches;
+		if ($order == 'DESC')
+			$this->db->query("UPDATE $this->post_table SET sort_key=2147483648-$key WHERE notice=0");
+		else
+			$this->db->query("UPDATE $this->post_table SET sort_key=$key WHERE notice=0");
 	}
 }
 ?>

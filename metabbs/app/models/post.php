@@ -33,10 +33,26 @@ class Post extends Model {
 		$this->edited_at = 0;
 		$this->last_update_at = $this->created_at;
 		Model::create();
+		$this->update_sort_key();
 	}
 	function update() {
 		$this->edited_at = time();
 		Model::update();
+		$this->update_sort_key();
+	}
+	function update_sort_key() {
+		if ($this->notice) {
+			$this->db->query("UPDATE $this->table SET sort_key=-id WHERE id=$this->id");
+		} else {
+			$board = $this->get_board();
+			if (!$board->order_by) $board->order_by = 'id DESC';
+			preg_match('/^(.+?) (ASC|DESC)?$/', $board->order_by, $matches);
+			list(, $key, $order) = $matches;
+			if ($order == 'DESC')
+				$this->db->query("UPDATE $this->table SET sort_key=2147483648-$key WHERE id=$this->id");
+			else
+				$this->db->query("UPDATE $this->table SET sort_key=$key WHERE id=$this->id");
+		}
 	}
 	function is_notice() {
 		# deprecated
@@ -94,6 +110,7 @@ class Post extends Model {
 		$comment->post_id = $this->id;
 		$comment->create();
 		$this->db->query("UPDATE $this->table SET last_update_at=$comment->created_at WHERE id=$this->id");
+		$this->update_sort_key();
 	}
 	function get_real_comment_count() {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->comment_table WHERE post_id=$this->id AND user_id != -1");
@@ -139,10 +156,10 @@ class Post extends Model {
 		$this->db->query("UPDATE $this->table SET category_id=$this->category_id WHERE id=$this->id");
 	}
 	function get_newer_post() {
-		return $this->db->fetchrow("SELECT * FROM $this->table WHERE board_id=$this->board_id AND id > $this->id ORDER BY id ASC LIMIT 1", 'Post');
+		return $this->db->fetchrow("SELECT * FROM $this->table WHERE board_id=$this->board_id AND sort_key <= $this->sort_key AND id!=$this->id ORDER BY sort_key DESC, id LIMIT 1", 'Post');
 	}
 	function get_older_post() {
-		return $this->db->fetchrow("SELECT * FROM $this->table WHERE board_id=$this->board_id AND id < $this->id ORDER BY id DESC LIMIT 1", 'Post');
+		return $this->db->fetchrow("SELECT * FROM $this->table WHERE board_id=$this->board_id AND sort_key >= $this->sort_key AND id!=$this->id ORDER BY sort_key, id DESC LIMIT 1", 'Post');
 	}
 	function valid() {
 		return !empty($this->name) && !empty($this->title) && !empty($this->body);
