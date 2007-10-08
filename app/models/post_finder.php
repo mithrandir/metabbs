@@ -1,6 +1,5 @@
 <?php
 class PostFinder {
-	var $order = 'id DESC';
 	var $keyword = '';
 	var $category = null;
 	var $page = 1;
@@ -16,9 +15,6 @@ class PostFinder {
 	}
 	function add_condition($key) {
 		$this->conditions[$key] = true;
-	}
-	function order_by($field) {
-		$this->order = $field;
 	}
 	function set_page($page) {
 		$this->page = $page;
@@ -64,7 +60,7 @@ class PostFinder {
 		$offset = ($this->page - 1) * $this->board->posts_per_page;
 		$limit = $this->board->posts_per_page;
 		$condition = $this->get_condition();
-		return $this->db->fetchall("SELECT $fields FROM $this->table WHERE $condition ORDER BY notice DESC, $this->order LIMIT $offset, $limit", 'Post');
+		return $this->db->fetchall("SELECT $fields FROM $this->table WHERE $condition ORDER BY sort_key, id DESC LIMIT $offset, $limit", 'Post');
 	}
 	function get_post_count() {
 		$condition = $this->get_condition();
