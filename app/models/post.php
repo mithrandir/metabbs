@@ -156,10 +156,10 @@ class Post extends Model {
 		$this->db->query("UPDATE $this->table SET category_id=$this->category_id WHERE id=$this->id");
 	}
 	function get_newer_post() {
-		return $this->db->fetchrow("SELECT * FROM $this->table WHERE board_id=$this->board_id AND sort_key <= $this->sort_key AND id!=$this->id ORDER BY sort_key DESC, id LIMIT 1", 'Post');
+		return $this->db->fetchrow("SELECT * FROM $this->table WHERE board_id=$this->board_id AND sort_key < $this->sort_key ORDER BY sort_key DESC LIMIT 1", 'Post');
 	}
 	function get_older_post() {
-		return $this->db->fetchrow("SELECT * FROM $this->table WHERE board_id=$this->board_id AND sort_key >= $this->sort_key AND id!=$this->id ORDER BY sort_key, id DESC LIMIT 1", 'Post');
+		return $this->db->fetchrow("SELECT * FROM $this->table WHERE board_id=$this->board_id AND sort_key > $this->sort_key ORDER BY sort_key LIMIT 1", 'Post');
 	}
 	function valid() {
 		return !empty($this->name) && !empty($this->title) && !empty($this->body);
