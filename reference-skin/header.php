@@ -1,7 +1,37 @@
 <?php
+global $controller, $action;
+
+$admin = $account->has_perm('admin', $board);
+
+// for write.php
+if ($controller == 'post' && $action == 'edit' ||
+	$controller == 'board' && $action == 'post') {
+	$categories = $board->get_categories();
+	$notice_checked = $post->notice ? 'checked="checked"' : '';
+	$secret_checked = $post->secret ? 'checked="checked"' : '';
+	$editing = $action == 'edit';
+	$additional_fields = array();
+	foreach ($extra_attributes as $attr) {
+		$attr->name = htmlspecialchars($attr->name);
+		$attr->output = $attr->render($post->get_attribute($attr->key));
+		$additional_fields[] = $attr;
+	}
+	if ($post->exists()) {
+		$attachments = $post->get_attachments();
+	} else {
+		$attachments = array();
+	}
+	$upload_limit = get_upload_size_limit();
+}
+
 // for list.php
 if (isset($categories)) {
 	foreach ($categories as $k => $c) {
+		if (isset($post) && $post->category_id == $c->id) {
+			$categories[$k]->selected = 'selected="selected"';
+		} else {
+			$categories[$k]->selected = '';
+		}
 		$categories[$k]->url = url_for($board, '', array('category' => $c->id));
 		$categories[$k]->post_count = $c->get_post_count();
 	}
