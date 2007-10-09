@@ -11,6 +11,7 @@ class Board extends Model {
 	var $use_category = 0;
 	var $use_trackback = 1;
 	var $order_by = '';
+	var $header, $footer;
 
 	function _init() {
 		$this->admin_table = get_table_name('board_admin');
@@ -71,6 +72,14 @@ class Board extends Model {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->category_table WHERE board_id=$this->id");
 	}
 	function delete() {
+		$result = $this->db->get_result("SELECT id FROM $this->post_table WHERE board_id=$this->id");
+		if ($result->count()) {
+			$ids = array();
+			while ($data = $result->fetch()) {
+				$ids[] = $data['id'];
+			}
+			$this->db->execute("DELETE FROM $this->post_table WHERE moved_to IN (".implode(',', $ids).")");
+		}
 		Model::delete();
 		$this->db->query("DELETE FROM $this->post_table WHERE board_id=$this->id");
 	}
