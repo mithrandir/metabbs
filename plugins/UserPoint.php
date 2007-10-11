@@ -27,7 +27,7 @@ class UserPoint extends Plugin {
 	}
 
 	function on_settings() {
-		echo "<h2>{$this->plugin_name}</h2>";
+		echo "<h2>점수 계산 방식</h2>";
 		if (is_post()) {
 			if (!file_exists($this->rule_file_path) || is_writable($this->rule_file_path)) {
 				$this->post_unit = (float) $_POST['post_unit'];
@@ -48,20 +48,14 @@ class UserPoint extends Plugin {
 		}
 
 		?><form method="post" action="?">
-			<fieldset>
-				<legend>게산 규칙</legend>
-				<p>
-					<label for="user-point-post-unit">작성한 글 수 ×</label>
-					<input id="user-point-post-unit" type="text" name="post_unit" value="<?php echo $this->post_unit; ?>" />
-					+ <label for="user-point-comment-unit">작성한 댓글 수 ×</label>
-					<input id="user-point-comment-unit" type="text" name="comment_unit" value="<?php echo $this->comment_unit; ?>" />
-				</p>
-			</fieldset>
+			<p>
+				<label for="user-point-post-unit">작성한 글 수 ×</label>
+				<input id="user-point-post-unit" type="text" name="post_unit" value="<?php echo $this->post_unit; ?>" size="5" />
+				+ <label for="user-point-comment-unit">작성한 댓글 수 ×</label>
+				<input id="user-point-comment-unit" type="text" name="comment_unit" value="<?php echo $this->comment_unit; ?>" size="5" />
+			</p>
 
-			<fieldset>
-				<input type="submit" value="Save" />
-				<p>규칙이 바뀔 때마다 회원 점수는 바르게 재계산됩니다.</p>
-			</fieldset>
+			<p><input type="submit" value="적용" /></p>
 		</form><?php
 	}
 
