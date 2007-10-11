@@ -51,10 +51,10 @@ class UserPoint extends Plugin {
 			<fieldset>
 				<legend>게산 규칙</legend>
 				<p>
-					작성한 글 수 ×
-					<input type="text" name="post_unit" value="<?php echo $this->post_unit; ?>" />
-					+ 작성한 댓글 수 ×
-					<input type="text" name="comment_unit" value="<?php echo $this->comment_unit; ?>" />
+					<label for="user-point-post-unit">작성한 글 수 ×</label>
+					<input id="user-point-post-unit" type="text" name="post_unit" value="<?php echo $this->post_unit; ?>" />
+					+ <label for="user-point-comment-unit">작성한 댓글 수 ×</label>
+					<input id="user-point-comment-unit" type="text" name="comment_unit" value="<?php echo $this->comment_unit; ?>" />
 				</p>
 			</fieldset>
 
