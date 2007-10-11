@@ -32,7 +32,7 @@ if (!defined('MODERN_SKIN')) {
 		$post->url = url_for($post, '', get_search_params());
 		$post->date = date('Y-m-d', $post->created_at);
 	}
-	add_filter('PostList', 'modern_list_filter', 42);
+	add_filter('PostList', 'modern_list_filter', 32768);
 
 	function modern_view_filter(&$post) {
 		modern_common_filter($post);
@@ -45,7 +45,7 @@ if (!defined('MODERN_SKIN')) {
 			$post->edited_at = date('Y-m-d H:i:s', $post->edited_at);
 		}
 	}
-	add_filter('PostView', 'modern_view_filter', 42);
+	add_filter('PostView', 'modern_view_filter', 32768);
 
 	function modern_comment_filter(&$comment) {
 		global $account;
@@ -62,6 +62,6 @@ if (!defined('MODERN_SKIN')) {
 			$comment->edit_url = null;
 		}
 	}
-	add_filter('PostViewComment', 'modern_comment_filter', 42);
+	add_filter('PostViewComment', 'modern_comment_filter', 32768);
 }
 ?>
