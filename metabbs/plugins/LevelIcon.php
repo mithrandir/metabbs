@@ -13,10 +13,10 @@ class LevelIcon extends Plugin {
 		if (!file_exists(METABBS_DIR . '/data/icons'))
 			$this->on_install();
 
-		add_filter('PostView', array(&$this, 'prepend_level_icon_filter'), 50);
-		add_filter('PostList', array(&$this, 'prepend_level_icon_filter'), 50);
-		add_filter('PostViewComment', array(&$this, 'prepend_level_icon_filter'), 50);
-		add_filter('UserInfo', array(&$this, 'user_info_level_icon_filter'), 50);
+		add_filter('PostView', array(&$this, 'prepend_level_icon_filter'), 1000);
+		add_filter('PostList', array(&$this, 'prepend_level_icon_filter'), 1000);
+		add_filter('PostViewComment', array(&$this, 'prepend_level_icon_filter'), 1000);
+		add_filter('UserInfo', array(&$this, 'user_info_level_icon_filter'), 1000);
 	}
 	function cache_icons() {
 		$dir = opendir(METABBS_DIR.'/data/icons');
@@ -40,7 +40,6 @@ class LevelIcon extends Plugin {
 		if ($model->user_id) {
 			$user = $model->get_user();
 			$level = $user->exists() ? $user->level : 0;
-			if ($level > 0) $model->name = link_to($model->name, $user);
 		} else {
 			$level = 0;
 		}
