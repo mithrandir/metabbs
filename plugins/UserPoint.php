@@ -67,7 +67,7 @@ class UserPoint extends Plugin {
 
 	function user_info_filter() {
 		global $user;
-		$user->signature = trim("$this->signature\n\n점수: ".$this->get_point($user));
+		$user->signature = trim("$user->signature\n\n점수: ".$this->get_point($user));
 	}
 
 }
