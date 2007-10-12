@@ -10,6 +10,7 @@ class Post extends Model {
 	var $edited_by = 0;
 	var $moved_to = 0;
 	var $comment_count = 0;
+	var $sort_key = 0;
 
 	function _init() {
 		$this->table = get_table_name('post');
