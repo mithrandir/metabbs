@@ -10,7 +10,7 @@ add_filter('PostViewComment', 'format_body', 500);
 function link_user(&$model) {
 	$user = $model->get_user();
 	if ($user->level > 0) {
-		$model->name = link_to_user($user);
+		$model->name = link_to($model->name, $user);
 	}
 }
 add_filter('PostList', 'link_user', 600);

@@ -2,6 +2,7 @@
 class Emoticon extends Plugin {
 	var $plugin_name = '이모티콘';
 	var $description = '이모티콘을 이미지로 치환합니다.';
+	var $tags = array('내용 처리');
 	var $mapping = array(
 		'O:-)' => 'face-angel.png',
 		':)' => 'face-smile.png',
