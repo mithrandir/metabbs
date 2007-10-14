@@ -18,7 +18,8 @@ function collision_test_callback() {
 }
 
 class SayHello extends Plugin {
-	var $description = 'MetaBBS plugin example. <strong>for testing purpose only!</strong>';
+	var $plugin_name = '예제 플러그인';
+	var $description = 'MetaBBS 플러그인 API의 사용 예제입니다. (테스트용)';
 	function on_init() {
 		add_handler('say', 'hello', 'before_say_hello_handler', 'before');
 		add_handler('say', 'hello', 'say_hello_handler');

@@ -1,6 +1,7 @@
 <?php
 class SimpleSpam extends Plugin {
-	var $description = 'Block posts containing bad words.';
+	var $plugin_name = '금칙어 설정';
+	var $description = '특정 단어가 포함된 글을 쓰지 못하게 합니다.';
 	function on_init() {
 		if (!file_exists(METABBS_DIR.'/data/spam.txt')) {
 			$fp = fopen(METABBS_DIR.'/data/spam.txt', 'w');

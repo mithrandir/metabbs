@@ -1,5 +1,7 @@
 <?php
 class IPBlock extends Plugin {
+	var $plugin_name = '아이피 차단';
+	var $description = '특정 아이피로 접속하는 사용자를 차단합니다.';
 	function on_init() {
 		if (!file_exists(METABBS_DIR.'/data/ipblock.txt')) {
 			fclose(fopen(METABBS_DIR.'/data/ipblock.txt', 'w'));
