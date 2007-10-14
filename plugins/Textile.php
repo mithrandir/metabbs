@@ -4079,7 +4079,7 @@ class MTLikeTextile extends Textile {
  */
 
 class Textile extends Plugin {
-	var $description = 'Apply Textile format.';
+	var $description = 'Textile 형식을 처리합니다.';
 
 	function on_init() {
 		add_filter('PostList', array(&$this, 'format'), 500);

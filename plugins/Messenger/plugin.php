@@ -98,7 +98,8 @@ function showMessage(index) {
 }
 
 class Messenger extends Plugin {
-	var $description = 'Messaging service';
+	var $plugin_name = '쪽지';
+	var $description = '답글이 달리면 쪽지로 알립니다.';
 
 	function on_init() {
 		global $account, $layout;

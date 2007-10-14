@@ -6,6 +6,7 @@ function openid_form() {
 </form>';
 }
 class OpenID extends Plugin {
+	var $description = 'OpenID로 로그인합니다.';
 	function add_include_path() {
 		ini_set("include_path", dirname(__FILE__) . PATH_SEPARATOR . ini_get("include_path"));
 	}

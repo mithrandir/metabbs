@@ -1510,7 +1510,7 @@ software, even if advised of the possibility of such damage.
 */
 
 class Markdown extends Plugin {
-	var $description = 'Apply Markdown format.';
+	var $description = 'Markdown 형식을 처리합니다.';
 
 	function on_init() {
 		add_filter('PostList', array(&$this, 'format'), 500);

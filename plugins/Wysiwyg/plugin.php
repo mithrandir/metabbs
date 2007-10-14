@@ -1,5 +1,7 @@
 <?php
 class Wysiwyg extends Plugin {
+	var $plugin_name = '위지윅 편집기';
+	var $description = '글 입력창을 위지윅 편집기로 바꿉니다.';
 	function on_init() {
 		global $controller, $action;
 		ini_set("include_path", dirname(__FILE__) . PATH_SEPARATOR . ini_get("include_path"));

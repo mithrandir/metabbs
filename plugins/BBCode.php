@@ -337,7 +337,7 @@ function format_bbcode($text)
 }
 
 class BBCode extends Plugin {
-	var $description = 'Support for BBCode format';
+	var $description = 'BBCode 형식을 처리합니다.';
 
 	function on_init() {
 		add_filter('PostList', array(&$this, 'format'), 500);
