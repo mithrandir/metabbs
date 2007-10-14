@@ -1,5 +1,7 @@
 <?php
 class MetadataViewer extends Plugin {
+	var $plugin_name = '추가 정보 표시';
+	var $description = '글의 추가 정보를 보입니다. (테스트용)';
 	function on_init() {
 		add_filter('PostList', array(&$this, 'print_metadata'), 10000);
 		add_filter('PostView', array(&$this, 'print_metadata'), 10000);

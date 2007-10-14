@@ -1,6 +1,7 @@
 <?php
 class Emoticon extends Plugin {
-	var $description = 'Replace emoticons to images';
+	var $plugin_name = '이모티콘';
+	var $description = '이모티콘을 이미지로 치환합니다.';
 	var $mapping = array(
 		'O:-)' => 'face-angel.png',
 		':)' => 'face-smile.png',

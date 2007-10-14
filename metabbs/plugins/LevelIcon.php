@@ -1,6 +1,7 @@
 <?php
 class LevelIcon extends Plugin {
-	var $description = 'Display a level icon';
+	var $plugin_name = '레벨 아이콘';
+	var $description = '사용자의 레벨에 따라 닉네임 앞에 아이콘을 붙입니다.';
 	var $icons = array();
 
 	function on_install() {
