@@ -1,8 +1,9 @@
 body {
     margin: 0;
-    font-family: verdana, sans-serif;
+    font-family: arial, verdana, sans-serif;
 	background-color: #333;
-    font-size: 14px;
+    font-size: 13px;
+	line-height: 1.5;
 }
 
 #meta-admin {
@@ -17,10 +18,13 @@ a {
 a:hover {
     background-color: #efc;
 }
+small {
+	font-size: 11px;
+}
 
 h1 {
     font-family: "trebuchet ms", verdana, sans-serif;
-    font-size: 2.2em;
+    font-size: 2.4em;
     margin: 20px 20px 0 20px;
 }
 
@@ -54,7 +58,7 @@ div.right {
 }
 
 .description {
-	font-size: 0.8em;
+	font-size: 11px;
 	color: #666;
 }
 
@@ -73,8 +77,11 @@ div.right {
 }
 
 #header {
-    padding: 10px 20px 20px 20px;
+    padding: 0.5em 1em 1.5em 1em;
     border-bottom: 1px solid #ccc;
+}
+#header a {
+	margin: 0 0.3em;
 }
 #header p {
     margin: 0;
