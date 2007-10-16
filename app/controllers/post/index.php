@@ -4,11 +4,21 @@ permission_required('read', $post);
 if (isset($_GET['search'])) {
 	$board->search = array_merge($board->search, $_GET['search']);
 }
-$seen_posts = explode(',', cookie_get('seen_posts'));
-if (!in_array($post->id, $seen_posts)) {
+
+// backward compatibility; #156
+if (cookie_is_registered('seen_posts')) {
+	$seen_posts = explode(',', cookie_get('seen_posts'));
+	$_SESSION['seen_posts'] = $seen_posts;
+	cookie_unregister('seen_posts');
+}
+
+if (!session_is_registered('seen_posts')) {
+	$_SESSION['seen_posts'] = array();
+}
+
+if (!in_array($post->id, $_SESSION['seen_posts'])) {
 	$post->update_view_count();
-	$seen_posts[] = $post->id;
-	cookie_register('seen_posts', implode(',', $seen_posts));
+	$_SESSION['seen_posts'][] = $post->id;
 }
 
 $style = $board->get_style();
