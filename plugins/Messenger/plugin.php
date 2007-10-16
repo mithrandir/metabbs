@@ -1,6 +1,7 @@
 <?php
 class Message extends Model {
 	var $model = 'message';
+	var $post_id = 0;
 
 	function _init() {
 		$this->table = get_table_name('message');
@@ -43,7 +44,7 @@ function print_unread_messages($messages) {
 <ul>
 <?php foreach ($messages as $n => $message) { ?>
 	<li id="message-<?=$n+1?>"<? if ($n > 0) { ?> style="display: none"<? } ?>>
-		<?=link_to_user($message->get_sender())?>, <?=date("Y-m-d H:i:s", $message->sent_at)?> / <a href="<?=url_for($message, 'read')?>" onclick="return true; markAsRead(this.href, 'message-<?=$n+1?>'); return false">Mark as read</a>
+		<? if ($message->from) { ?><?=link_to_user($message->get_sender())?>, <? } ?><?=date("Y-m-d H:i:s", $message->sent_at)?> / <a href="<?=url_for($message, 'read')?>" onclick="return true; markAsRead(this.href, 'message-<?=$n+1?>'); return false">Mark as read</a>
 		<div class="message-body">
 		<?=format_plain($message->body)?>
 		</div>
@@ -113,7 +114,9 @@ class Messenger extends Plugin {
 			$layout->add_stylesheet(METABBS_BASE_PATH . 'plugins/Messenger/style.css');
 		}
 		add_handler('message', 'read', array(&$this, 'action_read'));
+		add_handler('user', 'send-message', array(&$this, 'action_send_message'));
 		add_filter('PostComment', array(&$this, 'notify_reply'), 1024);
+		add_filter('UserInfo', array(&$this, 'add_message_link'), 200);
 	}
 	function notify_reply(&$comment) {
 		global $account;
@@ -128,6 +131,22 @@ class Messenger extends Plugin {
 			$message->read = 0;
 			$message->create();
 		}
+
+		$post = $comment->get_post();
+		if ($post->user_id && $post->user_id != $account->id) {
+			$message = new Message;
+			$message->from = $account->id;
+			$message->to = $post->user_id;
+			$message->body = $comment->body;
+			$message->post_id = $comment->post_id;
+			$message->sent_at = time();
+			$message->read = 0;
+			$message->create();
+		}
+	}
+	function add_message_link(&$user) {
+		if ($GLOBALS['account']->is_guest()) return;
+		$user->additional_info .= "<p>".link_to('Send Message', $user, 'send-message')."</p>";
 	}
 	function action_read() {
 		global $id, $account;
@@ -140,6 +159,24 @@ class Messenger extends Plugin {
 			}
 			redirect_back();
 		}
+	}
+	function action_send_message() {
+		global $template, $id, $user, $account;
+		if ($account->is_guest())
+			access_denied();
+		$user = User::find($id);
+		if (is_post()) {
+			$message = new Message;
+			$message->from = $account->id;
+			$message->to = $user->id;
+			$message->body = $_POST['body'];
+			$message->sent_at = time();
+			$message->read = 0;
+			$message->create();
+
+			redirect_to(url_for($user));
+		}
+		ini_set("include_path", dirname(__FILE__) . PATH_SEPARATOR . ini_get("include_path"));
 	}
 	function on_install() {
 		$db = get_conn();
