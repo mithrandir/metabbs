@@ -13,4 +13,9 @@ Homepage: <?=link_text($user->get_url())?><br />
 <? if ($user->signature) { ?>
 <p id="signature"><?=format_plain($user->signature)?></p>
 <? } ?>
+<? if ($user->additional_info) { ?>
+<div id="info">
+<?=$user->additional_info?>
+</div>
+<? } ?>
 </div>
