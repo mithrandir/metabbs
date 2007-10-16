@@ -11,6 +11,7 @@ if (!$account->is_guest()) {
 } else {
 	cookie_register('name', $comment->name);
 }
+$comment->post_id = $post->id;
 
 apply_filters('PostComment', $comment);
 
