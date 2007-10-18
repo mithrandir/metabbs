@@ -10,6 +10,7 @@ if ($controller == 'post' && $action == 'edit' ||
 	$notice_checked = $post->notice ? 'checked="checked"' : '';
 	$secret_checked = $post->secret ? 'checked="checked"' : '';
 	$editing = $action == 'edit';
+	$post->author = $post->name;
 	$additional_fields = array();
 	foreach ($extra_attributes as $attr) {
 		$attr->name = htmlspecialchars($attr->name);
@@ -21,6 +22,7 @@ if ($controller == 'post' && $action == 'edit' ||
 	} else {
 		$attachments = array();
 	}
+	$uploadable = $board->use_attachment;
 	$upload_limit = get_upload_size_limit();
 }
 
@@ -69,9 +71,9 @@ if (isset($attachments)) {
 		$attachments[$k]->size = human_readable_size($v->get_size());
 	}
 }
-if (isset($post) && $account->has_perm('comment', $post)) {
+if (isset($post) && $post->exists() && $account->has_perm('comment', $post)) {
 	$comment_url = url_for($post, 'comment');
-	$guest = $account->is_guest();
 }
+$guest = $account->is_guest();
 if (!isset($signature)) $signature = '';
 ?>
