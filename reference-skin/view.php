@@ -68,10 +68,11 @@
 	<h2>댓글</h2>
 	<ol id="comments">
 	<? foreach ($comments as $comment): ?>
-		<li class="comment">
+		<li class="comment" style="margin-left: <?=$comment->depth?>em">
 			<span class="author"><?=$comment->author?></span>
 			<span class="date"><?=$comment->date?></span>
 			<span class="actions">
+			<? if ($comment->reply_url): ?><a href="<?=$comment->reply_url?>">답글 달기</a><? endif; ?>
 			<? if ($comment->delete_url): ?><a href="<?=$comment->delete_url?>">지우기</a><? endif; ?>
 			<? if ($comment->edit_url): ?><a href="<?=$comment->edit_url?>">고치기</a><? endif; ?>
 			</span>
@@ -80,24 +81,7 @@
 	<? endforeach; ?>
 	</ol>
 
-<? if ($comment_url): ?>
-	<form method="post" action="<?=$comment_url?>">
-	<dl>
-	<? if ($guest): ?>
-		<dt>이름</dt>
-		<dd><input type="text" name="comment[name]" /></dd>
-
-		<dt>암호</dt>
-		<dd><input type="password" name="comment[password]" /></dd>
-	<? endif; ?>
-
-		<dt>내용</dt>
-		<dd><textarea name="comment[body]" cols="30" rows="5"></textarea></dd>
-	</dl>
-
-	<p><input type="submit" value="댓글 달기" /></p>
-	</form>
-<? endif; ?>
+	<? include "comment_form.php"; ?>
 </div>
 
 <div id="meta-nav">

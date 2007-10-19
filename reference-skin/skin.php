@@ -51,6 +51,11 @@ if (!defined('MODERN_SKIN')) {
 		global $account;
 		$comment->author = $comment->name;
 		$comment->date = date('Y-m-d H:i:s', $comment->created_at);
+		if ($account->has_perm('reply', $comment)) {
+			$comment->reply_url = url_for($comment, 'reply');
+		} else {
+			$comment->reply_url = null;
+		}
 		if ($account->has_perm('delete', $comment)) {
 			$comment->delete_url = url_for($comment, 'delete');
 		} else {

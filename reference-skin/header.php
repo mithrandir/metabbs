@@ -1,7 +1,8 @@
 <?php
 global $controller, $action;
 
-$admin = $account->has_perm('admin', $board);
+if (isset($board))
+	$admin = $account->has_perm('admin', $board);
 
 // for write.php
 if ($controller == 'post' && $action == 'edit' ||
@@ -71,8 +72,33 @@ if (isset($attachments)) {
 		$attachments[$k]->size = human_readable_size($v->get_size());
 	}
 }
+if (isset($comments)) {
+	function flatten_comments($comments, $parent = 0, $depth = 0) {
+		$_comments = array();
+		foreach ($comments as $comment) {
+			if ($comment->parent == $parent) {
+				$comment->depth = $depth;
+				$_comments[] = $comment;
+				$children = flatten_comments($comments, $comment->id, $depth + 1);
+				$_comments = array_merge($_comments, $children);
+			}
+		}
+		return $_comments;
+	}
+	$comments = flatten_comments($comments);
+}
 if (isset($post) && $post->exists() && $account->has_perm('comment', $post)) {
 	$comment_url = url_for($post, 'comment');
+}
+if ($controller == 'comment') {
+	$comment_url = url_for($controller, $action);
+	if ($action == 'edit') {
+		$comment_author = $comment->name;
+		$comment_body = $comment->body;
+	}
+}
+if (isset($comment_url) && !isset($comment_author)) {
+	$comment_author = $comment_body = "";
 }
 $guest = $account->is_guest();
 if (!isset($signature)) $signature = '';

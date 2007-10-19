@@ -1,5 +1,5 @@
 <?php
-if ($board->use_trackback && $GLOBALS['controller'] == 'post') {
+if (isset($board) && $board->use_trackback && $GLOBALS['controller'] == 'post') {
 ?>
 <!--
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
