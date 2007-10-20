@@ -1,6 +1,21 @@
 <?php
-if (isset($_POST['post']['password'])) {
-	$_POST['_auth_password'] = $_POST['post']['password'];
+if (is_post()) {
+	if (!isset($_POST['post'])) {
+		$_POST['post'] = @array(
+			'title' => $_POST['title'],
+			'category_id' => isset($_POST['category']) ? $_POST['category'] : 0,
+			'notice' => isset($_POST['notice']) ? $_POST['notice'] : 0,
+			'secret' => isset($_POST['secret']) ? $_POST['secret'] : 0,
+			'body' => $_POST['body']
+		);
+		if (isset($_POST['author'])) {
+			$_POST['post']['name'] = $_POST['author'];
+			$_POST['post']['password'] = $_POST['password'];
+		}
+	}
+	if (isset($_POST['post']['password'])) {
+		$_POST['_auth_password'] = $_POST['post']['password'];
+	}
 }
 permission_required('edit', $post);
 
