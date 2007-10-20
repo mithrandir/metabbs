@@ -78,12 +78,15 @@ if (isset($older_post)) {
 	}
 }
 if (isset($attachments)) {
-	if (!$board->use_attachment) {
-		$attachments = array();
-	} else foreach ($attachments as $k => $v) {
+	foreach ($attachments as $k => $v) {
 		$attachments[$k]->filename = shorten_path(htmlspecialchars($v->filename));
 		$attachments[$k]->url = htmlspecialchars(url_for($v));
 		$attachments[$k]->size = human_readable_size($v->get_size());
+		if ($v->is_image()) {
+			$attachments[$k]->thumbnail_url = url_for($v).'?thumbnail=1';
+		} else {
+			$attachments[$k]->thumbnail_url = null;
+		}
 	}
 }
 if (isset($comments)) {

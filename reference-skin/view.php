@@ -43,7 +43,10 @@
 	<h2>첨부 파일</h2>
 	<ul id="attachments">
 	<? foreach ($attachments as $attachment): ?>
-		<li><a href="<?=$attachment->url?>"><?=$attachment->filename?></a> (<?=$attachment->size?>)</li>
+		<li>
+			<a href="<?=$attachment->url?>"><?=$attachment->filename?></a> (<?=$attachment->size?>)
+			<? if ($attachment->thumbnail_url): ?><br /><img src="<?=$attachment->url?>" alt="<?=$attachment->filename?>" /><? endif; ?>
+		</li>
 	<? endforeach; ?>
 	</ul>
 <? endif; ?>
