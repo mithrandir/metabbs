@@ -24,7 +24,10 @@ class Comment extends Model {
 		$post->update_comment_count();
 	}
 	function get_user() {
-		return User::find($this->user_id);
+		if ($this->user_id)
+			return User::find($this->user_id);
+		else
+			return new Guest(array('name' => $this->name));
 	}
 	function get_post() {
 		return find_and_cache('post', $this->post_id);
