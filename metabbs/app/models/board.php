@@ -50,6 +50,7 @@ class Board extends Model {
 		return $this->get_posts(($page - 1) * $this->posts_per_page, $this->posts_per_page);
 	}
 	function get_feed_posts($count) {
+		if (!$this->order_by) $this->order_by = 'id DESC';
 		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE board_id=$this->id AND NOT moved_to ORDER BY $this->order_by LIMIT $count", 'Post');
 	}
 	function add_post(&$post) {
