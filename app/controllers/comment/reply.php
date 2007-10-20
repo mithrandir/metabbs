@@ -32,6 +32,7 @@ if (is_post()) {
 	}
 } else {
 	$template = get_template($board, 'reply');
+	$template->set('board', $board);
 	$template->set('comment', $comment);
 	$template->set('name', cookie_get('name'));
 	if (is_xhr()) {
