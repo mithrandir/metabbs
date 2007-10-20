@@ -2,12 +2,6 @@
 $template_engine = 'default';
 $options = array('get_body_in_the_list' => false, 'build_comment_tree' => false);
 
-/*
-TODO:
-	category->name : category->url vs category : category_url
-	깊이가 많이 들어가면 헷갈릴 듯.
-*/
-
 if (!defined('MODERN_SKIN')) {
 	define('MODERN_SKIN', 1);
 
@@ -44,7 +38,8 @@ if (!defined('MODERN_SKIN')) {
 		$post->edited = $post->is_edited();
 		if ($post->edited) {
 			$editor = $post->get_editor();
-			$post->edited_by = htmlspecialchars($editor->name);
+			if (!$editor->is_guest()) $editor->name = htmlspecialchars($editor->name);
+			$post->edited_by = $editor->name;
 			$post->edited_at = date('Y-m-d H:i:s', $post->edited_at);
 		}
 	}

@@ -20,7 +20,10 @@ if ($guest) {
 // for write.php
 if ($controller == 'post' && $action == 'edit' ||
 	$controller == 'board' && $action == 'post') {
-	$categories = $board->get_categories();
+	if ($board->use_category)
+		$categories = $board->get_categories();
+	else
+		$categories = null;
 	$notice_checked = $post->notice ? 'checked="checked"' : '';
 	$secret_checked = $post->secret ? 'checked="checked"' : '';
 	$editing = $action == 'edit';
@@ -123,7 +126,8 @@ if ($controller == 'comment') {
 	}
 }
 if (isset($comment_url) && !isset($comment_author)) {
-	$comment_author = $comment_body = "";
+	$comment_author = cookie_get('name');
+	$comment_body = "";
 }
 if (!isset($signature)) $signature = '';
 ?>
