@@ -3334,7 +3334,7 @@ class Textile_ {
  *
  * @author Jim Riggs \<textile at jimandlisa dot com\>
  */
-class MTLikeTextile extends Textile {
+class MTLikeTextile extends Textile_ {
   /**
    * Instantiates a new MTLikeTextile object. Optional options
    * can be passed to initialize the object. Attributes for the
