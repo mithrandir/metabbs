@@ -61,6 +61,14 @@ if (isset($post) && !$board->use_trackback) {
 	$post->trackback_url = null;
 	$trackbacks = array();
 }
+if (isset($trackbacks)) {
+	foreach ($trackbacks as $k => $v) {
+		if ($admin)
+			$trackbacks[$k]->delete_url = url_for($v, 'delete');
+		else
+			$trackbacks[$k]->delete_url = null;
+	}
+}
 if (isset($newer_post)) {
 	if (!$newer_post->exists()) {
 		$newer_post = null;
