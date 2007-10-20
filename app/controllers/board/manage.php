@@ -1,7 +1,7 @@
 <?php
 permission_required('admin', $board);
 
-if (is_post()) {
+if (isset($_POST['action'])) {
 	switch ($_POST['action']) {
 		case 'delete':
 		foreach ($_POST['posts'] as $post_id) {
@@ -20,6 +20,10 @@ if (is_post()) {
 			$post->category_id = $_POST['category'];
 			$post->update_category();
 		}
+		break;
+		case 'move':
+			$_board = new Board(array('id' => $_POST['board_id']));
+			$post->move_to($_board, isset($_POST['track']));
 		break;
 	}
 	redirect_to(url_for($board));
