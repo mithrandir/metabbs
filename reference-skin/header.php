@@ -41,6 +41,7 @@ if (isset($categories)) {
 } else {
 	$categories = null;
 }
+$manage_url = url_for($board, 'manage');
 
 // for view.php
 if (isset($post) && !$board->use_trackback) {

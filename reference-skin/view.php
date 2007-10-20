@@ -60,7 +60,10 @@
 	<h2>트랙백</h2>
 	<ol id="trackbacks">
 	<? foreach ($trackbacks as $trackback): ?>
-		<li><a href="<?=$trackback->url?>"><?=$trackback->title?></a> from <?=$trackback->blog_name?></li>
+		<li>
+			<a href="<?=$trackback->url?>"><?=$trackback->title?></a> from <?=$trackback->blog_name?>
+			<? if ($trackback->delete_url): ?><a href="<?=$trackback->delete_url?>">삭제</a><? endif; ?>
+		</li>
 	<? endforeach; ?>
 	</ol>
 <? endif; ?>
