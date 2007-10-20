@@ -3,6 +3,19 @@ global $controller, $action;
 
 if (isset($board))
 	$admin = $account->has_perm('admin', $board);
+$guest = $account->is_guest();
+if ($guest) {
+	$link_login = url_with_referer_for($board, 'login');
+	$link_signup = url_with_referer_for('account', 'signup');
+} else {
+	$link_logout = url_with_referer_for('account', 'logout');
+	$link_account = url_with_referer_for('account', 'edit');
+	if ($account->is_admin()) {
+		$link_admin = url_for('admin');
+	} else {
+		$link_admin = null;
+	}
+}
 
 // for write.php
 if ($controller == 'post' && $action == 'edit' ||
@@ -101,6 +114,5 @@ if ($controller == 'comment') {
 if (isset($comment_url) && !isset($comment_author)) {
 	$comment_author = $comment_body = "";
 }
-$guest = $account->is_guest();
 if (!isset($signature)) $signature = '';
 ?>

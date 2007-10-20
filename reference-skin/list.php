@@ -1,3 +1,14 @@
+<div id="account-info">
+<? if ($guest): ?>
+<a href="<?=$link_login?>">로그인</a>
+<a href="<?=$link_signup?>">회원가입</a>
+<? else: ?>
+<a href="<?=$link_logout?>">로그아웃</a>
+<a href="<?=$link_account?>">정보 수정</a>
+<? if ($link_admin): ?><a href="<?=$link_admin?>">관리자 페이지</a><? endif; ?>
+<? endif; ?>
+</div>
+
 <div id="board-info">
 모두 <?=$post_count?>개의 글이 있습니다.
 <a href="<?=$link_rss?>">RSS</a>
