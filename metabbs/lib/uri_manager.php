@@ -23,7 +23,7 @@ function _url_for($controller, $action = null, $params = null) {
 	} else {
 		$url .= $controller->model . '/';
 		if ($action) $url .= $action . '/';
-		$url .= $controller->get_id();
+		$url .= urlencode($controller->get_id());
 	}
 
 	if ($params) $url .= query_string_for($params);
