@@ -19,7 +19,9 @@ class NicknameIcon extends Plugin {
 		}
 	}
 	function user_info_icon_filter(&$user) {
-		$user->name = "<img src=\"".METABBS_BASE_PATH."data/usericons/$user->id\" alt=\"$user->name\" />";
+		if (file_exists('data/usericons/'.$model->user_id)) {
+			$user->name = "<img src=\"".METABBS_BASE_PATH."data/usericons/$user->id\" alt=\"$user->name\" />";
+		}
 	}
 	function delete_icon($userid) {
 		unlink('data/usericons/'.$userid);
