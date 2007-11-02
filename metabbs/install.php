@@ -3,27 +3,12 @@ header("Content-Type: text/html; charset=UTF-8");
 
 define('METABBS_DIR', '.');
 
-/**
- * 통과 메시지를 출력한다.
- * @param $msg 화면에 출력할 메시지
- */
 function pass($msg) {
 	echo "<div class=\"flash pass\">$msg ... <em>OK :)</em></div>";
 }
-
-/**
- * 경고 메시지를 출력한다.
- * @param $msg 화면에 출력할 메시지
- */
 function warn($msg) {
 	echo "<div class=\"flash warn\"><em>Warning:</em> $msg</div>";
 }
-
-/**
- * 실패했을때 설정 파일을 제거하고 에러메시지를 출력한다. 
- * @param $msg 화면에 출력할 메시지
- */
-
 function fail($msg) {
 	if (file_exists('metabbs.conf.php')) {
 		unlink('metabbs.conf.php');
@@ -32,23 +17,9 @@ function fail($msg) {
 	print_footer();
 	exit;
 }
-
-/**
- * 필드를 생성하여 출력합니다.
- * @param $name input 마크업 태그의 name 속성
- * @param $display_name 레이블 태그에 들어갈 문구
- * @param $value input 마크업 태그의 디폴트 값
- * @param $type input 마크업 태그의 type 속성
- * @param $desc input 마크업 태그 이후에 따르는 설명
- */
 function field($name, $display_name, $value = '', $type = 'text', $desc = '') {
 	echo "<p><label>$display_name</label> <input type=\"$type\" name=\"config[$name]\" value=\"$value\" />\n<span class='desc'>$desc</span></p>";
 }
-
-/**
- * 백 엔드를 가져온다.
- * @return lib/backends 폴더 내의 디렉토리 목록을 배열로 리턴한다.
- */
 function get_backends() {
 	$backends = array();
 	$dir = opendir('lib/backends');
@@ -59,14 +30,6 @@ function get_backends() {
 	}
 	return $backends;
 }
-
-/**
- * 설치 중 에러가 발생시 호출되는 함수. 에러 메시지를 처리해준다.
- * @param $errno 에러 번호
- * @param $errstr 에러 메시지
- * @param $errfile 에러가 발생한 파일
- * @param $errline 에러가 발생한 라인
- */
 function capture_errors($errno, $errstr, $errfile, $errline) {
 	if ($errno & (E_ERROR | E_USER_ERROR)) {
 		global $safe;
@@ -74,11 +37,6 @@ function capture_errors($errno, $errstr, $errfile, $errline) {
 		fail($errstr);
 	}
 }
-
-/**
- * 헤더를 출력한다.
- * @param $step 진행 단계
- */
 function print_header($step) {
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">

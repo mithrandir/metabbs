@@ -8,24 +8,24 @@ if (!isset($layout)) $layout = new Layout;
 import_enabled_plugins();
 
 /**
- * 써드 파티를 위한 API. 게시판의 정보를 제공한다.
+ * 외부 페이지를 위한 API
  */
 class SiteManager
 {
 	/**
-	 * 피드 주소를 결정한다.
+	 * 피드 링크 태그의 내용
 	 */
 	var $feed_link = 'RSS';
 
 	/**
-	 * 생성자. 유저 객체를 가져온다.
+	 * 생성자. 현재 사용자 객체를 가져온다.
 	 */
 	function SiteManager() {
 		$this->user = UserManager::get_user();
 	}
 
 	/**
-	 * 회원 여부를 확인한다.
+	 * 로그인 여부를 확인한다.
 	 * @return 비회원일 경우 true를 리턴한다.
 	 */
 	function isGuest() {
@@ -46,10 +46,10 @@ class SiteManager
 	}
 
 	/**
-	 * 지정한 개수만큼 최근 글을 가져온다.
-	 * @param $board_name 게시판 명
+	 * 최근 글 목록을 가져온다.
+	 * @param $board_name 게시판 이름
 	 * @param $count 개수
-	 * @return 지정한 개수의 최신글을 리턴한다. 
+	 * @return 최근 글을 지정한 개수만큼 리턴한다. 
 	 */
 	function getLatestPosts($board_name, $count) {
 		$board = Board::find_by_name($board_name);
@@ -59,9 +59,9 @@ class SiteManager
 	}
 
 	/**
-	 * 가장 최근글 하나를 가져온다. 
-	 * @param $board_name 게시판 명
-	 * @return 가장 최근 글 하나를 리턴한다.
+	 * 최근 글 하나를 가져온다.
+	 * @param $board_name 게시판 이름
+	 * @return 최근 글 하나를 리턴한다.
 	 */
 	function getLatestPost($board_name) {
 		$board = Board::find_by_name($board_name);
@@ -72,7 +72,7 @@ class SiteManager
 	}
 
 	/**
-	 * <head> 태그 내용을 출력한다.
+	 * <head> 태그에 들어갈 내용을 출력한다.
 	 */
 	function printHead() {
 		global $layout;
@@ -81,10 +81,10 @@ class SiteManager
 	}
 
 	/**
-	 * 가장 최근 글들의 목록을 출력한다.
-	 * @param $board_name 게시판 명
+	 * 최근 글 목록을 출력한다.
+	 * @param $board_name 게시판 이름
 	 * @param $count 글의 개수
-	 * @param $title_length 제목의 길이
+	 * @param $title_length 제목 길이 제한
 	 */
 	function printLatestPosts($board_name, $count, $title_length = -1) {
 		$board = Board::find_by_name($board_name);
@@ -102,12 +102,23 @@ class SiteManager
 <?php
 	}
 
+	/**
+	 * 여러 게시판에서 최근 글 목록을 가져온다.
+	 * @param $boards 게시판 이름의 배열
+	 * @param $count 글의 개수
+	 */
 	function getMetaLatestPosts($boards, $count) {
 		$db = get_conn();
 		$query = "SELECT p.* FROM ".get_table_name('board')." b, ".get_table_name('post')." p WHERE b.id=p.board_id AND b.name IN ('".implode("','", $boards)."') ORDER BY p.id DESC LIMIT $count";
 		return $db->fetchall($query, 'Post');
 	}
 
+	/**
+	 * 여러 게시판의 최근 글 목록을 출력한다.
+	 * @param $boards 게시판 이름의 배열
+	 * @param $count 글의 개수
+	 * @param $title_length 제목 길이 제한
+	 */
 	function printMetaLatestPosts($boards, $count, $title_length = -1) {
 		$posts = $this->getMetaLatestPosts($boards, $count);
 		apply_filters_array('PostList', $posts);
@@ -126,8 +137,5 @@ class SiteManager
 	}
 }
 
-/**
- * 이 인스턴스를 이용하여 외부 프로그램에서 MetaBBS에 접근한다.
- */
 $metabbs = new SiteManager;
 ?>
