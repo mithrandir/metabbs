@@ -1,0 +1,11 @@
+@import url(../blueprint/style.css);
+
+#meta a { color: #7a0; }
+#posts { border-top: 4px solid #7a0; }
+#posts tr.notice { background-color: #efffdd; }
+
+.post-title { background-color: #efffdd; border-top: 4px solid #7a0; }
+.post-title h2 { color: #7a0; }
+#responses h3 { color: #7a0; }
+#postform { border-top: 4px solid #7a0; background-color: #efffdd;  }
+#postform th { color: #7a0; }
