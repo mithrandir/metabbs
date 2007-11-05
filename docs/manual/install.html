@@ -17,13 +17,13 @@
 <ol>
 	<li>먼저 MetaBBS의 배포판을 내려받습니다. <a href="http://metabbs.org/">MetaBBS 홈페이지</a>에서 받을 수 있습니다.</li>
 	<li>받은 파일의 압축을 풉니다. 평소에 자주 사용하시던 프로그램을 쓰시면 됩니다.</li>
-	<li>FTP 클라이언트를 켜고 MetaBBS를 설치할 서버에 접속하여, 압축을 풀어 나온 파일들을 설치할 디렉토리에 업로드합니다.</li>
+	<li>FTP 클라이언트를 켜고 MetaBBS를 설치할 서버에 접속하여, 압축을 풀어 나온 파일들을 설치할 폴더에 업로드합니다.</li>
 </ol>
 
 <h2>2. 퍼미션 조정하기</h2>
-<p>파일을 모두 올렸다면, 인스톨러에 접속해봅니다. 웹 브라우저를 켜고 <code>http://<em>MetaBBS가 설치된 URL</em>/install.php</code>에 접속하면 됩니다. 그러면 이런 메시지가 나올겁니다.</p>
+<p>파일을 모두 올렸다면, 인스톨러에 접속해봅니다. 웹 브라우저를 켜고 <code>http://<strong>MetaBBS가 설치된 주소</strong>/install.php</code>에 접속하면 됩니다. 그러면 이런 메시지가 나올겁니다.</p>
 <p><img src="images/install/permission-check.png" alt="퍼미션 확인 메시지" /></p>
-<p>MetaBBS를 설치하고 사용하기 위해서는 웹 서버가 해당 디렉토리에 쓰기 권한을 가지고 있어야 하는데, 그럴 수 있는 권한이 없기 때문에 나오는 메시지입니다. FTP 클라이언트로 MetaBBS 디렉토리의 퍼미션을 707로 변경합니다. (아래 화면은 <a href="http://filezilla-project.org/">FileZilla</a>에서의 퍼미션 변경 화면입니다.)</p>
+<p>MetaBBS를 설치하고 사용하기 위해서는 웹 서버가 해당 디렉토리에 쓰기 권한을 가지고 있어야 하는데, 그럴 수 있는 권한이 없기 때문에 나오는 메시지입니다. FTP 클라이언트로 MetaBBS 디렉토리의 퍼미션을 707로 변경합니다. (아래는 <a href="http://filezilla-project.org/">FileZilla</a>에서의 퍼미션 변경 화면입니다.)</p>
 <p><img src="images/install/ftp-permission.png" alt="퍼미션 변경 화면. 파일질라 기준" /></p>
 <p class="note">참고: 일부 서버에서는 이 과정이 필요 없을수도 있습니다. 그렇다면 곧바로 다음 과정으로 넘어가십시오.</p>
 
@@ -32,9 +32,9 @@
 <p><img src="images/install/installer.png" alt="인스톨러 화면" /></p>
 <p>이제 데이터베이스 정보를 입력합니다. 잘 모르겠다면, 서버 관리자에게 문의해 보십시오.</p>
 <p><img src="images/install/database.png" alt="데이터베이스 정보 입력" /></p>
-<p>마지막으로 관리자 정보를 입력한 다음 [설치] 버튼을 누릅니다.</p>
+<p>마지막으로 관리자 정보를 입력한 다음 <strong>설치</strong> 버튼을 누릅니다.</p>
 <p><img src="images/install/admin.png" alt="관리자 정보 입력" /></p>
-<p>다음과 같은 화면이 나오면 설치가 성공적으로 완료된 것입니다. 이제 <em>Go to administration page &raquo;</em>를 클릭하여 관리자 화면으로 이동하면 됩니다.</p>
+<p>다음과 같은 화면이 나오면 설치를 성공적으로 마친 것입니다. 이제 <strong>Go to administration page &raquo;</strong>를 클릭하여 관리자 화면으로 이동하면 됩니다.</p>
 <p><img src="images/install/complete.png" alt="설치 완료 화면" /></p>
 </body>
 </html>
