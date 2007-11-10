@@ -119,7 +119,7 @@ if (isset($post) && $post->exists() && $account->has_perm('comment', $post)) {
 	$comment_url = url_for($post, 'comment');
 }
 if ($controller == 'comment') {
-	$comment_url = url_for($controller, $action);
+	$comment_url = "?";
 	if ($action == 'edit') {
 		$comment_author = $comment->name;
 		$comment_body = $comment->body;
