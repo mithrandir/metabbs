@@ -1,6 +1,14 @@
 <?php
 permission_required('reply', $comment);
 
+if (!isset($_POST['comment'])) {
+	$_POST['comment'] = array(
+		'name' => $_POST['author'],
+		'password' => $_POST['password'],
+		'body' => $_POST['body']
+	);
+}
+
 if (is_post()) {
 	$_comment = new Comment($_POST['comment']);
 	$_comment->user_id = $account->id;
