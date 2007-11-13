@@ -166,7 +166,16 @@ function openDialog(href) {
 	} else if (document.body) {
 		overlay.style.top = document.body.scrollTop + 'px';
 	}
-	new Ajax.Updater('dialog', href, {method: 'get', onComplete: function () { addCloseButton(); triggerCloseLinks(); fixFormActions(href); overlay.show(); }});
+
+	new Ajax.Updater('dialog', href, {
+		method: 'get',
+		onComplete: function () {
+			addCloseButton();
+			triggerCloseLinks();
+			fixFormActions(href);
+			$('dialog-overlay').show();
+		}
+	});
 }
 
 function triggerDialogLinks() {
@@ -174,7 +183,7 @@ function triggerDialogLinks() {
 		Event.observe(link, 'click', function (ev) {
 			openDialog(this.href);
 			Event.stop(ev);
-		});
+		}.bindAsEventListener(link));
 	});
 }
 
