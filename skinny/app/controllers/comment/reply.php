@@ -1,7 +1,7 @@
 <?php
 permission_required('reply', $comment);
 
-if (!isset($_POST['comment'])) {
+if (is_post() && !isset($_POST['comment'])) {
 	$_POST['comment'] = array(
 		'name' => $_POST['author'],
 		'password' => $_POST['password'],
@@ -39,10 +39,14 @@ if (is_post()) {
 		redirect_to(url_for($post));
 	}
 } else {
+	$post = $comment->get_post();
+
 	$template = get_template($board, 'reply');
 	$template->set('board', $board);
 	$template->set('comment', $comment);
 	$template->set('name', cookie_get('name'));
+	$template->set('link_cancel', url_for($post));
+
 	if (is_xhr()) {
 		$template->render_partial();
 		exit;
