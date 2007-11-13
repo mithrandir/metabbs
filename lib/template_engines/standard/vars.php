@@ -94,7 +94,7 @@ if (isset($attachments)) {
 		$attachments[$k]->url = htmlspecialchars(url_for($v));
 		$attachments[$k]->size = human_readable_size($v->get_size());
 		if ($v->is_image()) {
-			$attachments[$k]->thumbnail_url = url_for($v).'?thumbnail=1';
+			$attachments[$k]->thumbnail_url = url_for($v).'?thumb=1';
 		} else {
 			$attachments[$k]->thumbnail_url = null;
 		}
@@ -119,7 +119,7 @@ if (isset($post) && $post->exists() && $account->has_perm('comment', $post)) {
 	$comment_url = url_for($post, 'comment');
 }
 if ($controller == 'comment') {
-	$comment_url = "?";
+	$comment_url = url_for($GLOBALS['comment'], $action);
 	if ($action == 'edit') {
 		$comment_author = $comment->name;
 		$comment_body = $comment->body;
@@ -130,4 +130,5 @@ if (isset($comment_url) && !isset($comment_author)) {
 	$comment_body = "";
 }
 if (!isset($signature)) $signature = '';
+if (!isset($link_cancel)) $link_cancel = '';
 ?>

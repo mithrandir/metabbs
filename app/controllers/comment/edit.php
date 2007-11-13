@@ -1,14 +1,6 @@
 <?php
 permission_required('edit', $comment);
 
-if (!isset($_POST['comment'])) {
-	$_POST['comment'] = array(
-		'name' => $_POST['author'],
-		'password' => $_POST['password'],
-		'body' => $_POST['body']
-	);
-}
-
 $post = $comment->get_post();
 if (is_post() && (!$account->is_guest() || $comment->password == md5($_POST['password']))) {
 	$comment->body = $_POST['body'];
