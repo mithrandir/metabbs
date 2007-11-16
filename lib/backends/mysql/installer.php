@@ -1,5 +1,5 @@
 <?php
-require_once 'backend.php';
+require_once dirname(__FILE__).'/backend.php';
 class Table
 {
 	var $name;
