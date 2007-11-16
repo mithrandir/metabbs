@@ -37,7 +37,7 @@ function capture_errors($errno, $errstr, $errfile, $errline) {
 		fail($errstr);
 	}
 }
-function print_header() {
+function print_header($step) {
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -93,6 +93,11 @@ a:hover {
     text-align: right;
     color: #999;
 }
+#step {
+    font-size: 0.7em;
+    font-weight: normal;
+    color: #9c9;
+}
 .flash {
     border: 1px solid #ccc;
     padding: 0.5em;
@@ -135,7 +140,7 @@ form p {
 <body>
   <div id="wrap">
 	<div id="title">
-		<h1>MetaBBS Installation</h1>
+		<h1>MetaBBS Installation <span id="step">Step <?=$step?></span></h1>
 	</div>
 	<div id="contents">
 <?php
@@ -151,6 +156,8 @@ function print_footer() {
 </html>
 <?php
 }
+ini_set('include_path', METABBS_DIR . PATH_SEPARATOR . ini_get('include_path'));
+
 require_once 'lib/model.php';
 require_once 'lib/config.php';
 $config = new Config('metabbs.conf.php');
@@ -161,7 +168,7 @@ require_once 'lib/tag_helper.php';
 $backend = isset($_GET['backend']) ? $_GET['backend'] : 'mysql';
 require "lib/backends/$backend/installer.php";
 
-print_header();
+print_header(1);
 
 if (is_writable('.')) {
 	pass('Permission check');

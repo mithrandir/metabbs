@@ -11,7 +11,7 @@ class StandardTemplate {
 	}
 	function render() {
 		extract($this->vars);
-		include "lib/template_engines/standard/header.php";
+		include "lib/template_engines/standard/vars.php";
 		include "$this->path/header.php";
 		include "$this->path/$this->view.php";
 		include "$this->path/footer.php";
@@ -19,6 +19,7 @@ class StandardTemplate {
 	}
 	function render_partial() {
 		extract($this->vars);
+		include "lib/template_engines/standard/vars.php";
 		include "$this->path/$this->view.php";
 	}
 }

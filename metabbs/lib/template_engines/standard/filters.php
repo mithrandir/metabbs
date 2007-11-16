@@ -5,12 +5,13 @@ function modern_common_filter(&$post) {
 	$board = $post->get_board();
 	if ($board->use_category) {
 		if (!$post->category_id) {
-			$post->category = new UncategorizedPosts($board);
+			//$post->category = new UncategorizedPosts($board);
+			$post->category = null;
 		} else {
 			$post->category = $post->get_category();
+			$post->category->name = htmlspecialchars($post->category->name);
+			$post->category->url = url_for($board, '', array('category' => $post->category->id));
 		}
-		$post->category->name = htmlspecialchars($post->category->name);
-		$post->category->url = url_for($board, '', array('category' => $post->category->id));
 	} else {
 		$post->category = null;
 	}

@@ -143,6 +143,70 @@ function highlightSearchKeyword() {
 	highlightText(kw, $('body'));
 }
 
+// dialog
+
+function addDialogOverlay() {
+	var overlay = document.createElement('div');
+	var content = document.createElement('div');
+	overlay.id = 'dialog-overlay';
+	overlay.style.display = 'none';
+	content.id = 'dialog';
+	overlay.appendChild(content);
+	$('meta').appendChild(overlay);
+}
+
+function addCloseButton() {
+	new Insertion.Top('dialog', '<a href="#" class="dialog-close" id="dialog-close">X</a>');
+}
+
+function openDialog(href) {
+	var overlay = $('dialog-overlay');
+	if (document.documentElement && document.documentElement.scrollTop){
+		overlay.style.top = document.documentElement.scrollTop + 'px';
+	} else if (document.body) {
+		overlay.style.top = document.body.scrollTop + 'px';
+	}
+
+	new Ajax.Updater('dialog', href, {
+		method: 'get',
+		onComplete: function () {
+			addCloseButton();
+			triggerCloseLinks();
+			fixFormActions(href);
+			$('dialog-overlay').show();
+		}
+	});
+}
+
+function triggerDialogLinks() {
+	$$('a.dialog').each(function (link) {
+		Event.observe(link, 'click', function (ev) {
+			openDialog(this.href);
+			Event.stop(ev);
+		}.bindAsEventListener(link));
+	});
+}
+
+function triggerCloseLinks() {
+	$$('#dialog a.dialog-close').each(function (link) {
+		Event.observe(link, 'click', function (ev) {
+			$('dialog-overlay').hide();
+			Event.stop(ev);
+		});
+	});
+}
+
+function fixFormActions(href) {
+	$$('#dialog form').each(function (form) {
+		if (!form.action) form.action = href;
+	});
+}
+
 Event.observe(window, 'load', function () {
 	highlightSearchKeyword();
+	addDialogOverlay();
+	triggerDialogLinks();
+	try { 
+		document.execCommand('BackgroundImageCache', false, true); 
+	} catch (e) {}
 });
