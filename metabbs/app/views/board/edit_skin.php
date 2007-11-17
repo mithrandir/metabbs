@@ -21,7 +21,7 @@
 <? foreach ($styles as $style) { ?>
 <? if ($style->name != $current_style->name) { ?>
 	<li>
-	<div class="preview-image" onclick="location.href=this.next('a').href">
+	<div class="preview-image" onclick="location.href='?tab=skin&amp;style=<?=$style->name?>'">
 	<? if (file_exists('styles/'.$style->name.'/preview.png')) { ?>
 	<img src="<?=$style->get_path()?>/preview.png" alt="Preview" />
 	<? } ?>
