@@ -8,7 +8,7 @@ class Config {
 	 * @param $name 설정 파일 이름
 	 */
 	function Config($name) {
-		$this->filename = METABBS_DIR . '/' . $name;
+		$this->filename = $name;
 		$this->config = $this->_parse($this->filename);
 	}
 
