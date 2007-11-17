@@ -28,6 +28,8 @@ require METABBS_DIR . '/lib/tag_helper.php';
 require METABBS_DIR . '/lib/plugin.php';
 require METABBS_DIR . '/lib/metadata.php';
 
+import_default_language();
+
 $session_dir = METABBS_DIR . '/data/session';
 if (!file_exists($session_dir)) {
 	mkdir($session_dir, 0707);

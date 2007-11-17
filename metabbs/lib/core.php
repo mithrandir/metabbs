@@ -1,6 +1,6 @@
 <?php
 require METABBS_DIR . '/lib/config.php';
-$config = new Config(METABBS_DIR . 'metabbs.conf.php');
+$config = new Config(METABBS_DIR . '/metabbs.conf.php');
 
 $backend = $config->get('backend', 'mysql');
 
