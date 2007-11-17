@@ -1,81 +1,86 @@
 <?php
-/**
- * 화면에 출력될 글구를 해당 언어로 변경해준다.
- * @param 첫번째 인자는 키로 사용되고 이후의 인자는 printf의 인자들로 인식된다.
- * @return 해당 언어로 변경된 문자열을 리턴한다.
- */
-function i() {
-	global $lang;
-	if (func_num_args() == 1) {
-		$arg = func_get_arg(0);
-		return $lang->get($arg);
-	} else {
-		$args = func_get_args();
-		return vsprintf($lang->get(array_shift($args)), $args);
-	}
-}
+define('SOURCE_LANGUAGE', 'en');
 
-/**
- * 기본 언어
- */
-class DefaultLanguage {
-	/**
-	 * 기본 언어는 키와 값을 동일하게 처리한다.
-	 * @param $text 출력할 키 문자열
-	 * @return $text 문자열과 동일한 문자열
-	 */
-	function get($text) {
-		return $text;
-	}
-}
+class Language {
+	var $id;
+	var $messages = array();
 
-/**
- * 국제화 대응 클래스
- */
-class I18N {
-	/**
-	 * 생성자. 해당 언어 파일을 읽어 설정한다.
-	 * @param $lang 언어
-	 */
-	function I18N($lang) {
-		$this->lang = $lang;
-		$this->messages = Config::_parse(METABBS_DIR . "/lang/$lang.php");
+	function Language($id) {
+		$this->id = $id;
 	}
 
-	/**
-	 * 키에 해당하는 문자를 읽어온다.
-	 * @param $text 키 문자열
-	 * @return 해당 언어의 문자열을 리턴한다 없으면 키 문자열을 그대로 리턴.
-	 */
-	function get($text) {
-		return array_key_exists($text, $this->messages) ? $this->messages[$text] : $text;
+	function add_translation($message, $translation) {
+		$this->messages[$message] = $translation;
 	}
 
-	/**
-	 * 해당 언어 파일을 읽어 국재화 객체 인스턴스를 반환한다.
-	 * @param $lang 언어
-	 * @return 성공한 경우 국제화 객체의 인스턴스. 실패한 경우 null을 리턴한다.
-	 */
-	function import($lang) {
-		if ($lang == 'en') {
-			return new DefaultLanguage;
-		} else if (file_exists(METABBS_DIR . '/lang/'.$lang.'.php')) {
-			return new I18N($lang);
+	function load_from_file($path) {
+		$map = Config::_parse($path);
+		foreach ($map as $msg => $trans) {
+			$this->add_translation($msg, $trans);
+		}
+	}
+
+	function translate($text, $args = NULL) {
+		if (array_key_exists($text, $this->messages)) {
+			$translation = $this->messages[$text];
 		} else {
-			return false;
+			$translation = $text;
+		}
+
+		if (!$args) {
+			return $translation;
+		} else {
+			return vsprintf($translation, $args);
 		}
 	}
 }
 
-$default_language = $config->get('default_language', 'en');
-if ($config->get('always_use_default_language', false)) {
-	$lang = I18N::import($default_language);
-} else {
-	$langs = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-	$langs[] = $default_language;
-	foreach ($langs as $langcode) {
-		list($langcode) = explode(';', $langcode, 2);
-		if ($lang = I18N::import($langcode)) break;
+function parse_language_header($string) {
+	if (!$string) {
+		return array();
+	} else {
+		$languages = array();
+		foreach (explode(',', $string) as $lang) {
+			$languages[] = array_shift(explode(';', $lang, 2));
+		}
+		return $languages;
 	}
+}
+
+function import_language($language) {
+	global $lang;
+	$lang = new Language($language);
+	if ($language == SOURCE_LANGUAGE) {
+		return TRUE;
+	}
+
+	$path = METABBS_DIR . '/lang/' . $language . '.php';
+	if (file_exists($path)) {
+		$lang->load_from_file($path);
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+}
+
+function import_default_language() {
+	global $config;
+	$default_language = $config->get('default_language', SOURCE_LANGUAGE);
+	if ($config->get('always_use_default_language', false)) {
+		import_language($default_language);
+	} else {
+		$langs = parse_language_header($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+		$langs[] = $default_language;
+		foreach ($langs as $language) {
+			if (import_language($language)) break;
+		}
+	}
+}
+
+function i() {
+	global $lang;
+	$args = func_get_args();
+	$text = array_shift($args);
+	return $lang->translate($text, $args);
 }
 ?>
