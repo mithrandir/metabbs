@@ -22,7 +22,7 @@ $license_mapping = array(
 );
 if (isset($_GET['style'])) {
 	$board->change_style($_GET['style']);
-	redirect_to('?tab=skin');
+	redirect_to(url_for($board, 'edit', array('tab'=>'skin')));
 }
 if (is_post()) {
 	$sorting_changed = false;
