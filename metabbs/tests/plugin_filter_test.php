@@ -1,5 +1,5 @@
 <?php
-require '../lib/plugin.php';
+require_once '../lib/plugin.php';
 
 class PluginFilterTest extends UnitTestCase {
 	function setUp() {
