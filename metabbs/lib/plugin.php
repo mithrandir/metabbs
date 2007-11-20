@@ -78,7 +78,7 @@ function add_filter($event, $callback, $priority, $collision = META_FILTER_OVERW
 				add_filter($event, $callback, $priority, $collision);
 			break;
 			case META_FILTER_CALLBACK:
-				if ($fallback) $fallback();
+				if ($fallback) call_user_func($fallback);
 			break;
 		}
 	} else {
@@ -96,6 +96,11 @@ function remove_filter($event, $callback) {
 	global $filters;
 	$key = array_search($callback, $filters[$event]);
 	unset($filters[$event][$key]);
+}
+
+function remove_all_filters($event) {
+	global $filters;
+	$filters[$event] = array();
 }
 
 /**

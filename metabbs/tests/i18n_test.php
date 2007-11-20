@@ -1,4 +1,5 @@
 <?php
+require '../lib/config.php';
 require '../lib/i18n.php';
 
 class I18NTest extends UnitTestCase {
