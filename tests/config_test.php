@@ -1,5 +1,5 @@
 <?php
-require '../lib/config.php';
+require_once '../lib/config.php';
 
 class ConfigTest extends UnitTestCase {
 	function setUp() {

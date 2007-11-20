@@ -7,17 +7,18 @@ class ExtendedHtmlReporter extends HtmlReporter {
 	}
 	function paintHeader($test_name) {
 		HtmlReporter::paintHeader($test_name);
-		echo "<ul>";
+		echo "<p>";
+		echo "<a href=\"?test=all\">All</a>";
 		foreach ($this->cases as $case) {
-			echo "<li><a href=\"?test=$case\">$case</a></li>";
+			echo " | <a href=\"?test=$case\">$case</a>";
 		}
-		echo "</ul>";
+		echo "</p>";
 	}
 }
 
 $cases = array('config', 'i18n', 'plugin_filter');
 
-$test = &new TestSuite('All tests');
+$test = &new TestSuite('MetaBBS Tests');
 if (isset($_GET['test']) && in_array($_GET['test'], $cases)) {
 	$test->addTestFile("$_GET[test]_test.php");
 } else {

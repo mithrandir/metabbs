@@ -1,6 +1,6 @@
 <?php
-require '../lib/config.php';
-require '../lib/i18n.php';
+require_once '../lib/config.php';
+require_once '../lib/i18n.php';
 
 class I18NTest extends UnitTestCase {
 	function setUp() {
