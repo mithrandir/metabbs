@@ -1,6 +1,8 @@
 <?php
 require 'simpletest/unit_tester.php';
 
+$cases = array('config', 'i18n', 'plugin_filter', 'plugin_handler');
+
 class ExtendedHtmlReporter extends HtmlReporter {
 	function ExtendedHtmlReporter($cases) {
 		$this->cases = $cases;
@@ -15,8 +17,6 @@ class ExtendedHtmlReporter extends HtmlReporter {
 		echo "</p>";
 	}
 }
-
-$cases = array('config', 'i18n', 'plugin_filter');
 
 $test = &new TestSuite('MetaBBS Tests');
 if (isset($_GET['test']) && in_array($_GET['test'], $cases)) {

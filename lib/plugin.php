@@ -140,8 +140,13 @@ function apply_filters_array($event, &$array) {
  * hook이 디폴트인데 before가 이용가능하다.
  */
 function add_handler($controller, $action, $callback, $type = 'hook') {
-	global $filters;
-	$filters[$controller][$action][$type] = $callback;
+	global $handlers;
+	$handlers[$controller][$action][$type] = $callback;
+}
+
+function reset_custom_handler() {
+	global $handlers;
+	$handlers = array();
 }
 
 /**
@@ -150,11 +155,11 @@ function add_handler($controller, $action, $callback, $type = 'hook') {
  * @param $action 액션
  * @return 후킹 핸들러가 등록된 경우 실행하고 true를 아닌경우 false.
  */
-function run_hook_handler($controller, $action) {
-	global $filters;
+function run_custom_handler($controller, $action) {
+	global $handlers;
 	run_before_handler($controller, $action);
-	if (isset($filters[$controller][$action]['hook'])) {
-		call_user_func($filters[$controller][$action]['hook']);
+	if (isset($handlers[$controller][$action]['hook'])) {
+		call_user_func($handlers[$controller][$action]['hook']);
 		return true;
 	} else {
 		return false;
@@ -167,9 +172,9 @@ function run_hook_handler($controller, $action) {
  * @param $action 액션
  */
 function run_before_handler($controller, $action) {
-	global $filters;
-	if (isset($filters[$controller][$action]['before'])) {
-		call_user_func($filters[$controller][$action]['before']);
+	global $handlers;
+	if (isset($handlers[$controller][$action]['before'])) {
+		call_user_func($handlers[$controller][$action]['before']);
 	}
 }
 
