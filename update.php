@@ -71,8 +71,9 @@ if ($current < METABBS_DB_REVISION) {
 		print_rev_info();
 ?>
 <form method="post" action="">
-<p>New update is available.</p>
-<? if (!is_writable('metabbs.conf.php') && !@chmod('metabbs.conf.php', 0707)) { ?>
+<? if ($current < 949) { ?>
+<p>Please upgrade to 0.9 first.</p>
+<? } else if (!is_writable('metabbs.conf.php') && !@chmod('metabbs.conf.php', 0707)) { ?>
 <p>Configuration file is not writable. To continue the process, please change the permission of <code>metabbs.conf.php</code> to <code>0707</code>.</p>
 <? } else { ?>
 <p><input type="submit" value="Update now" /></p>
