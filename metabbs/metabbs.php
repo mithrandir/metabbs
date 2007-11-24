@@ -23,7 +23,7 @@ import_enabled_plugins();
 
 @include 'app/controllers/' . $controller . '.php';
 $action_dir = 'app/controllers/' . $controller;
-if (!run_hook_handler($controller, $action)) {
+if (!run_custom_handler($controller, $action)) {
 	include($action_dir . '/' . $action . '.php');
 }
 if (isset($board)) {
