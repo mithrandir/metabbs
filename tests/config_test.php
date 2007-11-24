@@ -4,7 +4,7 @@ require_once '../lib/config.php';
 class ConfigTest extends UnitTestCase {
 	function setUp() {
 		$fp = fopen('test.conf', 'w');
-		fwrite($fp, "<?php/*\n");
+		fwrite($fp, "<"."?php/*\n");
 		fwrite($fp, "a=1\n");
 		fwrite($fp, "b=2\n");
 		fclose($fp);
