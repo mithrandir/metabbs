@@ -26,7 +26,7 @@ class I18NTest extends UnitTestCase {
 
 	function testLoadFromFile() {
 		$fp = fopen('test.txt', 'w');
-		fwrite($fp, "<?php/*\n");
+		fwrite($fp, "<"."?php/*\n");
 		fwrite($fp, "Hello, world!=안녕, 세상!\n");
 		fwrite($fp, "Hello, %s!=안녕, %s!\n");
 		fclose($fp);
