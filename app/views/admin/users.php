@@ -20,7 +20,7 @@
 <? foreach ($users as $user) { ?>
 <tr>
 	<td><input type="checkbox" name="user_id[<?=$user->id?>]" class="check" <? if ($user->id==$account->id) { ?>disabled="disabled" <? } ?> /></td>
-	<td class="name"><?=$user->name?> <small>(<?=$user->user?>)</small></td>
+	<td class="name"><?=htmlspecialchars($user->name)?> <small>(<?=htmlspecialchars($user->user)?>)</small></td>
 	<td class="level"><?=$user->level?></td>
 	<td class="actions"><?=link_to(i('View'), $user)?><? if (!$user->is_admin()) { ?> | <a href="<?=url_for($user, 'delete')?>?page=<?=$page?>" onclick="return confirm('<?=i('Are you sure?')?>')"><?=i('Delete user')?></a><? } ?></td>
 </tr>
