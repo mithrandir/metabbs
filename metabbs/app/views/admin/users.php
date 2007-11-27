@@ -9,7 +9,7 @@
 <input type="text" name="query" value="<?=isset($_GET['query']) ? $_GET['query'] : ''?>" /> <input type="submit" value="<?=i('Search')?>" /></p>
 </form>
 
-<form method="post" action="<?=url_for('user', 'edit')?>">
+<form method="post" action="<?=url_for('user', 'edit')?>?page=<?=$page?>">
 <table id="users">
 <tr>
 	<th><input type="checkbox" value="1" onchange="checkAll(this.form, this.checked)" /></th>
@@ -22,7 +22,7 @@
 	<td><input type="checkbox" name="user_id[<?=$user->id?>]" class="check" <? if ($user->id==$account->id) { ?>disabled="disabled" <? } ?> /></td>
 	<td class="name"><?=$user->name?> <small>(<?=$user->user?>)</small></td>
 	<td class="level"><?=$user->level?></td>
-	<td class="actions"><?=link_to(i('View'), $user)?><? if (!$user->is_admin()) { ?> | <a href="<?=url_for($user, 'delete')?>" onclick="return confirm('<?=i('Are you sure?')?>')"><?=i('Delete user')?></a><? } ?></td>
+	<td class="actions"><?=link_to(i('View'), $user)?><? if (!$user->is_admin()) { ?> | <a href="<?=url_for($user, 'delete')?>?page=<?=$page?>" onclick="return confirm('<?=i('Are you sure?')?>')"><?=i('Delete user')?></a><? } ?></td>
 </tr>
 <? } ?>
 </table>
