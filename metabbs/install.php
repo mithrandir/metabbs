@@ -168,6 +168,7 @@ require_once 'lib/tag_helper.php';
 $backend = isset($_GET['backend']) ? $_GET['backend'] : 'mysql';
 require "lib/backends/$backend/installer.php";
 
+import_default_language();
 print_header(1);
 
 if (is_writable('.')) {
