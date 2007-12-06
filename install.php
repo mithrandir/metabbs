@@ -296,10 +296,13 @@ if (!isset($_POST['config'])) {
 	$user->create();
 
     $safe = true;
-	
+
+    $admin_url = function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules())
+	           ? 'metabbs/admin' : 'metabbs.php/admin';
+
 	echo "<h2>Installation Finished</h2>";
 	echo "<p>Thank you for installing MetaBBS. :-)</p>";
-	echo "<p><a href='metabbs.php/admin'>Go to administration page &raquo;</a></p>";
+	echo "<p><a href='$admin_url'>Go to administration page &raquo;</a></p>";
 }
 print_footer();
 ?>
