@@ -7,7 +7,7 @@ if (isset($board) && $board->use_trackback && isset($post) && $GLOBALS['controll
 	 xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
 <rdf:Description
 	 rdf:about="<?=full_url_for($post)?>"
-	 dc:title="<?=$post->title?>"
+	 dc:title="<?=str_replace('--', '&#x2d;&#x2d;', $post->title)?>"
 	 dc:identifier="<?=full_url_for($post)?>"
 	 trackback:ping="<?=full_url_for($post, 'trackback')?>" />
 </rdf:RDF>
