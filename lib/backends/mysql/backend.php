@@ -173,7 +173,7 @@ class MySQLAdapter
 		return array($major, $minor);
 	}
 	function get_created_tables() {
-		$result = $this->get_result("SHOW TABLES LIKE '".METABBS_TABLE_PREFIX."%'");
+		$result = $this->get_result("SHOW TABLES LIKE '".get_table_name("%")."'");
 		$tables = array();
 		while ($data = $result->fetch()) {
 			$tables[] = array_shift($data);
