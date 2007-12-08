@@ -1,7 +1,7 @@
 <?php
 require 'simpletest/unit_tester.php';
 
-$cases = array('config', 'i18n', 'plugin_filter', 'plugin_handler');
+$cases = array('config', 'i18n', 'plugin_filter', 'plugin_handler', 'model');
 
 class ExtendedHtmlReporter extends HtmlReporter {
 	function ExtendedHtmlReporter($cases) {

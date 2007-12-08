@@ -4,14 +4,10 @@ $config = new Config(METABBS_DIR . '/metabbs.conf.php');
 
 $backend = $config->get('backend', 'mysql');
 
-/**
- * 테이블의 프리픽스
- */
-define('METABBS_TABLE_PREFIX', $config->get('prefix', 'meta_'));
-
 require METABBS_DIR . '/lib/model.php';
 require METABBS_DIR . '/lib/backends/' . $backend . '/backend.php';
 $__db = get_conn();
+set_table_prefix($config->get('prefix', 'meta_'));
 
 require METABBS_DIR . '/app/models/board.php';
 require METABBS_DIR . '/app/models/category.php';
