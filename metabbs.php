@@ -16,6 +16,7 @@ if ($len == 4) { // /controller/action/id
 }
 
 $layout = new Layout;
+$layout->add_javascript(METABBS_BASE_PATH . 'elements/prototype.js');
 $title = 'MetaBBS';
 $view = DEFAULT_VIEW;
 
@@ -36,7 +37,6 @@ if (isset($board)) {
 	$style_dir = METABBS_BASE_PATH.'styles/default';
 }
 
-$layout->add_javascript(METABBS_BASE_PATH . 'elements/prototype.js');
 if ($view == ADMIN_VIEW) {
 	$layout->add_stylesheet(METABBS_BASE_PATH . 'elements/style.css');
 	$layout->add_javascript(METABBS_BASE_PATH . 'elements/admin.js');
