@@ -189,6 +189,7 @@ class Post extends Model {
 		return $this->metadata->attributes;
 	}
 	function set_attribute($key, $value) {
+		$this->metadata->post = &$this; // workaround for PHP4 -_-
 		$this->metadata->set($key, $value);
 	}
 	function get_page() {

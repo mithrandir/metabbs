@@ -37,6 +37,12 @@ function find_and_cache($model, $id) {
 	return $o;
 }
 
+ 	function find($model, $key, $value) {
+ 	    global $__db;
+ 	    $table = get_table_name($model);
+ 	    return $__db->fetchrow("SELECT * FROM $table WHERE $key=?", $model, array($value));
+	}
+
 /**
  * 모델 객체
  */
