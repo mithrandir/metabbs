@@ -1,7 +1,7 @@
 <?php
 class PostMeta {
 	function PostMeta(&$post) {
-		$this->post = $post;
+		$this->post = &$post;
 		$this->db = get_conn();
 		$this->table = get_table_name('post_meta');
 		$this->attributes = array();
