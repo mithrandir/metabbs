@@ -210,11 +210,11 @@ function loadXq() {
 		if(element.nodeName != "P") return false;
 		editor.showContextMenu([
 			{
-				title: 'º¼µå',
+				title: 'ë³¼ë“œ',
 				handler: editor.handleStrongEmphasis.bind(xed)
 			},
 			{
-				title: '¾ğ´õ¶óÀÎ',
+				title: 'ì–¸ë”ë¼ì¸',
 				handler: editor.handleUnderline.bind(xed)
 			},
 			{
