@@ -180,6 +180,13 @@ class MySQLAdapter
 		}
 		return $tables;
 	}
+	function quote_identifier($id) {
+		return "`$id`";
+	}
+	function quote($value) {
+		if (is_numeric($value)) return $value;
+		else return "'".$this->escape($value)."'";
+	}
 }
 
 class MySQLResult {

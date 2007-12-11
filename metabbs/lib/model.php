@@ -37,11 +37,12 @@ function find_and_cache($model, $id) {
 	return $o;
 }
 
- 	function find($model, $key, $value) {
- 	    global $__db;
- 	    $table = get_table_name($model);
- 	    return $__db->fetchrow("SELECT * FROM $table WHERE $key=?", $model, array($value));
-	}
+// XXX: must be (re)moved
+function find($model, $key, $value) {
+	global $__db;
+	$table = get_table_name($model);
+	return $__db->fetchrow("SELECT * FROM $table WHERE $key=?", $model, array($value));
+}
 
 /**
  * 모델 객체
@@ -57,7 +58,7 @@ class Model
 	 */
 	function Model($attributes = null) {
 		global $__db;
-		$this->db = $__db;
+		$this->db = &$__db;
 		$this->import($attributes);
 		if (isset($this->model))
 			$this->table = get_table_name($this->model);
@@ -70,14 +71,17 @@ class Model
 	function _init() { }
 
 	/**
-	 * 어트르뷰트(키와 값으로 이루어진 짝) 집합을 모델 객체의 필드로 치환한다.
-	 * @param $attributes 어트리뷰트
+	 * 데이터를 객체 속성으로 불러온다.
+	 * @param $attributes 데이터 배열
 	 */
 	function import($attributes) {
 		if (is_array($attributes)) {
 			foreach ($attributes as $key => $value) {
 				$this->$key = $value;
 			}
+			return TRUE;
+		} else {
+			return FALSE;
 		}
 	}
 
@@ -97,51 +101,53 @@ class Model
 	}
 
 	/**
-	 * 컬럼을 가져온다.
-	 * @return 한 컬럼의 내용들이 남긴 배열
+	 * 테이블에 필드가 존재하는 속성만 모아 돌려준다.
+	 * @return 데이터 배열
 	 */
-	function get_columns() {
+	function get_mapped_attributes() {
 		$columns = $this->db->get_columns($this->table);
-		$data = array();
-		foreach ($columns as $k) {
-			if (is_bool($this->$k)) $this->$k = (int)$this->$k;
-			$data["`$k`"] = "'" . $this->db->escape($this->$k) . "'";
+		$attributes = array();
+		foreach ($columns as $key) {
+			$attributes[$key] = $this->$key;
 		}
-		return $data;
+		return $attributes;
 	}
 
 	/**
 	 * 새로운 데이터를 테이블에 삽입한다.
 	 */
 	function create() {
-		$columns = $this->get_columns();
+		$columns = $this->get_mapped_attributes();
+		$keys = array_map(array(&$this->db, 'quote_identifier'), array_keys($columns));
+		$values = array_map(array(&$this->db, 'quote'), array_values($columns));
+		
 		$query = "INSERT INTO $this->table";
-		$query .= " (".implode(",", array_keys($columns)).")";
-		$query .= " VALUES(".implode(",", array_values($columns)).")";
-		$this->db->query($query);
+		$query .= " (".implode(", ", $keys).")";
+		$query .= " VALUES(".implode(", ", $values).")";
+		$this->db->execute($query);
 		$this->id = $this->db->insertid();
 	}
 
 	/**
-	 * 항목의 내용을 바꾼한다.
+	 * 항목의 내용을 바꾼다.
 	 */
 	function update() {
-		$columns = $this->get_columns();
+		$columns = $this->get_mapped_attributes();
 		$query = "UPDATE $this->table SET ";
 		$parts = array();
 		foreach ($columns as $k => $v) {
-			$parts[] = "$k=$v";
+			$parts[] = $this->db->quote_identifier($k)."=".$this->db->quote($v);
 		}
-		$query .= implode(",", $parts);
+		$query .= implode(", ", $parts);
 		$query .= " WHERE id=$this->id";
-		$this->db->query($query);
+		$this->db->execute($query);
 	}
 
 	/**
 	 * 항목을 삭제한다.
 	 */
 	function delete() {
-		$this->db->query("DELETE FROM $this->table WHERE id=$this->id");
+		$this->db->execute("DELETE FROM $this->table WHERE id=$this->id");
 	}
 }
 ?>
