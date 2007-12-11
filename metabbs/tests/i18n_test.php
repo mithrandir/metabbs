@@ -2,6 +2,8 @@
 require_once '../lib/config.php';
 require_once '../lib/i18n.php';
 
+define('METABBS_DIR', 'fixtures'); // XXX
+
 class I18NTest extends UnitTestCase {
 	function setUp() {
 		$this->lang = new Language('test');
@@ -25,17 +27,9 @@ class I18NTest extends UnitTestCase {
 	}
 
 	function testLoadFromFile() {
-		$fp = fopen('test.txt', 'w');
-		fwrite($fp, "<"."?php/*\n");
-		fwrite($fp, "Hello, world!=안녕, 세상!\n");
-		fwrite($fp, "Hello, %s!=안녕, %s!\n");
-		fclose($fp);
-
-		$this->lang->load_from_file('test.txt');
+		$this->lang->load_from_file('fixtures/lang/test.php');
 		$this->assertEqual('안녕, 세상!', $this->lang->translate('Hello, world!'));
 		$this->assertEqual('안녕, world!', $this->lang->translate('Hello, %s!', array('world')));
-
-		unlink('test.txt');
 	}
 
 	function testHeaderParsing() {
@@ -45,10 +39,31 @@ class I18NTest extends UnitTestCase {
 		$this->assertEqual(array('ko', 'en-us', 'en'), parse_language_header('ko,en-us;q=0.7,en;q=0.3'));
 	}
 
-	function testGlobalFunctions() {
+	function testImportSourceLanguage() {
 		import_language(SOURCE_LANGUAGE);
 		$this->assertEqual('blah blah', i('blah blah'));
 		$this->assertEqual('blah blah', i('%s %s', 'blah', 'blah'));
+	}
+
+	function testImportLanguage() {
+		$this->assertFalse(import_language('n/a'));
+
+		$this->assertTrue(import_language('test'));
+		$this->assertEqual('블라 블라', i('blah blah'));
+	}
+
+	function testImportDefaultLanguage() {
+		global $config;
+		$config = new Config('');
+		$config->set('always_use_default_language', TRUE);
+		$config->set('default_language', 'test');
+		import_default_language();
+		$this->assertEqual('블라 블라', i('blah blah'));
+
+		$config->set('always_use_default_language', FALSE);
+		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = SOURCE_LANGUAGE;
+		import_default_language();
+		$this->assertEqual('blah blah', i('blah blah'));
 	}
 }
 ?>

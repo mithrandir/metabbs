@@ -1,11 +1,11 @@
 <?php
 /**
- * MetaBBS 설정을 담당
+ * 설정 파일 클래스
  */
 class Config {
 	/**
-	 * 생성자로 파일이름과 내용을 설정한다.
-	 * @param $name 설정 파일 이름
+	 * 생성자
+	 * @param $name 설정 파일 경로
 	 */
 	function Config($name) {
 		$this->filename = $name;
