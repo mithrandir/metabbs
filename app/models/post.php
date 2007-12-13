@@ -43,16 +43,16 @@ class Post extends Model {
 	}
 	function update_sort_key() {
 		if ($this->notice) {
-			$this->db->query("UPDATE $this->table SET sort_key=-id WHERE id=$this->id");
+			$this->db->execute("UPDATE $this->table SET sort_key=-id WHERE id=$this->id");
 		} else {
 			$board = $this->get_board();
 			if (!$board->order_by) $board->order_by = 'id DESC';
 			preg_match('/^(.+?) (ASC|DESC)?$/', $board->order_by, $matches);
 			list(, $key, $order) = $matches;
 			if ($order == 'DESC')
-				$this->db->query("UPDATE $this->table SET sort_key=2147483648-$key WHERE id=$this->id");
+				$this->db->execute("UPDATE $this->table SET sort_key=2147483648-$key WHERE id=$this->id");
 			else
-				$this->db->query("UPDATE $this->table SET sort_key=$key WHERE id=$this->id");
+				$this->db->execute("UPDATE $this->table SET sort_key=$key WHERE id=$this->id");
 		}
 	}
 	function is_notice() {
@@ -110,7 +110,7 @@ class Post extends Model {
 		$comment->board_id = $this->board_id;
 		$comment->post_id = $this->id;
 		$comment->create();
-		$this->db->query("UPDATE $this->table SET last_update_at=$comment->created_at WHERE id=$this->id");
+		$this->db->execute("UPDATE $this->table SET last_update_at=$comment->created_at WHERE id=$this->id");
 		$this->update_sort_key();
 	}
 	function get_real_comment_count() {
@@ -121,7 +121,7 @@ class Post extends Model {
 	}
 	function update_comment_count() {
 		$this->comment_count = $this->get_real_comment_count();
-		$this->db->query("UPDATE $this->table SET comment_count=$this->comment_count WHERE id=$this->id");
+		$this->db->execute("UPDATE $this->table SET comment_count=$this->comment_count WHERE id=$this->id");
 	}
 	function get_trackbacks() {
 		return $this->db->fetchall("SELECT * FROM $this->trackback_table WHERE post_id=$this->id", 'Trackback');
@@ -145,16 +145,16 @@ class Post extends Model {
 	}
 	function delete() {
 		Model::delete();
-		$this->db->query("DELETE FROM $this->table WHERE moved_to=$this->id");
-		$this->db->query("DELETE FROM $this->comment_table WHERE post_id=$this->id");
-		$this->db->query("DELETE FROM $this->trackback_table WHERE post_id=$this->id");
+		$this->db->execute("DELETE FROM $this->table WHERE moved_to=$this->id");
+		$this->db->execute("DELETE FROM $this->comment_table WHERE post_id=$this->id");
+		$this->db->execute("DELETE FROM $this->trackback_table WHERE post_id=$this->id");
 	}
 	function update_view_count() {
 		$this->views++;
-		$this->db->query("UPDATE $this->table SET views=views+1, created_at='$this->created_at' WHERE id=$this->id");
+		$this->db->execute("UPDATE $this->table SET views=views+1, created_at='$this->created_at' WHERE id=$this->id");
 	}
 	function update_category() {
-		$this->db->query("UPDATE $this->table SET category_id=$this->category_id WHERE id=$this->id");
+		$this->db->execute("UPDATE $this->table SET category_id=$this->category_id WHERE id=$this->id");
 	}
 	function get_newer_post() {
 		return $this->db->fetchrow("SELECT * FROM $this->table WHERE board_id=$this->board_id AND (sort_key < $this->sort_key OR sort_key = $this->sort_key AND id > $this->id) ORDER BY sort_key DESC, id LIMIT 1", 'Post');
@@ -171,14 +171,14 @@ class Post extends Model {
 		$this->category_id = 0;
 		$this->board_id = $board->id;
 		$this->create();
-		$this->db->query("DELETE FROM $this->table WHERE moved_to=$_id");
+		$this->db->execute("DELETE FROM $this->table WHERE moved_to=$_id");
 		if ($track)
-			$this->db->query("UPDATE $this->table SET moved_to=$this->id WHERE id=$_id");
+			$this->db->execute("UPDATE $this->table SET moved_to=$this->id WHERE id=$_id");
 		else
-			$this->db->query("DELETE FROM $this->table WHERE id=$_id");
-		$this->db->query("UPDATE $this->comment_table SET post_id=$this->id WHERE post_id=$_id");
-		$this->db->query("UPDATE $this->trackback_table SET post_id=$this->id WHERE post_id=$_id");
-		$this->db->query("UPDATE $this->attachment_table SET post_id=$this->id WHERE post_id=$_id");
+			$this->db->execute("DELETE FROM $this->table WHERE id=$_id");
+		$this->db->execute("UPDATE $this->comment_table SET post_id=$this->id WHERE post_id=$_id");
+		$this->db->execute("UPDATE $this->trackback_table SET post_id=$this->id WHERE post_id=$_id");
+		$this->db->execute("UPDATE $this->attachment_table SET post_id=$this->id WHERE post_id=$_id");
 	}
 	function get_attribute($key) {
 		if ($this->exists()) $this->metadata->load();

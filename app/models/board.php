@@ -73,7 +73,7 @@ class Board extends Model {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->category_table WHERE board_id=$this->id");
 	}
 	function delete() {
-		$result = $this->db->get_result("SELECT id FROM $this->post_table WHERE board_id=$this->id");
+		$result = $this->db->query("SELECT id FROM $this->post_table WHERE board_id=$this->id");
 		if ($result->count()) {
 			$ids = array();
 			while ($data = $result->fetch()) {
@@ -82,7 +82,7 @@ class Board extends Model {
 			$this->db->execute("DELETE FROM $this->post_table WHERE moved_to IN (".implode(',', $ids).")");
 		}
 		Model::delete();
-		$this->db->query("DELETE FROM $this->post_table WHERE board_id=$this->id");
+		$this->db->execute("DELETE FROM $this->post_table WHERE board_id=$this->id");
 	}
 	function get_recent_comments($count) {
 		return $this->db->fetchall("SELECT * FROM $this->comment_table WHERE board_id=$this->id ORDER BY id DESC LIMIT $count", "Comment");
@@ -91,7 +91,7 @@ class Board extends Model {
 		return new Style($this->style);
 	}
 	function change_style($style) {
-		$this->db->query("UPDATE $this->table SET style=? WHERE id=$this->id", array($style));
+		$this->db->execute("UPDATE $this->table SET style=? WHERE id=$this->id", array($style));
 		$this->style = $style;
 	}
 	function get_admins() {
@@ -111,20 +111,20 @@ class Board extends Model {
 		foreach ($this->get_admins() as $admin) {
 			if ($admin->id == $user->id) return;
 		}
-		$this->db->query("INSERT INTO $this->admin_table (board_id, user_id) VALUES($this->id, $user->id)");
+		$this->db->execute("INSERT INTO $this->admin_table (board_id, user_id) VALUES($this->id, $user->id)");
 	}
 	function drop_admin($admin) {
-		$this->db->query("DELETE FROM $this->admin_table WHERE board_id=$this->id AND user_id=$admin->id");
+		$this->db->execute("DELETE FROM $this->admin_table WHERE board_id=$this->id AND user_id=$admin->id");
 	}
 	function reset_sort_keys() {
 		if (!$this->order_by) $this->order_by = 'id DESC';
-		$this->db->query("UPDATE $this->post_table SET sort_key=-id WHERE notice=1");
+		$this->db->execute("UPDATE $this->post_table SET sort_key=-id WHERE notice=1");
 		preg_match('/^(.+?) (ASC|DESC)?$/', $this->order_by, $matches);
 		list(, $key, $order) = $matches;
 		if ($order == 'DESC')
-			$this->db->query("UPDATE $this->post_table SET sort_key=2147483648-$key WHERE notice=0");
+			$this->db->execute("UPDATE $this->post_table SET sort_key=2147483648-$key WHERE notice=0");
 		else
-			$this->db->query("UPDATE $this->post_table SET sort_key=$key WHERE notice=0");
+			$this->db->execute("UPDATE $this->post_table SET sort_key=$key WHERE notice=0");
 	}
 }
 ?>

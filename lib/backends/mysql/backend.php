@@ -48,8 +48,8 @@ class BooleanColumn extends Column {
 function &get_conn() {
 	global $config, $__db;
 	if (!isset($__db)) {
-		$__db = new MySQLAdapter;
-		$__db->connect($config->get('host'), $config->get('user'), $config->get('password'), $config->get('pconn'));
+		$__db = new MySQLConnection;
+		$__db->connect($config->get('host'), $config->get('user'), $config->get('password'));
 		$__db->selectdb($config->get('dbname'));
 		if ($config->get('force_utf8') == '1') {
 			$__db->enable_utf8();
@@ -58,37 +58,31 @@ function &get_conn() {
 	return $__db;
 }
 
-class MySQLAdapter
+/**
+ * MySQL 연결 클래스
+ */
+class MySQLConnection
 {
 	var $conn;
 	var $utf8 = false;
 	var $real_escape = true;
 
-	function connect($host, $user, $password, $persistence = false) {
-		$func = $persistence ? 'mysql_pconnect' : 'mysql_connect';
-		$this->conn = $func($host, $user, $password) or trigger_error("mysql - Can't connect database",E_USER_ERROR);
+	function connect($host, $user, $password) {
+		$this->conn = mysql_connect($host, $user, $password) or trigger_error(mysql_error(), E_USER_ERROR);
 		$this->real_escape = function_exists('mysql_real_escape_string') && mysql_real_escape_string('ㅋ') == 'ㅋ';
-		//register_shutdown_function(array(&$this, 'disconnect'));
 	}
 	function disconnect() {
 		mysql_close($this->conn);
 	}
 	function selectdb($dbname) {
-		mysql_select_db($dbname, $this->conn) or trigger_error("Can't select database", E_USER_ERROR);
+		mysql_select_db($dbname, $this->conn) or trigger_error(mysql_error(), E_USER_ERROR);
 	}
 	function enable_utf8() {
 		$this->execute('set names utf8');
 		$this->utf8 = true;
 	}
 
-	function execute($query) {
-		$result = mysql_query($query, $this->conn);
-		if (!$result) {
-			trigger_error(mysql_error($this->conn), E_USER_ERROR);
-		}
-	}
-	function query($query, $data = null) {
-		if (!$query) return;
+	function execute($query, $data = NULL) {
 		if ($data) $query = $this->_q($query, $data);
 		$result = mysql_query($query, $this->conn);
 		if (!$result) {
@@ -96,6 +90,9 @@ class MySQLAdapter
 			trigger_error(mysql_error($this->conn), E_USER_ERROR);
 		}
 		return $result;
+	}
+	function query($query, $data = NULL) {
+		return new MySQLResult($this->execute($query, $data));
 	}
 	function escape($query) {
 		if ($this->real_escape) {
@@ -114,13 +111,10 @@ class MySQLAdapter
 		}
 		return implode('', $tokens);
 	}
-	function get_result($query) {
-		return new MySQLResult($this->query($query));
-	}
-	function fetchall($query, $model = 'Model', $data = null, $assoc = false) {
+	function fetchall($query, $model = 'Model', $data = NULL, $assoc = false) {
 		$results = array();
 		$result = $this->query($query, $data);
-		while ($data = mysql_fetch_assoc($result)) {
+		while ($data = $result->fetch()) {
 			if ($assoc)
 				$results[$data['id']] = new $model($data);
 			else
@@ -128,12 +122,13 @@ class MySQLAdapter
 		}
 		return $results;
 	}
-	function fetchrow($query, $model = 'Model', $data = null) {
-		return new $model(mysql_fetch_assoc($this->query($query, $data)));
+	function fetchrow($query, $model = 'Model', $data = NULL) {
+		$result = $this->query($query, $data);
+		return new $model($result->fetch());
 	}
-	function fetchone($query, $data = null) {
-		list($result) = mysql_fetch_row($this->query($query, $data));
-		return $result;
+	function fetchone($query, $data = NULL) {
+		$result = $this->query($query, $data);
+		return $result->fetchsingle();
 	}
 	function insertid() {
 		return mysql_insert_id($this->conn);
@@ -142,28 +137,28 @@ class MySQLAdapter
 		$sql = $t->to_sql();
 		if ($this->utf8)
 			$sql .= 'CHARACTER SET utf8 COLLATE utf8_general_ci';
-		$this->query($sql);
+		$this->execute($sql);
 	}
 	function rename_table($ot, $t) {
-		$this->query("RENAME TABLE ".get_table_name($ot)." TO ".get_table_name($t));
+		$this->execute("RENAME TABLE ".get_table_name($ot)." TO ".get_table_name($t));
 	}
 	function drop_table($t) {
-		$this->query("DROP TABLE ".get_table_name($t));
+		$this->execute("DROP TABLE ".get_table_name($t));
 	}
-	function add_field($t, $name, $type, $length = null) {
+	function add_field($t, $name, $type, $length = NULL) {
 		$table = new Table($t);
-		$this->query("ALTER TABLE $table->table ADD " . $table->_column($name, $type, $length));
+		$this->execute("ALTER TABLE $table->table ADD " . $table->_column($name, $type, $length));
 	}
 	function drop_field($t, $name) {
-		$this->query("ALTER TABLE ".get_table_name($t)." DROP COLUMN $name");
+		$this->execute("ALTER TABLE ".get_table_name($t)." DROP COLUMN $name");
 	}
 	function add_index($t, $name) {
-		$this->query("ALTER TABLE ".get_table_name($t)." ADD INDEX ${t}_$name ($name)");
+		$this->execute("ALTER TABLE ".get_table_name($t)." ADD INDEX ${t}_$name ($name)");
 	}
 	function get_columns($table) {
 		$result = $this->query("SHOW COLUMNS FROM $table");
 		$fields = array();
-		while (list($name) = mysql_fetch_row($result)) {
+		while ($name = $result->fetchsingle()) {
 			if ($name != 'id') $fields[] = $name;
 		}
 		return $fields;
@@ -173,7 +168,7 @@ class MySQLAdapter
 		return array($major, $minor);
 	}
 	function get_created_tables() {
-		$result = $this->get_result("SHOW TABLES LIKE '".get_table_name("%")."'");
+		$result = $this->query("SHOW TABLES LIKE '".get_table_name("%")."'");
 		$tables = array();
 		while ($data = $result->fetch()) {
 			$tables[] = array_shift($data);
@@ -195,6 +190,10 @@ class MySQLResult {
 	}
 	function fetch() {
 		return mysql_fetch_assoc($this->result);
+	}
+	function fetchsingle() {
+		list($value) = mysql_fetch_row($this->result);
+		return $value;
 	}
 	function count() {
 		return mysql_num_rows($this->result);

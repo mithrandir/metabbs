@@ -75,7 +75,7 @@ class User extends Model {
 		}
 	}
 	function set_token($token) {
-		$this->db->query("UPDATE $this->table SET token='$token' WHERE id=$this->id");
+		$this->db->execute("UPDATE $this->table SET token='$token' WHERE id=$this->id");
 	}
 	function unset_token() {
 		$this->set_token('');
