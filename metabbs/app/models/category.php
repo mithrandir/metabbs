@@ -26,7 +26,7 @@ class Category extends Model {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->post_table WHERE category_id=$this->id");
 	}
 	function delete() {
-		$this->db->query("UPDATE $this->post_table SET category_id=0 WHERE category_id=$this->id");
+		$this->db->execute("UPDATE $this->post_table SET category_id=0 WHERE category_id=$this->id");
 		Model::delete();
 	}
 }

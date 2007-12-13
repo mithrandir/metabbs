@@ -42,7 +42,7 @@ class SQLExporter {
 			$_columns[] = "`$c`";
 		}
 		$prefix = "INSERT INTO $t (".implode(",", $_columns).") VALUES(";
-		$result = $this->db->get_result("SELECT * FROM $t");
+		$result = $this->db->query("SELECT * FROM $t");
 		while ($data = $result->fetch()) {
 			$values = array();
 			foreach ($columns as $c) {
