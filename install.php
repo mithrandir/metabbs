@@ -21,14 +21,7 @@ function field($name, $display_name, $value = '', $type = 'text', $desc = '') {
 	echo "<p><label>$display_name</label> <input type=\"$type\" name=\"config[$name]\" value=\"$value\" />\n<span class='desc'>$desc</span></p>";
 }
 function get_backends() {
-	$backends = array();
-	$dir = opendir('lib/backends');
-	while ($backend = readdir($dir)) {
-		if ($backend{0} != '.') {
-			$backends[] = $backend;
-		}
-	}
-	return $backends;
+	return array('mysql');
 }
 function capture_errors($errno, $errstr, $errfile, $errline) {
 	if ($errno & (E_ERROR | E_USER_ERROR)) {
@@ -37,125 +30,7 @@ function capture_errors($errno, $errstr, $errfile, $errline) {
 		fail($errstr);
 	}
 }
-function print_header($step) {
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>MetaBBS Installation</title>
-  <style type="text/css">
-  <!--
-*{} /* for Opera */
 
-* {
-    font-family: Verdana, Arial, sans-serif;
-}
-
-body {
-    margin: 0em;
-    padding: 0em;
-    font-size: 0.8em;
-    color: black;
-    background-color: #333;
-}
-#wrap {
-    margin: 20px;
-    background-color: white;
-    border: 5px solid #ccc;
-}
-h1 {
-    margin: 0em;
-    padding: 0.6em 0.6em 0.4em 0.6em;
-    font-family: Trebuchet MS, Verdana, Arial, sans-serif;
-    font-size: 2.5em;
-}
-h2 {
-    border-bottom: 1px solid #9c6;
-    font-family: Trebuchet MS, Verdana, sans-serif;
-    font-size: 1.3em;
-    padding: 0.1em;
-}
-a:link, a:visited {
-    color: #4e9a06;
-}
-a:hover {
-    background-color: #efc;
-}
-#title {
-    border-bottom: 1px solid #ccc;
-    background: url(elements/bg.png) repeat-x top left;
-}
-#contents, #footer {
-    margin: 1.5em;
-}
-#footer p {
-    text-align: right;
-    color: #999;
-}
-#step {
-    font-size: 0.7em;
-    font-weight: normal;
-    color: #9c9;
-}
-.flash {
-    border: 1px solid #ccc;
-    padding: 0.5em;
-    margin-bottom: 0.5em;
-}
-.flash a:link, .flash a:visited {
-    font-weight: bold;
-    color: black;
-}
-.flash a:hover {
-    font-weight: bold;
-    background: none;
-    color: #555;
-}
-.fail {
-    background-color: pink;
-}
-.pass {
-    background-color: lightgreen;
-}
-.warn {
-    background-color: yellow;
-}
-.desc {
-    color: #999;
-    font-size: 90%;
-}
-form label {
-    display: block;
-    padding-top: 0.2em;
-    width: 13em;
-    float: left;
-}
-form p {
-    margin: 0px 0px 10px 0px;
-}
-  -->
-  </style>
-</head>
-<body>
-  <div id="wrap">
-	<div id="title">
-		<h1>MetaBBS Installation <span id="step">Step <?=$step?></span></h1>
-	</div>
-	<div id="contents">
-<?php
-}
-function print_footer() {
-?>
-	</div><!-- contents -->
-	<div id="footer">
-		<p id="copyright">&copy; 2005-2006, <a href="http://metabbs.daybreaker.info">MetaBBS Team</a></p>
-	</div>
-  </div><!-- wrap -->
-</body>
-</html>
-<?php
-}
 ini_set('include_path', METABBS_DIR . PATH_SEPARATOR . ini_get('include_path'));
 
 require_once 'lib/model.php';
@@ -169,8 +44,21 @@ $backend = isset($_GET['backend']) ? $_GET['backend'] : 'mysql';
 require "lib/backends/$backend/installer.php";
 
 import_default_language();
-print_header(1);
-
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>MetaBBS Installation</title>
+  <link rel="stylesheet" href="elements/style.css" type="text/css" />
+</head>
+<body id="installer">
+  <div id="meta-admin">
+	<h1>MetaBBS Installation</h1>
+	<div id="header"></div>
+	<div id="body">
+<?php
 if (is_writable('.')) {
 	pass('Permission check');
 } else {
@@ -189,7 +77,7 @@ if (!isset($_POST['config'])) {
 	<h2>Database Information</h2>
 	<form id="dbinfo" method="post" action="install.php?backend=<?=$backend?>">
 	<p>
-		<label for="backend">Backend</label>
+		<label for="backend">저장 방식</label>
 		<select name="backend" id="backend" onchange="location.replace('?backend='+this.value)">
 <?php
         foreach (get_backends() as $b) {
@@ -198,7 +86,6 @@ if (!isset($_POST['config'])) {
         }
 ?>
                 </select>
-                <span class="desc">어떤 방식으로 데이터를 저장할 것인지 선택합니다.</span>
 	</p>
 <?php
 	if (!is_supported()) {
@@ -304,5 +191,11 @@ if (!isset($_POST['config'])) {
 	echo "<p>Thank you for installing MetaBBS. :-)</p>";
 	echo "<p><a href='$admin_url'>Go to administration page &raquo;</a></p>";
 }
-print_footer();
 ?>
+	</div>
+	<div id="footer">
+		<p id="copyright">&copy; 2005-2006, <a href="http://metabbs.org">MetaBBS Team</a></p>
+	</div>
+  </div>
+</body>
+</html>

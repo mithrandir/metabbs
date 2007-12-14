@@ -1,7 +1,10 @@
 body {
     margin: 0;
-    font-family: arial, verdana, sans-serif;
 	background-color: #333;
+}
+
+body, input, textarea, select {
+    font-family: arial, verdana, sans-serif;
     font-size: 13px;
 	line-height: 1.5;
 }
@@ -178,4 +181,39 @@ td.disabled { background-color: pink; }
 .prev a, .next a { padding: 0 5px; }
 .first a:hover, .last a:hover, .next a:hover, .prev a:hover {
     background-color: #333;
+}
+
+/* installer css */
+#footer {
+	margin: 1.5em;
+	text-align: right;
+	color: #999;
+}
+
+.desc {
+    color: #999;
+    font-size: 90%;
+}
+
+#installer form label {
+    display: block;
+    padding-top: 0.2em;
+    width: 13em;
+    float: left;
+}
+
+#installer form p {
+    margin: 0px 0px 10px 0px;
+}
+
+#installer h1 {
+	margin: 0.5em;
+}
+#installer #header {
+	padding: 0; margin: 0;
+}
+
+#installer h2 {
+	margin-top: 1em;
+	border-bottom: 1px solid #9c6;
 }
