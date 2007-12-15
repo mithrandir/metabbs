@@ -1,7 +1,10 @@
 <?php
 require 'simpletest/unit_tester.php';
 
-$cases = array('config', 'i18n', 'plugin_filter', 'plugin_handler', 'model');
+$cases = array();
+foreach (glob('*_test.php') as $case) {
+	$cases[] = substr($case, 0, -9);
+}
 
 class ExtendedHtmlReporter extends HtmlReporter {
 	function ExtendedHtmlReporter($cases) {
