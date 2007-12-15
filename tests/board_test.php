@@ -3,10 +3,6 @@ require_once "../lib/model.php";
 require_once "../app/models/board.php";
 
 class BoardTest extends UnitTestCase {
-	function tearDown() {
-		cleanup();
-	}
-
 	function testFind() {
 		$board = Board::find(1);
 		$this->assertEqual(1, $board->id);

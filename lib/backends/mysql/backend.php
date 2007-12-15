@@ -66,6 +66,7 @@ class MySQLConnection
 	var $conn;
 	var $utf8 = false;
 	var $real_escape = true;
+	var $prefix;
 
 	function connect($host, $user, $password) {
 		$this->conn = mysql_connect($host, $user, $password) or trigger_error(mysql_error(), E_USER_ERROR);
