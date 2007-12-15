@@ -159,7 +159,7 @@ class MySQLConnection
 		$result = $this->query("SHOW COLUMNS FROM $table");
 		$fields = array();
 		while ($name = $result->fetchsingle()) {
-			if ($name != 'id') $fields[] = $name;
+			$fields[] = $name;
 		}
 		return $fields;
 	}

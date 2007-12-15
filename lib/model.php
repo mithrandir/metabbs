@@ -6,7 +6,7 @@ $__cache = array();
  * @param $prefix 접미사
  */
 function set_table_prefix($prefix) {
-	$GLOBALS['table_prefix'] = $prefix;
+	$GLOBALS['__db']->prefix = $prefix;
 }
 
 /**
@@ -15,7 +15,7 @@ function set_table_prefix($prefix) {
  * @return 테이블 이름
  */
 function get_table_name($model) {
-	return $GLOBALS['table_prefix'] . $model;
+	return $GLOBALS['__db']->prefix . $model;
 }
 
 /**
@@ -108,7 +108,8 @@ class Model
 		$columns = $this->db->get_columns($this->table);
 		$attributes = array();
 		foreach ($columns as $key) {
-			$attributes[$key] = $this->$key;
+			if ($this->$key)
+				$attributes[$key] = $this->$key;
 		}
 		return $attributes;
 	}

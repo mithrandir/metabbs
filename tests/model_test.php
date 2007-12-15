@@ -43,10 +43,10 @@ class MockDatabase {
 
 class ModelTest extends UnitTestCase {
 	function setUp() {
-		set_table_prefix('test_');
 		$this->db =& new MockDatabase;
 		$this->db->columns = array('blah', 'hello');
 		$GLOBALS['__db'] =& $this->db;
+		set_table_prefix('test_');
 	}
 	function testTableName() {
 		set_table_prefix('meta_');

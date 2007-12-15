@@ -28,6 +28,7 @@ if ($controller == 'post' && $action == 'edit' ||
 	$secret_checked = $post->secret ? 'checked="checked"' : '';
 	$editing = $action == 'edit';
 	$post->author = $post->name;
+	//$post->body = htmlspecialchars($post->body);
 	$additional_fields = array();
 	foreach ($extra_attributes as $attr) {
 		$attr->name = htmlspecialchars($attr->name);
