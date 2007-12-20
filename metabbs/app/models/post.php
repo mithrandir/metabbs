@@ -1,4 +1,6 @@
 <?php
+require_once dirname(__FILE__) . "/post_meta.php";
+
 class Post extends Model {
 	var $model = 'post';
 

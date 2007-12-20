@@ -10,7 +10,30 @@ $board_fixture = array(
 	)
 );
 
+$post_fixture = array(
+	'first' => array(
+		'id' => 1,
+		'board_id' => 1,
+		'title' => 'Hello!',
+		'body' => 'Hello, world!'
+	),
+	'second' => array(
+		'id' => 3,
+		'board_id' => 1,
+		'title' => 'second post',
+		'body' => 'yeah'
+	),
+	'notice' => array(
+		'id' => 2,
+		'board_id' => 1,
+		'title' => 'notice',
+		'body' => 'ah, ah',
+		'notice' => TRUE
+	)
+);
+
 $fixtures = array(
-	'board' => $board_fixture
+	'board' => $board_fixture,
+	'post'  => $post_fixture
 );
 ?>

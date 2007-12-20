@@ -37,13 +37,6 @@ function find_and_cache($model, $id) {
 	return $o;
 }
 
-// XXX: must be (re)moved
-function find($model, $key, $value) {
-	global $__db;
-	$table = get_table_name($model);
-	return $__db->fetchrow("SELECT * FROM $table WHERE $key=?", $model, array($value));
-}
-
 /**
  * 모델 객체
  */
@@ -108,7 +101,7 @@ class Model
 		$columns = $this->db->get_columns($this->table);
 		$attributes = array();
 		foreach ($columns as $key) {
-			if ($this->$key)
+			if (isset($this->$key))
 				$attributes[$key] = $this->$key;
 		}
 		return $attributes;
@@ -149,6 +142,7 @@ class Model
 	 */
 	function delete() {
 		$this->db->execute("DELETE FROM $this->table WHERE id=$this->id");
+		$this->id = NULL;
 	}
 }
 ?>
