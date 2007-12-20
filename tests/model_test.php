@@ -1,4 +1,5 @@
 <?php
+require_once "../lib/backends/mock.php";
 require_once "../lib/model.php";
 
 class CachedModel {
@@ -12,33 +13,6 @@ class CachedModel {
 
 class Animal extends Model {
 	var $model = 'animal';
-}
-
-class MockDatabase {
-	var $sequence = 1;
-
-	function get_columns($table) {
-		return $this->columns;
-	}
-	function quote_identifier($id) {
-		return "`$id`";
-	}
-	function quote($value) {
-		if (is_numeric($value)) return $value;
-		else return "'".$this->escape($value)."'";
-	}
-	function escape($string) {
-		return addslashes($string);
-	}
-	function query($query) {
-		$this->query = $query;
-	}
-	function execute($query) {
-		$this->query = $query;
-	}
-	function insertid() {
-		return $this->sequence++;
-	}
 }
 
 class ModelTest extends UnitTestCase {
@@ -94,6 +68,7 @@ class ModelTest extends UnitTestCase {
 		$model = new Animal(array('id' => 42));
 		$model->delete();
 		$this->assertEqual("DELETE FROM test_animal WHERE id=42", $this->db->query);
+		$this->assertNull($model->id);
 	}
 }
 ?>

@@ -13,6 +13,8 @@ class Board extends Model {
 	var $order_by = '';
 	var $header, $footer;
 
+	var $get_post_body = FALSE;
+
 	function _init() {
 		$this->admin_table = get_table_name('board_admin');
 		$this->post_table = get_table_name('post');
@@ -23,15 +25,13 @@ class Board extends Model {
 		return $this->name;
 	}
 	function find($id) {
-		return find('board', 'id', $id);
+		return find('board', $id);
 	}
 	function find_by_name($name) {
-		return find('board', 'name', $name);
+		return find_by('board', 'name', $name);
 	}
 	function find_all() {
-		$db = get_conn();
-		$table = get_table_name('board');
-		return $db->fetchall("SELECT * FROM $table", 'Board');
+		return find_all('board');
 	}
 	function validate() {
 		$_board = Board::find_by_name($this->name);
@@ -81,8 +81,8 @@ class Board extends Model {
 			}
 			$this->db->execute("DELETE FROM $this->post_table WHERE moved_to IN (".implode(',', $ids).")");
 		}
-		Model::delete();
 		$this->db->execute("DELETE FROM $this->post_table WHERE board_id=$this->id");
+		Model::delete();
 	}
 	function get_recent_comments($count) {
 		return $this->db->fetchall("SELECT * FROM $this->comment_table WHERE board_id=$this->id ORDER BY id DESC LIMIT $count", "Comment");
