@@ -5,6 +5,7 @@ class User extends Model {
 	var $email, $url;
 	var $level = 1;
 	var $token;
+	var $signature = '';
 	function _init() {
 		$this->table = get_table_name('user');
 		$this->post_table = get_table_name('post');

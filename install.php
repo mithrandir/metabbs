@@ -139,7 +139,7 @@ if (!isset($_POST['config'])) {
     function check_unexcepted_exit() {
         global $safe;
         if (!$safe) {
-		if (isset($GLOBALS['config'])) {
+			if (isset($GLOBALS['config'])) {
 				$conn = get_conn();
 				@include("db/uninstall.php");
 			}
@@ -169,11 +169,11 @@ if (!isset($_POST['config'])) {
 	include 'db/schema.php';
 
 	pass("Creating directories");
-	$config->config = $_POST['config'];
+	foreach ($_POST['config'] as $key => $value)
+		$config->set($key, $value);
 	$config->set('backend', $backend);
     $config->set('revision', METABBS_DB_REVISION);
 	$config->write_to_file();
-	set_table_prefix($config->get('prefix', 'meta_'));
 	
 	pass("Writing configuration to file");
 	$htaccess = implode('', file('.htaccess.in'));
@@ -182,11 +182,11 @@ if (!isset($_POST['config'])) {
 	fclose($fp);
 
 	pass("Initializing Database");
+	get_conn();
+	set_table_prefix($config->get('prefix', 'meta_'));
 	init_db();
 
 	pass("Creating admin user");
-	$backend = $config->get('backend');
-	require_once "lib/backends/$backend/backend.php";
 	require_once 'app/models/user.php';
 	require_once 'lib/account.php';
 	$user = new User;
@@ -199,7 +199,7 @@ if (!isset($_POST['config'])) {
     $safe = true;
 
     $admin_url = function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules())
-	           ? 'metabbs/admin' : 'metabbs.php/admin';
+	           ? 'admin' : 'metabbs.php/admin';
 
 	echo "<h2>Installation Finished</h2>";
 	echo "<p>Thank you for installing MetaBBS. :-)</p>";
