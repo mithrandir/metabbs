@@ -47,7 +47,7 @@ if ($view == ADMIN_VIEW) {
 	$layout->wrap("<div id=\"meta\">\n", "</div>\n");
 }
 
-if ($_SERVER['HTTP_X_REQUESTED_WITH'] != 'XMLHttpRequest') {
+if (!is_xhr()) {
 	include get_header_path();
 	echo $layout->header;
 	if ($view == DEFAULT_VIEW && isset($board) && $board->header)
@@ -59,7 +59,7 @@ if (isset($template)) {
 	$template->render();
 } else include "app/views/$controller/$action.php";
 
-if ($_SERVER['HTTP_X_REQUESTED_WITH'] != 'XMLHttpRequest') {
+if (!is_xhr()) {
 	if ($view == DEFAULT_VIEW && isset($board) && $board->footer)
 		include $board->footer;
 	echo $layout->footer;
