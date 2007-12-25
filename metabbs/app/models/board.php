@@ -3,7 +3,7 @@ class Board extends Model {
 	var $model = 'board';
 
 	var $title;
-	var $style = 'blueprint';
+	var $style = 'board-default';
 
 	var $perm_read = 0, $perm_write = 0, $perm_comment = 0;
 	var $posts_per_page = 10;
