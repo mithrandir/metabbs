@@ -47,16 +47,22 @@ if ($view == ADMIN_VIEW) {
 	$layout->wrap("<div id=\"meta\">\n", "</div>\n");
 }
 
-include get_header_path();
-echo $layout->header;
-if ($view == DEFAULT_VIEW && isset($board) && $board->header)
-	include $board->header;
+if ($_SERVER['HTTP_X_REQUESTED_WITH'] != 'XMLHttpRequest') {
+	include get_header_path();
+	echo $layout->header;
+	if ($view == DEFAULT_VIEW && isset($board) && $board->header)
+		include $board->header;
+}
+
 if (isset($template)) {
 	$template->set('title', $title);
 	$template->render();
 } else include "app/views/$controller/$action.php";
-if ($view == DEFAULT_VIEW && isset($board) && $board->footer)
-	include $board->footer;
-echo $layout->footer;
-include get_footer_path();
+
+if ($_SERVER['HTTP_X_REQUESTED_WITH'] != 'XMLHttpRequest') {
+	if ($view == DEFAULT_VIEW && isset($board) && $board->footer)
+		include $board->footer;
+	echo $layout->footer;
+	include get_footer_path();
+}
 ?>
