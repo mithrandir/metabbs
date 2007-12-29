@@ -59,9 +59,9 @@ class BoardTest extends UnitTestCase {
 		$this->assertEqual(3, $board->get_post_count());
 	}
 	function testDelete() {
-		$board = Board::find(1);
+		$board = Board::find(2);
 		$board->delete();
-		$deleted_post = Post::find(1);
+		$deleted_post = Post::find(4);
 		$this->assertFalse($deleted_post->exists());
 		$this->assertFalse($board->exists());
 	}

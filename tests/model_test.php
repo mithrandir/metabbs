@@ -8,10 +8,14 @@ class Animal extends Model {
 
 class ModelTest extends UnitTestCase {
 	function setUp() {
+		$this->origDB = $GLOBALS['__db'];
 		$this->db =& new MockDatabase;
 		$this->db->columns = array('blah', 'hello');
 		$GLOBALS['__db'] =& $this->db;
 		set_table_prefix('test_');
+	}
+	function tearDown() {
+		$GLOBALS['__db'] = $this->origDB;
 	}
 	function testTableName() {
 		set_table_prefix('meta_');

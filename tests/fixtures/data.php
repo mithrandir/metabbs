@@ -29,6 +29,11 @@ $post_fixture = array(
 		'title' => 'notice',
 		'body' => 'ah, ah',
 		'notice' => TRUE
+	),
+	'will be deleted' => array(
+		'id' => 4,
+		'board_id' => 2,
+		'body' => 'RIP'
 	)
 );
 
