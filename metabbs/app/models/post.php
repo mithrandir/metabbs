@@ -26,9 +26,7 @@ class Post extends Model {
 		$this->metadata = new PostMeta($this);
 	}
 	function find($id) {
-		$db = get_conn();
-		$table = get_table_name('post');
-		return $db->fetchrow("SELECT * FROM $table WHERE id=?", 'Post', array($id));
+		return find('post', $id);
 	}
 	function create() {
 		$this->password = md5($this->password);
@@ -58,18 +56,13 @@ class Post extends Model {
 		}
 	}
 	function is_notice() {
-		# deprecated
 		return (bool) $this->notice;
 	}
 	function is_edited() {
 		return $this->edited_at != 0;
 	}
 	function get_board() {
-		return find_and_cache('board', $this->board_id);
-	}
-	function get_board_name() {
-		$board = $this->get_board();
-		return $board->get_title();
+		return find('board', $this->board_id);
 	}
 	function get_user() {
 		if ($this->user_id) {
