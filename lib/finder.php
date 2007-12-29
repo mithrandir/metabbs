@@ -3,6 +3,19 @@ function find($model, $id) {
 	return find_by($model, 'id', $id);
 }
 
+function find_and_cache($model, $id) {
+	global $__cache;
+	$key = $model.'_'.$id;
+	if (!isset($__cache[$key])) {
+		$o = call_user_func('find', $model, $id);
+		$__cache[$key] = $o;
+	} else {
+		$o = $__cache[$key];
+	}
+	return $o;
+}
+
+
 function find_by($model, $key, $value) {
 	global $__db;
 	$table = get_table_name($model);

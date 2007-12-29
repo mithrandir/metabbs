@@ -3,6 +3,10 @@ require_once "../lib/backends/mock.php";
 require_once "../lib/finder.php";
 
 class Person extends Model {
+	function Person($data = array()) {
+		$this->id = uniqid('test'); // 인스턴스마다 달라짐
+		$this->Model($data);
+	}
 }
 
 class FinderTest extends UnitTestCase {
@@ -22,6 +26,11 @@ class FinderTest extends UnitTestCase {
 		$this->assertIsA($person, 'Person');
 		$this->assertEqual($person->id, 42);
 		$this->assertEqual($person->name, 'John Doe');
+	}
+	function testCachedFind() {
+		$uncached = find_and_cache('person', 1);
+		$cached = find_and_cache('person', 1);
+		$this->assertEqual($cached->id, $uncached->id);
 	}
 	function testFindBy() {
 		$this->db->data = array(array('name' => 'John Doe', 'id' => 42));

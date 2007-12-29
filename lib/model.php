@@ -19,25 +19,6 @@ function get_table_name($model) {
 }
 
 /**
- * 캐시를 사용하여 데이터를 가져온다.
- * 캐시에 해당 레코드가 있으면 캐시를 사용하고, 그렇지 않으면 새로 찾는다.
- * @param $model 모델 이름
- * @param $id 레코드 아이디
- * @return 모델 객체
- */
-function find_and_cache($model, $id) {
-	global $__cache;
-	$key = $model.'_'.$id;
-	if (!isset($__cache[$key])) {
-		$o = call_user_func(array($model, 'find'), $id);
-		$__cache[$key] = $o;
-	} else {
-		$o = $__cache[$key];
-	}
-	return $o;
-}
-
-/**
  * 모델 객체
  */
 class Model
