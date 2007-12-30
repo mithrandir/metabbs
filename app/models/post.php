@@ -13,6 +13,7 @@ class Post extends Model {
 	var $moved_to = 0;
 	var $comment_count = 0;
 	var $sort_key = 0;
+	var $meta = array();
 
 	function _init() {
 		$this->table = get_table_name('post');
@@ -35,6 +36,9 @@ class Post extends Model {
 		$this->last_update_at = $this->created_at;
 		Model::create();
 		$this->update_sort_key();
+
+		foreach ($this->meta as $k => $v)
+			$this->set_attribute($k, $v);
 	}
 	function update() {
 		$this->edited_at = time();

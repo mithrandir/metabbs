@@ -34,10 +34,17 @@ $post_fixture = array(
 		'id' => 4,
 		'board_id' => 2,
 		'body' => 'RIP'
+	),
+	'metadata test' => array(
+		'id' => 5,
+		'board_id' => 1,
+		'body' => '...',
+		'meta' => array('foo' => 'bar' )
 	)
 );
 
 $fixtures = array(
+	'post_meta' => array(), // dummy
 	'board' => $board_fixture,
 	'post'  => $post_fixture
 );

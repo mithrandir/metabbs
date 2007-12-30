@@ -15,7 +15,6 @@ function find_and_cache($model, $id) {
 	return $o;
 }
 
-
 function find_by($model, $key, $value) {
 	global $__db;
 	$table = get_table_name($model);

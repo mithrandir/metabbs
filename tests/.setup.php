@@ -2,6 +2,7 @@
 global $__db;
 
 require_once "../lib/model.php";
+require_once "../lib/finder.php";
 require_once "../lib/backends/mysql/backend.php";
 require_once "../lib/backends/mysql/installer.php";
 
