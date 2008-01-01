@@ -17,7 +17,7 @@ if (!file_exists('fixtures/.schema')) {
 	touch('fixtures/.schema');
 }
 
-include 'fixtures/data.php';
+include_once 'fixtures/data.php';
 if (!file_exists('fixtures/.fixture') ||
 	file_get_contents('fixtures/.fixture') < filemtime('fixtures/data.php')) {
 	foreach ($fixtures as $model => $fixture) {

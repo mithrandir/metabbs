@@ -12,9 +12,7 @@ class Comment extends Model {
 		$this->post_table = get_table_name('post');
 	}
 	function find($id) {
-		$db = get_conn();
-		$table = get_table_name('comment');
-		return $db->fetchrow("SELECT * FROM $table WHERE id=?", 'Comment', array($id));
+		return find('comment', $id);
 	}
 	function create() {
 		$this->created_at = time();
@@ -30,7 +28,7 @@ class Comment extends Model {
 			return new Guest(array('name' => $this->name));
 	}
 	function get_post() {
-		return find_and_cache('post', $this->post_id);
+		return find('post', $this->post_id);
 	}
 	function get_board() {
 		$post = $this->get_post();

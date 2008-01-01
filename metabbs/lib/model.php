@@ -1,6 +1,4 @@
 <?php
-$__cache = array();
-
 /**
  * 테이블 접미사를 지정한다.
  * @param $prefix 접미사
