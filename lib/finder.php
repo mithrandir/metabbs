@@ -1,4 +1,6 @@
 <?php
+$__cache = array();
+
 function find($model, $id) {
 	return find_by($model, 'id', $id);
 }
