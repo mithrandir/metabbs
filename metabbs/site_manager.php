@@ -38,9 +38,9 @@ class SiteManager
 	function printLoginForm() {
 ?>
 <form method="post" action="<?=url_with_referer_for("account", "login")?>">
-<label>User ID</label><input id="meta-login-id" type="text" name="user" /><br />
-<label>Password</label><input id="meta-login-password" type="password" name="password" /><br />
-<input id="meta-login-submit" type="submit" value="Login" />
+<div><label>User ID</label><input id="meta-login-id" type="text" name="user" /></div>
+<div><label>Password</label><input id="meta-login-password" type="password" name="password" /></div>
+<div><input id="meta-login-submit" type="submit" value="Login" /></div>
 </form>
 <?php
 	}
