@@ -64,8 +64,14 @@ $comment_fixture = array(
 		'post_id' => 1,
 		'body' => 'hi'
 	),
-	'child' => array(
+	'second' => array(
 		'id' => 2,
+		'board_id' => 1,
+		'post_id' => 1,
+		'body' => 'third'
+	),
+	'child' => array(
+		'id' => 3,
 		'board_id' => 1,
 		'post_id' => 1,
 		'parent' => 1,

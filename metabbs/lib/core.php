@@ -4,7 +4,7 @@ $config = new Config(METABBS_DIR . '/metabbs.conf.php');
 
 $backend = $config->get('backend', 'mysql');
 
-require METABBS_DIR . '/lib/finder.php';
+require METABBS_DIR . '/lib/query.php';
 require METABBS_DIR . '/lib/model.php';
 require METABBS_DIR . '/lib/backends/' . $backend . '/backend.php';
 $__db = get_conn();

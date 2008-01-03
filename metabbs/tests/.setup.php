@@ -2,7 +2,7 @@
 global $__db;
 
 require_once "../lib/model.php";
-require_once "../lib/finder.php";
+require_once "../lib/query.php";
 require_once "../lib/backends/mysql/backend.php";
 require_once "../lib/backends/mysql/installer.php";
 
@@ -10,6 +10,14 @@ $__db = new MySQLConnection;
 $__db->connect("localhost", "root", "");
 $__db->selectdb("metabbs_test");
 $__db->enable_utf8();
+
+if (!function_exists('rollback')) {
+	function rollback() {
+		global $__db;
+		$__db->execute("ROLLBACK");
+		$__db->execute("BEGIN");
+	}
+}
 
 if (!file_exists('fixtures/.schema')) {
 	include "../db/schema.php";

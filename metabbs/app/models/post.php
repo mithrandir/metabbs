@@ -85,10 +85,10 @@ class Post extends Model {
 		}
 	}
 	function get_category() {
-		return $this->category_id ? find_and_cache('category', $this->category_id) : null;
+		return $this->category_id ? find('category', $this->category_id) : null;
 	}
 	function get_comments($build_tree = true) {
-		$_comments = $this->db->fetchall("SELECT * FROM $this->comment_table WHERE post_id=$this->id ORDER BY id", 'Comment', array(), true);
+		$_comments = $this->db->fetchall("SELECT * FROM $this->comment_table WHERE post_id=$this->id ORDER BY id", 'Comment', array(), $build_tree);
 		if ($build_tree) {
 			$comments = array();
 			foreach ($_comments as $id => $comment) {

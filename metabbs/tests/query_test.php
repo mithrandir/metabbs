@@ -1,6 +1,6 @@
 <?php
 require_once "../lib/backends/mock.php";
-require_once "../lib/finder.php";
+require_once "../lib/query.php";
 
 class Person extends Model {
 	function Person($data = array()) {
@@ -9,7 +9,7 @@ class Person extends Model {
 	}
 }
 
-class FinderTest extends UnitTestCase {
+class QueryTest extends UnitTestCase {
 	function setUp() {
 		$this->origDB = $GLOBALS['__db'];
 		$this->db =& new MockDatabase;

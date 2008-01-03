@@ -1,5 +1,4 @@
 <?php
-require_once "../lib/finder.php";
 require_once "../lib/model.php";
 require_once "../app/models/board.php";
 require_once "../app/models/post.php";
@@ -24,14 +23,14 @@ class CommentTest extends UnitTestCase {
 	}
 
 	function testGetParent() {
-		$child = Comment::find(2);
+		$child = Comment::find(3);
 		$parent = $child->get_parent();
 		$this->assertEqual(1, $parent->id);
 		$this->assertNull($parent->get_parent());
 	}
 
 	function testHasChild() {
-		$child = Comment::find(2);
+		$child = Comment::find(3);
 		$parent = $child->get_parent();
 		$this->assertTrue($parent->has_child());
 		$this->assertFalse($child->has_child());

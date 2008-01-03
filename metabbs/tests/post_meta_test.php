@@ -1,5 +1,4 @@
 <?php
-require_once "../lib/finder.php";
 require_once "../lib/model.php";
 require_once "../app/models/post.php";
 require_once "../app/models/post_meta.php";
