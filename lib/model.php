@@ -90,37 +90,21 @@ class Model
 	 * 새로운 데이터를 테이블에 삽입한다.
 	 */
 	function create() {
-		$columns = $this->get_mapped_attributes();
-		$keys = array_map(array(&$this->db, 'quote_identifier'), array_keys($columns));
-		$values = array_map(array(&$this->db, 'quote'), array_values($columns));
-		
-		$query = "INSERT INTO $this->table";
-		$query .= " (".implode(", ", $keys).")";
-		$query .= " VALUES(".implode(", ", $values).")";
-		$this->db->execute($query);
-		$this->id = $this->db->insertid();
+		$this->id = insert($this->model, $this->get_mapped_attributes());
 	}
 
 	/**
 	 * 항목의 내용을 바꾼다.
 	 */
 	function update() {
-		$columns = $this->get_mapped_attributes();
-		$query = "UPDATE $this->table SET ";
-		$parts = array();
-		foreach ($columns as $k => $v) {
-			$parts[] = $this->db->quote_identifier($k)."=".$this->db->quote($v);
-		}
-		$query .= implode(", ", $parts);
-		$query .= " WHERE id=$this->id";
-		$this->db->execute($query);
+		update_all($this->model, $this->get_mapped_attributes(), "id=$this->id");
 	}
 
 	/**
 	 * 항목을 삭제한다.
 	 */
 	function delete() {
-		$this->db->execute("DELETE FROM $this->table WHERE id=$this->id");
+		delete_all($this->model, "id=$this->id");
 		$this->id = NULL;
 	}
 }
