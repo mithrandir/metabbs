@@ -9,8 +9,7 @@ function find_and_cache($model, $id) {
 	global $__cache;
 	$key = $model.'_'.$id;
 	if (!isset($__cache[$key])) {
-		$o = call_user_func('find', $model, $id);
-		$__cache[$key] = $o;
+		$__cache[$key] = find($model, $id);
 	} else {
 		$o = $__cache[$key];
 	}
@@ -24,7 +23,7 @@ function find_by($model, $key, $value) {
 	return new $model($result->fetch());
 }
 
-function find_all($model, $condition = '') {
+function find_all($model, $condition = '', $order = '', $offset = 0, $limit = NULL) {
 	global $__db;
 	$table = get_table_name($model);
 	$list = array();
@@ -35,5 +34,17 @@ function find_all($model, $condition = '') {
 		$list[] = new $model($row);
 	}
 	return $list;
+}
+
+function count_all($model, $condition = '') {
+}
+
+function delete_all($model, $condition = '') {
+}
+
+function insert($model, $data) {
+}
+
+function update_all($model, $data, $condition = '') {
 }
 ?>
