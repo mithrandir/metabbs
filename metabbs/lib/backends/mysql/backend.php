@@ -129,7 +129,7 @@ class MySQLConnection
 	}
 	function fetchone($query, $data = NULL) {
 		$result = $this->query($query, $data);
-		return $result->fetchsingle();
+		return $result->fetch_column();
 	}
 	function insertid() {
 		return mysql_insert_id($this->conn);
@@ -159,7 +159,7 @@ class MySQLConnection
 	function get_columns($table) {
 		$result = $this->query("SHOW COLUMNS FROM $table");
 		$fields = array();
-		while ($name = $result->fetchsingle()) {
+		while ($name = $result->fetch_column()) {
 			$fields[] = $name;
 		}
 		return $fields;
@@ -193,7 +193,7 @@ class MySQLResult {
 	function fetch() {
 		return mysql_fetch_assoc($this->result);
 	}
-	function fetchsingle() {
+	function fetch_column() {
 		list($value) = mysql_fetch_row($this->result);
 		return $value;
 	}

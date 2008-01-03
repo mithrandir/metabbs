@@ -35,5 +35,8 @@ class MockResult {
 	function fetch() {
 		return array_shift($this->data);
 	}
+	function fetch_column() {
+		return array_shift(array_shift($this->data));
+	}
 }
 ?>
