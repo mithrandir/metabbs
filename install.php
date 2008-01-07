@@ -59,6 +59,7 @@ function print_footer() {
 }
 ini_set('include_path', METABBS_DIR . PATH_SEPARATOR . ini_get('include_path'));
 
+require_once 'lib/query.php';
 require_once 'lib/model.php';
 require_once 'lib/config.php';
 $config = new Config('metabbs.conf.php');
