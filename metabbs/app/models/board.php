@@ -51,7 +51,7 @@ class Board extends Model {
 	}
 	function get_feed_posts($count) {
 		if (!$this->order_by) $this->order_by = 'id DESC';
-		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE board_id=$this->id AND NOT moved_to ORDER BY $this->order_by LIMIT $count", 'Post');
+		return find_all('post', "board_id=$this->id AND NOT moved_to", $this->order_by, $count);
 	}
 	function add_post(&$post) {
 		$post->board_id = $this->id;
@@ -59,18 +59,15 @@ class Board extends Model {
 	}
 	function get_post_count() {
 		if (!isset($this->_count))
-			$this->_count = $this->db->fetchone("SELECT COUNT(*) FROM $this->post_table WHERE board_id=$this->id");
+			$this->_count = count_all('post', "board_id=$this->id");
 		return $this->_count;
 	}
 	function get_categories() {
-		return $this->db->fetchall("SELECT * FROM $this->category_table WHERE board_id=$this->id", 'Category');
+		return find_all('category', "board_id=$this->id");
 	}
 	function add_category($category) {
 		$category->board_id = $this->id;
 		$category->create();
-	}
-	function get_category_count() {
-		return $this->db->fetchone("SELECT COUNT(*) FROM $this->category_table WHERE board_id=$this->id");
 	}
 	function delete() {
 		$result = $this->db->query("SELECT id FROM $this->post_table WHERE board_id=$this->id");
@@ -79,9 +76,9 @@ class Board extends Model {
 			while ($data = $result->fetch()) {
 				$ids[] = $data['id'];
 			}
-			$this->db->execute("DELETE FROM $this->post_table WHERE moved_to IN (".implode(',', $ids).")");
+			delete_all('post', "moved_to IN (".implode(',', $ids).")");
 		}
-		$this->db->execute("DELETE FROM $this->post_table WHERE board_id=$this->id");
+		delete_all('post', "board_id=$this->id");
 		Model::delete();
 	}
 	function get_recent_comments($count) {
