@@ -1,6 +1,9 @@
 <?php
 permission_required('admin', $board);
 
+if (!$_POST['posts'])
+	redirect_back();
+
 if (isset($_POST['action'])) {
 	switch ($_POST['action']) {
 		case 'delete':
