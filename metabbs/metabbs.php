@@ -38,7 +38,7 @@ if ($view == ADMIN_VIEW) {
 	$layout->add_javascript(METABBS_BASE_PATH . 'elements/admin.js');
 	$layout->header = $layout->footer = '';
 } else {
-	$layout->add_stylesheet($style_dir . '/style.css');
+	$layout->add_stylesheet($style_dir . '/style.css?' . filemtime('styles/'.$style->name.'/style.css'));
 	$layout->add_javascript(METABBS_BASE_PATH . 'elements/script.js');
 	$layout->wrap("<div id=\"meta\">\n", "</div>\n");
 }
