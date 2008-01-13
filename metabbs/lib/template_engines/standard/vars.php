@@ -47,7 +47,8 @@ if ($controller == 'post' && $action == 'edit' ||
 // for list.php
 if (isset($categories)) {
 	foreach ($categories as $k => $c) {
-		if (isset($_GET['category']) && $_GET['category'] == $c->id) {
+		if (isset($_GET['category']) && $_GET['category'] == $c->id ||
+			isset($post) && $post->category_id == $c->id) {
 			$categories[$k]->selected = 'selected="selected"';
 		} else {
 			$categories[$k]->selected = '';
