@@ -119,3 +119,4 @@ Administrators=관리자
 Add=추가
 Header Path=머리말 경로
 Footer Path=꼬리말 경로
+Screen name=이름/별명
