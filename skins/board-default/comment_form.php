@@ -14,4 +14,11 @@
 	<input type="submit" value="댓글 달기" class="button" />
 	<? if ($link_cancel): ?><a href="<?=$link_cancel?>" class="button dialog-close">취소</a><? endif; ?>
 	</form>
+
+	<script type="text/javascript">
+	Event.observe('comment-form', 'submit', function (event) {
+		addComment('comment-form', $$('#comments ol')[0])
+		Event.stop(event);
+	});
+	</script>
 <? endif; ?>

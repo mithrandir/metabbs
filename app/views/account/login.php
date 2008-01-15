@@ -8,5 +8,5 @@
 	<dd><input type="password" name="password" /></dd>
 </dl>
 <p><input type="checkbox" name="autologin" id="autologin" value="1" /> <label for="autologin">자동 로그인</label></p>
-<p><input type="submit" value="로그인" /> <a href="<?=$link_signup?>">회원가입</a></p>
+<p><input type="submit" value="로그인" /> <a href="<?=url_with_referer_for('account', 'signup')?>">회원가입</a></p>
 </form>
