@@ -57,6 +57,7 @@ function addComment(form, list) {
 			var submitButton = Form.getSubmitButton(form);
 			submitButton.enable();
 			$(form)['body'].value = '';
+			triggerDialogLinks();
 		}
 	});
 	return false;
