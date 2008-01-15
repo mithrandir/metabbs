@@ -150,7 +150,7 @@ function addDialogOverlay() {
 	overlay.style.display = 'none';
 	content.id = 'dialog';
 	overlay.appendChild(content);
-	$('meta').appendChild(overlay);
+	document.body.appendChild(overlay);
 }
 
 function addCloseButton() {
