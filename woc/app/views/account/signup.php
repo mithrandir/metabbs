@@ -27,7 +27,7 @@
 </fieldset>
 <fieldset>
 <p>
-	<label><?=i('Name')?><span class="star">*</span></label>
+	<label><?=i('Screen name')?><span class="star">*</span></label>
 	<input type="text" name="user[name]" value="<?=$account->name?>" />
 </p>
 <p>

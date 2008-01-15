@@ -20,6 +20,7 @@ function modern_list_filter(&$post) {
 	modern_common_filter($post);
 	$post->url = url_for($post, '', get_search_params());
 	$post->date = date('Y-m-d', $post->created_at);
+	$post->time = date('H:i:s', $post->created_at);
 }
 add_filter('PostList', 'modern_list_filter', 32768);
 

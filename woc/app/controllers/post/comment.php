@@ -25,8 +25,8 @@ apply_filters('PostComment', $comment);
 
 $post->add_comment($comment);
 if (is_xhr()) {
-	apply_filters('PostViewComment', $comment);
 	$template = get_template($board, '_comment');
+	apply_filters('PostViewComment', $comment);
 	$template->set('board', $board);
 	$template->set('comment', $comment);
 	$template->render_partial();
