@@ -1,4 +1,33 @@
 <?php
+require_once dirname(__FILE__).'/uri_parser.php';
+
+class AbstractRequest {
+	var $method = 'GET';
+	var $requested_with = '';
+	var $host;
+
+	function is_post() {
+		return $this->method == 'POST';
+	}
+
+	function is_xhr() {
+		return $this->requested_with == 'XMLHttpRequest';
+	}
+}
+
+class Request extends AbstractRequest {
+	function Request() {
+		foreach ($_GET as $k => $v) $this->$k = $v;
+		foreach ($_POST as $k => $v) $this->$k = $v;
+
+		$this->method = $_SERVER['REQUEST_METHOD'];
+		$this->requested_with = @$_SERVER['HTTP_X_REQUESTED_WITH'];
+
+		$parser = new URIParser;
+		list($this->controller, $this->action, $this->id) = $parser->parse($_SERVER['PATH_INFO']);
+	}
+}
+
 /**
  * post 호출인지 확인한다.
  * @return post 호출일때 참을 알려준다.
