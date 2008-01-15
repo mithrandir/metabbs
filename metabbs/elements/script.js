@@ -15,7 +15,7 @@ function checkForm(form) {
 
 	if (valid) {
 		var submitButton = Form.getSubmitButton(form);
-		new Insertion.After(submitButton, '<span id="sending">Sending...</span>');
+		//new Insertion.After(submitButton, '<span id="sending">Sending...</span>');
 		submitButton.disable();
 	} else {
 		document.getElementsByClassName('blank')[0].focus();
@@ -44,22 +44,19 @@ function loadReplyForm(id, url) {
 	});
 }
 
-function addComment(form) {
+function addComment(form, list) {
 	var data = Form.serialize(form);
 	if (!checkForm(form)) return false;
-	new Ajax.Updater({success: 'comments-list'}, form.action, {
+	new Ajax.Updater({success: list}, form.action, {
 		parameters: data,
 		insertion: Insertion.Bottom,
 		onFailure: function (transport) {
 			alert(transport.responseText);
 		},
 		onComplete: function (transport) {
-			$('sending').remove();
-			Form.getSubmitButton($('comment-form')).enable();
-			if (transport.status == 200) {
-				$$('#comments-list li').last().scrollTo();
-				$('comment_body').value = '';
-			}
+			var submitButton = Form.getSubmitButton(form);
+			submitButton.enable();
+			form['body'].value = '';
 		}
 	});
 	return false;
