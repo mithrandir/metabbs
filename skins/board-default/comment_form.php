@@ -17,7 +17,7 @@
 
 	<script type="text/javascript">
 	Event.observe('comment-form', 'submit', function (event) {
-		addComment(this, $$('#comments ol')[0])
+		addComment('comment-form', $$('#comments ol')[0])
 		Event.stop(event);
 	});
 	</script>

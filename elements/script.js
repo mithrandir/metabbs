@@ -1,5 +1,5 @@
 Form.getSubmitButton = function (form) {
-	return form.getInputs('submit')[0];
+	return $(form).getInputs('submit')[0];
 }
 
 function checkForm(form) {
@@ -47,7 +47,7 @@ function loadReplyForm(id, url) {
 function addComment(form, list) {
 	var data = Form.serialize(form);
 	if (!checkForm(form)) return false;
-	new Ajax.Updater({success: list}, form.action, {
+	new Ajax.Updater({success: list}, $(form).action, {
 		parameters: data,
 		insertion: Insertion.Bottom,
 		onFailure: function (transport) {
@@ -56,7 +56,7 @@ function addComment(form, list) {
 		onComplete: function (transport) {
 			var submitButton = Form.getSubmitButton(form);
 			submitButton.enable();
-			form['body'].value = '';
+			$(form)['body'].value = '';
 		}
 	});
 	return false;
