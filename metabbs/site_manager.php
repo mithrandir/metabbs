@@ -137,5 +137,5 @@ class SiteManager
 	}
 }
 
-$metabbs = new SiteManager;
+$GLOBALS['metabbs'] = new SiteManager;
 ?>
