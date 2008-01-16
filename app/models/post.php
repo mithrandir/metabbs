@@ -143,10 +143,10 @@ class Post extends Model {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->attachment_table WHERE post_id=$this->id");
 	}
 	function delete() {
-		Model::delete();
 		$this->db->execute("DELETE FROM $this->table WHERE moved_to=$this->id");
 		$this->db->execute("DELETE FROM $this->comment_table WHERE post_id=$this->id");
 		$this->db->execute("DELETE FROM $this->trackback_table WHERE post_id=$this->id");
+		Model::delete();
 	}
 	function update_view_count() {
 		$this->views++;
