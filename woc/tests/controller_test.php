@@ -19,7 +19,7 @@ class ControllerTest extends UnitTestCase {
 
 	function testProcess() {
 		$request = new AbstractRequest;
-		$response = new Response;
+		$response = new AbstractResponse;
 		$request->action = 'test';
 		$this->assertTrue($this->c->process($request, $response));
 		$this->assertTrue($this->c->ran);
@@ -30,6 +30,7 @@ class ControllerTest extends UnitTestCase {
 	}
 
 	function testRender() {
+		$this->c->response = new AbstractResponse;
 		$this->c->var = 'Hello, world!';
 		$this->c->render('test');
 		$this->assertEqual('Hello, world!', $this->c->response->body);
