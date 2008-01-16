@@ -19,6 +19,7 @@ class Controller {
 
 		call_user_func(array(&$this, 'action_' . $request->action));
 		$this->render($request->action);
+		$this->response->send();
 
 		return TRUE;
 	}
