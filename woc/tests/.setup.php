@@ -7,8 +7,8 @@ require_once "../lib/backends/mysql/backend.php";
 require_once "../lib/backends/mysql/installer.php";
 
 $__db = new MySQLConnection;
-$__db->connect("localhost", "root", "");
-$__db->selectdb("metabbs_test");
+$__db->connect("localhost", "omnibus", "20081945");
+$__db->selectdb("omnibus");
 $__db->enable_utf8();
 
 if (!function_exists('rollback')) {
