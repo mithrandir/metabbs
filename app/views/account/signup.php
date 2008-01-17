@@ -17,7 +17,8 @@
 <? if (isset($flash) && $error_field == 'password') { // error ?>
 	<input type="password" name="user[password]" class="blank" /> <?=$flash?>
 <? } else { ?>
-	<input type="password" name="user[password]" />
+	<input type="password" name="user[password]" /> 
+	<?=i('Password length must be longer than 5')?>.
 <? } ?>
 </p>
 <p>
