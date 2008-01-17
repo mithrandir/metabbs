@@ -121,7 +121,9 @@ class Messenger extends Plugin {
 	function notify_reply(&$comment) {
 		global $account;
 		$parent = $comment->get_parent();
-		if ($parent && $parent->user_id) {
+		$post = $comment->get_post();
+
+		if ($parent && $parent->user_id && $parent->user_id != $post->id) {
 			$message = new Message;
 			$message->from = $account->id;
 			$message->to = $parent->user_id;
@@ -132,7 +134,6 @@ class Messenger extends Plugin {
 			$message->create();
 		}
 
-		$post = $comment->get_post();
 		if ($post->user_id && $post->user_id != $account->id) {
 			$message = new Message;
 			$message->from = $account->id;
