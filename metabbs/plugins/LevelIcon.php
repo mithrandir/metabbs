@@ -68,7 +68,6 @@ class LevelIcon extends Plugin {
 		}
 		if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
 			$this->delete_icon($_GET['delete']);
-			redirect_to('?');
 		}
 		ksort($this->icons);
 ?>
