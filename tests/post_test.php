@@ -27,7 +27,6 @@ class PostTest extends UnitTestCase {
 	function testGetCategory() {
 		$post = Post::find(1);
 		$category = $post->get_category();
-		var_dump($category);
 		$this->assertEqual(1, $category->id);
 		$post2 = Post::find(2);
 		$this->assertNull($post2->get_category());
