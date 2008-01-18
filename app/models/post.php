@@ -85,7 +85,12 @@ class Post extends Model {
 		}
 	}
 	function get_category() {
-		return $this->category_id ? find('category', $this->category_id) : null;
+		
+		if ($this->category_id==0) {
+		 	 find('category', $this->category_id);
+		} else {
+		 null;
+		}
 	}
 	function get_comments($build_tree = true) {
 		$_comments = $this->db->fetchall("SELECT * FROM $this->comment_table WHERE post_id=$this->id ORDER BY id", 'Comment', array(), $build_tree);
