@@ -1,16 +1,14 @@
 <?php
 require_once ('../lib/backends/mysql/backend.php');
 
-class MysqlTest extends UnitTestCase {
+class MySQLTest extends UnitTestCase {
 	function setUp() {
-	$fp = fopen('fixtures/test.conf', 'w');
-	fwrite($fp, "<"."?php/*\n");
-	fwrite($fp, "a=1\n");
-	fwrite($fp, "b=2\n");
-	fclose($fp);
+		$this->conn= new MySQLConnection;
 	}
-	function tearDown() {
-		unlink('fixtures/test.conf');
+	function testOpen() {
+		$username="root";
+		$password="";
+		$this->assertEqual($this->conn->open(array("host"=>"localhost","user"=>$username,"password"=>$password)),$this->conn->connect("localhost",$username, $password));
 	}
 }
 ?>

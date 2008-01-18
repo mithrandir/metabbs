@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__FILE__).'/../base.php';
 function get_column_name($column) { return $column->name; }
 function column_to_string($column) { return $column->to_string(); }
 
@@ -49,7 +50,11 @@ function &get_conn() {
 	global $config, $__db;
 	if (!isset($__db)) {
 		$__db = new MySQLConnection;
-		$__db->connect($config->get('host'), $config->get('user'), $config->get('password'));
+		//접속할 때 필요한 정보를 배열로 저장.
+		$conninfo=array("host"=>($config->get('host')),"user"=>($config->get('user')),"password"=>($config->get('password')));
+		
+		$__db->connect($config->get('host'),$config->get('user'),$config->get('password'));
+		$__db->open($conninfo);
 		$__db->selectdb($config->get('dbname'));
 		if ($config->get('force_utf8') == '1') {
 			$__db->enable_utf8();
@@ -61,16 +66,18 @@ function &get_conn() {
 /**
  * MySQL 연결 클래스
  */
-class MySQLConnection
+class MySQLConnection extends BaseConnection
 {
 	var $conn;
 	var $utf8 = false;
 	var $real_escape = true;
 	var $prefix;
-
-	function connect($host, $user, $password) {
+	function connect($host,$user,$password) {
 		$this->conn = mysql_connect($host, $user, $password) or trigger_error(mysql_error(), E_USER_ERROR);
 		$this->real_escape = function_exists('mysql_real_escape_string') && mysql_real_escape_string('ㅋ') == 'ㅋ';
+	}
+	function open($conn) {
+		return $this->connect($conn["host"],$conn["user"],$conn["password"]);
 	}
 	function disconnect() {
 		mysql_close($this->conn);
