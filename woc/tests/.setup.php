@@ -6,7 +6,7 @@ require_once "../lib/query.php";
 require_once "../lib/backends/mysql/backend.php";
 require_once "../lib/backends/mysql/installer.php";
 
-$username = root
+$username = "root"
 $password = ""
 $testdb="metabbs_test"
 
