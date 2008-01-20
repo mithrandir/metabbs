@@ -13,10 +13,14 @@ class Controller {
 		return strtolower(substr(get_class($this), 0, -10));
 	}
 
+	function set_up() {
+	}
+
 	function process($request, $response) {
 		$this->request = $request;
 		$this->response = $response;
 
+		$this->set_up();
 		call_user_func(array(&$this, 'action_' . $request->action));
 		$this->render($request->action);
 		$this->response->send();
