@@ -4,7 +4,7 @@ class Xquared extends Plugin {
 	var $description = '글 입력창을 Xquared 위지윔 편집기로 바꿉니다.';
 
 	function on_init() {
-		global $controller, $action;
+		global $controller, $action, $layout;
 
 		ini_set('include_path', dirname(__FILE__).PATH_SEPARATOR.ini_get('include_path'));
 		if(!class_exists('HTML_Safe'))
@@ -14,6 +14,8 @@ class Xquared extends Plugin {
 		add_filter('PostView', array(&$this, 'format'), 500);
 		add_filter('PostViewRSS', array(&$this, 'format'), 500);
 
+		$plugin_uri = METABBS_BASE_PATH.'plugins/Xquared';
+		$layout->add_stylesheet("$plugin_uri/css/xq_contents.css");
 		if($controller == 'board' and $action == 'post' or $controller == 'post' and $action == 'edit')
 			$this->enable_editor();
 	}
@@ -25,7 +27,6 @@ class Xquared extends Plugin {
 
 		$layout->add_javascript("$plugin_uri/js/xquared-min.js");
 		$layout->add_stylesheet("$plugin_uri/css/xq_ui.css");
-		$layout->add_stylesheet("$plugin_uri/css/xq_contents.css");
 		$layout->add_javascript("$plugin_uri/plugin.js");
 		$layout->header = "
 			<script type=\"text/javascript\">
