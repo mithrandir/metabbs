@@ -25,6 +25,7 @@ class Xquared extends Plugin {
 
 		$layout->add_javascript("$plugin_uri/js/xquared-min.js");
 		$layout->add_stylesheet("$plugin_uri/css/xq_ui.css");
+		$layout->add_stylesheet("$plugin_uri/css/xq_contents.css");
 		$layout->add_javascript("$plugin_uri/plugin.js");
 		$layout->header = "
 			<script type=\"text/javascript\">
@@ -43,7 +44,7 @@ class Xquared extends Plugin {
 			$post->body = format_plain($post->body);
 		else {
 			$safe = new HTML_Safe;
-			$post->body = $safe->parse($post->body);
+			$post->body = '<div class="xed">'.$safe->parse($post->body).'</div>';
 		}
 	}
 }
