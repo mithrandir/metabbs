@@ -5,9 +5,15 @@ require_once "../lib/controller.php";
 
 class TestController extends Controller {
 	var $ran = FALSE;
+	var $setup = FALSE;
+
+	function set_up() {
+		$this->setup = TRUE;
+	}
 
 	function action_test() {
-		$this->ran = TRUE;
+		$this->ran = $this->setup;
+		$this->var = 'test';
 	}
 }
 
@@ -22,6 +28,7 @@ class ControllerTest extends UnitTestCase {
 		$response = new AbstractResponse;
 		$request->action = 'test';
 		$this->assertTrue($this->c->process($request, $response));
+		$this->assertTrue($this->c->setup);
 		$this->assertTrue($this->c->ran);
 	}
 

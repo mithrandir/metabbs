@@ -8,6 +8,9 @@ require_once "lib/backends/".$config->get('backend')."/backend.php";
 $GLOBALS['__db'] = get_conn();
 set_table_prefix($config->get('prefix', 'meta_'));
 
+require_once "lib/i18n.php";
+import_default_language();
+
 require_once "lib/controller.php";
 require_once "lib/request.php";
 require_once "lib/response.php";
