@@ -19,7 +19,7 @@ class NicknameIcon extends Plugin {
 		}
 	}
 	function user_info_icon_filter(&$user) {
-		if (file_exists('data/usericons/'.$model->user_id)) {
+		if (file_exists('data/usericons/'.$user->id)) {
 			$user->name = "<img src=\"".METABBS_BASE_PATH."data/usericons/$user->id\" alt=\"$user->name\" />";
 		}
 	}
