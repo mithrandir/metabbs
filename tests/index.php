@@ -2,8 +2,10 @@
 require 'simpletest/unit_tester.php';
 
 $cases = array();
-foreach (glob('*_test.php') as $case) {
-	$cases[] = substr($case, 0, -9);
+$d = opendir('cases');
+while ($f = readdir($d)) {
+	if (preg_match('/^(.+?)_test.php$/', $f, $matches))
+		$cases[] = $matches[1];
 }
 
 function print_case_list($cases) {
@@ -32,16 +34,16 @@ if (!isset($_GET['test'])) {
 	echo "<h2>Select the test case</h2>";
 	print_case_list($cases);
 } else {
-	include '.setup.php';
+	include 'cases/.setup.php';
 
 	$test = &new TestSuite('MetaBBS Tests');
 	if (in_array($_GET['test'], $cases)) {
-		$test->addTestFile("$_GET[test]_test.php");
+		$test->addTestFile("cases/$_GET[test]_test.php");
 	} else {
-		foreach ($cases as $case) $test->addTestFile("${case}_test.php");
+		foreach ($cases as $case) $test->addTestFile("cases/${case}_test.php");
 	}
 	$test->run(new ExtendedHtmlReporter($cases));
 
-	include '.teardown.php';
+	include 'cases/.teardown.php';
 }
 ?>

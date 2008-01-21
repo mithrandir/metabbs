@@ -85,11 +85,10 @@ class Post extends Model {
 		}
 	}
 	function get_category() {
-		
-		if ($this->category_id==0) {
-		 	 find('category', $this->category_id);
+		if ($this->category_id) {
+		 	return find('category', $this->category_id);
 		} else {
-		 null;
+			return NULL;
 		}
 	}
 	function get_comments($build_tree = true) {
