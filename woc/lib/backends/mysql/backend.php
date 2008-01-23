@@ -85,6 +85,9 @@ class MySQLConnection extends BaseConnection
 	function disconnect() {
 		mysql_close($this->conn);
 	}
+	function close() {
+		$this->disconnect();
+	}
 	function selectdb($dbname) {
 		mysql_select_db($dbname, $this->conn) or trigger_error(mysql_error(), E_USER_ERROR);
 	}
@@ -93,8 +96,8 @@ class MySQLConnection extends BaseConnection
 		$this->utf8 = true;
 	}
 
-	function execute($query, $data = NULL) {
-		if ($data) $query = $this->_q($query, $data);
+	function execute($query, $params = NULL) {
+		if ($params) $query = $this->bind_params($query, $params);
 		$result = mysql_query($query, $this->conn);
 		if (!$result) {
 			echo '<br />Error query: ' . htmlspecialchars($query);
@@ -102,8 +105,8 @@ class MySQLConnection extends BaseConnection
 		}
 		return $result;
 	}
-	function query($query, $data = NULL) {
-		return new MySQLResult($this->execute($query, $data));
+	function query($query, $params = NULL) {
+		return new MySQLResult($this->execute($query, $params));
 	}
 	function escape($query) {
 		if ($this->real_escape) {
@@ -112,7 +115,7 @@ class MySQLConnection extends BaseConnection
 			return mysql_escape_string($query);
 		}
 	}
-	function _q($query, $data) {
+	function bind_params($query, $data) {
 		$tokens = preg_split('/([?!])/', $query, -1, PREG_SPLIT_DELIM_CAPTURE);
 		foreach ($tokens as $i => $token) {
 			if ($token == '?')
