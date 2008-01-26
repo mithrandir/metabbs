@@ -21,3 +21,4 @@ $response = new Response;
 include "app/controllers/$request->controller.php";
 $controller = Controller::construct($request->controller);
 $controller->process($request, $response);
+$response->send();
