@@ -65,13 +65,17 @@ function is_supported() {
 }
 function init_db() {
 	$conn = get_conn();
-	list($major, $minor) = $conn->get_server_version();
+/*	list($major, $minor) = $conn->get_server_version();
 	if (($major == 4 && $minor >= 1) || $major > 4) {
 		global $config;
 		$config->set('force_utf8', 1);
 		$config->write_to_file();
 		$conn->enable_utf8();
-	}
+	}*/
+	global $config;
+	$config->set('force_utf8', 1);
+	$config->write_to_file();
+	$conn->enable_uft8();
 	run($conn);
 }
 ?>
