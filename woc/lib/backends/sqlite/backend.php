@@ -50,11 +50,11 @@ class BooleanColumn extends Column {
 function &get_conn() {
 	global $config, $__db;
 	if (!isset($__db)) {
-		$__db = new MySQLConnection;
+		$__db = new SQLiteConnection;
 		$__db->open(array(
-			"host" => $config->get('host'),
-			"user" => $config->get('user'),
-			"password" => $config->get('password'),
+			//"host" => $config->get('host'),
+			//"user" => $config->get('user'),
+			//"password" => $config->get('password'),
 			"dbname" => $config->get('dbname')
 		));
 		if ($config->get('force_utf8') == '1') {
@@ -65,31 +65,34 @@ function &get_conn() {
 }
 
 /**
- * MySQL 연결 클래스
+ * SQLite 연결 클래스
  */
-class MySQLConnection extends BaseConnection
+class SQLiteConnection extends BaseConnection
 {
 	var $conn;
 	var $utf8 = false;
-	var $real_escape = true;
+	//var $real_escape = true;
 	var $prefix;
 
 	function connect($host,$user,$password) {
-		$this->conn = mysql_connect($host, $user, $password) or trigger_error(mysql_error(), E_USER_ERROR);
-		$this->real_escape = function_exists('mysql_real_escape_string') && mysql_real_escape_string('ㅋ') == 'ㅋ';
+		//$this->conn = mysql_connect($host, $user, $password) or trigger_error(mysql_error(), E_USER_ERROR);
+		//$this->real_escape = function_exists('mysql_real_escape_string') && mysql_real_escape_string('ㅋ') == 'ㅋ';
 	}
 	function open($info) {
-		$this->connect($info["host"], $info["user"], $info["password"]);
-		$this->selectdb($info["dbname"]);
+		//$this->connect($info["host"], $info["user"], $info["password"]);
+		//$this->selectdb($info["dbname"]);
+		$this->conn = sqlite_open($info["dbname"],0666,&$error) or trigger_error(die($error),E_USER_ERROR);
+
 	}
 	function disconnect() {
-		mysql_close($this->conn);
+		//mysql_close($this->conn);
 	}
 	function close() {
-		$this->disconnect();
+		//$this->disconnect();
+		sqlite_close($this->conn);
 	}
 	function selectdb($dbname) {
-		mysql_select_db($dbname, $this->conn) or trigger_error(mysql_error(), E_USER_ERROR);
+		//mysql_select_db($dbname, $this->conn) or trigger_error(mysql_error(), E_USER_ERROR);
 	}
 	function enable_utf8() {
 		$this->execute('set names utf8');
@@ -98,22 +101,23 @@ class MySQLConnection extends BaseConnection
 
 	function execute($query, $params = NULL) {
 		if ($params) $query = $this->bind_params($query, $params);
-		$result = mysql_query($query, $this->conn);
+		$result = sqlite_query($this->conn,$query,&$error);
 		if (!$result) {
 			echo '<br />Error query: ' . htmlspecialchars($query);
-			trigger_error(mysql_error($this->conn), E_USER_ERROR);
+			trigger_error(die($error), E_USER_ERROR);
 		}
 		return $result;
 	}
 	function query($query, $params = NULL) {
-		return new MySQLResult($this->execute($query, $params));
+		return new SQLiteResult($this->execute($query, $params));
 	}
 	function escape($query) {
-		if ($this->real_escape) {
-			return mysql_real_escape_string($query, $this->conn);
-		} else {
-			return mysql_escape_string($query);
-		}
+		sqlite_escape_string($query);
+//		if ($this->real_escape) {
+//			return mysql_real_escape_string($query, $this->conn);
+//		} else {
+//			return mysql_escape_string($query);
+//		}
 	}
 	function bind_params($query, $data) {
 		$tokens = preg_split('/([?!])/', $query, -1, PREG_SPLIT_DELIM_CAPTURE);
@@ -145,7 +149,7 @@ class MySQLConnection extends BaseConnection
 		return $result->fetch_column();
 	}
 	function last_insert_id() {
-		return mysql_insert_id($this->conn);
+		return sqlite_last_insert_rowid($this->conn);
 	}
 	function add_table($t) {
 		$sql = $t->to_sql();
@@ -177,10 +181,10 @@ class MySQLConnection extends BaseConnection
 		}
 		return $fields;
 	}
-	function get_server_version() {
-		list($major, $minor) = explode('.', mysql_get_server_info($this->conn), 3);
-		return array($major, $minor);
-	}
+	//function get_server_version() {
+	//	list($major, $minor) = explode('.', mysql_get_server_info($this->conn), 3);
+	//	return array($major, $minor);
+	//}
 	function get_created_tables() {
 		$result = $this->query("SHOW TABLES LIKE '".get_table_name("%")."'");
 		$tables = array();
@@ -199,19 +203,21 @@ class MySQLConnection extends BaseConnection
 	}
 }
 
-class MySQLResult extends BaseResultSet{
-	function MySQLResult($result) {
+class SQLiteResult extends BaseResultSet {
+	function SQLiteResult($result) {
 		$this->result = $result;
 	}
 	function fetch() {
-		return mysql_fetch_assoc($this->result);
+		//return mysql_fetch_assoc($this->result);
+		return sqlite_fetch_array($this->result, SQLITE_ASSOC);
 	}
 	function fetch_column() {
-		list($value) = mysql_fetch_row($this->result);
-		return $value;
+		//list($value) = mysql_fetch_row($this->result);
+		//return $value;
+		return sqlite_fetch_single($this->result);
 	}
 	function count() {
-		return mysql_num_rows($this->result);
+		return sqlite_num_rows($this->result);
 	}
 }
 ?>
