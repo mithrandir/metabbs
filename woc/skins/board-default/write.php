@@ -58,6 +58,15 @@
 <p><a href="#" onclick="addFileEntry(); return false" class="button">파일 추가...</a></p>
 </div>
 <? endif; ?>
+
+<? if ($admin): ?>
+<div id="trackback">
+<h2>트랙백 보내기</h2>
+<ul id="trackback_input">
+	<li><input type="text" name="trackback" size="63" /></li>
+</ul>
+</div>
+<? endif; ?>
 </div>
 
 <div id="meta-nav">

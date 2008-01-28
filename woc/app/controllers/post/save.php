@@ -48,5 +48,13 @@ if (isset($_POST['meta'])) {
 	}
 }
 
+if (isset($_POST['trackback']) && isset($_POST['trackback']['to'])
+	&& ($_POST['trackback']['to'] != '')) {
+	if (!isset($_POST['trackback']['url'])) {
+		$_POST['trackback']['url'] = full_url_for($post);
+	}
+	send_trackback($_POST['trackback']);
+}
+
 redirect_to(url_for($post));
 ?>

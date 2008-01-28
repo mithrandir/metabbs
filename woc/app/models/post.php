@@ -85,11 +85,7 @@ class Post extends Model {
 		}
 	}
 	function get_category() {
-		if ($this->category_id) {
-		 	return find('category', $this->category_id);
-		} else {
-			return NULL;
-		}
+		return $this->category_id ? find('category', $this->category_id) : null;
 	}
 	function get_comments($build_tree = true) {
 		$_comments = $this->db->fetchall("SELECT * FROM $this->comment_table WHERE post_id=$this->id ORDER BY id", 'Comment', array(), $build_tree);
@@ -147,10 +143,10 @@ class Post extends Model {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->attachment_table WHERE post_id=$this->id");
 	}
 	function delete() {
-		Model::delete();
 		$this->db->execute("DELETE FROM $this->table WHERE moved_to=$this->id");
 		$this->db->execute("DELETE FROM $this->comment_table WHERE post_id=$this->id");
 		$this->db->execute("DELETE FROM $this->trackback_table WHERE post_id=$this->id");
+		Model::delete();
 	}
 	function update_view_count() {
 		$this->views++;

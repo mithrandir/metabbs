@@ -16,6 +16,15 @@ if (is_post()) {
 	if (isset($_POST['post']['password'])) {
 		$_POST['_auth_password'] = $_POST['post']['password'];
 	}
+	if (isset($_POST['trackback'])) {
+		$_POST['trackback'] = @array(
+			'to' => $_POST['trackback'],
+			'title' => $_POST['post']['title'],
+			'excerpt' => $_POST['post']['body'],
+		    'url' => full_url_for($post),
+			'blog_name' => $board->get_title()
+		);
+	}
 }
 permission_required('edit', $post);
 
