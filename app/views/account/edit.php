@@ -9,7 +9,7 @@
 	<input type="password" name="user[password]" class="ignore" />
 </p>
 <p>
-	<label><?=i('Name')?><span class="star">*</span></label>
+	<label><?=i('Screen name')?><span class="star">*</span></label>
 	<input type="text" name="user[name]" value="<?=$account->name?>" />
 </p>
 <p>

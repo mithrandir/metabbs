@@ -4,6 +4,7 @@ $attachment = Attachment::find($id);
 if (!$attachment->exists() || !$attachment->file_exists()) {
 	print_notice('Attachment not found', "Attachment #$id is not exist or broken.<br />Please check the attachment id.");
 }
+permission_required('read', Post::find($attachment->post_id));
 if (isset($_GET['thumb'])) {
 	include 'lib/thumbnail.php';
 	$orig_path = 'data/uploads/'.$attachment->id;

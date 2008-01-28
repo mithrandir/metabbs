@@ -18,6 +18,15 @@ if (is_post()) {
 		);
 	}
 
+	if (isset($_POST['trackback'])) {
+		$_POST['trackback'] = @array(
+			'to' => $_POST['trackback'],
+			'title' => $_POST['post']['title'],
+			'excerpt' => $_POST['post']['body'],
+			'blog_name' => $title
+		);
+	}
+
 	$post = new Post(@$_POST['post']);
 	if (!$account->is_guest()) {
 		$post->user_id = $account->id;

@@ -1,6 +1,4 @@
 <?php
-require_once dirname(__FILE__)."/post.php";
-
 class Board extends Model {
 	var $model = 'board';
 
