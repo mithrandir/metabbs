@@ -63,5 +63,7 @@ if (!is_xhr()) {
 		include $board->footer;
 	echo $layout->footer;
 	include get_footer_path();
+} else {
+	echo $content;
 }
 ?>
