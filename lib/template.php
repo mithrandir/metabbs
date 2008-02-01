@@ -82,15 +82,25 @@ define('ADMIN_VIEW', 1);
 class Layout {
 	var $stylesheets = array();
 	var $javascripts = array();
+	var $metadata = array();
 	var $header, $footer;
 
+	function Layout() {
+		$this->add_meta('Generator', 'MetaBBS '.METABBS_VERSION);
+	}
 	function add_stylesheet($path) {
 		$this->stylesheets[] = $path;
 	}
 	function add_javascript($path) {
 		$this->javascripts[] = $path;
 	}
+	function add_meta($name, $content) {
+		$this->metadata[$name] = $content;
+	}
 	function print_head() {
+		foreach ($this->metadata as $name => $content) {
+			echo "<meta name=\"$name\" content=\"".htmlspecialchars($content)."\" />\n";
+		}
 		foreach ($this->stylesheets as $stylesheet) {
 			echo '<link rel="stylesheet" href="'.$stylesheet.'" type="text/css" />';
 		}
