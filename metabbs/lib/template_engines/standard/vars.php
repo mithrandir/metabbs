@@ -1,5 +1,5 @@
 <?php
-global $controller, $action;
+global $controller, $action, $layout;
 
 if (isset($board))
 	$admin = $account->has_perm('admin', $board);
@@ -62,6 +62,9 @@ if (isset($categories)) {
 $manage_url = url_for($board, 'manage');
 
 // for view.php
+if ("$controller/$post" == 'post/index') {
+	$layout->add_meta('Author', htmlspecialchars(isset($post->name_orig) ? $post->name_orig : $post->name));
+}
 if (isset($post) && !$board->use_trackback) {
 	$post->trackback_url = null;
 	$trackbacks = array();

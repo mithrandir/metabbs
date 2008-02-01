@@ -45,19 +45,20 @@ if ($view == ADMIN_VIEW) {
 	$layout->wrap("<div id=\"meta\">\n", "</div>\n");
 }
 
+ob_start();
+if (isset($template)) {
+	$template->set('title', $title);
+	$template->render();
+} else include "app/views/$controller/$action.php";
+$content = ob_get_contents();
+ob_end_clean();
+
 if (!is_xhr()) {
 	include get_header_path();
 	echo $layout->header;
 	if ($view == DEFAULT_VIEW && isset($board) && $board->header)
 		include $board->header;
-}
-
-if (isset($template)) {
-	$template->set('title', $title);
-	$template->render();
-} else include "app/views/$controller/$action.php";
-
-if (!is_xhr()) {
+	echo $content;
 	if ($view == DEFAULT_VIEW && isset($board) && $board->footer)
 		include $board->footer;
 	echo $layout->footer;
