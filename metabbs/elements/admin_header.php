@@ -14,7 +14,7 @@
 <?=link_to(i('Users'), 'admin', 'users')?> |
 <?=link_to(i('Settings'), 'admin', 'settings')?> |
 <?=link_to(i('Plugins'), 'admin', 'plugins')?> |
-<?=link_to(i('Backup and Restore'), 'admin', 'backup')?> |
+<?=link_to(i('Maintenance'), 'admin', 'maintenance')?> |
 <?=link_to(i('Uninstall'), 'admin', 'uninstall')?> |
 <? foreach ($__admin_menu as $item) echo $item . ' | '; ?>
 <a href="<?=url_with_referer_for('account', 'logout')?>"><?=i('Logout')?> &raquo;</a></p>
