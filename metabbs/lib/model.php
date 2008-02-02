@@ -1,4 +1,6 @@
 <?php
+require_once "../app/models/metadata.php";
+
 /**
  * 테이블 접미사를 지정한다.
  * @param $prefix 접미사
@@ -35,6 +37,7 @@ class Model
 		if (isset($this->model))
 			$this->table = get_table_name($this->model);
 		$this->_init();
+		$this->metadata = new Metadata($this);
 	}
 
 	/**
@@ -106,6 +109,21 @@ class Model
 	function delete() {
 		delete_all($this->model, "id=$this->id");
 		$this->id = NULL;
+	}
+
+	function get_attribute($key) {
+		if ($this->exists()) $this->metadata->load();
+		return $this->metadata->get($key);
+	}
+
+	function get_attributes() {
+		if ($this->exists()) $this->metadata->load();
+		return $this->metadata->attributes;
+	}
+	
+	function set_attribute($key, $value) {
+		$this->metadata->post = &$this; // workaround for PHP4 -_-
+		$this->metadata->set($key, $value);
 	}
 }
 ?>

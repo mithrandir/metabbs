@@ -1,6 +1,4 @@
 <?php
-require_once dirname(__FILE__) . "/post_meta.php";
-
 class Post extends Model {
 	var $model = 'post';
 
@@ -23,8 +21,6 @@ class Post extends Model {
 		$this->comment_table = get_table_name('comment');
 		$this->trackback_table = get_table_name('trackback');
 		$this->attachment_table = get_table_name('attachment');
-
-		$this->metadata = new PostMeta($this);
 	}
 	function find($id) {
 		return find('post', $id);
@@ -178,18 +174,6 @@ class Post extends Model {
 		$this->db->execute("UPDATE $this->comment_table SET post_id=$this->id WHERE post_id=$_id");
 		$this->db->execute("UPDATE $this->trackback_table SET post_id=$this->id WHERE post_id=$_id");
 		$this->db->execute("UPDATE $this->attachment_table SET post_id=$this->id WHERE post_id=$_id");
-	}
-	function get_attribute($key) {
-		if ($this->exists()) $this->metadata->load();
-		return $this->metadata->get($key);
-	}
-	function get_attributes() {
-		if ($this->exists()) $this->metadata->load();
-		return $this->metadata->attributes;
-	}
-	function set_attribute($key, $value) {
-		$this->metadata->post = &$this; // workaround for PHP4 -_-
-		$this->metadata->set($key, $value);
 	}
 	function get_page() {
 		$board = $this->get_board();
