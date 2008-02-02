@@ -1,4 +1,6 @@
 <?php
+if (isset($_GET['rewrite'])) die('REWRITE OK');
+
 header("Content-Type: text/html; charset=UTF-8");
 
 define('METABBS_DIR', '.');
@@ -29,6 +31,20 @@ function capture_errors($errno, $errstr, $errfile, $errline) {
 		$safe = true;
 		fail($errstr);
 	}
+}
+function send_self_request($path) {
+	$fp = fsockopen($_SERVER['HTTP_HOST'], $_SERVER['SERVER_PORT']);
+	if (!$fp) return "";
+	fwrite($fp, "GET $path HTTP/1.1\r\n");
+	fwrite($fp, "Host: $_SERVER[HTTP_HOST]\r\n");
+	fwrite($fp, "Connection: close\r\n");
+	fwrite($fp, "\r\n");
+
+	$response = "";
+	while (!feof($fp))
+		$response .= fgets($fp, 1024);
+	fclose($fp);
+	return $response;
 }
 function print_header() {
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -140,11 +156,11 @@ if (!isset($_POST['config'])) {
     function check_unexcepted_exit() {
         global $safe;
         if (!$safe) {
+            @unlink(dirname(__FILE__).'/metabbs.conf.php');
 			if (isset($GLOBALS['config'])) {
 				$conn = get_conn();
 				@include("db/uninstall.php");
 			}
-            @unlink(dirname(__FILE__).'/metabbs.conf.php');
         }
     }
     register_shutdown_function('check_unexcepted_exit');
@@ -177,9 +193,19 @@ if (!isset($_POST['config'])) {
 	$config->write_to_file();
 	
 	pass("Writing configuration to file");
+	$path = dirname($_SERVER['REQUEST_URI']);
+	$fp = fopen('.htaccess', 'w');
+	fwrite($fp, "RewriteEngine On\n");
+	fwrite($fp, "RewriteBase $path\n");
+	fwrite($fp, "RewriteRule ^testrewrite$ install.php?rewrite=1 [L]");
+	fclose($fp);
+
+	$response = send_self_request($path.'/testrewrite');
+	$rewrite = strpos($response, "REWRITE OK") !== FALSE;
+
 	$htaccess = implode('', file('.htaccess.in'));
 	$fp = fopen('.htaccess', 'w');
-	fwrite($fp, str_replace('/url/to/metabbs/', dirname($_SERVER['REQUEST_URI']), $htaccess));
+	fwrite($fp, str_replace('/url/to/metabbs/', $path, $htaccess));
 	fclose($fp);
 
 	pass("Initializing Database");
@@ -199,8 +225,7 @@ if (!isset($_POST['config'])) {
 
     $safe = true;
 
-    $admin_url = function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules())
-	           ? 'admin' : 'metabbs.php/admin';
+    $admin_url = $rewrite ? 'admin' : 'metabbs.php/admin';
 
 	echo "<h2>Installation Finished</h2>";
 	echo "<p>Thank you for installing MetaBBS. :-)</p>";
