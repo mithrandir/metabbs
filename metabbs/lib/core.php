@@ -16,7 +16,6 @@ require METABBS_DIR . '/app/models/board.php';
 require METABBS_DIR . '/app/models/category.php';
 require METABBS_DIR . '/app/models/uncategorized_posts.php';
 require METABBS_DIR . '/app/models/post.php';
-//require METABBS_DIR . '/app/models/post_meta.php';
 require METABBS_DIR . '/app/models/post_finder.php';
 require METABBS_DIR . '/app/models/comment.php';
 require METABBS_DIR . '/app/models/trackback.php';
