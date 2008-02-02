@@ -1,5 +1,5 @@
 <?php
-define('METABBS_DB_REVISION', 949);
+define('METABBS_DB_REVISION', 1103);
 
 function run($conn) {
 	$t = new Table('board');
@@ -49,11 +49,12 @@ function run($conn) {
 	$t->add_index('user_id');
 	$conn->add_table($t);
 
-	$t = new Table('post_meta');
-	$t->column('post_id', 'integer');
+	$t = new Table('metadata');
+	$t->column('model', 'string', 20);
+	$t->column('model_id', 'integer');
 	$t->column('key', 'string', 45);
 	$t->column('value', 'string', 255);
-	$t->add_index('post_id');
+	$t->add_index('model_id');
 	$conn->add_table($t);
 
 	$t = new Table('comment');

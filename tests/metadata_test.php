@@ -1,11 +1,16 @@
 <?php
 require_once "../lib/model.php";
 require_once "../app/models/post.php";
-require_once "../app/models/post_meta.php";
+require_once "../app/models/metadata.php";
 
-class PostMetaTest extends UnitTestCase {
+class MetaModel extends Model {
+	var $model = 'meta_model';
+}
+
+class MetadataTest extends UnitTestCase {
 	function setUp() {
-		$this->metadata = new PostMeta(Post::find(5));
+		$this->metadata = new Metadata(Post::find(5));
+		$this->metadata2 = new Metadata(new MetaModel(array('id' => 123)));
 	}
 
 	function testLoad() {
@@ -23,8 +28,10 @@ class PostMetaTest extends UnitTestCase {
 	function testSet() {
 		$this->metadata->set('edited', 'no');
 		$this->assertEqual('no', $this->metadata->get('edited'));
+		$this->metadata2->set('edited', 'hello');
 		$this->metadata->set('edited', 'yes');
 		$this->assertEqual('yes', $this->metadata->get('edited'));
+		$this->assertEqual('hello', $this->metadata2->get('edited'));
 	}
 
 	function testReset() {
