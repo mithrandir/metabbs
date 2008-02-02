@@ -62,7 +62,7 @@ if (isset($categories)) {
 $manage_url = url_for($board, 'manage');
 
 // for view.php
-if ("$controller/$post" == 'post/index') {
+if ("$controller/$action" == 'post/index') {
 	$layout->add_meta('Author', htmlspecialchars(isset($post->name_orig) ? $post->name_orig : $post->name));
 }
 if (isset($post) && !$board->use_trackback) {
