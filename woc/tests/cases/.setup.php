@@ -5,10 +5,11 @@ require_once "../lib/model.php";
 require_once "../lib/query.php";
 require_once "../lib/backends/mysql/backend.php";
 require_once "../lib/backends/mysql/installer.php";
+require_once "config.php"
 
-$username = "root";
-$password = "";
-$testdb="metabbs_test";
+//$username = "root";
+//$password = "";
+//$testdb="metabbs_test";
 
 $__db = new MySQLConnection;
 $__db->connect("localhost", $username, $password);

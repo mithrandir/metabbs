@@ -21,3 +21,10 @@ MetaBBS 단위 테스트 안내
 ----------------------------
 테스트 케이스의 이름이 XXX라면, XXX_test.php를 만들면 됩니다.
 테스트에 사용되는 고정된 데이터는 fixtures/ 디렉토리 안에 저장합니다. 동적으로 생성된 파일은 되도록이면 tearDown 메소드에서 정리합니다.
+
+데이터 베이스 설정
+------------------
+cases/config.php.in 에서 자신의 dbuser, dbpassword, dbname에 맞게 내용을 입력한 후, 파일의 이름을 config.php로 바꿉니다.
+또는 .setup.php와 mysql_test.php에서 require_once('config.php')를 주석처리하고
+주석처리 되어 있던 설정부분을 해제해서 사용해도 됩니다.
+
