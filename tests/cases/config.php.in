@@ -1,0 +1,6 @@
+<?php
+//테스트를 위해선 이 파일에 DB 계정 정보를 작성하셔야 합니다.
+	$username="root";
+	$password="";
+	$dbname="metabbs_test";
+?>
