@@ -84,9 +84,7 @@ class MySQLConnection extends BaseConnection
 							"timestamp" => "integer(10)"
 							"boolean" => "bool"
 						);
-	function to_spec($column_mapping, $length) {
-		if(
-	}
+	
 	function connect($host, $user, $password) {
 		$this->conn = mysql_connect($host, $user, $password) or trigger_error(mysql_error(), E_USER_ERROR);
 		$this->real_escape = function_exists('mysql_real_escape_string') && mysql_real_escape_string('ㅋ') == 'ㅋ';
