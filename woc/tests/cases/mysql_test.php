@@ -14,7 +14,7 @@ class MySQLTest extends UnitTestCase {
 			"host" => "localhost",
 			"user" => $username,
 			"password" => $password,
-			"dbname" => $dbname
+			"dbname" => $testdb
 		));
 	}
 }
