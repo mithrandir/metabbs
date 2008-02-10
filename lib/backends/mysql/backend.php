@@ -73,8 +73,21 @@ class MySQLConnection extends BaseConnection
 	var $utf8 = false;
 	var $real_escape = true;
 	var $prefix;
-
-	function connect($host,$user,$password) {
+	var $column_mapping = array(
+							"integer" => array(
+										"integer" => "integer(10)",
+										"short" => "tinyint"
+										"u_short" => "tinyint UNSIGNED"
+										),
+							"string" => "varchar"
+							"text" => "text"
+							"timestamp" => "integer(10)"
+							"boolean" => "bool"
+						);
+	function to_spec($column_mapping, $length) {
+		if(
+	}
+	function connect($host, $user, $password) {
 		$this->conn = mysql_connect($host, $user, $password) or trigger_error(mysql_error(), E_USER_ERROR);
 		$this->real_escape = function_exists('mysql_real_escape_string') && mysql_real_escape_string('ㅋ') == 'ㅋ';
 	}
