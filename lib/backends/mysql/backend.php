@@ -147,6 +147,9 @@ class MySQLConnection extends BaseConnection
 	function last_insert_id() {
 		return mysql_insert_id($this->conn);
 	}
+	function insertid() {
+		$this->last_insert_id();
+	}
 	function add_table($t) {
 		$sql = $t->to_sql();
 		if ($this->utf8)
