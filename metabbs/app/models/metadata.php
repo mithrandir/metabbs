@@ -14,6 +14,11 @@ class Metadata {
 			$this->attributes[$data['key']] = $data['value'];
 		}
 	}
+	function reload() {
+		$this->loaded = false;
+		$this->attributes = array();
+		$this->load();
+	}
 	function get($key) {
 		return array_key_exists($key, $this->attributes) ? $this->attributes[$key] : '';
 	}
