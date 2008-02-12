@@ -1,17 +1,17 @@
 /**
  * Namespace for entire Xquared classes
  */
-var xq = {
-	majorVersion: '0.2',
-	minorVersion: '20071205'
-};
+if(!window.xq) xq = {};
+
+xq.majorVersion = '0.5';
+xq.minorVersion = '20080211';
 
 
 
 /**
  * Add prototype.js like functions
  */
-xq.Class = function() { // TODO
+xq.Class = function() {
 	var parent = null, properties = xq.$A(arguments);
 	if (typeof properties[0] == "function")
 		parent = properties.shift();
@@ -101,27 +101,35 @@ xq.isEmptyHash = function(h) {
 	return true;
 }
 
+xq.emptyFunction = function() {}
+
 xq.$A = function(arraylike) {
 	var len = arraylike.length, a = new Array(len);
 	while (len--) a[len] = arraylike[len];
 	return a;
 }
 
+xq.addClassName = function(element, className) {
+	if (!xq.hasClassName(element, className)) element.className += (element.className ? ' ' : '') + className;
+    return element;
+}
+xq.removeClassName = function(element, className) {
+	if (xq.hasClassName(element, className)) element.className = element.className.replace(new RegExp("(^|\\s+)" + className + "(\\s+|$)"), ' ').strip();
+    return element;
+}
 xq.hasClassName = function(element, className) {
 	var classNames = element.className;
 	return (classNames.length > 0 && (classNames == className || new RegExp("(^|\\s)" + className + "(\\s|$)").test(classNames)));
 }
 
 xq.serializeForm = function(f) {
-
-try{
 	var options = {hash: true};
 	var data = {};
 	var elements = f.getElementsByTagName("*");
 	for(var i = 0; i < elements.length; i++) {
 		var element = elements[i];
 		var tagName = element.tagName.toLowerCase();
-		if(element.disabled || !element.name || ['input', 'textarea', 'option'].indexOf(tagName) == -1) continue;
+		if(element.disabled || !element.name || ['input', 'textarea', 'option', 'select'].indexOf(tagName) == -1) continue;
 		
 		var key = element.name;
 		var value = xq.getValueOfElement(element);
@@ -136,7 +144,6 @@ try{
 		}
 	}
 	return data;
-} catch(e) {alert(e)}
 }
 
 xq.getValueOfElement = function(e) {
@@ -145,10 +152,15 @@ xq.getValueOfElement = function(e) {
 	return e.value;
 }
 
-xq.getElementsByClassName = function(element, className) {
-	if(element.getElementsByClassName) return element.getElementsByClassName(className);
+/**
+ * @param {Element} element Root element
+ * @param {String} className Target class name
+ * @param {String} tagName Optional tag name
+ */
+xq.getElementsByClassName = function(element, className, tagName) {
+	if(!tagName && element.getElementsByClassName) return element.getElementsByClassName(className);
 	
-	var elements = element.getElementsByTagName("*");
+	var elements = element.getElementsByTagName(tagName || "*");
 	var len = elements.length;
 	var result = [];
 	var p = new RegExp("(^|\\s)" + className + "($|\\s)");
@@ -198,7 +210,7 @@ if(!__prototype) {
 	
 	Array.prototype.last = function() {return this[this.length - 1]}
 	
-	Array.prototype.include = function(o) {
+	Array.prototype.includeElement = function(o) {
 		if (this.indexOf(o) != -1) return true;
 	
 	    var found = false;
@@ -281,6 +293,88 @@ xq.asEventSource = function(object, prefix, events) {
 	}
 }
 
+
+
+/**
+ * JSON to Element mapper
+ */
+xq.json2element = function(json, doc) {
+	var div = doc.createElement("DIV");
+	div.innerHTML = xq.json2html(json);
+	return div.firstChild || {};
+}
+
+/**
+ * Element to JSON mapper
+ */
+xq.element2json = function(element) {
+	if(element.nodeName == 'DL') {
+		var o = {};
+		var childElements = xq.findChildElements(element);
+		for(var i = 0; i < childElements.length; i++) {
+			var dt = childElements[i];
+			var dd = childElements[++i];
+			o[dt.innerHTML] = xq.element2json(xq.findChildElements(dd)[0]);
+		}
+		return o;
+	} else if (element.nodeName == 'OL') {
+		var o = [];
+		var childElements = xq.findChildElements(element);
+		for(var i = 0; i < childElements.length; i++) {
+			var li = childElements[i];
+			o[i] = xq.element2json(xq.findChildElements(li)[0]);
+		}
+	} else if(element.nodeName == 'SPAN' && element.className == 'number') {
+		return parseFloat(element.innerHTML);
+	} else if(element.nodeName == 'SPAN' && element.className == 'string') {
+		return element.innerHTML;
+	} else { // ignore textnode or unknown tag
+		return null;
+	}
+}
+
+/**
+ * JSON to HTML string mapper
+ */
+xq.json2html = function(json) {
+	var sb = [];
+	xq._json2html(json, sb);
+	return sb.join('');
+}
+
+xq._json2html = function(o, sb) {
+	if(typeof o === 'number') {
+		sb.push('<span class="number">' + o + '</span>');
+	} else if(typeof o === 'string') {
+		sb.push('<span class="string">' + o.escapeHTML() + '</span>');
+	} else if(o.constructor === Array) {
+		sb.push('<ol>');
+		for(var i = 0; i < o.length; i++) {
+			sb.push('<li>');
+			xq._json2html(o[i], sb);
+			sb.push('</li>');
+		}
+		sb.push('</ol>');
+	} else { // Object
+		sb.push('<dl>');
+		for (key in o) if (o.hasOwnProperty(key)) {
+			sb.push('<dt>' + key + '</dt>');
+			sb.push('<dd>');
+			xq._json2html(o[key], sb);
+			sb.push('</dd>');
+		}
+		sb.push('</dl>');
+	}
+}
+
+xq.findChildElements = function(parent) {
+	var childNodes = parent.childNodes;
+	var elements = [];
+	for(var i = 0; i < childNodes.length; i++) {
+		if(childNodes[i].nodeType == 1) elements.push(childNodes[i]);
+	}
+	return elements;
+}
 
 
 Date.preset = null;
@@ -405,6 +499,7 @@ xq.loadOthers = function() {
 		'ValidatorWebkit.js',
 		'ValidatorTrident.js',
 		'EditHistory.js',
+		'Macro.js',
 		'Controls.js',
 		'_ui_templates.js'
 	];
@@ -450,6 +545,23 @@ xq.Editor = xq.Class({
 				{className:"backgroundColor", title:"Background color", handler:"xed.handleBackgroundColor()"}
 			],
 			[
+				{className:"fontFace", title:"Font face", list:[
+                    {title:"Arial", handler:"xed.handleFontFace('Arial')"},
+                    {title:"Helvetica", handler:"xed.handleFontFace('Helvetica')"},
+                    {title:"Serif", handler:"xed.handleFontFace('Serif')"},
+                    {title:"Tahoma", handler:"xed.handleFontFace('Tahoma')"},
+                    {title:"Verdana", handler:"xed.handleFontFace('Verdana')"}
+				]},
+				{className:"fontSize", title:"Font size", list:[
+                    {title:"1", handler:"xed.handleFontSize('1')"},
+                    {title:"2", handler:"xed.handleFontSize('2')"},
+                    {title:"3", handler:"xed.handleFontSize('3')"},
+                    {title:"4", handler:"xed.handleFontSize('4')"},
+                    {title:"5", handler:"xed.handleFontSize('5')"},
+                    {title:"6", handler:"xed.handleFontSize('6')"}
+				]}
+			],
+			[
 				{className:"link", title:"Link", handler:"xed.handleLink()"},
 				{className:"strongEmphasis", title:"Strong emphasis", handler:"xed.handleStrongEmphasis()"},
 				{className:"emphasis", title:"Emphasis", handler:"xed.handleEmphasis()"},
@@ -479,11 +591,11 @@ xq.Editor = xq.Class({
 				{className:"paragraph", title:"Paragraph", handler:"xed.handleApplyBlock('P')"},
 				{className:"heading1", title:"Heading 1", handler:"xed.handleApplyBlock('H1')"},
 				{className:"blockquote", title:"Blockquote", handler:"xed.handleApplyBlock('BLOCKQUOTE')"},
-				{className:"code", title:"Code", handler:"xed.handleList('CODE')"},
+				{className:"code", title:"Code", handler:"xed.handleList('OL', 'code')"},
 				{className:"division", title:"Division", handler:"xed.handleApplyBlock('DIV')"}
 			],
 			[
-				{className:"table", title:"Table", handler:"xed.handleTable(3,3,'tl')"},
+				{className:"table", title:"Table", handler:"xed.handleTable(4, 4,'tl')"},
 				{className:"separator", title:"Separator", handler:"xed.handleSeparator()"}
 			],
 			[
@@ -495,11 +607,13 @@ xq.Editor = xq.Class({
 			]
 		];
 		
-		this.config.imagePathForDefaultToobar = 'img/toolbar/';
+		this.config.imagePathForDefaultToolbar = 'img/toolbar/';
 		this.config.imagePathForContent = 'img/content/';
 		
 		// relative | host_relative | absolute | browser_default
 		this.config.urlValidationMode = 'absolute';
+		
+		this.config.noValidationInSourceEditMode = false;
 		
 		this.config.automaticallyHookSubmitEvent = true;
 		
@@ -573,6 +687,12 @@ xq.Editor = xq.Class({
 		this.wysiwygEditorDiv = null;
 		
 		/**
+		 * Outer frame
+		 * @type IFrame
+		 */
+		this.outerFrame = null;
+		
+		/**
 		 * Design mode iframe
 		 * @type IFrame
 		 */
@@ -609,6 +729,8 @@ xq.Editor = xq.Class({
 		this.toolbarButtons = null;
 		this._toolbarAnchorsCache = [];
 		
+		this.macroMonitor = new xq.MacroMonitor();
+		
 		/**
 		 * Undo/redo manager
 		 * @type xq.EditHistory
@@ -627,7 +749,7 @@ xq.Editor = xq.Class({
 		this.addListener({
 			onEditorCurrentContentChanged: function(xed) {
 				var curFocusElement = xed.rdom.getCurrentElement();
-				if(!curFocusElement) return;
+				if(!curFocusElement || curFocusElement.ownerDocument != xed.rdom.getDoc()) return;
 				
 				if(xed._lastFocusElement != curFocusElement) {
 					if(!xed.rdom.tree.isBlockOnlyContainer(xed._lastFocusElement) && xed.rdom.tree.isBlock(xed._lastFocusElement)) {
@@ -637,7 +759,7 @@ xq.Editor = xq.Class({
 					xed._lastFocusElement = curFocusElement;
 				}
 
-				xed.updateAllToolbarButtonsStatus(curFocusElement);
+				xed.triggerUpdateAllToolbarButtonsStatus();
 			}
 		});
 	},
@@ -694,6 +816,7 @@ xq.Editor = xq.Class({
 				{event:"Ctrl+U", handler:"this.handleUnderline()"},
 				{event:"Ctrl+K", handler:"this.handleStrike()"},
 				{event:"Ctrl+Z", handler:"this.handleUndo()"},
+				{event:"Ctrl+Shift+Z", handler:"this.handleRedo()"},
 				{event:"Ctrl+Y", handler:"this.handleRedo()"}
 			];
 		} else {
@@ -713,6 +836,7 @@ xq.Editor = xq.Class({
 				{event:"Ctrl+U", handler:"this.handleUnderline()"},
 				{event:"Ctrl+K", handler:"this.handleStrike()"},
 				{event:"Ctrl+Z", handler:"this.handleUndo()"},
+				{event:"Ctrl+Shift+Z", handler:"this.handleRedo()"},
 				{event:"Ctrl+Y", handler:"this.handleRedo()"}
 			];
 		}
@@ -980,8 +1104,9 @@ xq.Editor = xq.Class({
 	 * Switches between edit-mode/normal mode.
 	 *
 	 * @param {Object} mode false or 'readonly' means read-only mode, true or 'wysiwyg' means WYSIWYG editing mode, and 'source' means source editing mode.
+	 * @param {boolean} dontGiveFocus do not give focus to editor
 	 */
-	setEditMode: function(mode) {
+	setEditMode: function(mode, dontGiveFocus) {
 		if(this.currentEditMode == mode) return;
 		
 		var firstCall = mode != false && mode != 'readonly' && !this.outmostWrapper;
@@ -993,11 +1118,13 @@ xq.Editor = xq.Class({
 			this.loadCurrentContentFromStaticContent();
 			this.editHistory = new xq.EditHistory(this.rdom);
 		}
-		
+
 		if(mode == 'wysiwyg') {
 			// Update contents
-			if(this.currentEditMode == 'source') this.setStaticContent(this.getSourceContent());
-			this.loadCurrentContentFromStaticContent();
+			if(this.currentEditMode == 'source') {
+				this.setStaticContent(this.getSourceContent());
+				this.loadCurrentContentFromStaticContent();
+			}
 			
 			// Make static content invisible
 			this.contentElement.style.display = "none";
@@ -1022,11 +1149,17 @@ xq.Editor = xq.Class({
 			}
 			
 			this.enableToolbarButtons();
-			if(!firstCall) this.focus();
+			
+			if(!firstCall && !dontGiveFocus) this.focus();
+			
+			var macros = this.macroMonitor.loadMacrosFromDocument(this.getBody());
+			for(var i = 0; i < macros.length; i++) macros[i].onWysiwygMode(this.getWin(), this.getBody());
 		} else if(mode == 'source') {
 			// Update contents
-			if(this.currentEditMode == 'wysiwyg') this.setStaticContent(this.getWysiwygContent());
-			this.loadCurrentContentFromStaticContent();
+			if(this.currentEditMode == 'wysiwyg') {
+				this.setStaticContent(this.getWysiwygContent());
+				this.loadCurrentContentFromStaticContent();
+			}
 			
 			// Make static content invisible
 			this.contentElement.style.display = "none";
@@ -1039,8 +1172,8 @@ xq.Editor = xq.Class({
 			this.currentEditMode = mode;
 
 			this.disableToolbarButtons(['html']);
-			if(!firstCall) this.focus();
-		} else {
+			if(!firstCall && !dontGiveFocus) this.focus();
+		} else { // if(mode == 'readonly')
 			// Update contents
 			this.setStaticContent(this.getCurrentContent());
 			this.loadCurrentContentFromStaticContent();
@@ -1076,16 +1209,16 @@ xq.Editor = xq.Class({
 	 */
 	loadCurrentContentFromStaticContent: function() {
 		// update WYSIWYG editor
-		var html = this.validator.invalidate(this.getStaticContentAsDOM());
-		html = this.removeUnnecessarySpaces(html);
+	    var html = this.validator.invalidate(this.getStaticContentAsDOM());
+	    html = this.removeUnnecessarySpaces(html);
 		
-		if(html.blank()) {
-			this.rdom.clearRoot();
-		} else {
-			this.rdom.getRoot().innerHTML = html;
-		}
-		this.rdom.wrapAllInlineOrTextNodesAs("P", this.rdom.getRoot(), true);
-		
+	    if(html.blank()) {
+		    this.rdom.clearRoot();
+	    } else {
+		    this.rdom.getRoot().innerHTML = html;
+	    }
+	    this.rdom.wrapAllInlineOrTextNodesAs("P", this.rdom.getRoot(), true);
+
 		// update source editor
 		var source = this.getWysiwygContent(true, true);
 		
@@ -1094,6 +1227,7 @@ xq.Editor = xq.Class({
 			this.sourceEditorTextarea.innerHTML = source;
 		}
 		
+		this._lastModified = Date.get();
 		this._fireOnCurrentContentChanged(this);
 	},
 	
@@ -1141,9 +1275,29 @@ xq.Editor = xq.Class({
 
 	_updateToolbarButtonStatus: function(buttonClassName, selected) {
 		var button = this.toolbarButtons[buttonClassName];
-		if(button) button.firstChild.firstChild.className = selected ? 'selected' : '';
+		if(button) {
+			var newClassName = selected ? 'selected' : '';
+			var target = button.firstChild.firstChild;
+			if(target.className != newClassName) target.className = newClassName;
+		}
 	},
 	
+	triggerUpdateAllToolbarButtonsStatus: function() {
+		if(this._scheduledToolbarUpdate) return;
+		
+		this._scheduledToolbarUpdate = window.setTimeout(
+			function() {
+				this._scheduledToolbarUpdate = null;
+				if(this._lastFocusElement) this.updateAllToolbarButtonsStatus(this._lastFocusElement);
+			}.bind(this), 500
+		);
+	},
+	
+	/**
+	 * Updates all toolbar buttons' status. Override this to customize toolbar status L&F. Don't call this function directly. Use triggerUpdateAllToolbarButtonsStatus() to call it indirectly.
+	 * 
+	 * @param {Element} element current element
+	 */
 	updateAllToolbarButtonsStatus: function(element) {
 		if(!this.toolbarContainer) return;
 		if(!this.toolbarButtons) {
@@ -1205,7 +1359,7 @@ xq.Editor = xq.Class({
 	 */
 	getCurrentContent: function(performFullValidation) {
 		if(this.getCurrentEditMode() == 'source') {
-			return this.getSourceContent(performFullValidation);
+			return this.getSourceContent(performFullValidation, this.config.noValidationInSourceEditMode);
 		} else {
 			return this.getWysiwygContent(performFullValidation);
 		}
@@ -1232,11 +1386,13 @@ xq.Editor = xq.Class({
 	 * 
 	 * @return {Object} HTML String
 	 */
-	getSourceContent: function(performFullValidation) {
+	getSourceContent: function(performFullValidation, noValidation) {
 		var raw = this.sourceEditorTextarea[xq.Browser.isWebkit ? 'innerHTML' : 'value'];
+		if(noValidation) return raw;
+		
 		var tempDiv = document.createElement('div');
 		tempDiv.innerHTML = this.removeUnnecessarySpaces(raw);
-
+		
 		var rdom = xq.RichDom.createInstance();
 		rdom.setRoot(document.body);
 		rdom.wrapAllInlineOrTextNodesAs("P", tempDiv, true);
@@ -1277,7 +1433,7 @@ xq.Editor = xq.Class({
 	},
 	
 	/**
-	 * Gets editor's original content as DOM node
+	 * Gets editor's original content as (newely created) DOM node
 	 *
 	 * @return {Object} HTML String
 	 */
@@ -1287,7 +1443,7 @@ xq.Editor = xq.Class({
 			div.innerHTML = this.contentElement[xq.Browser.isWebkit ? 'innerHTML' : 'value'];
 			return div;
 		} else {
-			return this.contentElement;
+			return this.contentElement.cloneNode(true);
 		}
 	},
 	
@@ -1298,11 +1454,25 @@ xq.Editor = xq.Class({
 		if(this.getCurrentEditMode() == 'wysiwyg') {
 			this.rdom.focus();
 			window.setTimeout(function() {
-				this.updateAllToolbarButtonsStatus(this.rdom.getCurrentElement());
+				this.triggerUpdateAllToolbarButtonsStatus();
 			}.bind(this), 0);
 		} else if(this.getCurrentEditMode() == 'source') {
 			this.sourceEditorTextarea.focus();
 		}
+	},
+	
+	/**
+	 * Returns outer iframe object
+	 */
+	getOuterFrame: function() {
+		return this.outerFrame;
+	},
+	
+	/**
+	 * Returns outer iframe document
+	 */
+	getOuterDoc: function() {
+		return this.outerFrame.contentWindow.document;
 	},
 	
 	/**
@@ -1347,7 +1517,7 @@ xq.Editor = xq.Class({
 		
 		this.contentElement.parentNode.insertBefore(this.outmostWrapper, this.contentElement);
 		
-		// create toolbar is needed
+		// create toolbar if needed
 		if(!this.toolbarContainer && this.config.generateDefaultToolbar) {
 			this.toolbarContainer = this._generateDefaultToolbar();
 			this.outmostWrapper.appendChild(this.toolbarContainer);
@@ -1369,17 +1539,43 @@ xq.Editor = xq.Class({
 		this.wysiwygEditorDiv.style.display = "none";
 		this.outmostWrapper.appendChild(this.wysiwygEditorDiv);
 		
+		// create outer iframe for WYSIWYG editor
+		this.outerFrame = this.doc.createElement('iframe');
+		this.rdom.setAttributes(this.outerFrame, {
+			"frameBorder": "0",
+			"marginWidth": "0",
+			"marginHeight": "0",
+			"allowTransparency": "true"
+		});
+		this.wysiwygEditorDiv.appendChild(this.outerFrame);
+		
+		var outerDoc = this.outerFrame.contentWindow.document;
+		outerDoc.open();
+		outerDoc.write('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">');
+		outerDoc.write('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko">');
+		outerDoc.write('<style type="text/css">html, body {margin:0px;padding:0px;width:100%;height:100%;overflow:hidden;}</style>');
+		outerDoc.write('<head>');
+		outerDoc.write('<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />');
+		outerDoc.write('<title>XQuared Outer Frame</title>');
+		outerDoc.write('</head>');
+		outerDoc.write('<body></body>');
+		outerDoc.write('</html>');
+		outerDoc.close();
+		var outerWin = this.outerFrame.contentWindow;
+		var outerDoc = outerWin.document;
+		
 		// create designmode iframe for WYSIWYG editor
-		this.editorFrame = this.doc.createElement('iframe');
+		this.editorFrame = outerDoc.createElement('iframe');
 		this.rdom.setAttributes(this.editorFrame, {
 			"frameBorder": "0",
 			"marginWidth": "0",
 			"marginHeight": "0",
-			"leftMargin": "0",
-			"topMargin": "0",
 			"allowTransparency": "true"
 		});
-		this.wysiwygEditorDiv.appendChild(this.editorFrame);
+		outerDoc.body.appendChild(this.editorFrame);
+		
+		this.editorFrame.style.width = "100%";
+		this.editorFrame.style.height = "100%";
 		
 		var doc = this.editorFrame.contentWindow.document;
 		if(xq.Browser.isTrident) doc.designMode = 'On';
@@ -1414,15 +1610,30 @@ xq.Editor = xq.Class({
 		// override image path
 		if(this.config.generateDefaultToolbar) {
 			this._addStyleRules([
-				{selector:".xquared div.toolbar", rule:"background-image: url(" + this.config.imagePathForDefaultToobar + "toolbarBg.gif)"},
-				{selector:".xquared ul.buttons li", rule:"background-image: url(" + this.config.imagePathForDefaultToobar + "toolbarButtonBg.gif)"},
-				{selector:".xquared ul.buttons li.xq_separator", rule:"background-image: url(" + this.config.imagePathForDefaultToobar + "toolbarSeparator.gif)"}
+				{selector:".xquared div.toolbar", rule:"background-image: url(" + this.config.imagePathForDefaultToolbar + "toolbarBg.gif)"},
+				{selector:".xquared ul.buttons li", rule:"background-image: url(" + this.config.imagePathForDefaultToolbar + "toolbarButtonBg.gif)"},
+				{selector:".xquared ul.buttons li.xq_separator", rule:"background-image: url(" + this.config.imagePathForDefaultToolbar + "toolbarSeparator.gif)"}
 			]);
 		}
 		
 		this.rdom.setWin(this.editorWin);
 		this.rdom.setRoot(this.editorBody);
-		this.validator = xq.Validator.createInstance(this.doc.location.href, this.config.urlValidationMode, this.config.allowedTags, this.config.allowedAttributes);
+		
+		var onBeforeDomValidation = this.onBeforeDomValidation.bind(this);
+		var onAfterDomValidation = this.onAfterDomValidation.bind(this);
+		var onBeforeDomInvalidation = this.onBeforeDomInvalidation.bind(this);
+		
+		this.validator = xq.Validator.createInstance(
+			this.doc.location.href,
+			this.config.urlValidationMode,
+			this.config.allowedTags,
+			this.config.allowedAttributes,
+			{
+				onAfterDomValidation: onAfterDomValidation,
+				onBeforeDomInvalidation: onBeforeDomInvalidation,
+				onBeforeDomValidation: onBeforeDomValidation
+			}
+		);
 		
 		// hook onsubmit of form
 		if(this.config.automaticallyHookSubmitEvent && this.contentElement.nodeName == 'TEXTAREA' && this.contentElement.form) {
@@ -1473,6 +1684,7 @@ xq.Editor = xq.Class({
 		
 		var handler = src.handler;
 		var xed = this;
+		xed.focus();
 		var stop = (typeof handler == "function") ? handler(this) : eval(handler);
 		
 		if(stop) {
@@ -1498,7 +1710,7 @@ xq.Editor = xq.Class({
 		for(var i = 0; i < map.length; i++) {
 			for(var j = 0; j < map[i].length; j++) {
 				var buttonConfig = map[i][j];
-
+				
 				var li = this.doc.createElement('li');
 				buttons.appendChild(li);
 				li.className = buttonConfig.className;
@@ -1506,26 +1718,71 @@ xq.Editor = xq.Class({
 				var span = this.doc.createElement('span');
 				li.appendChild(span);
 				
-				var a = this.doc.createElement('a');
-				span.appendChild(a);
-				a.href = '#';
-				a.title = buttonConfig.title;
-				a.handler = buttonConfig.handler;
-				
-				this._toolbarAnchorsCache.push(a);
-				
-				xq.observe(a, 'mousedown', xq.cancelHandler);
-				xq.observe(a, 'click', this._defaultToolbarClickHandler.bindAsEventListener(this));
-
-				var img = this.doc.createElement('img');
-				a.appendChild(img);
-				img.src = this.config.imagePathForDefaultToobar + buttonConfig.className + '.gif';
+				if(buttonConfig.handler) {
+					this._generateToolbarButton(buttonConfig, span);
+				} else {
+					this._generateToolbarDropdown(buttonConfig, span);
+				}
 
 				if(j == 0 && i != 0) li.className += ' xq_separator';
 			}
 		}
 		
 		return container;
+	},
+	
+	_generateToolbarButton: function(buttonConfig, span) {
+		var a = this.doc.createElement('a');
+		span.appendChild(a);
+		a.href = '#';
+		a.title = buttonConfig.title;
+		a.handler = buttonConfig.handler;
+		
+		this._toolbarAnchorsCache.push(a);
+		
+		xq.observe(a, 'mousedown', xq.cancelHandler);
+		xq.observe(a, 'click', this._defaultToolbarClickHandler.bindAsEventListener(this));
+
+		var img = this.doc.createElement('img');
+		a.appendChild(img);
+		img.src = this.config.imagePathForDefaultToolbar + buttonConfig.className + '.gif';
+	},
+	
+	_generateToolbarDropdown: function(buttonConfig, span) {
+		var select = this.doc.createElement('select');
+		var xed = this;
+		select.handlers = buttonConfig.list;
+		xq.observe(select, 'change', function(e) {
+			var src = e.target || e.srcElement;
+			var handler = src.handlers[src.value].handler;
+			xed.focus();
+			var stop = (typeof handler == "function") ? handler(this) : eval(handler);
+			src.selectedIndex = 0;
+			
+			if(stop) {
+				xq.stopEvent(e);
+				return false;
+			} else {
+				return true;
+			}
+		});
+		
+		var option = this.doc.createElement('option');
+		option.innerHTML = buttonConfig.title;
+		select.appendChild(option);
+		
+		option = this.doc.createElement('option');
+		option.innerHTML = '----';
+		select.appendChild(option);
+		
+		for(var i = 0; i < buttonConfig.list.length; i++) {
+			option = this.doc.createElement('option');
+			option.innerHTML = buttonConfig.list[i].title;
+			option.value = i;
+			
+			select.appendChild(option);
+		}
+		span.appendChild(select);
 	},
 	
 	
@@ -1965,21 +2222,31 @@ xq.Editor = xq.Class({
 	_handleMerge: function(withNext) {
 		var block = this.rdom.getCurrentBlockElement();
 		
-		// save caret position;
-		var marker = this.rdom.pushMarker();
-		
-		// perform merge
-		var merged = this.rdom.mergeElement(block, withNext, withNext);
-		if(!merged && !withNext) this.rdom.extractOutElementFromParent(block);
-		
-		// restore caret position
-		this.rdom.popMarker(true);
-		if(merged) this.rdom.correctEmptyElement(merged);
-		
-		var historyAdded = this.editHistory.onCommand();
-		this._fireOnCurrentContentChanged(this);
-		
-		return !!merged;
+		if(this.rdom.isEmptyBlock(block) && withNext) {
+			var blockToMove = this.rdom.removeBlock(block);
+			this.rdom.placeCaretAtStartOf(blockToMove);
+			blockToMove.scrollIntoView(false);
+
+			var historyAdded = this.editHistory.onCommand();
+			this._fireOnCurrentContentChanged(this);
+			
+			return true;
+		} else {
+			// save caret position;
+			var marker = this.rdom.pushMarker();
+			
+			// perform merge
+			var merged = this.rdom.mergeElement(block, withNext, withNext);
+			if(!merged && !withNext) this.rdom.extractOutElementFromParent(block);
+			
+			// restore caret position
+			this.rdom.popMarker(true);
+			if(merged) this.rdom.correctEmptyElement(merged);
+			
+			var historyAdded = this.editHistory.onCommand();
+			this._fireOnCurrentContentChanged(this);
+			return !!merged;
+		}
 	},
 	
 	/**
@@ -2042,7 +2309,7 @@ xq.Editor = xq.Class({
 	 */
 	handleStrongEmphasis: function() {
 		this.rdom.applyStrongEmphasis();
-		
+
 		var historyAdded = this.editHistory.onCommand();
 		this._fireOnCurrentContentChanged(this);
 		
@@ -2136,6 +2403,7 @@ xq.Editor = xq.Class({
 		this.rdom.placeCaretAtStartOf(row.cells[0]);
 		return true;
 	},
+	
 	handleInsertNewColumnAt: function(where) {
 		var cur = this.rdom.getCurrentBlockElement();
 		var td = this.rdom.getParentElementOf(cur, ["TD"], true);
@@ -2171,7 +2439,16 @@ xq.Editor = xq.Class({
 		var rtable = new xq.RichTable(this.rdom, table);
 		rtable.deleteCell(td);
 
+		//this.rdom.placeCaretAtStartOf(table);
 		return true;
+	},
+	
+	/**
+	 * Create and insert macro
+	 */
+	handleInsertMacro: function(macroName, params) {
+		var macro = this.macroMonitor.createInstance(macroName, params);
+		macro.onWysiwygMode(this.getWin(), this.getBody());
 	},
 	
 	/**
@@ -2203,7 +2480,7 @@ xq.Editor = xq.Class({
 		
 		return true;
 	},
-
+	
 	/**
 	 * Performs block outdentation
 	 */
@@ -2237,19 +2514,20 @@ xq.Editor = xq.Class({
 	/**
 	 * Applies list.
 	 *
-	 * @param {String} type "UL" or "OL" or "CODE". CODE generates OL.code
+	 * @param {String} type "UL" or "OL"
+	 * @param {String} CSS class name
 	 */
-	handleList: function(type) {
+	handleList: function(type, className) {
 		if(this.rdom.hasSelection()) {
 			var blocks = this.rdom.getBlockElementsAtSelectionEdge(true, true);
 			if(blocks.first() != blocks.last()) {
-				blocks = this.rdom.applyLists(blocks.first(), blocks.last(), type);
+				blocks = this.rdom.applyLists(blocks.first(), blocks.last(), type, className);
 			} else {
-				blocks[0] = blocks[1] = this.rdom.applyList(blocks.first(), type);
+				blocks[0] = blocks[1] = this.rdom.applyList(blocks.first(), type, className);
 			}
 			this.rdom.selectBlocksBetween(blocks.first(), blocks.last());
 		} else {
-			var block = this.rdom.applyList(this.rdom.getCurrentBlockElement(), type);
+			var block = this.rdom.applyList(this.rdom.getCurrentBlockElement(), type, className);
 			this.rdom.placeCaretAtStartOf(block);
 		}
 		var historyAdded = this.editHistory.onCommand();
@@ -2288,6 +2566,11 @@ xq.Editor = xq.Class({
 		var blockToMove = this.rdom.removeBlock(block);
 		this.rdom.placeCaretAtStartOf(blockToMove);
 		blockToMove.scrollIntoView(false);
+		
+		var historyAdded = this.editHistory.onCommand();
+		this._fireOnCurrentContentChanged(this);
+		
+		return true;
 	},
 	
 	/**
@@ -2336,7 +2619,7 @@ xq.Editor = xq.Class({
 	handleForegroundColor: function(color) {
 		if(color) {
 			this.rdom.applyForegroundColor(color);
-
+			
 			var historyAdded = this.editHistory.onCommand();
 			this._fireOnCurrentContentChanged(this);
 		} else {
@@ -2362,6 +2645,40 @@ xq.Editor = xq.Class({
 			if(xq.Browser.isTrident) var bm = this.rdom.rng().getBookmark();
 			
 			dialog.show({position: 'centerOfEditor'});
+		}
+		return true;
+	},
+
+	/**
+	 * Applies font face
+	 *
+	 * @param {String} face font face
+	 */
+	handleFontFace: function(face) {
+		if(face) {
+			this.rdom.applyFontFace(face);
+
+			var historyAdded = this.editHistory.onCommand();
+			this._fireOnCurrentContentChanged(this);
+		} else {
+			//TODO: popup font dialog
+		}
+		return true;
+	},
+	
+	/**
+	 * Applies font size
+	 *
+	 * @param {Number} font size (px)
+	 */
+	handleFontSize: function(size) {
+		if(size) {
+			this.rdom.applyFontSize(size);
+
+			var historyAdded = this.editHistory.onCommand();
+			this._fireOnCurrentContentChanged(this);
+		} else {
+			//TODO: popup font dialog
 		}
 		return true;
 	},
@@ -2424,7 +2741,7 @@ xq.Editor = xq.Class({
 		
 		return true;
 	},
-
+	
 	/**
 	 * Inserts seperator (HR)
 	 */
@@ -2567,7 +2884,7 @@ xq.Editor = xq.Class({
 			node.className = 'separator';
 		} else {
 			if(item.handler) {
-				node.innerHTML = '<a href="javascript:;" onclick="return false;">'+(item.title.toString().escapeHTML())+'</a>';
+				node.innerHTML = '<a href="#" onclick="return false;">'+(item.title.toString().escapeHTML())+'</a>';
 			} else {
 				node.innerHTML = (item.title.toString().escapeHTML());
 			}
@@ -2677,6 +2994,18 @@ xq.Editor = xq.Class({
 		
 		this.rdom.placeCaretAtStartOf(blockToPlaceCaret);
 		if(!xq.Browser.isTrident) blockToPlaceCaret.scrollIntoView(false);
+	},
+	
+	/**
+	 * Validator callback
+	 */
+	onBeforeDomValidation: function(element) {
+	},
+	
+	onAfterDomValidation: function(element) {
+	},
+	
+	onBeforeDomInvalidation: function(element) {
 	}
 });
 xq.Browser = {
@@ -3653,15 +3982,17 @@ xq.RichDom = xq.Class({
 	 * Turns block element into list item
 	 *
 	 * @param {Element} element Target element
-	 * @param {String} type One of "UL", "OL", "CODE". "CODE" is same with "OL" but it gives "OL" a class name "code"
+	 * @param {String} type One of "UL", "OL".
+	 * @param {String} className CSS class name.
 	 *
 	 * @return {Element} LI element
 	 */
-	turnElementIntoListItem: function(element, type) {
+	turnElementIntoListItem: function(element, type, className) {
 		type = type.toUpperCase();
+		className = className || "";
 		
-		var container = this.createElement(type == "UL" ? "UL" : "OL");
-		if(type == "CODE") container.className = "code";
+		var container = this.createElement(type);
+		if(className) container.className = className;
 		
 		if(this.tree.isTableCell(element)) {
 			var p = this.wrapAllInlineOrTextNodesAs("P", element, true)[0];
@@ -4021,12 +4352,14 @@ xq.RichDom = xq.Class({
 	 * Extract given list item out and change its container's tag
 	 *
 	 * @param {Element} element LI or P which is a child of LI
-	 * @param {String} type "OL", "UL", or "CODE"
+	 * @param {String} type "OL", "UL"
+	 * @param {String} className CSS class name
 	 *
 	 * @returns {Element} changed element
 	 */
-	changeListTypeTo: function(element, type) {
+	changeListTypeTo: function(element, type, className) {
 		type = type.toUpperCase();
+		className = className || "";
 		
 		var li = this.getParentElementOf(element, ["LI"]);
 		if(!li) throw "IllegalArgumentException";
@@ -4035,8 +4368,8 @@ xq.RichDom = xq.Class({
 
 		this.splitContainerOf(li);
 		
-		var newContainer = this.insertNodeAt(this.createElement(type == "UL" ? "UL" : "OL"), container, "before");
-		if(type == "CODE") newContainer.className = "code";
+		var newContainer = this.insertNodeAt(this.createElement(type), container, "before");
+		if(className) newContainer.className = className;
 		
 		this.insertNodeAt(li, newContainer, "start");
 		this.deleteNode(container);
@@ -4166,7 +4499,7 @@ xq.RichDom = xq.Class({
 			if(containersAreTableCell && prevContainer != nextContainer) return null;
 			
 			// if next has margin, perform outdent
-			if((!skip || !prev) && next && this.outdentElement(next)) return element;
+			if((!skip || !prev) && next && nextContainer.nodeName != "LI" && this.outdentElement(next)) return element;
 
 			// nextContainer is first li and next of it is list container
 			if(nextContainer && nextContainer.nodeName == 'LI' && this.tree.isListContainer(next.nextSibling)) {
@@ -4337,7 +4670,7 @@ xq.RichDom = xq.Class({
 		}
 		leaves = this.tree.getLeavesAtEdge(node);
 		
-		if (blocks.include(leaves[0])) {
+		if (blocks.includeElement(leaves[0])) {
 			var affected = this.indentElement(node, true);
 			if (affected) {
 				affect.push(affected);
@@ -4345,7 +4678,7 @@ xq.RichDom = xq.Class({
 			}
 		}
 		
-		if (blocks.include(node)) {
+		if (blocks.includeElement(node)) {
 			var affected = this.indentElement(node, true);
 			if (affected) {
 				affect.push(affected);
@@ -4366,7 +4699,7 @@ xq.RichDom = xq.Class({
 		var affect = [];
 		
 		leaves = this.tree.getLeavesAtEdge(top.parent);
-		if (blocks.include(leaves[0])) {
+		if (blocks.includeElement(leaves[0])) {
 			var affected = this.indentElement(top.parent);
 			if (affected)
 				return [affected];
@@ -4396,7 +4729,7 @@ xq.RichDom = xq.Class({
 		}
 		leaves = this.tree.getLeavesAtEdge(node);
 		
-		if (blocks.include(leaves[0]) && !this.outdentElementsCode(leaves[0])) {
+		if (blocks.includeElement(leaves[0]) && !this.outdentElementsCode(leaves[0])) {
 			var affected = this.outdentElement(node, true);
 			if (affected) {
 				affect.push(affected);
@@ -4404,14 +4737,14 @@ xq.RichDom = xq.Class({
 			}
 		}
 		
-		if (blocks.include(node)) {
+		if (blocks.includeElement(node)) {
 			var children = xq.$A(node.parentNode.childNodes);
 			var isCode = this.outdentElementsCode(node);
 			var affected = this.outdentElement(node, true, isCode);
 			if (affected) {
-				if (children.include(affected) && this.tree.isListContainer(node.parentNode) && !isCode) {
+				if (children.includeElement(affected) && this.tree.isListContainer(node.parentNode) && !isCode) {
 					for (var i=0; i < children.length; i++) {
-						if (blocks.include(children[i]) && !affect.include(children[i]))
+						if (blocks.includeElement(children[i]) && !affect.includeElement(children[i]))
 							affect.push(children[i]);
 					}
 				}else
@@ -4438,7 +4771,7 @@ xq.RichDom = xq.Class({
 		var affect = [];
 		
 		leaves = this.tree.getLeavesAtEdge(top.parent);
-		if (blocks.include(leaves[0]) && !this.outdentElementsCode(top.parent)) {
+		if (blocks.includeElement(leaves[0]) && !this.outdentElementsCode(top.parent)) {
 			var affected = this.outdentElement(top.parent);
 			if (affected)
 				return [affected];
@@ -4646,28 +4979,33 @@ xq.RichDom = xq.Class({
 	 *
 	 * @param {Element} element target element
 	 * @param {String} type one of "UL", "OL"
+	 * @param {String} className CSS className
 	 * @returns {Element} affected element
 	 */
-	applyList: function(element, type) {
+	applyList: function(element, type, className) {
 		type = type.toUpperCase();
-		var containerTag = type == "UL" ? "UL" : "OL";
+		className = className || "";
+		
+		var containerTag = type;
 		
 		if(element.nodeName == "LI" || (element.parentNode.nodeName == "LI" && !element.previousSibling)) {
 			var element = this.getParentElementOf(element, ["LI"]);
 			var container = element.parentNode;
-			if(container.nodeName == containerTag) {
+			if(container.nodeName == containerTag && container.className == className) {
 				return this.extractOutElementFromParent(element);
 			} else {
-				return this.changeListTypeTo(element, type);
+				return this.changeListTypeTo(element, type, className);
 			}
 		} else {
-			return this.turnElementIntoListItem(element, type);
+			return this.turnElementIntoListItem(element, type, className);
 		}
 	},
 	
-	applyLists: function(from, to, type) {
+	applyLists: function(from, to, type, className) {
 		type = type.toUpperCase();
-		var containerTag = type == "UL" ? "UL" : "OL";
+		className = className || "";
+
+		var containerTag = type;
 		var blocks = this.getBlockElementsBetween(from, to);
 		
 		// LIs or Non-containing blocks
@@ -4709,7 +5047,7 @@ xq.RichDom = xq.Class({
 			
 			// preserve original index to restore selection
 			var originalIndex = blocks.indexOf(block);
-			blocks[originalIndex] = this.applyList(block, type);
+			blocks[originalIndex] = this.applyList(block, type, className);
 		}
 		
 		return blocks;
@@ -4760,6 +5098,24 @@ xq.RichDom = xq.Class({
 	 */
 	applyForegroundColor: function(color) {
 		this.execCommand("forecolor", color);
+	},
+	
+	/**
+	 * Applies font face to selected area
+	 *
+	 * @param {String} face font face
+	 */
+	applyFontFace: function(face) {
+		this.execCommand("fontname", face);
+	},
+	
+	/**
+	 * Applies font size to selected area
+	 *
+	 * @param {Number} size font size (px)
+	 */
+	applyFontSize: function(size) {
+		this.execCommand("fontsize", size);
 	},
 	
 	execCommand: function(commandId, param) {throw "Not implemented";},
@@ -4960,7 +5316,7 @@ xq.RichDom = xq.Class({
 	 * Checks if the node is empty-text-node or not
 	 */
 	isEmptyTextNode: function(node) {
-		return node.nodeType == 3 && node.nodeValue.length == 0;
+		return node.nodeType == 3 && (node.nodeValue.length == 0 || (node.nodeValue.length == 1 && (node.nodeValue.charAt(0) == 32 || node.nodeValue.charAt(0) == 160)));
 	},
 	
 	/**
@@ -5045,9 +5401,13 @@ xq.RichDom = xq.Class({
 	
 	isFirstBlockOfBody: function(block) {
 		var root = this.getRoot();
+		if(this.isFirstLiWithNestedList(block)) block = block.parentNode;
+		
 		var found = this.tree.findBackward(
 			block,
-			function(node) {return (node == root) || node.previousSibling;}.bind(this)
+			function(node) {
+				return node == root || (this.tree.isBlock(node) && !this.tree.isBlockOnlyContainer(node));
+			}.bind(this)
 		);
 		
 		return found == root;
@@ -5067,7 +5427,7 @@ xq.RichDom = xq.Class({
 	getInnerText: function(element) {
 		return element.innerHTML.stripTags();
 	},
-
+	
 	/**
 	 * Checks if given node is place holder or not.
 	 * 
@@ -5145,7 +5505,6 @@ xq.RichDom = xq.Class({
 
 		var block = this.getParentBlockElementOf(element);
 		
-		// IEï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¤ DOMï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½: elementï¿½ï¿½ ï¿½ï¿½ï¿½Ú·ï¿½ ï¿½Ñ¾ï¿½4ï¿?ï¿½ï¿½ì°¡ï¿½ï¿?
 		if(block == null) return {};
 		
 		var parents = this.tree.collectParentsOf(element, true, function(node) {return block.parentNode == node});
@@ -5160,6 +5519,16 @@ xq.RichDom = xq.Class({
 		var underline = doc.queryCommandState("Underline") && !this.getParentElementOf(element, ["A"]);
 		var superscription = doc.queryCommandState("superscript");
 		var subscription = doc.queryCommandState("subscript");
+		var foregroundColor = doc.queryCommandValue("forecolor");
+
+		// TODO remove conditional
+		if(xq.Browser.isGecko) {
+			this.execCommand("styleWithCSS", "true");
+			var backgroundColor = doc.queryCommandValue("hilitecolor");
+			this.execCommand("styleWithCSS", "false");
+		} else {
+			var backgroundColor = doc.queryCommandValue("backcolor");
+		}
 		
 		// if block is only child, select its parent
 		while(block.parentNode && block.parentNode != this.getRoot() && !block.previousSibling && !block.nextSibling && !this.tree.isListContainer(block.parentNode)) {
@@ -5170,7 +5539,14 @@ xq.RichDom = xq.Class({
 		if(block.nodeName == "LI") {
 			var parent = block.parentNode;
 			var isCode = parent.nodeName == "OL" && parent.className == "code";
-			list = isCode ? "CODE" : parent.nodeName;
+			var hasClass = parent.className.length > 0;
+			if(isCode) {
+				list = "CODE";
+			} else if(hasClass) {
+				list = false;
+			} else {
+				list = parent.nodeName;
+			}
 		}
 		
 		var justification = block.style.textAlign || "left";
@@ -5184,7 +5560,9 @@ xq.RichDom = xq.Class({
 			superscription: superscription,
 			subscription: subscription,
 			list: list,
-			justification: justification
+			justification: justification,
+			foregroundColor: foregroundColor,
+			backgroundColor: backgroundColor
 		};
 	},
 	
@@ -5385,9 +5763,14 @@ xq.RichDom.createInstance = function() {
 xq.RichDomW3 = xq.Class(xq.RichDom, {
 	insertNode: function(node) {
 		var rng = this.rng();
-		rng.insertNode(node);
-		rng.selectNode(node);
-		rng.collapse(false);
+		
+		if(!rng) {
+			this.root.appendChild(node);
+		} else {
+			rng.insertNode(node);
+			rng.selectNode(node);
+			rng.collapse(false);
+		}
 		return node;
 	},
 
@@ -5419,9 +5802,10 @@ xq.RichDomW3 = xq.Class(xq.RichDom, {
 		if(this.tree.isBlockOnlyContainer(block)) {
 			this.execCommand("InsertParagraph");
 			
-			// check for atomic block element such as HR
+			// check for HR
 			var newBlock = this.getCurrentElement();
-			if(this.tree.isAtomic(newBlock.previousSibling)) {
+			
+			if(this.tree.isAtomic(newBlock.previousSibling) && newBlock.previousSibling.nodeName == "HR") {
 				var nextBlock = this.tree.findForward(
 					newBlock,
 					function(node) {return this.tree.isBlock(node) && !this.tree.isBlockOnlyContainer(node)}.bind(this)
@@ -5437,17 +5821,30 @@ xq.RichDomW3 = xq.Class(xq.RichDom, {
 			modified = true;
 		}
 		
+		// insert placeholder - part 1
 		block = this.getCurrentElement();
 		if(this.tree.isBlock(block) && !this._hasPlaceHolderAtEnd(block)) {
 			block.appendChild(this.makePlaceHolder());
 			modified = true;
 		}
 		
+		// insert placeholder - part 2
 		if(this.tree.isBlock(block)) {
 			var parentsLastChild = block.parentNode.lastChild;
 			if(this.isPlaceHolder(parentsLastChild)) {
 				this.deleteNode(parentsLastChild);
 				modified = true;
+			}
+		}
+		
+		// remove empty elements
+		if(this.tree.isBlock(block)) {
+			var nodes = block.childNodes;
+			for(var i = 0; i < nodes.length; i++) {
+				var node = nodes[i];
+				if(node.nodeType == 1 && !this.tree.isAtomic(node) && !node.hasChildNodes() && !this.isPlaceHolder(node)) {
+					this.deleteNode(node);
+				}
 			}
 		}
 		
@@ -5595,6 +5992,14 @@ xq.RichDomW3 = xq.Class(xq.RichDom, {
 		}
 		this.selectElement(element, false);
 		this.collapseSelection(true);
+	},
+	
+	placeCaretAtEndOf: function(element) {
+		while(this.tree.isBlock(element.lastChild)) {
+			element = element.lastChild;
+		}
+		this.selectElement(element, false);
+		this.collapseSelection(false);
 	},
 	
 	getSelectionAsHtml: function() {
@@ -6458,15 +6863,26 @@ xq.RichTable.create = function(rdom, cols, rows, headerPositions) {
  * Validates and invalidates designmode contents
  */
 xq.Validator = xq.Class({
-	initialize: function(curUrl, urlValidationMode, allowedTags, allowedAttrs) {
+	initialize: function(curUrl, urlValidationMode, allowedTags, allowedAttrs, callbacks) {
 		xq.addToFinalizeQueue(this);
-
+		
 		this.allowedTags = (allowedTags || ['a', 'abbr', 'acronym', 'address', 'blockquote', 'br', 'caption', 'cite', 'code', 'dd', 'dfn', 'div', 'dl', 'dt', 'em', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'img', 'kbd', 'li', 'ol', 'p', 'pre', 'q', 'samp', 'span', 'sup', 'sub', 'strong', 'table', 'thead', 'tbody', 'td', 'th', 'tr', 'ul', 'var']).join(' ') + ' ';
 		this.allowedAttrs = (allowedAttrs || ['alt', 'cite', 'class', 'datetime', 'height', 'href', 'id', 'rel', 'rev', 'src', 'style', 'title', 'width']).join(' ') + ' ';
 		
 		this.curUrl = curUrl;
 		this.curUrlParts = curUrl ? curUrl.parseURL() : null;
 		this.urlValidationMode = urlValidationMode;
+		
+		this.callbacks = {};
+		var callbackNames = [
+			'onBeforeDomValidation', 'onAfterDomValidation', 'onBeforeStringValidation', 'onAfterStringValidation',
+			'onBeforeDomInvalidation', 'onAfterDomInvalidation', 'onBeforeStringInvalidation', 'onAfterStringInvalidation'
+		];
+		for(var i = 0; i < callbackNames.length; i++) {
+			this.callbacks[callbackNames[i]] =
+				(callbacks && callbacks[callbackNames[i]]) ||
+				xq.emptyFunction;
+		}
 	},
 	
 	/**
@@ -6508,6 +6924,78 @@ xq.Validator = xq.Class({
 			return "<" + tag + attrs + " />"
 		});
 	},
+
+	validateFont: function(element) {
+		var rdom = xq.RichDom.createInstance();
+		rdom.setRoot(element);
+		
+		// It should be reversed to deal with nested elements
+		var fonts = xq.$A(element.getElementsByTagName('FONT')).reverse();
+		for(var i = 0; i < fonts.length; i++) {
+			var font = fonts[i];
+			var color = font.getAttribute('color');
+			var backgroundColor = font.style.backgroundColor;
+			var face = font.getAttribute('face');
+			var size = ["xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"][Number(font.getAttribute('size')) % 8 - 1];
+			
+			if(color || backgroundColor || face || size) {
+				var span = rdom.replaceTag("span", font);
+				span.removeAttribute('color');
+				span.removeAttribute('face');
+				span.removeAttribute('size');
+				
+				if(color) span.style.color = color;
+				if(backgroundColor) span.style.backgroundColor = backgroundColor;
+				if(face) span.style.fontFamily = face;
+				if(size) span.style.fontSize = size;
+			}
+		}
+	},
+
+	invalidateFont: function(element) {
+		var rdom = xq.RichDom.createInstance();
+		rdom.setRoot(element);
+
+		// It should be reversed to deal with nested elements
+		var spans = xq.$A(element.getElementsByTagName('SPAN')).reverse();
+		for(var i = 0; i < spans.length; i++) {
+			var span = spans[i];
+			if(span.className == "strike") continue;
+			
+			var color = span.style.color;
+			var backgroundColor = span.style.backgroundColor;
+			var face = span.style.fontFamily;
+			var size = {"xx-small":1, "x-small":2, "small":3, "medium":4, "large":5, "x-large":6, "xx-large":7}[span.style.fontSize];
+			
+			if(color || backgroundColor || face || size) {
+				var font = rdom.replaceTag("font", span);
+				font.style.cssText = "";
+				
+				if(color) font.setAttribute('color', this.asRGB(color));
+				if(backgroundColor) font.style.backgroundColor = backgroundColor;
+				if(face) font.setAttribute('face', face);
+				if(size) font.setAttribute('size', size);
+			}
+		}
+	},
+	
+	asRGB: function(color) {
+		if(color.indexOf("#") == 0) return color;
+
+		var p = /rgb\((\d+),\s*(\d+),\s*(\d+)\)/;		
+		var m = p.exec(color);
+		if(!m) return color;
+		
+		var r = Number(m[1]).toString(16);
+		var g = Number(m[2]).toString(16);
+		var b = Number(m[3]).toString(16);
+		
+		if(r.length == 1) r = "0" + r;
+		if(g.length == 1) g = "0" + g;
+		if(b.length == 1) b = "0" + b;
+		
+		return "#" + r + g + b;
+	},
 	
 	removeComments: function(content) {
 		return content.replace(/<!--.*?-->/img, '');
@@ -6519,7 +7007,7 @@ xq.Validator = xq.Class({
 			scripts[i].parentNode.removeChild(scripts[i]);
 		}
 	},
-
+	
 	// TODO: very slow
 	applyWhitelist: function(content) {
 		var allowedTags = this.allowedTags;
@@ -6621,9 +7109,14 @@ xq.Validator = xq.Class({
 					
 					// 4. make it relative by removing same part
 					var rel = abs;
-					if(abs.indexOf(urlParts.includeHost) == 0) {
+					if(abs.indexOf(urlParts.includeQuery) == 0 && abs.indexOf("#") != -1) {
+						// same except for fragment-part?
+						rel = abs.substring(abs.indexOf("#"));
+					} else if(abs.indexOf(urlParts.includeHost) == 0) {
+						// same host?
 						rel = abs.substring(urlParts.includeHost.length);
 					}
+					
 					if(rel == '') rel = '#';
 					
 					return name + '="' + rel + '"';
@@ -6674,13 +7167,13 @@ xq.Validator = xq.Class({
 /**
  * Creates and returns instance of browser specific implementation.
  */
-xq.Validator.createInstance = function(curUrl, urlValidationMode, allowedTags, allowedAttrs) {
+xq.Validator.createInstance = function(curUrl, urlValidationMode, allowedTags, allowedAttrs, callbacks) {
 	if(xq.Browser.isTrident) {
-		return new xq.ValidatorTrident(curUrl, urlValidationMode, allowedTags, allowedAttrs);
+		return new xq.ValidatorTrident(curUrl, urlValidationMode, allowedTags, allowedAttrs, callbacks);
 	} else if(xq.Browser.isWebkit) {
-		return new xq.ValidatorWebkit(curUrl, urlValidationMode, allowedTags, allowedAttrs);
+		return new xq.ValidatorWebkit(curUrl, urlValidationMode, allowedTags, allowedAttrs, callbacks);
 	} else {
-		return new xq.ValidatorGecko(curUrl, urlValidationMode, allowedTags, allowedAttrs);
+		return new xq.ValidatorGecko(curUrl, urlValidationMode, allowedTags, allowedAttrs, callbacks);
 	}
 }
 /**
@@ -6690,13 +7183,19 @@ xq.ValidatorW3 = xq.Class(xq.Validator, {
 	validate: function(element, fullValidation) {
 		element = element.cloneNode(true);
 
+		this.callbacks.onBeforeDomValidation(element);
+
 		var rdom = xq.RichDom.createInstance();
 		rdom.setRoot(element);
 		rdom.removePlaceHoldersAndEmptyNodes(element);
 		this.removeDangerousElements(element);
-		this.validateFontColor(element);
+		this.validateFont(element);
+
+		this.callbacks.onAfterDomValidation(element);
 
 		var content = element.innerHTML;
+
+		this.callbacks.onBeforeStringValidation(content);
 		
 		try {
 			content = this.replaceTag(content, "b", "strong");
@@ -6713,12 +7212,18 @@ xq.ValidatorW3 = xq.Class(xq.Validator, {
 		var blocks = rdom.tree.getBlockTags().join("|");
 		var regex = new RegExp("</(" + blocks + ")>([^\n])", "img");
 		content = content.replace(regex, '</$1>\n$2');
+
+		this.callbacks.onAfterStringValidation(content);
 		
 		return content;
 	},
 	invalidate: function(element) {
 		var rdom = xq.RichDom.createInstance();
 		rdom.setRoot(element);
+
+		this.callbacks.onBeforeDomInvalidation(element);
+
+		this.invalidateFont(element);
 		
 		// <span class="strike"> -> <strike>
 		var strikes = xq.getElementsByClassName(rdom.getRoot(), "strike");
@@ -6731,13 +7236,19 @@ xq.ValidatorW3 = xq.Class(xq.Validator, {
 		for(var i = 0; i < underlines.length; i++) {
 			if(["EM", "I"].indexOf(underlines[i].nodeName) != -1) rdom.replaceTag("u", underlines[i]).removeAttribute("class");
 		}
+
+		this.callbacks.onAfterDomInvalidation(element);
 		
 		var content = rdom.getRoot().innerHTML;
+
+		this.callbacks.onBeforeStringInvalidation(content);
 		
 		content = this.replaceTag(content, "strong", "b");
 		content = this.replaceTag(content, "em", "i");
 		content = this.removeComments(content);
 		content = this.replaceNbspToBr(content);
+		
+		this.callbacks.onAfterStringInvalidation(content);
 		
 		return content;
 	},
@@ -6755,23 +7266,6 @@ xq.ValidatorW3 = xq.Class(xq.Validator, {
 		}
 
 		return content;
-	},
-	
-	validateFontColor: function(element) {
-		var rdom = xq.RichDom.createInstance();
-		rdom.setRoot(element);
-
-		var fonts = xq.$A(element.getElementsByTagName('FONT')).reverse();
-		for(var i = 0; i < fonts.length; i++) {
-			var font = fonts[i];
-			var color = font.getAttribute('color');
-			
-			if(color) {
-				var span = rdom.replaceTag("span", font);
-				span.removeAttribute('color');
-				span.style.color = color;
-			}
-		}
 	},
 	
 	addNbspToEmptyBlocks: function(content) {
@@ -6813,11 +7307,16 @@ xq.ValidatorTrident = xq.Class(xq.Validator, {
 	validate: function(element, fullValidation) {
 		element = element.cloneNode(true);
 		
-		this.removeDangerousElements(element);
-		this.validateFontColor(element);
-		this.validateBackgroundColor(element);
+		this.callbacks.onBeforeDomValidation(element);
 		
+		this.removeDangerousElements(element);
+		this.validateFont(element);
+
+		this.callbacks.onAfterDomValidation(element);
+
 		var content = element.innerHTML;
+		
+		this.callbacks.onBeforeStringValidation(content);
 		
 		try {
 			content = this.validateStrike(content);
@@ -6826,15 +7325,18 @@ xq.ValidatorTrident = xq.Class(xq.Validator, {
 			if(fullValidation) content = this.performFullValidation(content);
 		} catch(ignored) {}
 		
+		this.callbacks.onAfterStringValidation(content);
+		
 		return content;
 	},
 	
 	invalidate: function(element) {
 		var rdom = xq.RichDom.createInstance();
 		rdom.setRoot(element);
+
+		this.callbacks.onBeforeDomInvalidation(element);
 		
-		this.invalidateFontColor(element);
-		this.invalidateBackgroundColor(element);
+		this.invalidateFont(element);
 		
 		// <span class="strike"> -> <strike>
 		var strikes = xq.getElementsByClassName(rdom.getRoot(), "strike");
@@ -6848,9 +7350,14 @@ xq.ValidatorTrident = xq.Class(xq.Validator, {
 			if(["EM", "I"].indexOf(underlines[i].nodeName) != -1) rdom.replaceTag("u", underlines[i]).removeAttribute("className");
 		}
 
+		this.callbacks.onAfterDomInvalidation(element);
+
 		var content = rdom.getRoot().innerHTML;
 
+		this.callbacks.onBeforeStringInvalidation(content);
 		content = this.removeComments(content);
+
+		this.callbacks.onAfterStringInvalidation(content);
 		
 		return content;
 	},
@@ -6871,63 +7378,6 @@ xq.ValidatorTrident = xq.Class(xq.Validator, {
 		}
 		
 		return content;
-	},
-	
-	validateFontColor: function(element) {
-		var rdom = xq.RichDom.createInstance();
-		rdom.setRoot(element);
-		
-		// It should be reversed to deal with nested elements
-		var fonts = xq.$A(element.getElementsByTagName('FONT')).reverse();
-		for(var i = 0; i < fonts.length; i++) {
-			var font = fonts[i];
-			var color = font.getAttribute('color');
-			
-			if(color) {
-				var span = rdom.replaceTag("span", font);
-				span.removeAttribute('color');
-				span.style.color = color;
-			}
-		}
-	},
-
-	invalidateFontColor: function(element) {
-		var rdom = xq.RichDom.createInstance();
-		rdom.setRoot(element);
-
-		var spans = xq.$A(element.getElementsByTagName('SPAN')).reverse();
-		for(var i = 0; i < spans.length; i++) {
-			var span = spans[i];
-			var color = span.style.color;
-			
-			if(color) {
-				var font = rdom.replaceTag("font", span);
-				font.style.color = "";
-				font.setAttribute('color', color);
-			}
-		}
-	},
-
-	validateBackgroundColor: function(element) {
-		var rdom = xq.RichDom.createInstance();
-		rdom.setRoot(element);
-
-		// It should be reversed to deal with nested elements
-		var fonts = xq.$A(element.getElementsByTagName('FONT')).reverse();
-		for(var i = 0; i < fonts.length; i++) {
-			if(fonts[i].style.color || fonts[i].style.backgroundColor) rdom.replaceTag("span", fonts[i]);
-		}
-	},
-
-	invalidateBackgroundColor: function(element) {
-		var rdom = xq.RichDom.createInstance();
-		rdom.setRoot(element);
-
-		// It should be reversed to deal with nested elements
-		var spans = xq.$A(element.getElementsByTagName('SPAN')).reverse();
-		for(var i = 0; i < spans.length; i++) {
-			if(spans[i].style.color || spans[i].style.backgroundColor) rdom.replaceTag("font", spans[i]);
-		}
 	},
 	
 	lowerTagNamesAndUniformizeQuotation: function(content) {
@@ -7006,16 +7456,20 @@ xq.EditHistory = xq.Class({
 	onCommand: function() {
 		this.lastModified = Date.get();
 		if(this.disabled) return false;
-
+		
 		return this.pushContent();
 	},
 	onEvent: function(event) {
 		this.lastModified = Date.get();
 		if(this.disabled) return false;
-
+		
+		var arrowKeys = [33,34,35,36,37,39];
+		// Mac?ì„œ ?”ì‚´??up/down ?„ë? ??pushContent ?˜ë©´ ìºëŸ¿???„ë‹¤
+		if(!xq.Browser.isMac) arrowKeys.push(38,40);
+		
 		// ignore normal keys
 		if('keydown' == event.type && !(event.ctrlKey || event.metaKey)) return false;
-		if(['keydown', 'keyup', 'keypress'].indexOf(event.type) != -1 && !event.ctrlKey && !event.altKey && !event.metaKey && [33,34,35,36,37,38,39,40].indexOf(event.keyCode) == -1) return false;
+		if(['keydown', 'keyup', 'keypress'].indexOf(event.type) != -1 && !event.ctrlKey && !event.altKey && !event.metaKey && arrowKeys.indexOf(event.keyCode) == -1) return false;
 		if(['keydown', 'keyup', 'keypress'].indexOf(event.type) != -1 && (event.ctrlKey || event.metaKey) && [89,90].indexOf(event.keyCode) != -1) return false;
 		
 		// ignore ctrl/shift/alt/meta keys
@@ -7057,19 +7511,20 @@ xq.EditHistory = xq.Class({
 		this.pushContent(true);
 	},
 	saveCaret: function() {
+/*
 		if(this.rdom.hasSelection()) return null;
 
 		// FF on Mac has a caret problem with these lines. --2007/11/19
+		// This code has one more issue with FF and Safari. --2008/01/31
+		//
 		var marker = this.rdom.pushMarker();
 		var str = xq.Browser.isTrident ? '<SPAN class='+marker.className : '<span class="'+marker.className+'"';
 		var caret = this.rdom.getRoot().innerHTML.indexOf(str);
 		this.rdom.popMarker(true);
 
 		return caret;
-
-/*
+*/
 		// This is old code. It also has same problem.
-		
 		if(this.rdom.hasSelection()) return null;
 		
 		var bookmark = this.rdom.saveSelection();
@@ -7082,7 +7537,6 @@ xq.EditHistory = xq.Class({
 		this.rdom.restoreSelection(bookmark);
 		
 		return caret;
-*/
 	},
 	restoreCaret: function() {
 		var marker = this.rdom.$('caret_marker_00700');
@@ -7101,6 +7555,169 @@ xq.EditHistory = xq.Class({
 		}
 	}
 });
+xq.MacroMonitor = xq.Class({
+	initialize: function() {
+		this.registeredMacros = [];
+		this.register('TableOfContents');
+		this.register('Flash');
+	},
+	
+	/**
+	 * Registers new macro class by name
+	 */
+	register: function(macroName) {
+		this.registeredMacros.push(macroName);
+	},
+	
+	/**
+	 * Creates macro instance using given name and parameters
+	 *
+	 * @param {String} macroName Name of macro
+	 * @param {Object} params Parameters
+	 * @param {Object} initialStates Initial states of this macro instance.
+	 */
+	createInstance: function(macroName, params, initialStates) {
+		if(this.registeredMacros.indexOf(macroName) == -1) throw "Unknown macro name: [" + macroName + "]. You must register macro name using xq.MacroMonitor.register()";
+		return new window.xq[macroName + "Macro"](macroName, params, initialStates);
+	},
+
+	/**
+	 * Loads macro instances from givin document.
+	 * It delegates actual instantiation to each macro classes.
+	 */
+	loadMacrosFromDocument: function(root) {
+		var found = [];
+		for(var i = 0; i < this.registeredMacros.length; i++) {
+			var clazz = window.xq[this.registeredMacros[i] + "Macro"];
+			found.push(clazz.loadMacrosFromDocument(this, root));
+		}
+		return found.flatten();
+	}
+});
+
+
+xq.Macro = xq.Class({
+	/**
+     * @constructor
+     *
+     * @param {String} name Name of macro class
+     * @param {Object} params Parameters
+     * @param {Object} initialStates Initial states of this macro instance.
+	 */
+	initialize: function(name, params, initialStates) {
+		this._name = name;
+		this._params = params || {};
+		this._states = initialStates || {};
+	},
+	
+	getName: function() {
+		return this._name;
+	},
+	
+	getParams: function() {
+		return this._params;
+	},
+	
+	getStates: function() {
+		return this._states;
+	},
+	
+	/**
+	 * Called on WYSIWYG mode
+	 *
+	 * @param {Window} win designMode window
+	 * @param {Element} root root element of designMode document (typically a document itself)
+	 */
+	onWysiwygMode: function(win, root) {},
+	
+	/**
+	 * Called on read-only mode
+	 *
+	 * @param {Element} root Root element of content area
+	 */
+	onReadonlyMode: function(root) {},
+	
+	/**
+	 * Finalize this instance
+	 */
+	finalize: function() {}
+});
+
+
+
+/**
+ * Table of Contents macro
+ */
+xq.TableOfContentsMacro = xq.Class(xq.Macro, {
+	onWysiwygMode: function(win, root) {
+		if(this.periodicUpdater) {
+			window.clearInterval(this.periodicUpdater);
+			this.periodicUpdater = null;
+		}
+		
+		var rdom = xq.RichDom.createInstance();
+		rdom.setWin(win);
+		rdom.setRoot(root);
+		
+		var toc = 
+			rdom.$('xq_table_of_contents') ||
+			rdom.insertHtmlAt('<div id="xq_table_of_contents"></div>', rdom.getRoot(), "start");
+		
+		// force update
+		this.lastUpdatedHtml = "";
+		this.updateContents(rdom, toc);
+		
+		this.periodicUpdater = window.setInterval(function() {
+			this.updateContents(rdom, toc);
+		}.bind(this), 1000);
+	},
+	
+	updateContents: function(rdom, toc) {
+		// removed?
+		if(!toc.parentNode) {
+			window.clearInterval(this.periodicUpdater);
+			this.periodicUpdater = null;
+			return;
+		}
+		
+		// generated html
+		var headings = rdom.searchHeadings();
+		var sb = [];
+		sb.push("<p>Table of Contents</p>");
+		if(headings.length > 0) {
+			sb.push("<ol>");
+			for(var i = 0; i < headings.length; i++) {
+				sb.push('<li>' + headings[i].innerHTML + '</li>');
+			}
+			sb.push("</ol>");
+		}
+		var html = sb.join("");
+		
+		// update if necessary
+		if(this.lastUpdatedHtml != html) {
+			toc.innerHTML = html;
+			this.lastUpdatedHtml = html;
+		}
+	}
+});
+xq.TableOfContentsMacro.loadMacrosFromDocument = function(monitor, root) {
+	var result = [];
+	if(root.ownerDocument.getElementById("xq_table_of_contents")) {
+		result.push(monitor.createInstance('TableOfContents'));
+	}
+	return result;
+}
+
+
+
+/**
+ * Flash movie macro
+ */
+xq.FlashMacro = xq.Class(xq.Macro, {
+});
+xq.FlashMacro.loadMacrosFromDocument = function(monitor, root) {
+	return [];
+}
 /**
  * @fileOverview xq.controls provides common UI elements such as dialog.
  */
@@ -7176,7 +7793,6 @@ xq.controls.FormDialog = xq.Class({
 					this.onCloseHandler();
 					this.close();
 				}
-				return false;
 			}.bind(this));
 		}
 		
