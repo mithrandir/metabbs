@@ -162,7 +162,7 @@ class Post extends Model {
 	}
 	function move_to($board, $track = true) {
 		$_id = $this->id;
-		$attributes = $post->get_attributes();
+		$attributes = $this->get_attributes();
 		$this->id = null;
 		$this->category_id = 0;
 		$this->board_id = $board->id;
