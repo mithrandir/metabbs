@@ -162,6 +162,7 @@ class Post extends Model {
 	}
 	function move_to($board, $track = true) {
 		$_id = $this->id;
+		$attributes = $post->get_attributes();
 		$this->id = null;
 		$this->category_id = 0;
 		$this->board_id = $board->id;
@@ -174,6 +175,8 @@ class Post extends Model {
 		$this->db->execute("UPDATE $this->comment_table SET post_id=$this->id WHERE post_id=$_id");
 		$this->db->execute("UPDATE $this->trackback_table SET post_id=$this->id WHERE post_id=$_id");
 		$this->db->execute("UPDATE $this->attachment_table SET post_id=$this->id WHERE post_id=$_id");
+		foreach ($attributes as $key => $value)
+			$this->set_attribute($key, $value);
 	}
 	function get_page() {
 		$board = $this->get_board();
