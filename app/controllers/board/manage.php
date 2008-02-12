@@ -25,8 +25,11 @@ if (isset($_POST['action'])) {
 		}
 		break;
 		case 'move':
-			$_board = new Board(array('id' => $_POST['board_id']));
+		$_board = new Board(array('id' => $_POST['board_id']));
+		foreach ($_POST['posts'] as $post_id) {
+			$post = Post::find($post_id);
 			$post->move_to($_board, isset($_POST['track']));
+		}
 		break;
 	}
 	redirect_to(url_for($board));
