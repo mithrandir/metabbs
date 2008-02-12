@@ -230,7 +230,7 @@ function loadXq() {
 	}
 
 	var xed = new xq.Editor('post_body');
-	xed.config.imagePathForDefaultToobar = XquaredPluginUri + '/img/toolbar/';
+	xed.config.imagePathForDefaultToolbar = XquaredPluginUri + '/img/toolbar/';
 	xed.addShortcuts(getAdditionalShortcuts());
 	xed.addAutocorrections(getAdditionalAutocorrections());
 	xed.addAutocompletions(getAdditionalAutocompletions());
