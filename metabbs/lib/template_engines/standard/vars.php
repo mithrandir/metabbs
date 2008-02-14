@@ -1,8 +1,10 @@
 <?php
 global $controller, $action, $layout;
 
-if (isset($board))
+if (isset($board)) {
 	$admin = $account->has_perm('admin', $board);
+	$board->title = $board->get_title();
+}
 $guest = $account->is_guest();
 if ($guest) {
 	$link_login = url_with_referer_for($board, 'login');

@@ -3,8 +3,8 @@ permission_required('comment', $post);
 
 if (!isset($_POST['comment'])) {
 	$_POST['comment'] = array(
-		'name' => $_POST['author'],
-		'password' => $_POST['password'],
+		'name' => @$_POST['author'],
+		'password' => @$_POST['password'],
 		'body' => $_POST['body']
 	);
 }
