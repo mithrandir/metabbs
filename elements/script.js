@@ -172,6 +172,10 @@ function openDialog(href) {
 			triggerCloseLinks();
 			fixFormActions(href);
 			$('dialog-overlay').show();
+
+			var title = $$('#dialog h1')[0];
+			title.innerHTML = '<a href="#"></a>' + title.innerHTML;
+			title.childNodes[0].focus();
 		}
 	});
 }
