@@ -10,9 +10,9 @@ class Table
 		$this->table = get_table_name($name);
 	}
 	function _column($name, $type, $length = null) {
-		$class = $type.'Column';
-		$column = new $class($name);
-		return $column->to_spec($length);
+		//$class = $type.'Column';
+		//$column = new $class($name);
+		return $column->to_spec($name, $type, $length);
 	}
 	function column($name, $type, $length = null) {
 		$this->columns[] = $this->_column($name, $type, $length);

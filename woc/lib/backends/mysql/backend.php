@@ -4,7 +4,7 @@ require_once dirname(__FILE__).'/../base.php';
 function get_column_name($column) { return $column->name; }
 function column_to_string($column) { return $column->to_string(); }
 
-class Column {
+/*class Column {
 	function Column($name) {
 		$this->name = $name;
 	}
@@ -45,7 +45,7 @@ class BooleanColumn extends Column {
 	function to_spec() {
 		return "`$this->name` bool NOT NULL";
 	}
-}
+}*/
 
 function &get_conn() {
 	global $config, $__db;
@@ -74,17 +74,32 @@ class MySQLConnection extends BaseConnection
 	var $real_escape = true;
 	var $prefix;
 	var $column_mapping = array(
-							"integer" => array(
-										"integer" => "integer(10)",
-										"short" => "tinyint"
-										"u_short" => "tinyint UNSIGNED"
-										),
-							"string" => "varchar"
-							"text" => "text"
-							"timestamp" => "integer(10)"
-							"boolean" => "bool"
+							
+							"Integer" => "integer(10) NOT NULL DEFAULT",
+							"Short" => "tinyint NOT NULL DEFAULT",
+							"UShort" => "tinyint UNSIGNED NOT NULL DEFAULT",
+							"String" => "NOT NULL DEFAULT",
+							"Text" => "text NOT NULL",
+							"Timestamp" => "integer(10) NOT NULL",
+							"Boolean" => "bool NOT NULL"
 						);
-	
+	function to_spec($name, $type, $length) {
+		if($type == "Integer" 
+			|| $type == "Short" 
+			|| $type == "UShort") {
+			var $default = 0;
+			return "`$this->name` $column_mapping[$type] '$this->default'";
+		}
+		if($type == "String") {
+			var $default = '';
+			return "`$this->name` varchar($length) $column_mapping[$type] '$this->default'";
+		}
+		if($type == "Text"
+			|| $type == "Timestamp"
+			|| $type == "Boolean") {
+			return "`$this->name` $column_mapping[$type]";
+		}
+	}
 	function connect($host, $user, $password) {
 		$this->conn = mysql_connect($host, $user, $password) or trigger_error(mysql_error(), E_USER_ERROR);
 		$this->real_escape = function_exists('mysql_real_escape_string') && mysql_real_escape_string('ㅋ') == 'ㅋ';
