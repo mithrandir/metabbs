@@ -38,9 +38,11 @@ if ($view == ADMIN_VIEW) {
 	$layout->add_javascript(METABBS_BASE_PATH . 'elements/admin.js');
 	$layout->header = $layout->footer = '';
 } else {
-	$css = 'styles/'.$style->name.'/style.css';
-	if (file_exists($css))
-		$layout->add_stylesheet($style_dir.'/style.css?'.filemtime($css));
+	if (isset($style)) {
+		$css = 'styles/'.$style->name.'/style.css';
+		if (file_exists($css))
+			$layout->add_stylesheet($style_dir.'/style.css?'.filemtime($css));
+	}
 	$layout->add_javascript(METABBS_BASE_PATH . 'elements/script.js');
 	$layout->wrap("<div id=\"meta\">\n", "</div>\n");
 }
