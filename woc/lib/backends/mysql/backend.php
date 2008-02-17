@@ -82,7 +82,8 @@ class MySQLConnection extends BaseConnection
 							"Text" => "text NOT NULL",
 							"Timestamp" => "integer(10) NOT NULL",
 							"Boolean" => "bool NOT NULL"
-						);
+							);
+
 	function to_spec($name, $type, $length) {
 		if($type == "Integer" 
 			|| $type == "Short" 
