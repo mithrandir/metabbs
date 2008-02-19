@@ -19,9 +19,7 @@ if ($guest) {
 	}
 }
 
-// for write.php
-if ($controller == 'post' && $action == 'edit' ||
-	$controller == 'board' && $action == 'post') {
+if ($this->view == 'write') {
 	if ($board->use_category)
 		$categories = $board->get_categories();
 	else
@@ -29,8 +27,9 @@ if ($controller == 'post' && $action == 'edit' ||
 	$notice_checked = $post->notice ? 'checked="checked"' : '';
 	$secret_checked = $post->secret ? 'checked="checked"' : '';
 	$editing = $action == 'edit';
-	$post->author = $post->name;
-	//$post->body = htmlspecialchars($post->body);
+	$post->author = htmlspecialchars($post->name);
+	$post->title = htmlspecialchars($post->title);
+	$post->body = htmlspecialchars($post->body);
 	$additional_fields = array();
 	foreach ($extra_attributes as $attr) {
 		$attr->name = htmlspecialchars($attr->name);
@@ -55,6 +54,7 @@ if (isset($categories)) {
 		} else {
 			$categories[$k]->selected = '';
 		}
+		$categories[$k]->name = htmlspecialchars($c->name);
 		$categories[$k]->url = url_for($board, '', array('category' => $c->id));
 		$categories[$k]->post_count = $c->get_post_count();
 	}
@@ -63,8 +63,7 @@ if (isset($categories)) {
 }
 $manage_url = url_for($board, 'manage');
 
-// for view.php
-if ("$controller/$action" == 'post/index') {
+if ($this->view == 'view') {
 	$layout->add_meta('Author', htmlspecialchars(isset($post->name_orig) ? $post->name_orig : $post->name));
 }
 if (isset($post) && !$board->use_trackback) {
@@ -73,6 +72,8 @@ if (isset($post) && !$board->use_trackback) {
 }
 if (isset($trackbacks)) {
 	foreach ($trackbacks as $k => $v) {
+		$trackbacks[$k]->title = htmlspecialchars($v->title);
+		$trackbacks[$k]->blog_name = htmlspecialchars($v->blog_name);
 		if ($admin)
 			$trackbacks[$k]->delete_url = url_for($v, 'delete');
 		else
@@ -128,14 +129,15 @@ if (isset($post) && $post->exists() && $account->has_perm('comment', $post)) {
 if ($controller == 'comment') {
 	$comment_url = url_for($GLOBALS['comment'], $action);
 	if ($action == 'edit') {
-		$comment_author = $comment->name;
-		$comment_body = $comment->body;
+		$comment_author = htmlspecialchars($comment->name);
+		$comment_body = htmlspecialchars($comment->body);
 	}
 }
 if (isset($comment_url) && !isset($comment_author)) {
-	$comment_author = cookie_get('name');
+	$comment_author = htmlspecialchars(cookie_get('name'));
 	$comment_body = "";
 }
 if (!isset($signature)) $signature = '';
 if (!isset($link_cancel)) $link_cancel = '';
+if (isset($keyword)) $keyword = htmlspecialchars($keyword);
 ?>
