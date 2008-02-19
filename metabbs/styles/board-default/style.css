@@ -2,12 +2,12 @@ html, body { height: 100%; }
 form {
 	margin: 0;
 }
-#meta {
+#meta, #dialog {
 	font-size: 13px;
 	font-family: Verdana, Tahoma, sans-serif;
 	line-height: 1.5;
 }
-#meta a {
+#meta a, #dialog a {
 	color: #000;
 }
 #meta a:hover {
@@ -55,7 +55,7 @@ form {
 #posts th.left {
 	background: #ccc url(header-left.png) no-repeat top left;
 }
-#posts td.author {
+#posts th.author {
 	width: 10em;
 }
 #posts th.date {
