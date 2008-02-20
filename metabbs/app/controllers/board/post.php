@@ -40,12 +40,4 @@ if (is_post()) {
 	if (isset($_GET['search'])) {
 		$post->category_id = $_GET['search']['category'];
 	}
-
-	$template = get_template($board, 'write');
-	$template->set('board', $board);
-	$template->set('post', $post);
-	$template->set('extra_attributes', $extra_attributes);
-	$template->set('link_list', url_for($board));
-	$template->set('link_cancel', '');
 }
-?>
