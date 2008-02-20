@@ -49,7 +49,7 @@ function print_unread_messages($messages) {
 		<?=format_plain($message->body)?>
 		</div>
 		<? if ($message->post_id) { ?>
-		(from <?=link_to_post($message->get_post())?>)
+		(from <?=link_to_post($post = $message->get_post())?><? if ($post->category_id) { ?> / Category: <? $category = $post->get_category(); echo htmlspecialchars($category->name); ?><? } ?>)
 		<? } ?>
 		<div class="message-nav">
 		<? if ($n > 0) { ?><a href="#" onclick="showMessage(<?=$n?>); return false">&lsaquo; Previous</a><? } ?>
