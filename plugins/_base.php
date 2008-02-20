@@ -24,4 +24,6 @@ function sanitize(&$model) {
 add_filter('PostList', 'sanitize', 0);
 add_filter('PostView', 'sanitize', 0);
 add_filter('PostViewComment', 'sanitize', 0);
+
+include dirname(__FILE__).'/../lib/template_engines/standard/filters.php';
 ?>

@@ -4,7 +4,7 @@ class StandardTemplate {
 		$this->path = $path;
 		$this->view = $view;
 		$this->vars = get_global_template_vars();
-		include 'lib/template_engines/standard/filters.php';
+		//include 'lib/template_engines/standard/filters.php';
 	}
 	function set($key, $value) {
 		$this->vars[$key] = $value;
