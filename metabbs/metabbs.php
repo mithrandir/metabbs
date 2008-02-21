@@ -21,12 +21,10 @@ import_enabled_plugins();
 @include 'app/controllers/' . $controller . '.php';
 $action_dir = 'app/controllers/' . $controller;
 if (!run_custom_handler($controller, $action)) {
-	$action_path = $action_dir . '/' . $action . '.php';
-	if (!file_exists($action_path)) {
+	$found = @include $action_dir . '/' . $action . '.php';
+	if (!$found) {
 		header('HTTP/1.1 404 Not Found');
 		print_notice(i('Page not found'), i('The requested URL was not found on this server.'));
-	} else {
-		include $action_path;
 	}
 }
 if (isset($board)) {
