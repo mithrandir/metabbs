@@ -1,3 +1,3 @@
 <?php
-include 'themes/default/account-edit.php';
+include 'themes/'.get_current_theme().'/account-edit.php';
 ?>

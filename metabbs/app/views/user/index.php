@@ -1,3 +1,3 @@
 <?php
-include 'themes/default/user-info.php';
+include 'themes/'.get_current_theme().'/user-info.php';
 ?>
