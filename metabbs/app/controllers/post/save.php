@@ -2,12 +2,6 @@
 if (!defined('SECURITY')) {
 	return;
 }
-$limit = get_upload_size_limit();
-
-// If the size of post data is greater than post_max_size, the $_POST and $_FILES superglobals are empty. (see http://php.net/manual/en/ini.core.php#ini.post-max-size)
-if (empty($_POST) && empty($_FILES)) {
-	print_notice('Max upload size exceeded', 'Please upload files smaller than ' . $limit . '.');
-}
 
 if (!$post->valid()) {
 	// TODO: more friendly error message
@@ -21,10 +15,15 @@ apply_filters('PostSave', $post);
 if ($board->use_attachment && isset($_FILES['upload'])) {
 	$uploads = $_FILES['upload'];
 	$attachments = array();
+	$limit = get_upload_size_limit();
 	foreach ($uploads['name'] as $key => $filename) {
 		if (!$filename) continue;
+		if ($uploads['size'][$key] == 0 ||
+			$uploads['error'][$key] == UPLOAD_ERR_INI_SIZE) {
+			header('HTTP/1.1 413 Request Entity Too Large');
+			print_notice(i('Max upload size exceeded'), i('Please upload files smaller than %s.', $limit));
+		}
 		if (!is_uploaded_file($uploads['tmp_name'][$key])) continue;
-		if ($uploads['size'][$key] == 0) print_notice('Max upload size exceeded', 'Please upload files smaller than ' . $limit . '.');
 		$attachments[] = new Attachment(array('filename' => $filename, 'tmp_name' => $uploads['tmp_name'][$key], 'type' => $uploads['type'][$key]));
 	}
 }
