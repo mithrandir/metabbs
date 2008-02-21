@@ -50,7 +50,7 @@ class BooleanColumn extends Column {
 function &get_conn() {
 	global $config, $__db;
 	if (!isset($__db)) {
-		$__db = new MySQLConnection;
+		$__db = new PgSQLConnection;
 		$__db->open(array(
 			"host" => $config->get('host'),
 			"user" => $config->get('user'),
@@ -65,22 +65,22 @@ function &get_conn() {
 }
 
 /**
- * MySQL 연결 클래스
+ * PostgreSQL 연결 클래스
  */
-class MySQLConnection extends BaseConnection
+class PgSQLConnection extends BaseConnection
 {
 	var $conn;
 	var $utf8 = false;
 	var $real_escape = true;
 	var $prefix;
-	var $column_mapping = array(							
-							"Integer" => "integer(10) NOT NULL DEFAULT",
-							"Short" => "tinyint NOT NULL DEFAULT",
-							"UShort" => "tinyint UNSIGNED NOT NULL DEFAULT",
+	var $column_mapping = array(	
+							"Integer" => "integer NOT NULL DEFAULT",
+							"Short" => "smallint NOT NULL DEFAULT",
+							"UShort" => "smallint NOT NULL DEFAULT",
 							"String" => "NOT NULL DEFAULT",
 							"Text" => "text NOT NULL",
-							"Timestamp" => "integer(10) NOT NULL",
-							"Boolean" => "bool NOT NULL"
+							"Timestamp" => "integer NOT NULL",
+							"Boolean" => "boolean NOT NULL"
 							);
 
 	function to_spec($name, $type, $length) {
@@ -100,45 +100,59 @@ class MySQLConnection extends BaseConnection
 			return "`$this->name` $column_mapping[$type]";
 		}
 	}
-	function connect($host, $user, $password) {
-		$this->conn = mysql_connect($host, $user, $password) or trigger_error(mysql_error(), E_USER_ERROR);
-		$this->real_escape = function_exists('mysql_real_escape_string') && mysql_real_escape_string('ㅋ') == 'ㅋ';
+	function connect($host, $user, $password) {	
+		//$this->conn = mysql_connect($host, $user, $password) or trigger_error(mysql_error(), E_USER_ERROR);
+		//$this->real_escape = function_exists('mysql_real_escape_string') && mysql_real_escape_string('ㅋ') == 'ㅋ';
 	}
 	function open($info) {
-		$this->connect($info["host"], $info["user"], $info["password"]);
-		$this->selectdb($info["dbname"]);
+		$host = $info["host"];
+		$user = $info["user"];
+		$password = $info["password"];
+		$dbname = $info["dbname"];
+
+		$conn_string = "";
+		$conn_string .= ($this->host) ? " host=$this->host" : "";
+		$conn_string .= ($this->user) ? " user=$this->user" : "";
+		$conn_string .= ($this->password) ? " password=$this->password" : "";
+		$conn_string .= ($this->dbname) ? " dbname=$this->dbname" : "";
+		
+		$this->conn = pg_connect($conn_string) or trigger_error(pg_last_error($this->conn), E_USER_ERROR);
+		$this->real_escape = function_exists('pg_escape_string') && pg_escape_string('ㅋ') == 'ㅋ';
+		
+		//$this->connect($info["host"], $info["user"], $info["password"]);
+		//$this->selectdb($info["dbname"]);
 	}
 	function disconnect() {
-		mysql_close($this->conn);
+		pg_close($this->conn);
 	}
 	function close() {
 		$this->disconnect();
 	}
-	function selectdb($dbname) {
+	/*function selectdb($dbname) {
 		mysql_select_db($dbname, $this->conn) or trigger_error(mysql_error(), E_USER_ERROR);
-	}
+	}*/
 	function enable_utf8() {
-		$this->execute('set names utf8');
+		$this->execute('set client_encoding uhc'); //Need review
 		$this->utf8 = true;
 	}
 
 	function execute($query, $params = NULL) {
 		if ($params) $query = $this->bind_params($query, $params);
-		$result = mysql_query($query, $this->conn);
+		$result = pg_query($this->conn, $query);
 		if (!$result) {
 			echo '<br />Error query: ' . htmlspecialchars($query);
-			trigger_error(mysql_error($this->conn), E_USER_ERROR);
+			trigger_error(pg_last_error($this->conn), E_USER_ERROR);
 		}
 		return $result;
 	}
 	function query($query, $params = NULL) {
-		return new MySQLResult($this->execute($query, $params));
+		return new PgSQLResult($this->execute($query, $params));
 	}
 	function escape($query) {
 		if ($this->real_escape) {
-			return mysql_real_escape_string($query, $this->conn);
+			return pg_escape_string($query, $this->conn);
 		} else {
-			return mysql_escape_string($query);
+			return addslashes($query);
 		}
 	}
 	function bind_params($query, $data) {
@@ -170,9 +184,13 @@ class MySQLConnection extends BaseConnection
 		$result = $this->query($query, $data);
 		return $result->fetch_column();
 	}
-	function last_insert_id() {
-		return mysql_insert_id($this->conn);
+	function postg_insert_id ($tablename, $fieldname) {
+		$result = pg_query($this->conn, "SELECT last_value FROM ${tablename}_ ${fieldname}_sql");
 	}
+	function last_insert_id() {
+		return postg_insert_id($this->conn);
+	}
+	
 	function insertid() {
 		$this->last_insert_id();
 	}
@@ -207,7 +225,7 @@ class MySQLConnection extends BaseConnection
 		return $fields;
 	}
 	function get_server_version() {
-		list($major, $minor) = explode('.', mysql_get_server_info($this->conn), 3);
+		list($major, $minor) = explode('.', pg_version($this->conn), 3);
 		return array($major, $minor);
 	}
 	function get_created_tables() {
@@ -228,19 +246,24 @@ class MySQLConnection extends BaseConnection
 	}
 }
 
-class MySQLResult extends BaseResultSet{
-	function MySQLResult($result) {
+class PgSQLResult extends BaseResultSet{
+	function PgSQLResult($result) {
 		$this->result = $result;
 	}
 	function fetch() {
-		return mysql_fetch_assoc($this->result);
+		return pg_fetch_assoc($this->result);
+	}
+	function postg_fetch_row($result) {
+		global $fetch_row_counter;
+		$fetch_row_counter++;
+		return pg_fetch_row($result, $fetch_row_counter);
 	}
 	function fetch_column() {
-		list($value) = mysql_fetch_row($this->result);
+		list($value) = postg_fetch_row($this->result);
 		return $value;
 	}
 	function count() {
-		return mysql_num_rows($this->result);
+		return pg_num_rows($this->result);
 	}
 }
 ?>
