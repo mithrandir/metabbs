@@ -138,3 +138,5 @@ User not found=사용자를 찾을 수 없습니다
 User #%d doesn't exist.=%d번 사용자는 존재하지 않습니다.
 No user id=사용자 번호가 없습니다
 Please append the user id.=주소 뒤에 사용자 번호를 붙이세요.
+Page not found=페이지를 찾을 수 없습니다
+The requested URL was not found on this server.=요청하신 주소를 찾지 못하였습니다.
