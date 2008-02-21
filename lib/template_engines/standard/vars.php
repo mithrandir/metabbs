@@ -7,7 +7,7 @@ if (isset($board)) {
 }
 $guest = $account->is_guest();
 if ($guest) {
-	$link_login = url_with_referer_for($board, 'login');
+	$link_login = url_with_referer_for('account', 'login');
 	$link_signup = url_with_referer_for('account', 'signup');
 } else {
 	$link_logout = url_with_referer_for('account', 'logout');
