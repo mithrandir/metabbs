@@ -10,6 +10,7 @@ if (is_post()) {
     }
 	$config->set('global_header', $settings['global_header']);
 	$config->set('global_footer', $settings['global_footer']);
+	$config->set('theme', $settings['theme']);
 	$config->set('default_language', $settings['default_language']);
 	$config->set('always_use_default_language', $settings['always_use_default_language']);
 	import_default_language(); // reload language data
@@ -23,4 +24,6 @@ if (is_post()) {
 
 $default_language = $config->get('default_language', SOURCE_LANGUAGE);
 $current_tz = Timezone::get();
+$current_theme = get_current_theme();
+$themes = get_themes();
 ?>

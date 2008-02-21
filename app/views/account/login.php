@@ -1,3 +1,3 @@
 <?php
-include 'themes/default/login.php';
+include 'themes/'.get_current_theme().'/login.php';
 ?>

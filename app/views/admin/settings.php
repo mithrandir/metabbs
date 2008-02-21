@@ -10,6 +10,15 @@
 	<dt><?=label_tag(i('Global footer'), 'settings', 'global_footer')?></dt>
 	<dd><?=text_field('settings', 'global_footer', $config->get('global_footer'), 30)?></dd>
 
+	<dt><?=label_tag(i('Site theme'), 'settings', 'theme')?></dt>
+	<dd>
+		<select name="settings[theme]" id="settings_theme">
+		<? foreach ($themes as $theme): ?>
+		<?=option_tag($theme, $theme, $theme == $current_theme)?>
+		<? endforeach; ?>
+		</select>
+	</dd>
+
 	<dt><?=label_tag(i('Default language'), 'settings', 'default_language')?></dt>
 	<dd>
 		<select name="settings[default_language]" id="settings_default_language">
