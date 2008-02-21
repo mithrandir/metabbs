@@ -2,6 +2,8 @@
 permission_required('write', $board);
 
 if (is_post()) {
+	check_post_max_size_overflow();
+
 	if (!$account->has_perm('admin', $board)) {
 		unset($_POST['post']['notice']);
 	}

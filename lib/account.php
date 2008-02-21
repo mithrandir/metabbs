@@ -72,11 +72,8 @@ function editinfo() {
  */
 function access_denied() {
 	global $account;
-	if ($account->is_guest()) {
-		redirect_to(url_with_referer_for('account', 'login'));
-	} else {
-		print_notice('Access denied', 'You have no permission to access this page.');
-	}
+	header('HTTP/1.1 403 Forbidden');
+	print_notice(i('Access denied'), i('You have no permission to access this page.') . ' ' . ($account->is_guest() ? login() : '') );
 }
 
 /**

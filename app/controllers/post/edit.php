@@ -1,5 +1,7 @@
 <?php
 if (is_post()) {
+	check_post_max_size_overflow();
+
 	if (!isset($_POST['post'])) {
 		$_POST['post'] = @array(
 			'title' => $_POST['title'],
