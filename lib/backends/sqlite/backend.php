@@ -4,7 +4,7 @@ require_once dirname(__FILE__).'/../base.php';
 function get_column_name($column) { return $column->name; }
 function column_to_string($column) { return $column->to_string(); }
 
-/*class Column {
+class Column {
 	function Column($name) {
 		$this->name = $name;
 	}
@@ -12,40 +12,40 @@ function column_to_string($column) { return $column->to_string(); }
 class IntegerColumn extends Column {
 	var $default = 0;
 	function to_spec() {
-		return "`$this->name` integer(10) NOT NULL DEFAULT '$this->default'";
+		return "`$this->name` INTEGER NOT NULL DEFAULT '$this->default'";
 	}
 }
 class ShortColumn extends IntegerColumn {
 	function to_spec() {
-		return "`$this->name` tinyint NOT NULL DEFAULT '$this->default'";
+		return "`$this->name` INTEGER NOT NULL DEFAULT '$this->default'";
 	}
 }
 class UShortColumn extends IntegerColumn {
 	function to_spec() {
-		return "`$this->name` tinyint UNSIGNED NOT NULL DEFAULT '$this->default'";
+		return "`$this->name` INTEGER NOT NULL DEFAULT '$this->default'";
 	}
 }
 class StringColumn extends Column {
 	var $default = '';
 	function to_spec($length) {
-		return "`$this->name` varchar($length) NOT NULL DEFAULT '$this->default'";
+		return "`$this->name` TEXT NOT NULL DEFAULT '$this->default'";
 	}
 }
 class TextColumn extends Column {
 	function to_spec() {
-		return "`$this->name` text NOT NULL";
+		return "`$this->name` TEXT NOT NULL";
 	}
 }
 class TimestampColumn extends Column {
 	function to_spec() {
-		return "`$this->name` integer(10) NOT NULL";
+		return "`$this->name` INTEGER NOT NULL";
 	}
 }
 class BooleanColumn extends Column {
 	function to_spec() {
-		return "`$this->name` bool NOT NULL";
+		return "`$this->name` TEXT NOT NULL";
 	}
-}*/
+}
 
 function &get_conn() {
 	global $config, $__db;
@@ -73,30 +73,7 @@ class SQLiteConnection extends BaseConnection
 	var $utf8 = false;
 	//var $real_escape = true;
 	var $prefix;
-	var $column_mapping = array(
-							"Integer" => "INTEGER NOT NULL DEFAULT",
-							"Short" => "INTEGER NOT NULL DEFAULT",
-							"UShort" => "INTEGER NOT NULL DEFAULT",
-							"String" => "TEXT NOT NULL DEFAULT",
-							"Text" => "TEXT NOT NULL",
-							"Timestamp" => "INTEGER NOT NULL",
-							"Boolean" => "TEXT NOT NULL" //To be Reviewed
-							);
-
-	function to_spec($name, $type, $length) {
-		if($type == "Integer"
-			|| $type == "Short"
-			|| $type == "UShort") {
-			var $default = 0;
-			return "`$this->name` $column_mapping[$type] '$this->default'";
-		}
-		if($type == "String"
-			|| $type == "Text"
-			|| $type == "Timestamp"
-			|| $type == "Boolean") {
-			return "`$this->name` $column_mapping[$type]";
-		}
-	}
+	
 	function connect($host,$user,$password) {
 		//$this->conn = mysql_connect($host, $user, $password) or trigger_error(mysql_error(), E_USER_ERROR);
 		//$this->real_escape = function_exists('mysql_real_escape_string') && mysql_real_escape_string('ㅋ') == 'ㅋ';
