@@ -1,10 +1,8 @@
 <?php
-require_once dirname(__FILE__).'/../base.php';
-
 function get_column_name($column) { return $column->name; }
 function column_to_string($column) { return $column->to_string(); }
 
-/*class Column {
+class Column {
 	function Column($name) {
 		$this->name = $name;
 	}
@@ -45,18 +43,14 @@ class BooleanColumn extends Column {
 	function to_spec() {
 		return "`$this->name` bool NOT NULL";
 	}
-}*/
+}
 
 function &get_conn() {
 	global $config, $__db;
 	if (!isset($__db)) {
 		$__db = new MySQLConnection;
-		$__db->open(array(
-			"host" => $config->get('host'),
-			"user" => $config->get('user'),
-			"password" => $config->get('password'),
-			"dbname" => $config->get('dbname')
-		));
+		$__db->connect($config->get('host'), $config->get('user'), $config->get('password'));
+		$__db->selectdb($config->get('dbname'));
 		if ($config->get('force_utf8') == '1') {
 			$__db->enable_utf8();
 		}
@@ -67,52 +61,19 @@ function &get_conn() {
 /**
  * MySQL 연결 클래스
  */
-class MySQLConnection extends BaseConnection
+class MySQLConnection
 {
 	var $conn;
 	var $utf8 = false;
 	var $real_escape = true;
 	var $prefix;
-	var $column_mapping = array(							
-							"Integer" => "integer(10) NOT NULL DEFAULT",
-							"Short" => "tinyint NOT NULL DEFAULT",
-							"UShort" => "tinyint UNSIGNED NOT NULL DEFAULT",
-							"String" => "NOT NULL DEFAULT",
-							"Text" => "text NOT NULL",
-							"Timestamp" => "integer(10) NOT NULL",
-							"Boolean" => "bool NOT NULL"
-							);
 
-	function to_spec($name, $type, $length) {
-		if($type == "Integer" 
-			|| $type == "Short" 
-			|| $type == "UShort") {
-			var $default = 0;
-			return "`$this->name` $column_mapping[$type] '$this->default'";
-		}
-		if($type == "String") {
-			var $default = '';
-			return "`$this->name` varchar($length) $column_mapping[$type] '$this->default'";
-		}
-		if($type == "Text"
-			|| $type == "Timestamp"
-			|| $type == "Boolean") {
-			return "`$this->name` $column_mapping[$type]";
-		}
-	}
 	function connect($host, $user, $password) {
 		$this->conn = mysql_connect($host, $user, $password) or trigger_error(mysql_error(), E_USER_ERROR);
 		$this->real_escape = function_exists('mysql_real_escape_string') && mysql_real_escape_string('ㅋ') == 'ㅋ';
 	}
-	function open($info) {
-		$this->connect($info["host"], $info["user"], $info["password"]);
-		$this->selectdb($info["dbname"]);
-	}
 	function disconnect() {
 		mysql_close($this->conn);
-	}
-	function close() {
-		$this->disconnect();
 	}
 	function selectdb($dbname) {
 		mysql_select_db($dbname, $this->conn) or trigger_error(mysql_error(), E_USER_ERROR);
@@ -122,8 +83,8 @@ class MySQLConnection extends BaseConnection
 		$this->utf8 = true;
 	}
 
-	function execute($query, $params = NULL) {
-		if ($params) $query = $this->bind_params($query, $params);
+	function execute($query, $data = NULL) {
+		if ($data) $query = $this->_q($query, $data);
 		$result = mysql_query($query, $this->conn);
 		if (!$result) {
 			echo '<br />Error query: ' . htmlspecialchars($query);
@@ -131,8 +92,8 @@ class MySQLConnection extends BaseConnection
 		}
 		return $result;
 	}
-	function query($query, $params = NULL) {
-		return new MySQLResult($this->execute($query, $params));
+	function query($query, $data = NULL) {
+		return new MySQLResult($this->execute($query, $data));
 	}
 	function escape($query) {
 		if ($this->real_escape) {
@@ -141,7 +102,7 @@ class MySQLConnection extends BaseConnection
 			return mysql_escape_string($query);
 		}
 	}
-	function bind_params($query, $data) {
+	function _q($query, $data) {
 		$tokens = preg_split('/([?!])/', $query, -1, PREG_SPLIT_DELIM_CAPTURE);
 		foreach ($tokens as $i => $token) {
 			if ($token == '?')
@@ -170,11 +131,8 @@ class MySQLConnection extends BaseConnection
 		$result = $this->query($query, $data);
 		return $result->fetch_column();
 	}
-	function last_insert_id() {
-		return mysql_insert_id($this->conn);
-	}
 	function insertid() {
-		$this->last_insert_id();
+		return mysql_insert_id($this->conn);
 	}
 	function add_table($t) {
 		$sql = $t->to_sql();
@@ -191,6 +149,10 @@ class MySQLConnection extends BaseConnection
 	function add_field($t, $name, $type, $length = NULL) {
 		$table = new Table($t);
 		$this->execute("ALTER TABLE $table->table ADD " . $table->_column($name, $type, $length));
+	}
+	function change_field($t, $old_name, $new_name, $type, $length = NULL) {
+		$table = new Table($t);
+		$this->execute("ALTER TABLE $table->table CHANGE `$old_name` " . $table->_column($new_name, $type, $length));
 	}
 	function drop_field($t, $name) {
 		$this->execute("ALTER TABLE ".get_table_name($t)." DROP COLUMN $name");
@@ -228,7 +190,7 @@ class MySQLConnection extends BaseConnection
 	}
 }
 
-class MySQLResult extends BaseResultSet{
+class MySQLResult {
 	function MySQLResult($result) {
 		$this->result = $result;
 	}
