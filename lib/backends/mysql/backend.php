@@ -1,4 +1,6 @@
 <?php
+require_once dirname(__FILE__).'/../base.php';
+
 function get_column_name($column) { return $column->name; }
 function column_to_string($column) { return $column->to_string(); }
 
@@ -61,13 +63,16 @@ function &get_conn() {
 /**
  * MySQL 연결 클래스
  */
-class MySQLConnection
+class MySQLConnection extends BaseConnection
 {
 	var $conn;
 	var $utf8 = false;
 	var $real_escape = true;
 	var $prefix;
-
+	function open($info) {
+		$this->connect($info["host"], $info["user"], $info["password"]);
+		$this->selectdb($info["dbname"]);
+	}
 	function connect($host, $user, $password) {
 		$this->conn = mysql_connect($host, $user, $password) or trigger_error(mysql_error(), E_USER_ERROR);
 		$this->real_escape = function_exists('mysql_real_escape_string') && mysql_real_escape_string('ㅋ') == 'ㅋ';
@@ -190,7 +195,7 @@ class MySQLConnection
 	}
 }
 
-class MySQLResult {
+class MySQLResult extends BaseResultSet{
 	function MySQLResult($result) {
 		$this->result = $result;
 	}
