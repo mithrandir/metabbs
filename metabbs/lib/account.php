@@ -40,7 +40,7 @@ function admin() {
  */
 function login() {
 	global $board;
-	return link_to_account(i('Login'), 'login', 'link-login', isset($board) ? $board : 'account');
+	return link_to_account(i('Login'), 'login', 'link-login');
 }
 
 /**
