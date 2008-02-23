@@ -63,7 +63,7 @@ class Board extends Model {
 		return $this->_count;
 	}
 	function get_categories() {
-		return find_all('category', "board_id=$this->id");
+		return find_all('category', "board_id=$this->id", "name");
 	}
 	function add_category($category) {
 		$category->board_id = $this->id;
