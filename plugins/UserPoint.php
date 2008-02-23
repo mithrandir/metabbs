@@ -16,7 +16,7 @@ class UserPoint extends Plugin {
 			$this->comment_unit = 1;
 		}
 
-		add_filter('UserInfo', array(&$this, 'user_info_filter'), 1000);
+		add_filter('UserInfo', array(&$this, 'user_info_filter'), 1500);
 	}
 
 	function get_point($user) {
