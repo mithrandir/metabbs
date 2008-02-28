@@ -1,5 +1,5 @@
 <div id="post">
-	<h1><div class="title-wrap"><?=$post->title?></div></h1>
+	<h1><span class="title-wrap"><?=$post->title?></span></h1>
 
 	<table>
 	<tr>

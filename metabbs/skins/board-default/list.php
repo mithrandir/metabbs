@@ -60,9 +60,11 @@
 </form>
 
 <form method="get" action="" id="search-form">
+<div>
 	<input type="checkbox" name="title" id="search_title" value="1" <?=$title_checked?> /> <label for="search_title">제목</label> 
 	<input type="checkbox" name="body" id="search_body" value="1" <?=$body_checked?> /> <label for="search_body">내용</label> 
 	<input type="checkbox" name="comment" id="search_comment" value="1" <?=$comment_checked?> /> <label for="search_comment">댓글</label> 
 	<input type="text" name="keyword" value="<?=$keyword?>" />
 	<input type="submit" value="검색" />
+</div>
 </form>

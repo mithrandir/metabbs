@@ -1,6 +1,6 @@
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" action="">
 <div id="post-form">
-<h1><div class="title-wrap">글쓰기</div></h1>
+<h1><span class="title-wrap">글쓰기</span></h1>
 <table>
 <? if ($guest): ?>
 <tr>
