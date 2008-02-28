@@ -11,8 +11,8 @@
 	<? endif; ?>
 	<p><textarea name="body" cols="40" rows="5"><?=$comment_body?></textarea></p>
 
-	<input type="submit" value="댓글 달기" class="button" />
-	<? if ($link_cancel): ?><a href="<?=$link_cancel?>" class="button dialog-close">취소</a><? endif; ?>
+	<div><input type="submit" value="댓글 달기" class="button" />
+	<? if ($link_cancel): ?><a href="<?=$link_cancel?>" class="button dialog-close">취소</a><? endif; ?></div>
 	</form>
 
 	<script type="text/javascript">
