@@ -4,7 +4,7 @@ $template->set('board', $board);
 
 if (isset($keyword)) {
 	$template->set('keyword', $keyword);
-	foreach (array('title', 'body', 'comment') as $key) {
+	foreach (array('author', 'title', 'body', 'comment') as $key) {
 		if (isset($_GET[$key]) && $_GET[$key]) {
 			$finder->add_condition($key);
 			$template->set($key.'_checked', 'checked="checked"');
@@ -14,6 +14,7 @@ if (isset($keyword)) {
 	}
 } else {
 	$template->set('keyword', '');
+	$template->set('author_checked', '');
 	$template->set('title_checked', 'checked="checked"');
 	$template->set('body_checked', '');
 	$template->set('comment_checked', '');

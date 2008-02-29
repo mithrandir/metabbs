@@ -18,7 +18,7 @@ $finder->get_post_body = $style->skin->get_option('get_body_in_the_list', true);
 if (isset($_GET['keyword']) && trim($_GET['keyword'])) {
 	$keyword = $_GET['keyword'];
 	$finder->set_keyword($keyword);
-	foreach (array('title', 'body', 'comment') as $key) {
+	foreach (array('author', 'title', 'body', 'comment') as $key) {
 		if (isset($_GET[$key]) && $_GET[$key]) {
 			$finder->add_condition($key);
 		}

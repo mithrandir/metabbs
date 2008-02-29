@@ -3,7 +3,7 @@ class PostFinder {
 	var $keyword = '';
 	var $category = null;
 	var $page = 1;
-	var $conditions = array('title' => false, 'body' => false, 'comment' => false);
+	var $conditions = array('author' => false, 'title' => false, 'body' => false, 'comment' => false);
 
 	function PostFinder($board) {
 		$this->board = $board;
@@ -41,6 +41,9 @@ class PostFinder {
 						} else {
 							$or_parts[] = "0";
 						}
+					break;
+					case 'author':
+						$or_parts[] = "name LIKE '%$keyword%'";
 					break;
 					default:
 						$or_parts[] = "$k LIKE '%$keyword%'";
