@@ -10,7 +10,7 @@ class Message extends Model {
 		return find('message', $id);
 	}
 	function get_unread_messages_of($user) {
-		return find_first('message', "`to`=$user->id AND NOT `read`");
+		return find_all('message', "`to`=$user->id AND NOT `read`");
 	}
 	function mark_all_read($user) {
 		update_all('message', array('read' => 1), "`to`=$user->id");
@@ -184,6 +184,10 @@ class Messenger extends Plugin {
 		$t->column('read', 'boolean');
 		$t->add_index('to');
 		$db->add_table($t);
+	}
+	function on_uninstall() {
+		$db = get_conn();
+		$db->drop_table('message');
 	}
 }
 
