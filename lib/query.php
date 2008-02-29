@@ -19,8 +19,15 @@ function find_and_cache($model, $id) {
 
 function find_by($model, $key, $value) {
 	global $__db;
+	return find_first($model, $__db->quote_identifier($key)."=".$__db->quote($value));
+}
+
+function find_first($model, $condition = '') {
+	global $__db;
 	$table = get_table_name($model);
-	$result = $__db->query("SELECT * FROM $table WHERE ".$__db->quote_identifier($key)."=".$__db->quote($value));
+	$query = "SELECT * FROM $table";
+	if ($condition) $query .= " WHERE $condition";
+	$result = $__db->query($query);
 	return new $model($result->fetch());
 }
 
