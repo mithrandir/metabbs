@@ -23,7 +23,7 @@ if (is_post()) {
 		cookie_register('name', $_comment->name);
 	}
 
-	apply_filters('PostComment', $_comment);
+	apply_filters('PostComment', $_comment, array('reply' => TRUE));
 
 	$post = $comment->get_post();
 	$post->add_comment($_comment);

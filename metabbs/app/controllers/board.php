@@ -9,5 +9,5 @@ if (!$board->exists()) {
 	header('HTTP/1.1 404 Not Found');
 	print_notice(i('Board not found'), i("Board %s doesn't exist.", $id));
 }
-$title = $board->get_title();
+$title = htmlspecialchars($board->get_title());
 ?>

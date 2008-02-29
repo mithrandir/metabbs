@@ -84,6 +84,7 @@ class Layout {
 	var $javascripts = array();
 	var $metadata = array();
 	var $header, $footer;
+	var $title = 'MetaBBS';
 
 	function Layout() {
 		$this->add_meta('Generator', 'MetaBBS '.METABBS_VERSION);

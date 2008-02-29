@@ -8,5 +8,5 @@ if ($action != 'edit') {
 		print_notice(i('User not found'), i("User #%d doesn't exist.", $id));
 	}
 }
-$title = $user->name;
+$title = htmlspecialchars($user->name);
 ?>

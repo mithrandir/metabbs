@@ -13,7 +13,7 @@ if (!$uri) {
 
 $layout = new Layout;
 $layout->add_javascript(METABBS_BASE_PATH . 'elements/prototype.js');
-$title = 'MetaBBS';
+$title = &$layout->title;
 $view = DEFAULT_VIEW;
 
 import_enabled_plugins();
@@ -53,7 +53,7 @@ if ($view == ADMIN_VIEW) {
 
 ob_start();
 if (isset($template)) {
-	$template->set('title', $title);
+	$template->set('title', $title); // XXX
 	$template->render();
 } else include "app/views/$controller/$action.php";
 $content = ob_get_contents();
