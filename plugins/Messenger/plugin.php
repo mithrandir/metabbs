@@ -7,19 +7,13 @@ class Message extends Model {
 		$this->table = get_table_name('message');
 	}
 	function find($id) {
-		$db = get_conn();
-		$table = get_table_name('message');
-		return $db->fetchrow("SELECT * FROM $table WHERE id=?", 'Message', array($id));
+		return find('message', $id);
 	}
 	function get_unread_messages_of($user) {
-		$db = get_conn();
-		$table = get_table_name('message');
-		return $db->fetchall("SELECT * FROM $table WHERE `to`=$user->id AND NOT `read`", 'Message');
+		return find_first('message', "`to`=$user->id AND NOT `read`");
 	}
 	function mark_all_read($user) {
-		$db = get_conn();
-		$table = get_table_name('message');
-		$db->query("UPDATE $table SET `read`=1 WHERE `to`=$user->id");
+		update_all('message', array('read' => 1), "`to`=$user->id");
 	}
 	function get_sender() {
 		return User::find($this->from);
@@ -28,7 +22,7 @@ class Message extends Model {
 		return Post::find($this->post_id);
 	}
 	function mark_as_read() {
-		$this->db->query("UPDATE $this->table SET `read`=1 WHERE id=$this->id");
+		update_all('message', array('read' => 1), "id=$this->id");
 	}
 }
 
@@ -123,7 +117,7 @@ class Messenger extends Plugin {
 		$parent = $comment->get_parent();
 		$post = $comment->get_post();
 
-		if ($parent && $parent->user_id && $parent->user_id != $post->id) {
+		if ($parent && $parent->user_id && $parent->user_id != $post->user_id) {
 			$message = new Message;
 			$message->from = $account->id;
 			$message->to = $parent->user_id;
