@@ -21,7 +21,7 @@ if (!$account->is_guest()) {
 }
 $comment->post_id = $post->id;
 
-apply_filters('PostComment', $comment);
+apply_filters('PostComment', $comment, array('reply' => false));
 
 $post->add_comment($comment);
 if (is_xhr()) {

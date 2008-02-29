@@ -12,5 +12,5 @@ if ($post->moved_to) {
 	redirect_to(url_for(new Post(array('id' => $post->moved_to)), $action));
 }
 $board = $post->get_board();
-$title = $board->get_title() . " - $post->title";
+$title = htmlspecialchars($board->get_title() . " - $post->title");
 ?>

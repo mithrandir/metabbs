@@ -15,5 +15,5 @@ $board = Blog::find_by_name('blog'); //XXX
 
 require_once 'lib/page.php';
 $controller = 'board';
-$title = $board->title;
+$layout->title = htmlspecialchars($board->get_title());
 ?>
