@@ -2,17 +2,17 @@
 require_once '../lib/backends/sqlite/backend.php';
 class SQLiteTest extends UnitTestCase {
 	function setUp() {
-		$testdb = "metabbs_test";
+		$testdb = ':memory:';
 		$this->conn = new SQLiteConnection;
 	}
 	function testOpen() {
-		$testdb = "metabbs_test";
+		$testdb = ':memory:';
 		$this->conn->open(array(
 			"dbname" => $testdb
 			));
 	}
 	function testClose() {
-		$testdb = "metabbs_test";
+		$testdb = ':memory:';
 		$db_handle = $this->conn->open(array(
 					"dbname" => $testdb
 					)); //why null?

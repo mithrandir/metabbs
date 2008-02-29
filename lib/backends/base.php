@@ -2,45 +2,50 @@
 class BaseConnection {
 	function BaseConnection() {
 		if(get_class($this) == 'BaseConnection')
-			trigger_error('Not implemented yet');
+			self::trigger_not_implemented_error();
 	}
 	function open($info) {	
-		trigger_error('Not implemented yet');
+		self::trigger_not_implemented_error();
 	}
 	function close() {
-		trigger_error('Not implemented yet');
+		self::trigger_not_implemented_error();
 	}
 	function execute($query) {
-		trigger_error('Not implemented yet');
+		self::trigger_not_implemented_error();
 	}
 	function query($query) { 
-		trigger_error('Not implemented yet');
+		self::trigger_not_implemented_error();
 	}
 	function last_insert_id($sequence_name) {
-		trigger_error('Not implemented yet');
+		self::trigger_not_implemented_error();
 	}
 	function bind_params($query, $params) {
-		trigger_error('Not implemented yet');
+		self::trigger_not_implemented_error();
 	}
 	function escape($string) {
-		trigger_error('Not implemented yet');
+		self::trigger_not_implemented_error();
 	}
 	function quote($value) {
-		trigger_error('Not implemented yet');
+		self::trigger_not_implemented_error();
 	}
 	function quote_identifier($id) {
-		trigger_error('Not implemented yet');
+		self::trigger_not_implemented_error();
+	}
+	function trigger_not_implemented_error() {
+			list(, $callee) = debug_backtrace();
+			$callee = $callee['class'].$callee['type'].$callee['function'].'()';
+			trigger_error("Not implemented $callee", E_USER_ERROR);
 	}
 }
 
 class BaseResultSet {
 	function fetch() {
-		trigger_error('Not implemented yet');
+		BaseConection::trigger_not_implemented_error();
 	}
 	function fetch_column() {
-		trigger_error('Not implemented yet');
+		BaseConection::trigger_not_implemented_error();
 	}
 	function count() {
-		trigger_error('Not implemented yet');
+		BaseConection::trigger_not_implemented_error();
 	}
 }
