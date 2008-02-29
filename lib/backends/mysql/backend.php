@@ -34,6 +34,11 @@ class TextColumn extends Column {
 		return "`$this->name` text NOT NULL";
 	}
 }
+class LongTextColumn extends Column {
+	function to_spec() {
+		return "`$this->name` longtext NOT NULL";
+	}
+}
 class TimestampColumn extends Column {
 	function to_spec() {
 		return "`$this->name` integer(10) NOT NULL";
