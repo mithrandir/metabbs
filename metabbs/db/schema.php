@@ -1,5 +1,5 @@
 <?php
-define('METABBS_DB_REVISION', 1103);
+define('METABBS_DB_REVISION', 1158);
 
 function run($conn) {
 	$t = new Table('board');
@@ -32,7 +32,7 @@ function run($conn) {
 	$t->column('category_id', 'integer');
 	$t->column('name', 'string', 45);
 	$t->column('title', 'string', 255);
-	$t->column('body', 'text');
+	$t->column('body', 'longtext');
 	$t->column('password', 'string', 32);
 	$t->column('created_at', 'timestamp');
 	$t->column('notice', 'boolean');
