@@ -21,6 +21,12 @@ function modern_list_filter(&$post) {
 	$post->url = url_for($post, '', get_search_params());
 	$post->date = date('Y-m-d', $post->created_at);
 	$post->time = date('H:i:s', $post->created_at);
+	if (isset($post->attachments)) {
+		foreach ($post->attachments as $k => $v) {
+			modern_attachment_filter($post->attachments[$k]);
+		}
+		$post->attachment_count = count($post->attachments);
+	}
 }
 add_filter('PostList', 'modern_list_filter', 32768);
 
@@ -62,4 +68,15 @@ function modern_comment_filter(&$comment) {
 	}
 }
 add_filter('PostViewComment', 'modern_comment_filter', 32768);
+
+function modern_attachment_filter(&$attachment) {
+	$attachment->filename = shorten_path(htmlspecialchars($attachment->filename));
+	$attachment->url = htmlspecialchars(url_for($attachment));
+	$attachment->size = human_readable_size($attachment->get_size());
+	if ($attachment->is_image()) {
+		$attachment->thumbnail_url = url_for($attachment).'?thumb=1';
+	} else {
+		$attachment->thumbnail_url = null;
+	}
+}
 ?>
