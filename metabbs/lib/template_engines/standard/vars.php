@@ -98,14 +98,7 @@ if (isset($older_post)) {
 }
 if (isset($attachments)) {
 	foreach ($attachments as $k => $v) {
-		$attachments[$k]->filename = shorten_path(htmlspecialchars($v->filename));
-		$attachments[$k]->url = htmlspecialchars(url_for($v));
-		$attachments[$k]->size = human_readable_size($v->get_size());
-		if ($v->is_image()) {
-			$attachments[$k]->thumbnail_url = url_for($v).'?thumb=1';
-		} else {
-			$attachments[$k]->thumbnail_url = null;
-		}
+		modern_attachment_filter($attachments[$k]);
 	}
 }
 if (isset($comments)) {

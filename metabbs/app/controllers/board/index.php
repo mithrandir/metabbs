@@ -14,6 +14,7 @@ $finder = new PostFinder($board);
 $board->finder = $finder;
 $finder->set_page(get_requested_page());
 $finder->get_post_body = $style->skin->get_option('get_body_in_the_list', true);
+$finder->exclude_notice = $style->skin->get_option('exclude_notice');
 
 if (isset($_GET['keyword']) && trim($_GET['keyword'])) {
 	$keyword = $_GET['keyword'];
@@ -39,7 +40,17 @@ if ($board->use_category) {
 	}
 }
 $posts = $finder->get_posts();
+if ($style->skin->get_option('preload_attachments')) {
+	foreach ($posts as $n => $post) {
+		$posts[$n]->attachments = $post->get_attachments();
+	}
+}
 apply_filters_array('PostList', $posts);
+
+if ($finder->exclude_notice) {
+	$notices = $finder->get_notice_posts();
+	apply_filters_array('PostList', $notices);
+}
 
 $post_count = $board->get_post_count();
 $matched_post_count = $finder->get_post_count();

@@ -29,6 +29,8 @@ if ($board->use_category) {
 $template->set('posts', $posts);
 $template->set('post_count', $count = $board->get_post_count());
 $template->set('posts_count', $count); // backward compatibility
+if (isset($notices)) $template->set('notices', $notices);
+
 $template->set('link_rss', url_for($board, 'rss'));
 $template->set('link_new_post', $account->has_perm('write', $board) ? url_for($board, 'post', get_search_params()) : null);
 $template->set('admin', $account->has_perm('admin', $board));

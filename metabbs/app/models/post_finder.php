@@ -4,6 +4,8 @@ class PostFinder {
 	var $category = null;
 	var $page = 1;
 	var $conditions = array('author' => false, 'title' => false, 'body' => false, 'comment' => false);
+	var $exclude_notice = false;
+	var $get_post_body = true;
 
 	function PostFinder($board) {
 		$this->board = $board;
@@ -26,6 +28,9 @@ class PostFinder {
 		$keyword = $this->db->escape($this->keyword);
 		$and_parts = array('board_id='.$this->board->id);
 		$or_parts = array();
+		if ($this->exclude_notice) {
+			$and_parts[] = 'notice=0';
+		}
 		foreach ($this->conditions as $k => $v) {
 			if ($v) {
 				switch ($k) {
@@ -57,13 +62,21 @@ class PostFinder {
 			$and_parts[] = 'category_id='.$this->category->id;
 		return implode(' AND ', $and_parts);
 	}
-	function get_posts() {
+	function get_fields() {
 		$fields = 'id, board_id, user_id, category_id, name, title, created_at, notice, views, secret, moved_to, comment_count';
 		if ($this->get_post_body) $fields .= ', body';
+		return $fields;
+	}
+	function get_posts() {
+		$fields = $this->get_fields();
 		$offset = ($this->page - 1) * $this->board->posts_per_page;
 		$limit = $this->board->posts_per_page;
 		$condition = $this->get_condition();
 		return $this->db->fetchall("SELECT $fields FROM $this->table WHERE $condition ORDER BY sort_key, id DESC LIMIT $offset, $limit", 'Post');
+	}
+	function get_notice_posts() {
+		$fields = $this->get_fields();
+		return $this->db->fetchall("SELECT $fields FROM $this->table WHERE board_id={$this->board->id} AND notice=1 ORDER BY sort_key, id DESC", 'Post');
 	}
 	function get_post_count() {
 		$condition = $this->get_condition();
