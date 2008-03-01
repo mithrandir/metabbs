@@ -14,6 +14,9 @@ class Xquared extends Plugin {
 		add_filter('PostView', array(&$this, 'format'), 500);
 		add_filter('PostViewRSS', array(&$this, 'format'), 500);
 
+		$plugin_uri = METABBS_BASE_PATH.'plugins/Xquared';
+		$layout->add_stylesheet("$plugin_uri/css/xq_contents.css");
+
 		if($controller == 'board' and $action == 'post' or $controller == 'post' and $action == 'edit')
 			$this->enable_editor();
 	}
@@ -43,7 +46,7 @@ class Xquared extends Plugin {
 			$post->body = format_plain($post->body);
 		else {
 			$safe = new HTML_Safe;
-			$post->body = $safe->parse($post->body);
+			$post->body = '<div class="xed">'.$safe->parse($post->body).'</div>';
 		}
 	}
 }
