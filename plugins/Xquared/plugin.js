@@ -236,7 +236,7 @@ function loadXq() {
 	xed.addAutocompletions(getAdditionalAutocompletions());
 	xed.addContextMenuHandler('test', contextMenuHandler);
 	xed.setEditMode('wysiwyg');
-	xed.loadStylesheet(XquaredPluginUri + '/css/xq_contents.css');
+	xed.loadStylesheet(XquaredPluginUri + '/css/xq_contents_editor.css');
 
 	setPostAttribute(document.getElementById('post_body').form, 'format', 'xquared-html');
 
