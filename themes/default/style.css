@@ -1,0 +1,46 @@
+#dialog {
+	font-size: 13px;
+	font-family: Verdana, Tahoma, sans-serif;
+	line-height: 1.5;
+}
+#dialog a {
+	color: #000;
+}
+
+#dialog-overlay {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1000;
+	width: 100%;
+	height: 100%;
+	background: transparent url(dialog-overlay.png) center center no-repeat;
+}
+#dialog {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-top: -195px;
+	margin-left: -270px;
+	width: 457px;
+	height: 309px;
+	padding: 42px;
+}
+
+#dialog h1 {
+	margin: 0 !important;
+	font-size: 1em;
+	padding: 0.3em 0.5em;
+	background: transparent url(header.png) repeat-x;
+}
+#dialog form {
+	padding: 1.5em;
+}
+#dialog .button {
+	float: left;
+}
+#dialog-close {
+	float: right;
+	font-weight: bold;
+	padding: 0.5em;
+}

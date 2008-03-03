@@ -47,6 +47,9 @@ if ($view == ADMIN_VIEW) {
 		if (file_exists($css))
 			$layout->add_stylesheet($style_dir.'/style.css?'.filemtime($css));
 	}
+	$css = 'themes/'.get_current_theme().'/style.css';
+	if (file_exists($css))
+		$layout->add_stylesheet(METABBS_BASE_PATH . $css);
 	$layout->add_javascript(METABBS_BASE_PATH . 'elements/script.js');
 	$layout->wrap("<div id=\"meta\">\n", "</div>\n");
 }
