@@ -155,27 +155,36 @@ function addDialogOverlay() {
 
 function addCloseButton() {
 	new Insertion.Top('dialog', '<a href="#" class="dialog-close" id="dialog-close">X</a>');
+	$('dialog-close').focus();
+}
+
+function fixIEDocumentHeight(mode) {
+	if (!Prototype.Browser.IE) return;
+	if (mode == true) {
+		$$('html', 'body').each(function (el) {
+			el.setAttribute('originalHeight', el.style.height);
+			el.style.height = {html: '93%', body: '100%'}[el.tagName.toLowerCase()];
+		});
+	} else {
+		$$('html', 'body').each(function (el) {
+			el.style.height = el.getAttribute('originalHeight');
+		});
+	}
 }
 
 function openDialog(href) {
-	var overlay = $('dialog-overlay');
-	if (document.documentElement && document.documentElement.scrollTop){
-		overlay.style.top = document.documentElement.scrollTop + 'px';
-	} else if (document.body) {
-		overlay.style.top = document.body.scrollTop + 'px';
-	}
-
-	new Ajax.Updater('dialog', href, {
+	new Ajax.Request(href, {
 		method: 'get',
-		onComplete: function () {
+		onComplete: function (xhr) {
+			fixIEDocumentHeight(true);
+			var overlay = $('dialog-overlay');
+			overlay.style.top = document.viewport.getScrollOffsets().top;
+			$('dialog').innerHTML = xhr.responseText;
+			overlay.show();
+
 			addCloseButton();
 			triggerCloseLinks();
 			fixFormActions(href);
-			$('dialog-overlay').show();
-
-			var title = $$('#dialog h1')[0];
-			title.innerHTML = '<a href="#"></a>' + title.innerHTML;
-			title.childNodes[0].focus();
 		}
 	});
 }
@@ -193,6 +202,7 @@ function triggerCloseLinks() {
 	$$('#dialog a.dialog-close').each(function (link) {
 		Event.observe(link, 'click', function (ev) {
 			$('dialog-overlay').hide();
+			fixIEDocumentHeight(false);
 			Event.stop(ev);
 		});
 	});
