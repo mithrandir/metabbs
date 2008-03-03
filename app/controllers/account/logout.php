@@ -1,4 +1,6 @@
 <?php
+login_required();
+
 $nothing = null;
 apply_filters('BeforeLogout', $nothing);
 UserManager::logout();

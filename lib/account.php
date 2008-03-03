@@ -73,7 +73,15 @@ function editinfo() {
 function access_denied() {
 	global $account;
 	header('HTTP/1.1 403 Forbidden');
-	print_notice(i('Access denied'), i('You have no permission to access this page.') . ' ' . ($account->is_guest() ? login() : '') );
+	print_notice(i('Access denied'), i('You have no permission to access this page.') . ' ' . ($account->is_guest() ? login() : ''));
+}
+
+function login_required() {
+	global $account;
+	if ($account->is_guest()) {
+		header('HTTP/1.1 403 Forbidden');
+		print_notice(i('Access denied'), i('Please login to access this page.') . ' ' . ($account->is_guest() ? login() : ''));
+	}
 }
 
 /**
