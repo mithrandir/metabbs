@@ -172,13 +172,20 @@ function fixIEDocumentHeight(mode) {
 	}
 }
 
+function getScrollTop() {
+	if (document.documentElement && document.documentElement.scrollTop)
+		return document.documentElement.scrollTop;
+	else if (document.body)
+		return document.body.scrollTop;
+}
+
 function openDialog(href) {
 	new Ajax.Request(href, {
 		method: 'get',
 		onComplete: function (xhr) {
 			fixIEDocumentHeight(true);
 			var overlay = $('dialog-overlay');
-			overlay.style.top = document.viewport.getScrollOffsets().top;
+			overlay.style.top = getScrollTop() + 'px';
 			$('dialog').innerHTML = xhr.responseText;
 			overlay.show();
 
