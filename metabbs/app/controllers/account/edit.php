@@ -1,4 +1,6 @@
 <?php
+login_required();
+
 if (is_post()) {
 	$old_password = $account->password;	
 	$account->import($_POST['user']);
