@@ -14,17 +14,18 @@
 	z-index: 1000;
 	width: 100%;
 	height: 100%;
-	background: transparent url(dialog-overlay.png) center center no-repeat;
+	background-image: url(spacer.gif);
 }
 #dialog {
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	margin-top: -195px;
-	margin-left: -270px;
-	width: 457px;
-	height: 309px;
-	padding: 42px;
+	margin-left: -200px;
+	margin-top: -150px;
+	width: 400px;
+	height: 300px;
+	background-color: #fff;
+	border: 10px solid #aaa;
 }
 
 #dialog h1 {
@@ -36,11 +37,8 @@
 #dialog form {
 	padding: 1.5em;
 }
-#dialog .button {
-	float: left;
-}
 #dialog-close {
 	float: right;
 	font-weight: bold;
-	padding: 0.5em;
+	margin: 0.5em;
 }
