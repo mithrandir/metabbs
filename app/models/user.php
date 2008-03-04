@@ -85,7 +85,8 @@ class User extends Model {
 		if ($this->is_admin()) return true;
 		switch ($action) {
 			case 'list':
-				return $this->level >= $object->perm_read;
+				return $object->get_attribute('always_show_list', false)
+					|| $this->level >= $object->perm_read;
 			break;
 			case 'read':
 				$board = $object->get_board();
@@ -135,7 +136,8 @@ class Guest extends Model
 	function has_perm($action, $object) {
 		switch ($action) {
 			case 'list':
-				return $this->level >= $object->perm_read;
+				return $object->get_attribute('always_show_list', false)
+					|| $this->level >= $object->perm_read;
 			break;
 			case 'read':
 				$board = $object->get_board();
