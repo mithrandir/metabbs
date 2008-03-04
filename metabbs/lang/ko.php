@@ -142,3 +142,4 @@ Page not found=페이지를 찾을 수 없습니다
 The requested URL was not found on this server.=요청하신 주소를 찾지 못하였습니다.
 Please login to access this page.=이 페이지에 접근하려면 로그인 하세요.
 Maintenance=유지 보수
+Site theme=사이트 테마

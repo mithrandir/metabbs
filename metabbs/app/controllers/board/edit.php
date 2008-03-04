@@ -41,6 +41,7 @@ if (is_post()) {
 	}
 	$board->import($_POST['board']);
 	$board->update();
+	$board->set_attribute('always_show_list', $_POST['board']['always_show_list']);
 	if ($sorting_changed) $board->reset_sort_keys();
 	if ($_GET['tab'] == 'category') {
 		foreach ($_POST['categories'] as $_category) {

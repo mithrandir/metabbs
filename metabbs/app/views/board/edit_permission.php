@@ -4,7 +4,10 @@
 <h3><?=i('General')?></h3>
 <dl>
 	<dt><?=label_tag("Read", 'board', 'perm_read')?></dt>
-	<dd><?=i('More than level %s', text_field('board', 'perm_read', $board->perm_read, 3))?></dd>
+	<dd>
+		<?=i('More than level %s', text_field('board', 'perm_read', $board->perm_read, 3))?>
+		<?=check_box('board', 'always_show_list', $board->get_attribute('always_show_list', false))?> <label for="board_always_show_list">읽기 권한이 없어도 목록을 보여줍니다.</label>
+	</dd>
 
 	<dt><?=label_tag("Write", 'board', 'perm_write')?></dt>
 	<dd><?=i('More than level %s', text_field('board', 'perm_write', $board->perm_write, 3))?></dd>
