@@ -138,7 +138,7 @@ function highlightText(text, element) {
 function highlightSearchKeyword() {
 	var kw = location.search.toQueryParams()['keyword'];
 	if (!kw) return;
-	highlightText(kw, $('body'));
+	if ($('body')) highlightText(kw, $('body'));
 }
 
 // dialog

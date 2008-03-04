@@ -90,6 +90,7 @@ form {
 }
 #meta-nav {
 	padding: 0.8em 0.5em;
+	float: left;
 }
 #meta-nav .button, #meta-nav a {
 	float: left;
@@ -158,6 +159,11 @@ input.button {
 #post .date {
 	margin-top: 0.5em;
 	font-size: 0.8em;
+}
+#post .edit-info {
+	font-size: 0.85em;
+	color: #999;
+	margin: 2em 0 1em 1em;
 }
 #attachments {
 	border-top: 1px dotted #ccc;
@@ -259,4 +265,15 @@ input.button {
 }
 #dialog .button {
 	float: left;
+}
+#neighbor-posts {
+	list-style: none;
+	margin: 1em;
+	padding: 0;
+	float: right;
+	color: #999;
+	font-size: 1.1em;
+}
+#neighbor-posts a {
+	font-weight: bold;
 }

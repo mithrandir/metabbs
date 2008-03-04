@@ -11,6 +11,10 @@
 		<td id="post-content">
 			<div class="body"><?=$post->body?></div>
 
+			<? if ($post->edited): ?>
+			<p class="edit-info"><?=$post->edited_by?> 님이 <?=$post->edited_at?>에 고쳤습니다.</p>
+			<? endif; ?>
+
 			<? if ($signature): ?>
 			<div class="signature"><?=$signature?></div>
 			<? endif; ?>
@@ -64,3 +68,13 @@
 <? if ($link_edit): ?><a href="<?=$link_edit?>">고치기</a> <? endif; ?>
 <? if ($link_delete): ?><a href="<?=$link_delete?>">지우기</a> <? endif; ?>
 </div>
+
+<p id="neighbor-posts">
+<? if ($newer_post): ?>
+<a href="<?=$newer_post->url?>">&larr; <?=$newer_post->title?></a>
+<? endif; ?>
+<? if ($newer_post and $older_post): ?> | <? endif; ?>
+<? if ($older_post): ?>
+<a href="<?=$older_post->url?>"><?=$older_post->title?> &rarr;</a>
+<? endif; ?>
+</ul>
