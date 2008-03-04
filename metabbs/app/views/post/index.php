@@ -9,6 +9,8 @@ if (isset($user) && $user->exists() && $user->signature)
 
 $template->set('board', $board);
 $template->set('post', $post);
+$template->set('older_post', $older_post);
+$template->set('newer_post', $newer_post);
 $template->set('comments', $comments);
 
 $params = get_search_params();
