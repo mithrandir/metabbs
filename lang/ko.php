@@ -143,3 +143,4 @@ The requested URL was not found on this server.=요청하신 주소를 찾지 �
 Please login to access this page.=이 페이지에 접근하려면 로그인 하세요.
 Maintenance=유지 보수
 Site theme=사이트 테마
+Information=정보
