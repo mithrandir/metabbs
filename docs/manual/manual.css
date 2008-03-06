@@ -18,10 +18,10 @@ h2 {
 	color: #000;
 	border-bottom: 1px solid #000;
 }
-p {
+p, pre {
 	margin-top: 0.5em;
 }
-ol {
+ol, ul {
 	margin: 1em 3em;
 }
 a {
@@ -30,7 +30,7 @@ a {
 a:hover {
 	background-color: #efc;
 }
-code {
+code, pre.code {
 	background-color: #eee;
 	font-family: Monaco, "Courier New", sans-serif;
 }

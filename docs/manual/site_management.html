@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>사이트 구축하기 - MetaBBS 도움말</title>
+	<link rel="stylesheet" href="manual.css" type="text/css" />
+</head>
+<body>
+<h1>MetaBBS로 사이트 구축하기</h1>
+
+<h2>시작하기 전에</h2>
+<p>이미 MetaBBS가 설치되어 있고, 모든 파일이 UTF-8 인코딩으로 작성되어 있어야 합니다.</p>
+<p><strong>루트 디렉토리</strong>는 index.html 등 사이트를 구성하는 파일들이 있는 위치를 말합니다. 이 문서는 MetaBBS가 루트 디렉토리 바로 밑의 metabbs 디렉토리에 설치되었다고 가정하므로, 설치된 환경에 맞게 경로를 수정하시기 바랍니다.</p>
+
+<h2>머리말과 꼬리말</h2>
+<ol>
+	<li>모든 상대 경로를 절대 경로로 바꿔야 합니다. 즉, 이미지나 링크의 주소가 <code>logo.gif</code>처럼 되어있다면 <code>http://example.com/사이트 주소/logo.gif</code> 또는 <code>/사이트 주소/logo.gif</code>와 같이 바꾸면 됩니다.</li>
+	<li>그 다음으로 해야할 일은 머리말과 꼬리말을 분리하는 것입니다. 내용이 들어갈 부분의 앞쪽과 뒤쪽을 분리하여 각각 루트 디렉토리에 header.php, footer.php로 저장합니다.</li>
+	<li>header.php에서, <code>&lt;head&gt;</code>와 <code>&lt;/head&gt;</code> 사이에 <code>&lt;?php if (isset($layout)) $layout-&gt;print_head(); ?&gt;</code>를 추가한 뒤 저장합니다.</li>
+	<li>관리자 페이지의 [환경 설정] 메뉴에 들어가면 [머리말 파일], [꼬리말 파일] 칸이 있습니다. 각각 ../header.php, ../footer.php로 지정한 뒤 [OK] 버튼을 누릅니다.</li>
+	<li>게시판으로 접속하여 레이아웃이 깨지지 않고 잘 나오는지 확인해봅니다.</li>
+</ol>
+
+<h2>사이트 매니저 불러오기</h2>
+<p>사이트 매니저는 MetaBBS 외부에서 게시판 데이터에 접근할 수 있도록 해줍니다. 외부 로그인 폼이나 최근 게시물을 출력하기 원하는 파일 맨 위에 관리자 페이지의 [정보] 메뉴의 [코드 생성] 부분에 있는 코드를 복사하여 붙입니다.</p>
+
+<h2>최근 게시물 출력하기</h2>
+<p>사이트 매니저를 불러온 뒤, 최근 게시물을 출력할 위치에 다음 코드를 삽입합니다.</p>
+<pre class="code">&lt;?php
+$metabbs-&gt;printLatestPosts('<strong>게시판 이름</strong>', <strong>글 개수</strong>, <strong>제목 길이</strong>);
+?&gt;</pre>
+
+<h2>로그인 폼 및 사용자 정보 출력하기</h2>
+<p>사이트 매니저를 불러온 뒤, 원하는 위치에 다음 코드를 적절히 고쳐 삽입합니다.</p>
+<pre class="code">&lt;?php if ($metabbs-&gt;isGuest()): ?&gt;
+&lt;!-- 로그인 안 된 상태 --&gt;
+	&lt;a&nbsp;href="&lt;?=url_with_referer_for('account', 'login')?&gt;"&gt;로그인&lt;/a&gt;
+&lt;?php else: ?&gt;
+&lt;!-- 로그인 된 상태 --&gt;
+	&lt;strong&gt;&lt;?=$metabbs-&gt;user-&gt;name?&gt;&lt;/strong&gt;님,&nbsp;환영합니다.
+	&lt;a&nbsp;href="&lt;?=url_with_referer_for('account', 'logout')?&gt;"&gt;로그아웃&lt;/a&gt;
+	&lt;?php if&nbsp;($metabbs-&gt;user-&gt;is_admin()): ?&gt;
+	&nbsp;&nbsp;&nbsp;|&nbsp;&lt;a&nbsp;href="&lt;?=url_for('admin')?&gt;"&gt;관리&lt;/a&gt;
+	&lt;?php endif; ?&gt;
+&lt;?php endif; ?&gt;</pre>
+</body>
+</html>
