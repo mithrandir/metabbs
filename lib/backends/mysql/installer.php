@@ -36,7 +36,6 @@ class SQLExporter {
 	function to_sql($t) {
 		$sql = array();
 		$columns = $this->db->get_columns($t);
-		array_unshift($columns, 'id');
 		$_columns = array();
 		foreach ($columns as $c) {
 			$_columns[] = "`$c`";

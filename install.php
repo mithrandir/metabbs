@@ -225,7 +225,7 @@ if (!isset($_POST['config'])) {
 
     $safe = true;
 
-    $admin_url = $rewrite ? 'admin' : 'metabbs.php/admin';
+    $admin_url = ($rewrite ? '' : 'metabbs.php/') . 'account/login/?url=../../admin/';
 
 	echo "<h2>Installation Finished</h2>";
 	echo "<p>Thank you for installing MetaBBS. :-)</p>";
