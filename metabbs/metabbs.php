@@ -46,12 +46,14 @@ if ($view == ADMIN_VIEW) {
 		$css = 'styles/'.$style->name.'/style.css';
 		if (file_exists($css))
 			$layout->add_stylesheet($style_dir.'/style.css?'.filemtime($css));
+		$layout->wrap("<div id=\"meta\">\n", "</div>\n");
+	} else {
+		$layout->wrap("<div id=\"meta\" class=\"theme-only\">\n", "</div>\n");
 	}
 	$css = 'themes/'.get_current_theme().'/style.css';
 	if (file_exists($css))
 		$layout->add_stylesheet(METABBS_BASE_PATH . $css);
 	$layout->add_javascript(METABBS_BASE_PATH . 'elements/script.js');
-	$layout->wrap("<div id=\"meta\">\n", "</div>\n");
 }
 
 ob_start();

@@ -19,13 +19,10 @@
 #dialog {
 	position: absolute;
 	left: 50%;
-	top: 50%;
 	margin-left: -200px;
-	margin-top: -150px;
 	width: 400px;
-	height: 300px;
 	background-color: #fff;
-	border: 10px solid #aaa;
+	border: 5px solid #aaa;
 }
 
 #dialog h1 {
@@ -35,10 +32,68 @@
 	background: transparent url(header.png) repeat-x;
 }
 #dialog form {
-	padding: 1.5em;
+	padding: 1em 1.5em;
 }
 #dialog-close {
 	float: right;
+	margin: 0.25em;
+	padding: 0 0.25em;
+	text-decoration: none;
 	font-weight: bold;
-	margin: 0.5em;
+	font-size: 14px;
+}
+
+#meta.theme-only {
+	font-size: 13px;
+	font-family: Verdana, Arial, sans-serif;
+	margin: 2em;
+}
+#meta.theme-only h1 {
+	font-size: 1.5em;
+	margin: 0 0 1em 0;
+}
+#meta.theme-only h2 {
+	font-size: 1.2em;
+	margin: 0;
+}
+#signup-form label, #login-form label.field {
+	width: 8em;
+	float: left;
+}
+fieldset {
+	border: none;
+	margin: 0 0 1em 0;
+	padding: 0;
+}
+.star {
+	color: #f00;
+	font-weight: bold;
+}
+#profile {
+	line-height: 1.8;
+}
+#dialog #profile {
+	margin: 0 1em;
+}
+#profile .email, #profile .homepage {
+	margin: 0;
+}
+#profile .name {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+#profile #signature {
+	border: 1px solid #ccc;
+	background-color: #f4f4f4;
+	padding: 0.5em;
+	margin-bottom: 1em;
+}
+#profile #signature p {
+	margin: 0;
+}
+#profile a {
+	color: #000;
+}
+#profile #info {
+	border-top: 1px solid #ccc;
 }

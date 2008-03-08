@@ -185,13 +185,16 @@ function openDialog(href) {
 		onComplete: function (xhr) {
 			fixIEDocumentHeight(true);
 			var overlay = $('dialog-overlay');
+			var dialog = $('dialog');
 			overlay.style.top = getScrollTop() + 'px';
-			$('dialog').innerHTML = xhr.responseText;
+			dialog.innerHTML = xhr.responseText;
 			overlay.show();
 
 			addCloseButton();
 			triggerCloseLinks();
 			fixFormActions(href);
+			dialog.style.top = '50%';
+			dialog.style.marginTop = '-' + parseInt(dialog.getHeight()/2) + 'px';
 		}
 	});
 }
