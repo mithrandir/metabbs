@@ -277,3 +277,15 @@ input.button {
 #neighbor-posts a {
 	font-weight: bold;
 }
+#dialog .buttons {
+	margin-bottom: 1em;
+	overflow: hidden;
+	display: inline-block;
+}
+#delete-form {
+	text-align: center;
+}
+#delete-form .buttons {
+	width: 14.5em;
+	margin: 0 auto 1em auto;
+}

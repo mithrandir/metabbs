@@ -1,6 +1,7 @@
-<h1>정보 수정</h1>
-<form method="post" onsubmit="return checkForm(this)" action="?url=<?=$_GET['url']?>">
-<p><span class="star">*</span> <?=i('Required')?></p>
+<h1>정보 고치기</h1>
+<form method="post" onsubmit="return checkForm(this)" action="?url=<?=$_GET['url']?>" id="signup-form">
+<fieldset>
+<h2>기본 정보</h2>
 <p>
 	<label><?=i('User ID')?></label>
 	<?=$account->user?>
@@ -13,6 +14,9 @@
 	<label><?=i('Screen name')?><span class="star">*</span></label>
 	<input type="text" name="user[name]" value="<?=$account->name?>" />
 </p>
+</fieldset>
+<fieldset>
+<h2>추가 정보</h2>
 <p>
 	<label><?=i('E-Mail Address')?></label>
 	<input type="text" name="user[email]" size="50" class="ignore" value="<?=$account->email?>" />
@@ -26,4 +30,5 @@
 	<textarea name="user[signature]" cols="50" rows="5" class="ignore"><?=$account->signature?></textarea>
 </p>
 <p><input type="submit" value="<?=i('Edit Info')?>" />
+</fieldset>
 </form>

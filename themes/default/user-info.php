@@ -1,21 +1,24 @@
-<h1>User Information</h1>
+<h1>사용자 정보</h1>
 <div id="profile">
 <p><span class="name"><?=$user->name?></span> (<?=htmlspecialchars($user->user)?>)</p>
-<p>
-<? if ($user->email) { ?>
-E-mail: <a href="mailto:<?=htmlspecialchars($user->email)?>"><?=str_replace("@", " at ", htmlspecialchars($user->email))?></a><br />
-<? } ?>
-<? if ($user->url) { ?>
-Homepage: <?=link_text(htmlspecialchars($user->get_url()))?><br />
-<? } ?>
-</p>
-<p><?=$user->get_post_count()?> posts, <?=$user->get_comment_count()?> comments</p>
-<? if ($user->signature) { ?>
-<p id="signature"><?=format_plain($user->signature)?></p>
-<? } ?>
-<? if ($user->additional_info) { ?>
+<? if ($user->signature): ?>
+<div id="signature"><?=format_plain($user->signature)?></div>
+<? endif; ?>
+
+<? if ($user->email): ?>
+<p class="email"><?=i('E-Mail Address')?>: <?=str_replace("@", " at ", htmlspecialchars($user->email))?></p>
+<? endif; ?>
+
+<? if ($user->url): ?>
+<p class="homepage"><?=i('Homepage')?>: <?=link_text(htmlspecialchars($user->get_url()))?></p>
+<? endif; ?>
+
+<p>글 <?=$user->get_post_count()?>개, 댓글 <?=$user->get_comment_count()?>개 씀</p>
+
+<? if ($user->additional_info): ?>
 <div id="info">
 <?=$user->additional_info?>
 </div>
-<? } ?>
+<? endif; ?>
+
 </div>

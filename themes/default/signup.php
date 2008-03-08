@@ -1,8 +1,8 @@
 <h1>회원 가입</h1>
-<form method="post" onsubmit="return checkForm(this)">
-<p><span class="star">*</span> <?=i('Required')?></p>
+<form method="post" onsubmit="return checkForm(this)" id="signup-form">
 
 <fieldset>
+<h2>필수 정보</h2>
 <p>
 	<label><?=i('User ID')?><span class="star">*</span></label>
 	<input type="text" name="user[user]" value="<?=$account->user?>" />
@@ -19,19 +19,20 @@
 	<input type="password" name="user[password]" class="blank" /> <?=$flash?>
 <? } else { ?>
 	<input type="password" name="user[password]" /> 
-	<?=i('Password length must be longer than 5')?>.
+	<?=i('Password must be longer than 5')?>.
 <? } ?>
 </p>
 <p>
 	<label><?=i('Password (again)')?><span class="star">*</span></label>
 	<input type="password" name="user[password_again]" />
 </p>
-</fieldset>
-<fieldset>
 <p>
 	<label><?=i('Screen name')?><span class="star">*</span></label>
 	<input type="text" name="user[name]" value="<?=$account->name?>" />
 </p>
+</fieldset>
+<fieldset>
+<h2>추가 정보</h2>
 <p>
 	<label><?=i('E-Mail Address')?></label>
 	<input type="text" name="user[email]" size="50" class="ignore" value="<?=$account->email?>" />

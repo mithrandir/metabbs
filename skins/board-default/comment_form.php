@@ -11,7 +11,7 @@
 	<? endif; ?>
 	<p><textarea name="body" cols="40" rows="5"><?=$comment_body?></textarea></p>
 
-	<div><input type="submit" value="댓글 달기" class="button" />
+	<div class="buttons"><input type="submit" value="댓글 달기" class="button" />
 	<? if ($link_cancel): ?><a href="<?=$link_cancel?>" class="button dialog-close">취소</a><? endif; ?></div>
 	</form>
 
