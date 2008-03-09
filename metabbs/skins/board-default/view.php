@@ -77,4 +77,4 @@
 <? if ($older_post): ?>
 <a href="<?=$older_post->url?>"><?=$older_post->title?> &rarr;</a>
 <? endif; ?>
-</ul>
+</p>
