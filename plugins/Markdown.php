@@ -2682,7 +2682,8 @@ class Markdown extends Plugin {
 			'MarkdownExtra_Parser' => 'Markdown Extra'
 		);
 
-		?><form method="post" action="?">
+		?><h2>Markdown 설정</h2>
+		<form method="post" action="?">
 			<div>
 				<label for="markdown_type">종류</label>
 				<select id="markdown_type" name="class_name"><?php
@@ -2696,7 +2697,10 @@ class Markdown extends Plugin {
 				약자 표기 등의 기능이 추가되어 있습니다.</p>
 
 			<div><?php echo submit_tag('Save') ?></div>
-		</form><?php
+		</form>
+		<?php if(class_exists('SmartyPants')): ?>
+			<p>팁: SmartyPants 플러그인과 함께 사용하시면 더 좋습니다.</p>
+		<?php endif;
 	}
 }
 
