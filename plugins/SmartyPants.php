@@ -1196,10 +1196,10 @@ class SmartyPants extends Plugin {
 		$this->smartypants_class = $class_name;
 		$this->parser = new $class_name;
 
-		add_filter('PostList', array(&$this, 'format'), 1000);
-		add_filter('PostView', array(&$this, 'format'), 1000);
-		add_filter('PostViewRSS', array(&$this, 'format'), 1000);
-		add_filter('PostViewComment', array(&$this, 'format'), 1000);
+		add_filter('PostList', array(&$this, 'format'), 1500);
+		add_filter('PostView', array(&$this, 'format'), 1500);
+		add_filter('PostViewRSS', array(&$this, 'format'), 1500);
+		add_filter('PostViewComment', array(&$this, 'format'), 1500);
 	}
 
 	function format(&$model) {
@@ -1230,15 +1230,17 @@ class SmartyPants extends Plugin {
 			'SmartyPantsTypographer_Parser' => 'SmartyPants Typographer'
 		);
 
+		get_plugins();
+
 		$compatible_plugin_names = array_map(
 			create_function('$c', '
 				global $__plugins;
-				$p = isset($__plugins[$c]) ? $__plugins[$c] : new $c;
+				$p = $__plugins[$c];
 				return empty($p->plugin_name) ? $c : $p->plugin_name;
 			'),
 
 			array_filter(
-				array('Markdown', 'Xquared', 'BBCode', 'Textile'),
+				array('Markdown', 'Xquared', 'BBCode', 'Textile', 'Emoticon'),
 				create_function('$c', 'return @is_subclass_of($c, "Plugin");')
 			)
 		);
