@@ -23,7 +23,4 @@ $template->set('link_edit', $account->has_perm('edit', $post) ? url_for($post, '
 $template->set('link_delete', $account->has_perm('delete', $post) ? url_for($post, 'delete') : '');
 
 $template->set('commentable', $account->has_perm('comment', $post));
-
-$template->set('newer_post', $post->get_newer_post());
-$template->set('older_post', $post->get_older_post());
 $template->render();
