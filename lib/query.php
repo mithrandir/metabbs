@@ -10,7 +10,7 @@ class ObjectCache {
 		return $this->map[$key];
 	}
 
-	function put($key, &$object) {
+	function put($key, $object) {
 		$this->map[$key] = $object;
 	}
 
