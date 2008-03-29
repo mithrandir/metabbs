@@ -1,7 +1,5 @@
 <?php
-function modern_common_filter(&$post) {
-	$post->author = $post->name;
-	$post->title = htmlspecialchars($post->title);
+function modern_load_post_category(&$post) {
 	$board = $post->get_board();
 	if ($board->use_category) {
 		if (!$post->category_id) {
@@ -15,6 +13,12 @@ function modern_common_filter(&$post) {
 	} else {
 		$post->category = null;
 	}
+}
+
+function modern_common_filter(&$post) {
+	$post->author = $post->name;
+	$post->title = htmlspecialchars($post->title);
+	modern_load_post_category($post);
 }
 function modern_list_filter(&$post) {
 	modern_common_filter($post);

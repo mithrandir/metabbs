@@ -9,6 +9,7 @@ if (!$post->exists()) {
 	print_notice(i('Post not found'), i("Post #%d doesn't exist.", $id));
 }
 if ($post->moved_to) {
+	if ($action == 'index') $action = '';
 	redirect_to(url_for(new Post(array('id' => $post->moved_to)), $action));
 }
 $board = $post->get_board();
