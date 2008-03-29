@@ -86,6 +86,7 @@ if (isset($newer_post)) {
 	} else {
 		$newer_post->url = url_for($newer_post);
 		$newer_post->title = htmlspecialchars($newer_post->title);
+		modern_load_post_category($newer_post);
 	}
 }
 if (isset($older_post)) {
@@ -94,6 +95,7 @@ if (isset($older_post)) {
 	} else {
 		$older_post->url = url_for($older_post);
 		$older_post->title = htmlspecialchars($older_post->title);
+		modern_load_post_category($older_post);
 	}
 }
 if (isset($attachments)) {
