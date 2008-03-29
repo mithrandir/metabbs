@@ -6,6 +6,11 @@ require_once "../app/models/post.php";
 require_once "../app/models/comment.php";
 
 class PostTest extends UnitTestCase {
+	function tearDown() {
+		global $__cache;
+		$__cache->reset();
+	}
+
 	function testFind() {
 		$post = Post::find(1);
 		$this->assertEqual(1, $post->id);
