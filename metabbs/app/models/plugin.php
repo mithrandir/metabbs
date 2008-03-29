@@ -42,6 +42,6 @@ class Plugin extends Model {
 function get_enabled_plugins() {
 	$db = get_conn();
 	$table = get_table_name('plugin');
-	return $db->fetchall("SELECT * FROM $table WHERE enabled=1");
+	return $db->fetchall("SELECT name FROM $table WHERE enabled=1");
 }
 ?>

@@ -10,7 +10,10 @@ $__admin_menu = array();
  */
 function register_plugin($name) {
 	global $__plugins;
-	$__plugins[$name] = new $name;
+	$plugin = Plugin::find_by_name($name);
+	if ($plugin->enabled)
+		$plugin->on_init();
+	$__plugins[$name] = $plugin;
 	ksort($__plugins);
 }
 
@@ -187,14 +190,11 @@ function get_plugins() {
 }
 
 function import_plugin($plugin) {
-	global $__plugins;
 	if (file_exists(METABBS_DIR."/plugins/$plugin.php")) {
 		include_once("plugins/$plugin.php");
 	} else if (file_exists(METABBS_DIR."/plugins/$plugin/plugin.php")) {
 		include_once("plugins/$plugin/plugin.php");
 	}
-	if (array_key_exists($plugin, $__plugins))
-		$__plugins[$plugin]->on_init();
 }
 
 function import_enabled_plugins() {
