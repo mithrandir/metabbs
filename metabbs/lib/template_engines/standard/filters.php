@@ -6,7 +6,7 @@ function modern_load_post_category(&$post) {
 			//$post->category = new UncategorizedPosts($board);
 			$post->category = null;
 		} else {
-			$post->category = $post->get_category();
+			$post->category = clone($post->get_category());
 			$post->category->name = htmlspecialchars($post->category->name);
 			$post->category->url = url_for($board, '', array('category' => $post->category->id));
 		}

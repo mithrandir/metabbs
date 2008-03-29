@@ -76,4 +76,11 @@ if (!function_exists('array_combine')) {
 		return $r;
 	}
 }
+
+/**
+ * PHP 4를 위해 PHP 5 객체 복제 흉내내기
+ */
+if (version_compare(phpversion(), '5.0') < 0) {
+	eval('function clone($object) { return $object; }');
+}
 ?>
