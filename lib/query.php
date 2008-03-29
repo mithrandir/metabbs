@@ -1,8 +1,30 @@
 <?php
-$__cache = array();
+class ObjectCache {
+	var $map = array();
+
+	function has($key) {
+		return array_key_exists($key, $this->map);
+	}
+
+	function get($key) {
+		return $this->map[$key];
+	}
+
+	function put($key, &$object) {
+		$this->map[$key] = $object;
+	}
+}
+
+$__cache = new ObjectCache;
 
 function find($model, $id) {
-	return find_by($model, 'id', $id);
+	global $__cache;
+	$key = $model . '#' . $id;
+	if (!$__cache->has($key)) {
+		$object = find_by($model, 'id', $id);
+		$__cache->put($key, $object);
+		return $object;
+	} else return $__cache->get($key);
 }
 
 function find_and_cache($model, $id) {
