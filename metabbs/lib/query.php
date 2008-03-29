@@ -13,6 +13,10 @@ class ObjectCache {
 	function put($key, &$object) {
 		$this->map[$key] = $object;
 	}
+
+	function reset() {
+		$this->map = array();
+	}
 }
 
 $__cache = new ObjectCache;
@@ -27,16 +31,9 @@ function find($model, $id) {
 	} else return $__cache->get($key);
 }
 
+// deprecated; use find
 function find_and_cache($model, $id) {
-	global $__cache;
-	$key = $model.'_'.$id;
-	if (!isset($__cache[$key])) {
-		$o = find($model, $id);
-		$__cache[$key] = $o;
-	} else {
-		$o = $__cache[$key];
-	}
-	return $o;
+	return find($model, $id);
 }
 
 function find_by($model, $key, $value) {
