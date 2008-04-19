@@ -80,24 +80,11 @@ if (isset($trackbacks)) {
 			$trackbacks[$k]->delete_url = null;
 	}
 }
-if (isset($newer_post)) {
-	if (!$newer_post->exists()) {
-		$newer_post = null;
-	} else {
-		$newer_post->url = url_for($newer_post);
-		$newer_post->title = htmlspecialchars($newer_post->title);
-		modern_load_post_category($newer_post);
-	}
-}
-if (isset($older_post)) {
-	if (!$older_post->exists()) {
-		$older_post = null;
-	} else {
-		$older_post->url = url_for($older_post);
-		$older_post->title = htmlspecialchars($older_post->title);
-		modern_load_post_category($older_post);
-	}
-}
+if (isset($newer_post) && !$newer_post->exists()) 
+	$newer_post = null;
+if (isset($older_post) && !$older_post->exists()) 
+	$older_post = null;
+
 if (isset($attachments)) {
 	foreach ($attachments as $k => $v) {
 		modern_attachment_filter($attachments[$k]);
