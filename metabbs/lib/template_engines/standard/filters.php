@@ -37,6 +37,7 @@ add_filter('PostList', 'modern_list_filter', 32768);
 function modern_view_filter(&$post) {
 	modern_common_filter($post);
 	$board = $post->get_board();
+	$post->url = url_for($post);
 	$post->date = date('Y-m-d H:i:s', $post->created_at);
 	if ($board->use_trackback) {
 		$post->trackback_url = full_url_for($post, 'trackback');
