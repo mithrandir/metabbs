@@ -1218,10 +1218,10 @@ class SmartyPants extends Plugin {
 				array(
 					SMARTYPANTS_SMART_DOUBLEQUOTE_OPEN,
 					SMARTYPANTS_SMART_DOUBLEQUOTE_CLOSE,
-					'&#8216;', '&#8217;','&#8212;', '&#8230;',
+					'&#8216;', '&#8217;','&#8212;', '&#8230;', '&#160;',
 					'&amp;', '&lt;', '&gt;'
 				),
-				array('“', '”', '‘', '’', '—', '…', '&', '<', '>'),
+				array('“', '”', '‘', '’', '—', '…', ' ', '&', '<', '>'),
 				$this->parser->transform($this->escape($model->title))
 			);
 		}
