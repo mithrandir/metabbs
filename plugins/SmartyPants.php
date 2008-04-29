@@ -1185,15 +1185,25 @@ possibility of such damage.
 class SmartyPants extends Plugin {
 	var $description = '띄어쓰기나 구두점, 인용 기호 등을 올바르게 정리해줍니다.';
 	var $smartypants_class;
-	var $smartypants_config_path = 'data/smartypants_class_name.txt';
+	var $smartypants_config_path = 'data/smartypants_config.txt';
+	var $smartypants_old_config_path = 'data/smartypants_class_name.txt';
 
 	function on_init() {
-		if ($class_name = @file($this->smartypants_config_path))
-			$class_name = trim($class_name[0]);
-		else
+		if ($config_str = @file($this->smartypants_config_path)) {
+			$class_name = trim($config_str[0]);
+			$with_title = !empty($config_str[1]) && $config_str[1] != 'false';
+		}
+		else if ($config_str = @file($this->smartypants_old_config_path)) {
+			$class_name = trim($config_str[0]);
+			$with_title = false;
+		}
+		else {
 			$class_name = 'SmartyPants_Parser';
+			$with_title = true;
+		}
 
 		$this->smartypants_class = $class_name;
+		$this->with_title = $with_title;
 		$this->parser = new $class_name;
 
 		add_filter('PostList', array(&$this, 'format'), 1500);
@@ -1203,17 +1213,43 @@ class SmartyPants extends Plugin {
 	}
 
 	function format(&$model) {
-		if (!$model->body) return;
-		$model->body = $this->parser->transform($model->body);
+		if ($model->title && $this->with_title) {
+			$model->title = str_replace(
+				array(
+					SMARTYPANTS_SMART_DOUBLEQUOTE_OPEN,
+					SMARTYPANTS_SMART_DOUBLEQUOTE_CLOSE,
+					'&#8216;', '&#8217;','&#8212;', '&#8230;',
+					'&amp;', '&lt;', '&gt;'
+				),
+				array('“', '”', '‘', '’', '—', '…', '&', '<', '>'),
+				$this->parser->transform($this->escape($model->title))
+			);
+		}
+
+		if ($model->body) {
+			$model->body = $this->parser->transform($model->body);
+		}
+	}
+
+	function escape($string) {
+		return str_replace(
+			array('&', '<', '>'),
+			array('&amp;', '&lt;', '&gt;'),
+			$string
+		);
 	}
 
 	function on_settings() {
 		if (is_post()) {
 			if ($fp = fopen($this->smartypants_config_path, 'w')) {
-				fwrite($fp, $_POST['class_name']);
+				fwrite($fp, "{$_POST['class_name']}\n{$_POST['with_title']}");
 				fclose($fp);
 
+				@unlink($this->smartypants_old_config_path);
+
 				$this->smartypants_class = $_POST['class_name'];
+				$this->with_title = !empty($_POST['with_title'])
+					&& $_POST['with_title'] != 'false';
 
 				echo '<div class="flash pass">설정을 저장했습니다.</div>';
 			}
@@ -1260,8 +1296,14 @@ class SmartyPants extends Plugin {
 				구두점이나 인용 부호 외에도 구두점 사이의 띄어쓰기도 올바르게
 				교정해줍니다.</p>
 
+			<div>
+				<input id="smartypants_with_title" type="checkbox" name="with_title" value="true" <?php !$this->with_title || print 'checked="checked"' ?> />
+				<label for="smartypants_with_title">글 제목에도 적용합니다.</label>
+			</div>
+
 			<div><?php echo submit_tag('Save') ?></div>
 		</form>
+
 		<?php if(count($compatible_plugin_names)): ?><div class="tip">
 			<p>팁: 아래와 같은 플러그인들과 함께 사용해도 충돌 없이
 				<strong>잘</strong> 작동합니다.</p>
