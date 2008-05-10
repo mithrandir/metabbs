@@ -122,7 +122,7 @@ class Model
 	}
 	
 	function set_attribute($key, $value) {
-		$this->metadata->post = &$this; // workaround for PHP4 -_-
+		$this->metadata->model = &$this; // workaround for PHP4 -_-
 		$this->metadata->set($key, $value);
 	}
 }
