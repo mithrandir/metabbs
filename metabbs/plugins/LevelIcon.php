@@ -17,7 +17,7 @@ class LevelIcon extends Plugin {
 		add_filter('PostView', array(&$this, 'prepend_level_icon_filter'), 1000);
 		add_filter('PostList', array(&$this, 'prepend_level_icon_filter'), 1000);
 		add_filter('PostViewComment', array(&$this, 'prepend_level_icon_filter'), 1000);
-		add_filter('UserInfo', array(&$this, 'user_info_level_icon_filter'), 1000);
+		add_filter('UserInfo', array(&$this, 'user_info_level_icon_filter'), 377);
 	}
 	function cache_icons() {
 		$dir = opendir(METABBS_DIR.'/data/icons');
