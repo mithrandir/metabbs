@@ -1,4 +1,3 @@
-<?php $link_rss = 'http://feeds.feedburner.com/langdev' ?>
 <div id="account-info">
 <? if ($guest): ?>
 <a href="<?=$link_login?>" class="dialog">로그인</a>
