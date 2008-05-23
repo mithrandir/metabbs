@@ -92,10 +92,10 @@ form {
 	padding: 0.8em 0.5em;
 	float: left;
 }
-#meta-nav .button, #meta-nav a {
+#meta-nav .button, #meta-nav a, #meta-nav button {
 	float: left;
 }
-#meta-nav a, a.button, input.button {
+#meta-nav a, a.button, input.button, button {
 	width: 81px;
 	height: 19px;
 	background: url(button.png) no-repeat;
@@ -108,7 +108,7 @@ form {
 #meta-nav a, a.button {
 	display: block;
 }
-input.button {
+input.button, button {
 	height: 27px;
 	border: none;
 	cursor: pointer;
@@ -267,6 +267,7 @@ input.button {
 	float: left;
 }
 #neighbor-posts {
+	list-style: none;
 	margin: 1em;
 	padding: 0;
 	float: right;

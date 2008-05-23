@@ -37,6 +37,12 @@
 	<td colspan="4" class="body"><textarea name="body" id="post_body" cols="40" rows="12"><?=$post->body?></textarea></td>
 </tr>
 
+<? if ($preview): ?>
+	<tr>
+		<td colspan="4" class="preview"><?=$preview->body?></td>
+	</tr>
+<? endif; ?>
+
 <? foreach ($additional_fields as $field): ?>
 <tr>
 	<th><?=$field->name?></th>
@@ -70,7 +76,10 @@
 </div>
 
 <div id="meta-nav">
-<? if ($editing): ?><input type="submit" value="고치기" class="button" /><? else: ?><input type="submit" value="글쓰기" class="button" /><? endif; ?>
+	<button type="submit" name="action" value="save" class="save">
+		<? if ($editing): ?>고치기<? else: ?>글쓰기<? endif; ?>
+	</button>
+	<button type="submit" name="action" value="preview">미리보기</button>
 <? if ($link_cancel): ?><a href="<?=$link_cancel?>">취소</a><? endif; ?>
 <a href="<?=$link_list?>">목록으로</a>
 </div>
