@@ -1,0 +1,259 @@
+form {
+	margin: 0;
+}
+#meta {
+	font-size: 13px;
+	font-family: Verdana, Tahoma, sans-serif;
+	line-height: 1.5;
+}
+#meta a {
+	color: #000;
+}
+#meta a:hover {
+}
+#meta a img {
+	border: 1px solid #000;
+	vertical-align: middle;
+}
+#meta a:hover img {
+	border: 1px solid #999;
+}
+#account-info {
+	float: right;
+}
+.feed {
+	padding-left: 0.5em;
+}
+#categories {
+	padding: 0.8em 0.5em;
+}
+.post-count {
+	font-size: 0.8em;
+}
+
+.comment-count {
+	font-size: 0.8em;
+	background: transparent url(comments.gif) center left no-repeat;
+	margin-left: 0.5em;
+	padding-left: 15px;
+	color: #666;
+}
+.category {
+	font-weight: bold;
+	border-right: 1px solid #999;
+	padding-right: 0.5em;
+	color: #999;
+}
+#page-list {
+	float: left;
+	padding: 0.5em;
+	font-size: 1.1em;
+}
+#page-list a {
+	margin: 0 0.2em;
+}
+.here a {
+	font-weight: bold;
+}
+#meta-nav {
+	padding: 0.8em 0.5em;
+}
+#meta-nav.list {
+	float: right;
+}
+#meta-nav .button, #meta-nav a {
+	float: left;
+}
+#meta-nav a, a.button, input.button {
+	width: 81px;
+	height: 19px;
+	background: url(button.png) no-repeat;
+	text-decoration: none;
+	padding: 4px 0;
+	font-size: 1em;
+	text-align: center;
+	margin-right: 1em;
+}
+#meta-nav a, a.button {
+	display: block;
+}
+input.button {
+	height: 27px;
+	border: none;
+	cursor: pointer;
+	font-weight: bold;
+}
+#search-form {
+	text-align: right;
+	padding: 1em;
+	clear: both;
+}
+
+#post {
+	background: url(header.png) repeat-x;
+}
+#post h1 {
+	font-size: 1.1em;
+	background: url(header-left.png) no-repeat;
+	margin: 0 !important;
+	height: 31px;
+	overflow: hidden;
+}
+.title-wrap {
+	display: block;
+	background: url(header-right.png) no-repeat top right;
+	padding: 0.3em 1em;
+}
+#post table {
+	width: 100%;
+	border-collapse: collapse;
+	border-bottom: 1px solid #ddd;
+}
+#post-side {
+	width: 12em;
+	padding: 1em;
+	background-color: #f4f4f4;
+	vertical-align: top;
+}
+#post-content {
+	vertical-align: top;
+	line-height: 1.8;
+}
+#post-content .body {
+	padding: 0 1em;
+	clear: both;
+}
+#post .author {
+	font-weight: bold;
+}
+#post .date {
+	margin-top: 0.5em;
+	font-size: 0.8em;
+}
+#attachments {
+	border-bottom: 1px dotted #ccc;
+	list-style: none;
+	padding: 0.5em 1em;
+	margin: 0;
+	overflow: hidden;
+	display: inline-block;
+}
+#attachments li {
+	float: left;
+	margin-right: 1em;
+}
+#attachments li img {
+	margin-top: 0.5em;
+}
+#responses {
+	border-top: 3px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	margin-top: 1.5em;
+	background-color: #f8f8f8;
+}
+#trackbacks {
+	border-bottom: 1px solid #ddd;
+}
+#trackback-url {
+	margin: 0;
+	padding: 1em;
+}
+#comments ol {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+#comments li:first-child {
+	border: none !important;
+}
+.comment {
+	border-top: 1px solid #ddd;
+	padding: 1em;
+}
+.comment .actions {
+	float: right;
+	font-size: 0.9em;
+}
+.comment .actions a {
+	font-weight: bold;
+}
+#comment-form {
+	padding: 1.5em;
+}
+#comment-form label {
+	font-weight: bold;
+	margin-right: 0.5em;
+}
+#comment_author {
+	margin-right: 1.5em;
+}
+
+#post-form {
+	background: #f4f4f4 url(header.png) repeat-x;
+	border-bottom: 1px solid #ddd;
+	width: 50em;
+}
+#post-form h1 {
+	font-size: 1.1em;
+	background: url(header-left.png) no-repeat;
+	margin: 0;
+	height: 31px;
+}
+#post-form table {
+	width: 100%;
+	margin-left: 0.5em;
+}
+#post-form td {
+	padding: 0.8em 0.5em;
+}
+#post-form th {
+	width: 6em;
+	font-size: 0.9em;
+}
+#post-form td.name {
+	width: 11em;
+}
+#post-form .body {
+	text-align: center;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+#post-form .options td { padding: 0 0.5em; }
+#post_title { width: 95%; }
+#post_body { width: 96.5%; }
+#upload, #trackback {
+	padding: 1em 1em;
+	border-top: 1px solid #ddd;
+}
+#upload h2, #trackback h2 {
+	font-size: 1.1em;
+	margin: 0;
+}
+
+#images {
+	border-collapse: collapse;
+}
+#images td {
+	padding: 0 1em 1em 1em;
+	width: 150px;
+	vertical-align: top;
+}
+#images img {
+	margin-bottom: 0.5em;
+}
+#images td p {
+	margin: 0;
+}
+.metadata {
+	margin-top: 0.5em !important;
+	font-size: 0.85em;
+	line-height: 2em;
+}
+#notices {
+	margin: 1em 2em;
+	padding: 0;
+	list-style: square;
+}
+#dialog .button {
+	float: left;
+}
