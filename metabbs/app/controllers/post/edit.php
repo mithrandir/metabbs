@@ -42,6 +42,17 @@ if (is_post() && isset($_POST['post']) && (!$account->is_guest() || $post->passw
 			@unlink('data/uploads/'.$id);
 		}
 	}
-	define('SECURITY', 1);
-	include 'app/controllers/post/save.php';
+	if ($_POST['action'] == 'preview') {
+		if (version_compare(phpversion(), '5.0.0', '<')) {
+			$preview = $post;
+		} else {
+			eval('$preview = clone $post;');
+		}
+
+		apply_filters('PostSave', $preview);
+		apply_filters('PostView', $preview);
+	} else {
+		define('SECURITY', 1);
+		include 'app/controllers/post/save.php';
+	}
 }
