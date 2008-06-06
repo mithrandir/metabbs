@@ -1,5 +1,5 @@
 <h2><?=i('Boards')?></h2>
-<table id="boards">
+<table id="contents">
 <tr>
 	<th class="name"><?=i('Name')?></th>
 	<th class="actions"><?=i('Actions')?></th>
@@ -10,6 +10,7 @@
 <? } ?>
 </tbody>
 </table>
-<form method="post" action="<?=url_for('admin', 'new')?>" onsubmit="return addNewBoard(this)" id="add-board-form">
+<form method="post" action="<?=url_for('admin', 'new')?>">
 <h3><?=i('New Board')?></h3>
 <p><input type="text" name="name" /> <input type="submit" value="<?=i('Create')?>" id="create-board" /></p>
+</form>
