@@ -8,18 +8,27 @@
 </head>
 <body>
 <div id="meta-admin">
-<h1><?=i('MetaBBS Administration')?></h1>
 <div id="header">
-<?=link_to(i('Boards'), 'admin')?> |
-<?=link_to(i('Users'), 'admin', 'users')?> |
-<?=link_to(i('Settings'), 'admin', 'settings')?> |
-<?=link_to(i('Plugins'), 'admin', 'plugins')?> |
-<?=link_to(i('Maintenance'), 'admin', 'maintenance')?> |
-<?=link_to(i('Information'), 'admin', 'info')?> |
-<? foreach ($__admin_menu as $item) echo $item . ' | '; ?>
-<a href="<?=url_with_referer_for('account', 'logout')?>"><?=i('Logout')?> &raquo;</a></p>
+<h1><?=i('MetaBBS Administration')?></h1>
+
+<div id="account">
+<?=htmlspecialchars($account->name)?>님, 환영합니다. <a href="<?=url_with_referer_for('account', 'logout')?>"><?=i('Logout')?> &raquo;</a></p>
 </div>
-<div id="body">
+
+<ul id="nav">
+	<li><?=link_to(i('Boards'), 'admin')?></li>
+	<li><?=link_to(i('Users'), 'admin', 'users')?></li>
+	<li><?=link_to(i('Settings'), 'admin', 'settings')?></li>
+	<li><?=link_to(i('Plugins'), 'admin', 'plugins')?></li>
+	<li><?=link_to(i('Maintenance'), 'admin', 'maintenance')?></li>
+	<li><?=link_to(i('Information'), 'admin', 'info')?></li>
+	<? foreach ($__admin_menu as $item): ?>
+	<li><?=$item?></li>
+	<? endforeach ?>
+</ul>
+</div>
+
+<div id="content">
 <? if (isset($flash)) { ?>
 <div class="flash <?=$flash_class?>">
 <p><?=$flash?></p>

@@ -1,105 +1,128 @@
 body {
-    margin: 0;
-	background-color: #333;
-}
-
-body, input, textarea, select {
-    font-family: arial, verdana, sans-serif;
-    font-size: 13px;
-	line-height: 1.5;
-}
-
-#meta-admin {
-    border: 5px solid #ccc;
-    margin: 20px;
-    background: url(bg.png) repeat-x #fff;
+	margin: 0;
+	font-family: Arial, 맑은 고딕, Verdana, sans-serif;
 }
 
 a {
-    color: #4E9A06;
+	color: #00aa33;
+	text-decoration: none;
 }
+
 a:hover {
-    background-color: #efc;
-}
-small {
-	font-size: 11px;
+	text-decoration: underline;
 }
 
 h1 {
-    font-family: "trebuchet ms", verdana, sans-serif;
-    font-size: 2.4em;
-    margin: 20px 20px 0 20px;
+	font-weight: normal;
+	padding: 0.5em;
+	margin: 0;
+	font-size: 2.5em;
+	float: left;
 }
 
-h2 {
-    font-family: "trebuchet ms", verdana, sans-serif;
-    font-size: 1.4em;
-    margin-bottom: 0.5em;
-	margin-top: 0;
+#account {
+	float: right;
+	margin: 1em;
 }
 
-table {
-    border-collapse: collapse;
-}
-table th {
-    text-align: left;
-    background-color: #eee;
-    border: 1px solid #ccc;
-}
-table td {
-    border: 1px solid #ccc;
-}
-table th, table td {
-    padding: 0.5em;
-}
-
-div.left {
-    float: left;
-}
-div.right {
-    float: right;
-}
-
-.description {
-	font-size: 11px;
-	color: #666;
-}
-
-.flash {
-    padding: 0.5em;
-    width: 50%;
-    border: 1px solid red;
-    background-color: pink;
-}
-.flash p {
-    margin: 0;
-}
-.pass {
-    border: 1px solid green;
-    background-color: lightgreen;
+#account a {
+	color: #fff;
+	text-decoration: underline;
 }
 
 #header {
-    padding: 0.5em 1em 1.5em 1em;
-    border-bottom: 1px solid #ccc;
-}
-#header a {
-	margin: 0 0.3em;
-}
-#header p {
-    margin: 0;
+	background-color: #00aa33;
+	color: #fff;
 }
 
-#body {
-    margin: 20px;
+#nav {
+	clear: both;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	background-color: #f7f7f7;
+	border-bottom: 1px solid #ddd;
+	padding: 0.5em 0.25em;
 }
 
-#boards .name {
-    width: 150px;
+#nav li {
+	display: inline;
+	margin-left: 1em;
 }
-#boards .name form { display: inline; }
-#boards td.actions {
-    color: #999;
+
+#nav a.current {
+	font-weight: bold;
+}
+
+#content {
+	margin: 1.5em;
+}
+
+#content h2 {
+	margin: 0 0 0.5em 0;
+	font-weight: normal;
+}
+
+#description {
+	margin: 0.5em 0 2em 0;
+}
+
+table {
+	border-collapse: collapse;
+}
+table td {
+	padding: 0.5em;
+	border-bottom: 1px solid #e8e8e8;
+}
+table th {
+	padding: 0.5em;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+	background-color: #f4f4f4;
+}
+tr.depth-1 td.title {
+	padding-left: 1.5em;
+}
+
+td.actions {
+	width: 16em;
+	color: #999;
+}
+
+#contents .name {
+	width: 20em;
+}
+
+#contents .url {
+	margin-left: 1em;
+	font-size: 0.9em;
+	color: #777;
+}
+
+#actions {
+	margin-top: 1em;
+}
+
+form table {
+	border-top: 1px solid #ddd;
+}
+
+form table th {
+	width: 10em;
+}
+
+.flash {
+	padding: 0.5em;
+	width: 50%;
+	border: 1px solid red;
+	background-color: pink;
+}
+.flash p {
+	margin: 0;
+}
+.pass {
+	border: 1px solid green;
+	background-color: lightgreen;
 }
 
 form p {
@@ -107,25 +130,12 @@ form p {
 }
 dt {
 	float: left;
-    width: 10em;
+	width: 10em;
 }
 dd {
 	margin-bottom: 0.5em;
 	clear: right;
 }
-
-#header, #body {
-    clear: both;
-}
-
-#users .name {
-    width: 200px;
-}
-
-#users .level {
-    text-align: center;
-}
-
 ul.tabs {
 	list-style: none;
 	margin: 0 0 1em 0;
@@ -133,37 +143,34 @@ ul.tabs {
 }
 
 ul.tabs li {
-    display: inline;
-    margin: 0px;
-    padding: 0px;
+	display: inline;
+	margin: 0px;
+	padding: 0px;
 }
 
 ul.tabs li.selected {
 	font-weight: bold;
-	color: #4e9a06;
 }
 
 ul.tabs a {
 	margin: 0px;
 	padding: 3px;
 }
-
 .style-name { font-size: 1.2em; font-weight: bold; }
 #change-style { margin-top: 1em; }
 #change-style ul { margin: 0; padding: 0; overflow: hidden; display: inline-block; list-style: none; width: 700px; }
-#change-style li {  float: left; margin-right: 1.5em; margin-top: 1em; text-align: center; font-size: 1.1em; }
+#change-style li {	float: left; margin-right: 1.5em; margin-top: 1em; text-align: center; font-size: 1.1em; }
 #change-style img { border: none; text-decoration: none; }
 div.preview-image { width: 100px; height: 100px; border: 1px solid #000; cursor: pointer; }
 div.preview-image:hover { border: 1px solid #7a0; }
 #current-style td.preview-image { width: 100px; height: 100px; }
 
-#plugins dl { margin: 0; }
-#plugins dt { float: none; }
-#plugins dd { margin: 0; font-size: 0.85em; }
-
-.status { width: 5em; text-align: center; }
-td.enabled { background-color: lightgreen; }
-td.disabled { background-color: pink; }
+.plugins .name {
+	width: 25em;
+}
+.plugins dl { margin: 0; }
+.plugins dt { float: none; }
+.plugins dd { margin: 0; font-size: 0.85em; }
 
 .empty { border: 2px solid red; }
 
@@ -173,47 +180,26 @@ td.disabled { background-color: pink; }
 #pages li { display: inline; padding: 0 5px; }
 #pages li.here { font-weight: bold; }
 .first a, .last a, .next a, .prev a {
-    border: 1px solid #ccc;
-    padding: 0 4px;
-    background-color: #eee;
-    text-decoration: none;
+	border: 1px solid #ccc;
+	padding: 0 4px;
+	background-color: #eee;
+	text-decoration: none;
 }
 .prev a, .next a { padding: 0 5px; }
 .first a:hover, .last a:hover, .next a:hover, .prev a:hover {
-    background-color: #333;
+	background-color: #333;
 }
 
-/* installer css */
-#footer {
-	margin: 1.5em;
-	text-align: right;
-	color: #999;
+#users .name {
+	width: 200px;
 }
 
-.desc {
-    color: #999;
-    font-size: 90%;
+#users .level {
+	text-align: center;
 }
 
-#installer form label {
-    display: block;
-    padding-top: 0.2em;
-    width: 13em;
-    float: left;
-}
-
-#installer form p {
-    margin: 0px 0px 10px 0px;
-}
-
-#installer h1 {
-	margin: 0.5em;
-}
-#installer #header {
-	padding: 0; margin: 0;
-}
-
-#installer h2 {
-	margin-top: 1em;
-	border-bottom: 1px solid #9c6;
+pre.code {
+	background-color: #444;
+	padding: 1em;
+	color: #fff;
 }
