@@ -8,6 +8,7 @@
 <? foreach ($posts as $post) { ?>
 	<entry>
 		<title><![CDATA[<?=$post->title?>]]></title>
+		<link href="<?=full_url_for($post)?>" />
 		<id><?=full_url_for($post)?></id>
 <? if (!$post->secret) { ?>
 		<content type="html"><? if (!$post->secret) { ?><![CDATA[
