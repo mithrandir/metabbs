@@ -60,5 +60,5 @@ if ($page_group_end != $page_count) {
 	$pages[] = link_to_page($page_count);
 }
 $template->set('pages', $pages);
-//$layout->header .= '<link rel="alternate" type="application/rss+xml" title="RSS" href="' . url_for($board, 'rss') . '" />';
+$layout->add_link('alternate', 'application/rss+xml', url_for($board, 'rss'), 'RSS Feed');
 $template->render();
