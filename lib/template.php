@@ -84,30 +84,28 @@ class Layout {
 	var $javascripts = array();
 	var $metadata = array();
 	var $header, $footer;
+	var $head = '';
 	var $title = 'MetaBBS';
 
 	function Layout() {
 		$this->add_meta('Generator', 'MetaBBS '.METABBS_VERSION);
 	}
 	function add_stylesheet($path) {
-		$this->stylesheets[] = $path;
+		$this->add_link('stylesheet', 'text/css', $path);
 	}
 	function add_javascript($path) {
-		$this->javascripts[] = $path;
+		$this->head .= "<script type=\"text/javascript\" src=\"$path\"></script>\n";
 	}
 	function add_meta($name, $content) {
-		$this->metadata[$name] = $content;
+		$this->head .= "<meta name=\"$name\" content=\"".htmlspecialchars($content)."\" />\n";
+	}
+	function add_link($rel, $type, $href, $title = '') {
+		$this->head .= '<link rel="' . $rel . '" href="' . $href . '" type="' . $type . '"';
+		if ($title) $this->head .= ' title="' . $title . '"';
+		$this->head .= " />\n";
 	}
 	function print_head() {
-		foreach ($this->metadata as $name => $content) {
-			echo "<meta name=\"$name\" content=\"".htmlspecialchars($content)."\" />\n";
-		}
-		foreach ($this->stylesheets as $stylesheet) {
-			echo '<link rel="stylesheet" href="'.$stylesheet.'" type="text/css" />';
-		}
-		foreach ($this->javascripts as $javascript) {
-			echo '<script type="text/javascript" src="' . $javascript . '"></script>';
-		}
+		echo $this->head;
 	}
 	function wrap($header, $footer) {
 		$this->header .= $header;
