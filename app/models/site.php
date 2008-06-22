@@ -4,7 +4,7 @@ class Site {
 		$db = get_conn();
 		$post_table = get_table_name('post');
 		$board_table = get_table_name('board');
-		return $db->fetchall("SELECT p.* FROM $post_table as p, $board_table as b WHERE b.id=p.board_id AND b.perm_read = 0 ORDER BY p.sort_key, p.id DESC LIMIT $count", 'Post');
+		return $db->fetchall("SELECT p.* FROM $post_table as p, $board_table as b WHERE b.id=p.board_id AND b.perm_read = 0 ORDER BY p.id DESC LIMIT $count", 'Post');
 	}
 
 	/*static*/ function get_latest_comments($count) {
