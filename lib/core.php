@@ -12,6 +12,7 @@ require METABBS_DIR . '/lib/backends/' . $backend . '/backend.php';
 $__db = get_conn();
 set_table_prefix($config->get('prefix', 'meta_'));
 
+require METABBS_DIR . '/app/models/site.php';
 require METABBS_DIR . '/app/models/board.php';
 require METABBS_DIR . '/app/models/category.php';
 require METABBS_DIR . '/app/models/uncategorized_posts.php';
