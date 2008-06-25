@@ -1,4 +1,17 @@
 <?php
+$profiles = array(
+	'board' => array(),
+	'gallery' => array(
+		'use_attachment' => true,
+		'style' => 'gallery-default',
+	),
+	'blog' => array(
+		'use_attachment' => true,
+		'perm_write' => 255,
+		'style' => 'blog-default',
+	)
+);
+
 $board = new Board(array('name' => $_POST['name']));
 if (empty($_POST['name'])) {
 	echo "Board name is empty.";
@@ -8,12 +21,9 @@ if (empty($_POST['name'])) {
 	echo "Board '$board->name' already exists.";
 	exit;
 } else {
+	$profile = $profiles[$_POST['profile']];
+	$board->import($profile);
 	$board->create();
-	if (is_xhr()) {
-		include('app/views/admin/_board.php');
-		exit;
-	} else {
-		redirect_to(url_for('admin'));
-	}
+	redirect_to(url_for('admin'));
 }
 ?>
