@@ -7,6 +7,8 @@ $profiles = array(
 	),
 	'blog' => array(
 		'use_attachment' => true,
+		'use_category' => true,
+		'posts_per_page' => 5,
 		'perm_write' => 255,
 		'style' => 'blog-default',
 	)
