@@ -8,7 +8,16 @@
 <? if ($link_edit): ?><a href="<?=$link_edit?>">고치기</a> / <? endif; ?>
 <? if ($link_delete): ?><a href="<?=$link_delete?>">지우기</a> <? endif; ?>
 </div>
-<div class="body"><?=$post->body?></div>
+<div class="body">
+<? foreach ($attachments as $attachment): ?>
+<? if ($attachment->thumbnail_url): ?>
+<p><img src="<?=$attachment->url?>" alt="<?=$attachment->filename?>" /></p>
+<? else: ?>
+<p>첨부 파일: <a href="<?=$attachment->url?>"><?=$attachment->filename?></a> (<?=$attachment->size?>)</p>
+<? endif; ?>
+<? endforeach; ?>
+<?=$post->body?>
+</div>
 </div>
 
 <div class="responses">
