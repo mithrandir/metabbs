@@ -125,5 +125,10 @@ class Model
 		$this->metadata->model = &$this; // workaround for PHP4 -_-
 		$this->metadata->set($key, $value);
 	}
+
+	function remove_attribute($key) {
+		$this->metadata->model = &$this; // workaround for PHP4 -_-
+		$this->metadata->remove($key);
+	}
 }
 ?>

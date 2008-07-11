@@ -20,15 +20,22 @@ class Metadata {
 		$this->load();
 	}
 	function get($key) {
+		if (!$this->loaded) $this->load();
 		return array_key_exists($key, $this->attributes) ? $this->attributes[$key] : '';
 	}
 	function set($key, $value) {
+		if (!$this->loaded) $this->load();
 		if (!array_key_exists($key, $this->attributes)) {
 			insert('metadata', array('model' => $this->model->model, 'model_id' => $this->model->id, 'key' => $key, 'value' => $value));
 		} else {
 			update_all('metadata', array('value' => $value), "model='{$this->model->model}' AND model_id={$this->model->id} AND `key`=".$this->db->quote($key));
 		}
 		$this->attributes[$key] = $value;
+	}
+	function remove($key) {
+		if (!$this->loaded) $this->load();
+		delete_all('metadata', "model='{$this->model->model}' AND model_id={$this->model->id} AND `key`=".$this->db->quote($key));
+		$this->reload();
 	}
 	function reset() {
 		delete_all('metadata', "model='{$this->model->model}' AND model_id={$this->model->id}");
