@@ -10,9 +10,14 @@ switch ($_GET['action']) {
 			$board->add_member($user);
 	break;
 	case 'drop':
-		$admin = User::find($_GET['id']);
-		if ($admin->exists())
-			$board->drop_member($admin);
+		$member = User::find($_GET['id']);
+		if ($member->exists())
+			$board->drop_member($member);
+	break;
+	case 'toggle':
+		$member = User::find($_GET['id']);
+		if ($member->exists() && !$member->is_admin())
+			$board->toggle_member_class($member);
 	break;
 }
 redirect_to(url_for($board, 'edit', array('tab' => 'permission')));
