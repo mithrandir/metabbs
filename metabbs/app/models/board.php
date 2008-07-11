@@ -113,6 +113,12 @@ class Board extends Model {
 	function drop_admin($admin) {
 		$this->db->execute("DELETE FROM $this->admin_table WHERE board_id=$this->id AND user_id=$admin->id");
 	}
+	function restrict_access() {
+		return $this->get_attribute('restrict_access', false);
+	}
+	function restrict_write() {
+		return $this->get_attribute('restrict_write', false);
+	}
 	function reset_sort_keys() {
 		if (!$this->order_by) $this->order_by = 'id DESC';
 		$this->db->execute("UPDATE $this->post_table SET sort_key=-id WHERE notice=1");

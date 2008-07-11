@@ -41,8 +41,12 @@ if (is_post()) {
 	}
 	$board->import($_POST['board']);
 	$board->update();
-	if ($_GET['tab'] == 'permission')
+	if ($_GET['tab'] == 'permission') {
 		$board->set_attribute('always_show_list', $_POST['board']['always_show_list']);
+		$board->set_attribute('restrict_write', $_POST['board']['restrict_write']);
+		$board->set_attribute('restrict_comment', $_POST['board']['restrict_comment']);
+		$board->set_attribute('restrict_access', $_POST['board']['restrict_access']);
+	}
 	if ($sorting_changed) $board->reset_sort_keys();
 	if ($_GET['tab'] == 'category') {
 		foreach ($_POST['categories'] as $_category) {

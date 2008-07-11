@@ -3,8 +3,12 @@ define('ASK_PASSWORD', 2);
 
 function permission_required($action, $object) {
 	global $account;
-	$result = $account->has_perm($action, $object);
-	if (!$result)
+	$result_permission = $account->has_perm($action, $object);
+	$result_member = $account->is_member($action, $object);
+	$board = !is_a($object, 'Board') ? $object->get_board() : $object;
+	$access_flag = $board->restrict_access();
+
+	if (($access_flag && (!$result_permission || !$result_member)) || !$access_flag && !$result_permission )
 		access_denied();
 	else if ($result === ASK_PASSWORD)
 		ask_password_of($object);

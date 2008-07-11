@@ -99,7 +99,8 @@ class User extends Model {
 				return $object->is_admin($this);
 			break;
 			case 'write':
-				return $this->level >= $object->perm_write;
+				return ($object->restrict_write() && $object->is_member($this) && $this->level >= $object->perm_write)
+					|| (!$object->restrict_write() && $this->level >= $object->perm_write);
 			break;
 			case 'delete':
 			case 'edit':
@@ -107,14 +108,32 @@ class User extends Model {
 					$board = $object->get_board();
 				else
 					$board = $object;
+
 				return $this->has_perm('admin', $board) ||
 					(isset($object->user_id) && $object->user_id == $this->id);
 			break;
 			case 'reply':
 			case 'comment':
 				$board = $object->get_board();
-				return $this->level >= $board->perm_comment;
+				return ($board->restrict_comment() && $board->is_member($this) && $this->level >= $board->perm_comment)
+					|| (!$board->restrict_comment() && $this->level >= $board->perm_comment);
 			break;
+		}
+	}
+	function is_member($action, $object) {
+		if ($this->is_admin()) return true;
+		switch ($action) {
+			case 'list':
+			case 'write':
+				return $object->is_member($this);
+				break;
+			case 'read':
+			case 'edit':
+			case 'reply':
+			case 'comment':
+				$board = $object->get_board();
+				return $board->is_member($this);
+				break;
 		}
 	}
 }
@@ -153,7 +172,8 @@ class Guest extends Model
 				return false;
 			break;
 			case 'write':
-				return $this->level >= $object->perm_write;
+				return ($object->restrict_write() && $object->is_member($this) && $this->level >= $object->perm_write)
+					|| (!$object->restrict_write() && $this->level >= $object->perm_write);
 			break;
 			case 'delete':
 			case 'edit':
@@ -174,8 +194,25 @@ class Guest extends Model
 			case 'reply':
 			case 'comment':
 				$board = $object->get_board();
-				return $this->level >= $board->perm_comment;
+				return ($board->restrict_comment() && $board->is_member($this) && $this->level >= $board->perm_comment)
+					|| (!$board->restrict_comment() && $this->level >= $board->perm_comment);
 			break;
+		}
+	}
+	function is_member($action, $object) {
+		if ($this->is_admin()) return true;
+		switch ($action) {
+			case 'list':
+			case 'write':
+				return $object->is_member($this);
+				break;
+			case 'read':
+			case 'edit':
+			case 'reply':
+			case 'comment':
+				$board = $object->get_board();
+				return $board->is_member($this);
+				break;
 		}
 	}
 }
