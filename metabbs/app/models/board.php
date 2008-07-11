@@ -114,6 +114,28 @@ class Board extends Model {
 	function drop_admin($admin) {
 		$this->db->execute("DELETE FROM $this->admin_table WHERE board_id=$this->id AND user_id=$admin->id");
 	}
+	function get_members() {
+		if (!isset($this->_members)) {
+			$table = get_table_name('user');
+			$this->_members = $this->db->fetchall("SELECT u.* FROM $this->member_table a, $table u WHERE u.level=255 OR (a.board_id=$this->id AND a.user_id=u.id) GROUP BY u.id", "User");
+		}
+		return $this->_members;
+	}
+	function is_member($user) {
+		foreach ($this->get_members() as $member) {
+			if ($member->id == $user->id) return true;
+		}
+		return false;
+	}
+	function add_member($user) {
+		foreach ($this->get_members() as $member) {
+			if ($member->id == $user->id) return;
+		}
+		$this->db->execute("INSERT INTO $this->member_table (board_id, user_id) VALUES($this->id, $user->id)");
+	}
+	function drop_member($user) {
+		$this->db->execute("DELETE FROM $this->member_table WHERE board_id=$this->id AND user_id=$user->id");
+	}
 	function restrict_access() {
 		return $this->get_attribute('restrict_access', false);
 	}
