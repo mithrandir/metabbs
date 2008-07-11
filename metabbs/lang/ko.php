@@ -147,4 +147,7 @@ $lang['Information'] = '정보';
 $lang['Inputs is Empty.'] = '입력란이 비었습니다.';
 $lang['Fill out The Title and Body.'] = '제목과 내용을 채워주세요.';
 $lang['Back to Write Page'] = '쓰기 페이지로 이동';
-
+$lang['Members'] = '접근 가능한 멤버';
+$lang['Set members are able to write this board.'] = '제한된 멤버가 게시판에 쓸 수 있게 설정합니다.';
+$lang['Set members are able to comment this board.'] = '제한된 멤버가 게시판에 코멘트를 달 수 있게 설정합니다.';
+$lang['Set members are able to access this board.'] = '제한된 멤버가 게시판에 접근할 수 있게 설정합니다.';
