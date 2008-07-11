@@ -143,3 +143,6 @@ $lang['Please login to access this page.'] = '이 페이지에 접근하려면 �
 $lang['Maintenance'] = '유지 보수';
 $lang['Site theme'] = '사이트 테마';
 $lang['Information'] = '정보';
+$lang['Inputs is Empty.'] = '입력란이 비었습니다.';
+$lang['Fill out The Title and Body.'] = '제목과 내용을 채워주세요.';
+$lang['Back to Write Page'] = '쓰기 페이지로 이동';
