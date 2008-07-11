@@ -17,6 +17,7 @@ class Board extends Model {
 
 	function _init() {
 		$this->admin_table = get_table_name('board_admin');
+		$this->member_table = get_table_name('board_member');
 		$this->post_table = get_table_name('post');
 		$this->comment_table = get_table_name('comment');
 		$this->category_table = get_table_name('category');
@@ -118,6 +119,9 @@ class Board extends Model {
 	}
 	function restrict_write() {
 		return $this->get_attribute('restrict_write', false);
+	}
+	function restrict_comment() {
+		return $this->get_attribute('restrict_comment', false);
 	}
 	function reset_sort_keys() {
 		if (!$this->order_by) $this->order_by = 'id DESC';
