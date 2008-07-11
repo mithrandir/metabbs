@@ -1,5 +1,5 @@
 <?php
-define('METABBS_DB_REVISION', 1216);
+define('METABBS_DB_REVISION', 1223);
 
 function run($conn) {
 	$t = new Table('board');
@@ -19,16 +19,10 @@ function run($conn) {
 	$t->add_index('name');
 	$conn->add_table($t);
 
-	$t = new Table('board_admin');
-	$t->column('board_id', 'integer');
-	$t->column('user_id', 'integer');
-	$t->add_index('board_id');
-	$conn->add_table($t);
-	$conn->query("INSERT INTO ".get_table_name('board_admin')." (board_id, user_id) VALUES(0, 0)"); // insert dummy data
-
 	$t = new Table('board_member');
 	$t->column('board_id', 'integer');
 	$t->column('user_id', 'integer');
+	$t->column('admin', 'boolean');
 	$t->add_index('board_id');
 	$conn->add_table($t);
 	$conn->query("INSERT INTO ".get_table_name('board_member')." (board_id, user_id) VALUES(0, 0)"); // insert dummy data
