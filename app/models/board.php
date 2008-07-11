@@ -16,7 +16,6 @@ class Board extends Model {
 	var $get_post_body = FALSE;
 
 	function _init() {
-		$this->admin_table = get_table_name('board_admin');
 		$this->member_table = get_table_name('board_member');
 		$this->post_table = get_table_name('post');
 		$this->comment_table = get_table_name('comment');
@@ -92,32 +91,10 @@ class Board extends Model {
 		$this->db->execute("UPDATE $this->table SET style=? WHERE id=$this->id", array($style));
 		$this->style = $style;
 	}
-	function get_admins() {
-		if (!isset($this->_admins)) {
-			$table = get_table_name('user');
-			$this->_admins = $this->db->fetchall("SELECT u.* FROM $this->admin_table a, $table u WHERE u.level=255 OR (a.board_id=$this->id AND a.user_id=u.id) GROUP BY u.id", "User");
-		}
-		return $this->_admins;
-	}
-	function is_admin($user) {
-		foreach ($this->get_admins() as $admin) {
-			if ($admin->id == $user->id) return true;
-		}
-		return false;
-	}
-	function add_admin($user) {
-		foreach ($this->get_admins() as $admin) {
-			if ($admin->id == $user->id) return;
-		}
-		$this->db->execute("INSERT INTO $this->admin_table (board_id, user_id) VALUES($this->id, $user->id)");
-	}
-	function drop_admin($admin) {
-		$this->db->execute("DELETE FROM $this->admin_table WHERE board_id=$this->id AND user_id=$admin->id");
-	}
 	function get_members() {
 		if (!isset($this->_members)) {
 			$table = get_table_name('user');
-			$this->_members = $this->db->fetchall("SELECT u.* FROM $this->member_table a, $table u WHERE u.level=255 OR (a.board_id=$this->id AND a.user_id=u.id) GROUP BY u.id", "User");
+			$this->_members = $this->db->fetchall("SELECT u.*, a.admin FROM $this->member_table a, $table u WHERE u.level=255 OR (a.board_id=$this->id AND a.user_id=u.id) GROUP BY u.id", "User");
 		}
 		return $this->_members;
 	}
@@ -127,14 +104,23 @@ class Board extends Model {
 		}
 		return false;
 	}
+	function is_admin($user) {
+		foreach ($this->get_members() as $member) {
+			if ($member->id == $user->id && $member->admin) return true;
+		}
+		return false;
+	}
 	function add_member($user) {
 		foreach ($this->get_members() as $member) {
 			if ($member->id == $user->id) return;
 		}
-		$this->db->execute("INSERT INTO $this->member_table (board_id, user_id) VALUES($this->id, $user->id)");
+		$this->db->execute("INSERT INTO $this->member_table (board_id, user_id, admin) VALUES($this->id, $user->id, 0)");
 	}
 	function drop_member($user) {
 		$this->db->execute("DELETE FROM $this->member_table WHERE board_id=$this->id AND user_id=$user->id");
+	}
+	function toggle_member_class($user) {
+		$this->db->execute("UPDATE $this->member_table SET admin = 1 - admin WHERE board_id=$this->id AND user_id=$user->id");
 	}
 	function restrict_access() {
 		return $this->get_attribute('restrict_access', false);
