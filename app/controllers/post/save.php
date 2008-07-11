@@ -4,7 +4,8 @@ if (!defined('SECURITY')) {
 }
 
 if (!$post->valid()) {
-	// TODO: more friendly error message
+	header('HTTP/1.1 403 Forbidden');
+	print_notice(i('Inputs is Empty.'), i('Fill out The Title and Body.'). ' ' . link_text('#', i('Back to Write Page'), array('onclick' => 'history.back();return false;')));
 	exit;
 }
 
