@@ -130,6 +130,7 @@ $lang['Post #%d doesn\'t exist.'] = '%d번 글은 존재하지 않습니다.';
 $lang['Attachment not found'] = '첨부 파일을 찾을 수 없습니다';
 $lang['Attachment #%d doesn\'t exist.'] = '%d번 첨부 파일은 존재하지 않습니다.';
 $lang['Access denied'] = '접근 금지';
+$lang['Access restrict'] = '접근 제한';
 $lang['You have no permission to access this page.'] = '이 페이지에 접근할 권한이 없습니다.';
 $lang['Max upload size exceeded'] = '최대 업로드 가능 용량 초과';
 $lang['Please upload files smaller than %s.'] = '%s보다 작은 크기의 파일을 올리십시오.';
@@ -146,3 +147,4 @@ $lang['Information'] = '정보';
 $lang['Inputs is Empty.'] = '입력란이 비었습니다.';
 $lang['Fill out The Title and Body.'] = '제목과 내용을 채워주세요.';
 $lang['Back to Write Page'] = '쓰기 페이지로 이동';
+
