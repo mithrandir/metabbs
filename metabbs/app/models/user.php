@@ -125,6 +125,8 @@ class User extends Model {
 
 				if ($object->restrict_write())
 					return $object->is_member($this);
+				else
+					return true;
 			break;
 			case 'delete':
 			case 'edit':
@@ -143,6 +145,8 @@ class User extends Model {
 
 				if ($board->restrict_comment())
 					return $board->is_member($this);
+				else
+					return true;
 			break;
 		}
 	}
