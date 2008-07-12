@@ -56,17 +56,15 @@ function print_header() {
   <link rel="stylesheet" href="elements/style.css" type="text/css" />
 </head>
 <body id="installer">
-  <div id="meta-admin">
-	<h1>MetaBBS Installation</h1>
-	<div id="header"></div>
-	<div id="body">
+<div id="meta-admin">
+	<div id="header">
+		<h1 style="float: none">MetaBBS Installation</h1>
+	</div>
+	<div id="content">
 <?php
 }
 function print_footer() {
 ?>
-	</div>
-	<div id="footer">
-		<p id="copyright">&copy; 2005-2006, <a href="http://metabbs.org">MetaBBS Team</a></p>
 	</div>
   </div>
 </body>
