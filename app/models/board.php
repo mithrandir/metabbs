@@ -63,10 +63,11 @@ class Board extends Model {
 		return $this->_count;
 	}
 	function get_categories() {
-		return find_all('category', "board_id=$this->id", "name");
+		return find_all('category', "board_id=$this->id", "position");
 	}
 	function add_category($category) {
 		$category->board_id = $this->id;
+		$category->position = $this->db->fetchone("SELECT MAX(position) FROM {$category->table} WHERE board_id = $category->board_id") + 1;
 		$category->create();
 	}
 	function delete() {
@@ -140,6 +141,9 @@ class Board extends Model {
 			$this->db->execute("UPDATE $this->post_table SET sort_key=2147483648-$key WHERE notice=0");
 		else
 			$this->db->execute("UPDATE $this->post_table SET sort_key=$key WHERE notice=0");
+	}
+	function have_empty_item() {
+		return $this->get_attribute('have_empty_item', false);
 	}
 }
 ?>
