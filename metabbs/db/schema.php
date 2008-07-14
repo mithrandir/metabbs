@@ -1,5 +1,5 @@
 <?php
-define('METABBS_DB_REVISION', 1223);
+define('METABBS_DB_REVISION', 1227);
 
 function run($conn) {
 	$t = new Table('board');
@@ -101,6 +101,7 @@ function run($conn) {
 	$t = new Table('category');
 	$t->column('board_id', 'integer');
 	$t->column('name', 'string', 45);
+	$t->column('position', 'integer');
 	$t->add_index('board_id');
 	$conn->add_table($t);
 

@@ -54,10 +54,12 @@ if (is_post()) {
 				$board->add_category(new Category(array('name' => $_category)));
 			}
 		}
+		$board->set_attribute('have_empty_item', $_POST['category']['have_empty_item']);
 	}
 	redirect_to(url_for($board, 'edit', array('tab'=>$_GET['tab'])));
 }
 $view = ADMIN_VIEW;
 $styles = get_styles();
 $current_style = $board->get_style();
+$un = new UncategorizedPosts($board); 
 ?>
