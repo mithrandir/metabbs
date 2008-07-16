@@ -39,6 +39,7 @@ if (isset($attachments)) {
 	foreach ($attachments as $attachment) {
 		$post->add_attachment($attachment);
 		move_uploaded_file($attachment->tmp_name, 'data/uploads/' . $attachment->id);
+		chmod('data/uploads/' . $attachment->id, 0606);
 	}
 }
 
