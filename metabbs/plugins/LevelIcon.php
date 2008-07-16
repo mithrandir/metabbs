@@ -6,6 +6,7 @@ class LevelIcon extends Plugin {
 
 	function on_install() {
 		mkdir('data/icons');
+		chmod('data/icons', 0707);
 		copy(dirname(__FILE__).'/icons/admin.png', 'data/icons/255.png');
 		copy(dirname(__FILE__).'/icons/user.png', 'data/icons/1.png');
 		copy(dirname(__FILE__).'/icons/guest.png', 'data/icons/0.png');
