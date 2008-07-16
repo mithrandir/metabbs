@@ -5,6 +5,7 @@ class NicknameIcon extends Plugin {
 
 	function on_install() {
 		mkdir('data/usericons');
+		chmod('data/usericons', 0707);
 	}
 	function on_init() {
 		add_filter('PostView', array(&$this, 'replace_icon_filter'), 599);
