@@ -178,7 +178,8 @@ if (!isset($_POST['config'])) {
 
 	$dirs = array('data', 'data/uploads', 'data/session');
 	foreach ($dirs as $dir) {
-		mkdir($dir, 0707);
+		mkdir($dir);
+		chmod($dir, 0707);
 	}
 
 	include 'db/schema.php';
@@ -189,6 +190,7 @@ if (!isset($_POST['config'])) {
 	$config->set('backend', $backend);
     $config->set('revision', METABBS_DB_REVISION);
 	$config->write_to_file();
+	chmod('metabbs.conf.php', 0606);
 	
 	pass("Writing configuration to file");
 	$path = dirname($_SERVER['REQUEST_URI']);
@@ -205,6 +207,7 @@ if (!isset($_POST['config'])) {
 	$fp = fopen('.htaccess', 'w');
 	fwrite($fp, str_replace('/url/to/metabbs/', $path, $htaccess));
 	fclose($fp);
+	chmod('.htaccess', 0606);
 
 	pass("Initializing Database");
 	get_conn();

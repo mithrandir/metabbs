@@ -1,6 +1,7 @@
 <?php
 if (!file_exists('data/thumb')) {
-	@mkdir('data/thumb', 0707);
+	@mkdir('data/thumb');
+	@chmod('data/thumb', 0707);
 }
 
 function get_image_extension($path) {
