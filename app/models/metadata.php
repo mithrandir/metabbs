@@ -8,7 +8,7 @@ class Metadata {
 		$this->loaded = false;
 	}
 	function load() {
-		if ($this->loaded) return;
+		if ($this->loaded || !$this->model->exists()) return;
 		$result = $this->db->query("SELECT * FROM $this->table WHERE model_id={$this->model->id}");
 		while ($data = $result->fetch()) {
 			$this->attributes[$data['key']] = $data['value'];
