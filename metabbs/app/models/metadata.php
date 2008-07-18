@@ -24,8 +24,6 @@ class Metadata {
 		return array_key_exists($key, $this->attributes) ? $this->attributes[$key] : '';
 	}
 	function set($key, $value) {
-		$this->attributes[$key] = $value;
-
 		if ($this->model->exists()) {
 			if (!$this->loaded) $this->load();
 			if (!array_key_exists($key, $this->attributes)) {
@@ -34,6 +32,8 @@ class Metadata {
 				update_all('metadata', array('value' => $value), "model='{$this->model->model}' AND model_id={$this->model->id} AND `key`=".$this->db->quote($key));
 			}
 		}
+
+		$this->attributes[$key] = $value;
 	}
 	function remove($key) {
 		if (!$this->loaded) $this->load();
