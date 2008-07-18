@@ -57,5 +57,6 @@ if (isset($_POST['trackback']) && isset($_POST['trackback']['to'])
 	send_trackback($_POST['trackback']);
 }
 
+apply_filters('AfterPostSave', $post);
 redirect_to(url_for($post));
 ?>
