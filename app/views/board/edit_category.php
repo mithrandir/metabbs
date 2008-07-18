@@ -16,8 +16,8 @@
 	<td class="name"><?=$category->name?> <span id="category-<?=$category->id?>"></span></td>
 	<td class="post_count"><?=$category->get_post_count()?></td>
 	<td><a href="<?=url_for($category, 'rename')?>" onclick="editCategory('category-<?=$category->id?>', this.href); return false"><?=i('Rename')?></a> |
-	<?= $category->is_first() ? i('Up') : "<a href=\"".url_for($category, 'up')."\">".i('Up')."</a>" ?> |
-	<?= $category->is_last() ? i('Down') : "<a href=\"".url_for($category, 'down')."\">".i('Down')."</a>" ?> |
+	<?= $category->is_first() ? i('Move up') : "<a href=\"".url_for($category, 'up')."\">".i('Move up')."</a>" ?> |
+	<?= $category->is_last() ? i('Move down') : "<a href=\"".url_for($category, 'down')."\">".i('Move down')."</a>" ?> |
 	<a href="<?=url_for($category, 'delete')?>" onclick="return window.confirm('<?=i('Are you sure?')?>')"><?=i('Delete')?></a>	</td>
 </tr>
 <? } ?>
