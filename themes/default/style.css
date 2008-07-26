@@ -97,3 +97,10 @@ fieldset {
 #profile #info {
 	border-top: 1px solid #ccc;
 }
+.meta-error {
+	background-color: #f7f7f7;
+	border: 1px solid #ddd;
+	width: 20em;
+	padding: 0.5em;
+	margin-bottom: 1em;
+}

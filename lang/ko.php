@@ -155,3 +155,4 @@ $lang['None'] = '없음';
 $lang['Additional Setting'] = '추가 설정';
 $lang['Have empty item'] = '빈 아이템 설정';
 $lang['Post count'] = '포스트 수';
+$lang['Login failed'] = '로그인에 실패했습니다';

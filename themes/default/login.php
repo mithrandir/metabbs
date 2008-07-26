@@ -1,4 +1,7 @@
 <h1>로그인</h1>
+<?php if ($error): ?>
+<p class="meta-error"><?=$error?></p>
+<?php endif; ?>
 <form method="post" action="" id="login-form">
 <p><label for="user" class="field">아이디</label> <input type="text" name="user" id="user" /></p>
 <p><label for="password" class="field">암호</label> <input type="password" name="password" id="password" /></p>
