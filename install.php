@@ -6,21 +6,25 @@ header("Content-Type: text/html; charset=UTF-8");
 define('METABBS_DIR', '.');
 
 function pass($msg) {
-	echo "<div class=\"flash pass\">$msg ... <em>OK :)</em></div>";
+	echo "<div class=\"flash pass\">$msg ... <strong>OK :)</strong></div>";
 }
 function warn($msg) {
-	echo "<div class=\"flash warn\"><em>Warning:</em> $msg</div>";
+	echo "<div class=\"flash warn\"><strong>Warning:</strong> $msg</div>";
 }
 function fail($msg) {
 	if (file_exists('metabbs.conf.php')) {
 		unlink('metabbs.conf.php');
 	}
-	echo "<div class=\"flash fail\">$msg. <a href=\"$_SERVER[REQUEST_URI]\">Retry?</a></div>";
+	echo "<div class=\"flash fail\">$msg.</div>";
 	print_footer();
 	exit;
 }
 function field($name, $display_name, $value = '', $type = 'text', $desc = '') {
-	echo "<p><label>$display_name</label> <input type=\"$type\" name=\"config[$name]\" value=\"$value\" />\n<span class='desc'>$desc</span></p>";
+	echo "<tr>
+	<th><label for=\"config_$name\">".i($display_name)."</label></th>
+	<td><input type=\"$type\" name=\"config[$name]\" value=\"$value\" /></td>
+	<td class=\"description\">$desc</td>
+</tr>";
 }
 function get_backends() {
 	return array('mysql');
@@ -58,7 +62,7 @@ function print_header() {
 <body id="installer">
 <div id="meta-admin">
 	<div id="header">
-		<h1 style="float: none">MetaBBS Installation</h1>
+		<h1 style="float: none">MetaBBS 설치</h1>
 	</div>
 	<div id="content">
 <?php
@@ -95,17 +99,19 @@ if (is_writable('.')) {
 }
 
 if (file_exists('metabbs.conf.php')) {
-	echo '<div class="flash fail">MetaBBS is already installed. Please remove metabbs.conf.php and database.</div>';
+	echo '<div class="flash fail">MetaBBS가 이미 설치되어 있습니다. 관리자 페이지에서 유지 보수 - 언인스톨을 이용하거나 metabbs.conf.php를 지워보세요.</div>';
 	print_footer();
 	exit;
 }
 
 if (!isset($_POST['config'])) {
 ?>
-	<h2>Database Information</h2>
-	<form id="dbinfo" method="post" action="install.php?backend=<?=$backend?>">
-	<p>
-		<label for="backend">Backend</label>
+	<h2>데이터베이스 정보</h2>
+	<form method="post" action="install.php?backend=<?=$backend?>">
+	<table>
+<? /* will not be supported in 0.9 series
+	<tr>
+		<>Backend</label>
 		<select name="backend" id="backend" onchange="location.replace('?backend='+this.value)">
 <?php
         foreach (get_backends() as $b) {
@@ -119,33 +125,34 @@ if (!isset($_POST['config'])) {
 <?php
 	if (!is_supported()) {
 		fail('Your server doesn\'t support <em>' . $backend . '</em>');
-	}
+	} */
     db_info_form();
-	field('prefix', 'Table Prefix', 'meta_', 'text', 'MetaBBS가 저장될 DB 테이블의 식별자를 입력합니다. (다중 설치인 경우 사용)');
+	field('prefix', 'Table Prefix', 'meta_', 'text', '테이블 이름 앞에 붙는 식별자입니다. 여러 곳에 설치할 때만 바꾸세요.');
 ?>
-	<h2>Admin Information</h2>
-	<p>
-		<?=label_tag("Admin ID", 'admin', 'id')?>
-		<input type="text" name="admin_id" id="admin_id" value="admin" />
-		<span class="desc">관리자로 사용할 아이디를 입력합니다.</span>
-	</p>
-	<p>
-		<?=label_tag("Admin Password", 'admin', 'password')?>
-		<input type="password" name="admin_password" id="admin_password" />
-		<span class="desc">관리자 아이디의 비밀번호를 입력합니다.</span>
-	</p>
-	<p>
-		<?=label_tag("Admin Password (Again)", 'admin', 'password_verify')?>
-		<input type="password" name="admin_password_verify" id="admin_password_verify" />
-		<span class="desc">확인을 위해 관리자 아이디의 비밀번호를 한번 더 입력합니다.</span>
-	</p>
-	<p>
-		<?=label_tag("Admin Name", 'admin', 'name')?>
-		<input type="text" name="admin_name" id="admin_name" value="admin" />
-		<span class="desc">관리자 아이디의 이름을 입력합니다.</span>
-	</p>
-	<p><?=submit_tag("Install")?></p>
-	</form>
+</table>
+
+<h2>관리자 정보</h2>
+<table>
+	<tr>
+		<th><?=label_tag("Admin ID", 'admin', 'id')?></th>
+		<td><input type="text" name="admin_id" id="admin_id" value="admin" /></td>
+	</tr>
+	<tr>
+		<th><?=label_tag("Admin Password", 'admin', 'password')?></th>
+		<td><input type="password" name="admin_password" id="admin_password" /></td>
+	</tr>
+	<tr>
+		<th><?=label_tag("Admin Password (Again)", 'admin', 'password_verify')?></th>
+		<td><input type="password" name="admin_password_verify" id="admin_password_verify" /></td>
+	</tr>
+	<tr>
+		<th><?=label_tag("Admin Name", 'admin', 'name')?></th>
+		<td><input type="text" name="admin_name" id="admin_name" value="admin" /></td>
+	</tr>
+</table>
+
+<p><?=submit_tag("Install")?></p>
+</form>
 <?php
 } else {
 	set_error_handler('capture_errors');
