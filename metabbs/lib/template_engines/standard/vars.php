@@ -24,6 +24,10 @@ if ($this->view == 'write') {
 		$categories = $board->get_categories();
 	else
 		$categories = null;
+	$un = new UncategorizedPosts($board);
+	if ($board->have_empty_item())
+		array_unshift($categories, $un);
+	
 	$notice_checked = $post->notice ? 'checked="checked"' : '';
 	$secret_checked = $post->secret ? 'checked="checked"' : '';
 	$editing = $action == 'edit';

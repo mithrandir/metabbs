@@ -22,9 +22,6 @@
 	<td colspan="3">
 		<? if ($categories): ?>
 		<select name="category">
-		<? if ($board->have_empty_item()): ?>
-			<option value="0"><?=i('None')?></option>
-		<? endif; ?>
 		<? foreach ($categories as $category): ?>
 			<option value="<?=$category->id?>" <?=$category->selected?>><?=$category->name?></option>
 		<? endforeach; ?>
