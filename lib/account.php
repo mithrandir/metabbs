@@ -120,7 +120,7 @@ class UserManager
 	 */
 	function login($user, $password, $autologin) {
 		$user = User::auth($user, md5($password));
-		if ($user->exists()) {
+		if ($user->exists() && !$user->get_attribute('pwresetcode')) {
 			$_SESSION['user_id'] = $user->id;
 			if ($autologin) {
 				cookie_register('user_id', $user->id);

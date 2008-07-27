@@ -16,3 +16,4 @@
 @define("METABBS_BASE_URI",&nbsp;"<?=METABBS_BASE_URI?>");
 require_once('<?=str_replace("\\", "/", METABBS_DIR)?>/site_manager.php');
 ?&gt;</pre>
+<p>쓰는 방법은 <a href="http://metabbs.org/manual/site_management.html">사이트 구축하기</a> 도움말을 보세요.</p>
