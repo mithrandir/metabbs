@@ -113,16 +113,15 @@ form table th {
 
 .flash {
 	padding: 0.5em;
-	width: 50%;
-	border: 1px solid red;
-	background-color: pink;
+	border-bottom: 1px solid #ff99aa;
+	background-color: #ffeeee;
 }
 .flash p {
 	margin: 0;
 }
 .pass {
-	border: 1px solid green;
-	background-color: lightgreen;
+	border-bottom-color: #88ee99;
+	background-color: #eeffee;
 }
 
 form p {
@@ -202,4 +201,8 @@ pre.code {
 	background-color: #444;
 	padding: 1em;
 	color: #fff;
+}
+
+#installer h2 {
+	margin-top: 1em;
 }
