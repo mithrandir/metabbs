@@ -64,6 +64,7 @@ class LevelIcon extends Plugin {
 				$ext = strrchr($_FILES['icon']['name'], '.');
 				$this->delete_icon($level);
 				move_uploaded_file($_FILES['icon']['tmp_name'], 'data/icons/'.$level.$ext);
+				chmod('data/icons/'.$level.$ext, 0707);
 				$this->icons[$level] = $level.$ext;
 			}
 		}
