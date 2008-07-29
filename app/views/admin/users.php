@@ -22,7 +22,7 @@
 	<td><input type="checkbox" name="user_id[<?=$user->id?>]" class="check" <? if ($user->id==$account->id) { ?>disabled="disabled" <? } ?> /></td>
 	<td class="name"><?=htmlspecialchars($user->name)?> <small>(<?=htmlspecialchars($user->user)?>)</small></td>
 	<td class="level"><?=$user->level?></td>
-	<td class="actions"><?=link_to(i('View'), $user)?><? if (!$user->is_admin()) { ?> | <a href="<?=url_for($user, 'delete')?>?page=<?=$page?>" onclick="return confirm('<?=i('Are you sure?')?>')"><?=i('Delete user')?></a><? } ?><? if ($user->id!=$account->id) { ?> | 
+	<td class="actions"><?=link_to(i('View'), $user)?><? if (!$user->is_admin()) { ?> | <a href="<?=url_for($user, 'delete')?>?page=<?=$page?>" onclick="return confirm('<?=i('Are you sure?')?>')"><?=i('Delete user')?></a><? } ?><? if ($user->id != $account->id && !preg_match('@^http://@', $user->user)) { ?> | 
 	<? if ($user->get_attribute('pwresetcode')) { ?><a href="<?=url_for($user, 'reset-password')?>">암호 초기화 상태</a>
 	<? } else { ?><a href="<?=url_for($user, 'reset-password')?>" onclick="return confirm('<?=i('Are you sure?')?>')">암호 초기화</a><? } } ?></td>
 </tr>
