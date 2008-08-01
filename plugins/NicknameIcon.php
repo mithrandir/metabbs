@@ -45,7 +45,7 @@ class NicknameIcon extends Plugin {
 				$msg = '없는 사용자 아이디입니다.';
 			} else if (is_uploaded_file($_FILES['icon']['tmp_name'])) {
 				move_uploaded_file($_FILES['icon']['tmp_name'], 'data/usericons/'.$user->id);
-				chmod('data/usericons/'.$user->id, 0707);
+				chmod('data/usericons/'.$user->id, 0606);
 				$msg = '아이콘을 추가했습니다.';
 			} else {
 				$msg = '업로드에 실패했습니다.';
