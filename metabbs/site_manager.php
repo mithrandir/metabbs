@@ -95,7 +95,7 @@ class SiteManager
 <? foreach ($this->getLatestPosts($board_name, $count) as $post) {
 	if ($title_length > 0) $post->title = utf8_strcut($post->title, $title_length);
 ?>
-	<li>[<?=$post->name?>] <?=link_to_post($post)?> <span class="comment-count"><?=link_to_comments($post)?></span></li>
+	<li>[<?=$post->name?>] <a href="<?=url_for($post)?>"><?=$post->title?></a> <span class="comment-count"><?=link_to_comments($post)?></span></li>
 <? } ?>
 </ul>
 </div>
@@ -129,7 +129,7 @@ class SiteManager
 	$post->board = $post->get_board();
 	if ($title_length > 0) $post->title = utf8_strcut($post->title, $title_length);
 ?>
-	<li>[<?=$post->name?>] <?=link_to_post($post)?> <span class="comment-count"><?=link_to_comments($post)?></span> @ <?=link_to($post->board->get_title(), $post->board)?></li>
+	<li>[<?=$post->name?>] <a href="<?=url_for($post)?>"><?=$post->title?></a> <span class="comment-count"><?=link_to_comments($post)?></span> @ <?=link_to($post->board->get_title(), $post->board)?></li>
 <? } ?>
 </ul>
 </div>
