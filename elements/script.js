@@ -112,6 +112,14 @@ function findReplyEntryFor(id) {
 	return entry
 }
 
+function recalcDepth(comment) {
+	markCommentParents();
+	var depth = comment.classNames().filter(function (cl) {
+		return cl.startsWith('parent-')
+	}).size() - 1
+	comment.style.marginLeft = (depth * 2) + 'em'
+}
+
 function replyComment(form, id) {
 	var data = Form.serialize(form);
 	if (!checkForm(form)) return false;
@@ -124,12 +132,7 @@ function replyComment(form, id) {
 		},
 		onComplete: function (transport) {
 			var comment = entry.next('li');
-			markCommentParents();
-			var depth = comment.classNames().filter(function (cl) {
-				return cl.startsWith('parent-')
-			}).size() - 1
-
-			comment.style.marginLeft = (depth * 2) + 'em'
+			recalcDepth(comment);
 
 			triggerDialogLinks();
 			closeDialog();
@@ -139,9 +142,19 @@ function replyComment(form, id) {
 	return false;
 }
 
-function editComment(id, url) {
-	new Ajax.Updater($(id).getElementsByClassName('comment')[0], url, {
-		method: 'GET'
+function editComment(form, id) {
+	var submitButton = Form.getSubmitButton(form);
+	submitButton.disable();
+	var origMargin = $('comment_' + id).style.marginLeft
+	new Ajax.Request(form.action, {
+		parameters: Form.serialize(form),
+		onComplete: function (transport) {
+			$('comment_' + id).replace(transport.responseText)
+			$('comment_' + id).style.marginLeft = origMargin
+
+			triggerDialogLinks()
+			closeDialog()
+		}
 	});
 }
 

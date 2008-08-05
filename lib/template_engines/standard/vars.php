@@ -130,4 +130,6 @@ if (isset($keyword)) $keyword = htmlspecialchars($keyword);
 
 if ($this->view == 'reply')
 	$form_id = 'reply-form';
+else if ($this->view == 'edit_comment')
+	$form_id = 'edit-form';
 ?>
