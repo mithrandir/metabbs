@@ -46,4 +46,11 @@
 	</ol>
 
 	<? include "comment_form.php"; ?>
+
+	<script type="text/javascript">
+	Event.observe('comment-form', 'submit', function (event) {
+		addComment('comment-form', $('comments'))
+		Event.stop(event);
+	});
+	</script>
 </div>
