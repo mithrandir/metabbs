@@ -33,7 +33,7 @@ class SQLExporter {
 	function SQLExporter() {
 		$this->db = get_conn();
 	}
-	function to_sql($t) {
+	function to_sql($t, $fp = NULL) {
 		$sql = array();
 		$columns = $this->db->get_columns($t);
 		$_columns = array();
@@ -47,9 +47,14 @@ class SQLExporter {
 			foreach ($columns as $c) {
 				$values[] = "'".$this->db->escape($data[$c])."'";
 			}
-			$sql[] = $prefix . implode(",", $values) . ");";
+			$line = $prefix . implode(",", $values) . ");";
+			if (!$fp)
+				$sql[] = $line;
+			else
+				fwrite($fp, $line . "\n");
 		}
-		return implode("\n", $sql)."\n\n";
+		if (!$fp) return implode("\n", $sql)."\n\n";
+		else fwrite($fp, "\n");
 	}
 }
 function db_info_form() {
