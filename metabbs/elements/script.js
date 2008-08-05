@@ -78,21 +78,62 @@ function deleteComment(form, id, leaveEntry) {
 	});
 }
 
+function markCommentParents() {
+	$$('li').filter(function (comment) {
+		return comment.identify().startsWith('comment_')
+	}).each(function (comment) {
+		var i = 0;
+		var p = comment.classNames().filter(function (cl) {
+			if (!cl.startsWith('parent-'))
+				return true;
+			else {
+				i++;
+				return i == 1;
+			}
+		})
+		comment.className = p.join(' ')
+	}).each(function (comment) {
+		var classes = comment.classNames().filter(function (cl) {
+			return cl.startsWith('parent-');
+		})
+
+		$$('.parent-' + comment.id.split('_')[1]).each(function (el) {
+			classes.each(function (cl) { el.addClassName(cl) })
+		})
+	})
+}
+
+function findReplyEntryFor(id) {
+	markCommentParents();
+
+	var entry = $$('.parent-' + id).last()
+	if (!entry)
+		entry = $('comment_' + id)
+	return entry
+}
+
 function replyComment(form, id) {
 	var data = Form.serialize(form);
 	if (!checkForm(form)) return false;
-	new Ajax.Updater({success: id}, form.action, {
+	var entry = findReplyEntryFor(id);
+	new Ajax.Updater({success: entry}, form.action, {
 		parameters: data,
-		insertion: Insertion.Bottom,
+		insertion: Insertion.After,
 		onFailure: function (transport) {
 			alert(transport.responseText);
 		},
 		onComplete: function (transport) {
-			Form.getSubmitButton(form).enable();
-			$('sending').remove();
-			if (transport.status == 200) {
-				$('reply-form').remove();
-			}
+			var comment = entry.next('li');
+			markCommentParents();
+			var depth = comment.classNames().filter(function (cl) {
+				return cl.startsWith('parent-')
+			}).size() - 1
+
+			comment.style.marginLeft = (depth * 2) + 'em'
+
+			triggerDialogLinks();
+			closeDialog();
+			comment.scrollTo();
 		}
 	});
 	return false;
