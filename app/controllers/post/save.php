@@ -31,8 +31,10 @@ if ($board->use_attachment && isset($_FILES['upload'])) {
 
 if ($post->exists()) {
 	$post->update();
+	apply_filters('AfterUpdatePost', $post);
 } else {
 	$board->add_post($post);
+	apply_filters('AfterAddPost', $post);
 }
 
 if (isset($attachments)) {
@@ -57,6 +59,5 @@ if (isset($_POST['trackback']) && isset($_POST['trackback']['to'])
 	send_trackback($_POST['trackback']);
 }
 
-apply_filters('AfterPostSave', $post);
 redirect_to(url_for($post));
 ?>
