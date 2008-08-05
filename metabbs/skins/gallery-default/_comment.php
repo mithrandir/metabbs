@@ -1,4 +1,4 @@
-		<li class="comment" style="margin-left: <?=$comment->depth * 2?>em">
+		<li id="comment_<?=$comment_id?>" class="comment parent-<?=$comment->parent?>" style="margin-left: <?=$comment->depth * 2?>em">
 			<div class="actions">
 			<? if ($comment->reply_url): ?><a href="<?=$comment->reply_url?>" class="dialog">답글 달기</a><? endif; ?>
 			<? if ($comment->delete_url): ?>| <a href="<?=$comment->delete_url?>" class="dialog">지우기</a><? endif; ?>
