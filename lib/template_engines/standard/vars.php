@@ -69,6 +69,7 @@ $manage_url = url_for($board, 'manage');
 
 if ($this->view == 'view') {
 	$layout->add_meta('Author', htmlspecialchars(isset($post->name_orig) ? $post->name_orig : $post->name));
+	$form_id = 'comment-form';
 }
 if (isset($post) && !$board->use_trackback) {
 	$post->trackback_url = null;
@@ -126,4 +127,7 @@ if (isset($comment_url) && !isset($comment_author)) {
 if (!isset($signature)) $signature = '';
 if (!isset($link_cancel)) $link_cancel = '';
 if (isset($keyword)) $keyword = htmlspecialchars($keyword);
+
+if ($this->view == 'reply')
+	$form_id = 'reply-form';
 ?>
