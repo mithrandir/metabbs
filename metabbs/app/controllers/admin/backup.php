@@ -9,7 +9,7 @@ if (isset($_GET['format']) && $_GET['format'] == 'sql') {
 	require 'lib/backends/'.$config->get('backend').'/installer.php';
 	$db = get_conn();
 	$exporter = new SQLExporter;
-	$filename = "metabbs_backup_" . date('Ymd') . ".sql";
+	$filename = "metabbs_backup_" . date('Ymd') . '_' . md5(microtime() . uniqid(rand(), true)) . ".sql";
 	$fp = fopen('data/backup/' . $filename, 'w');
 	foreach ($db->get_created_tables() as $t) {
 		$exporter->to_sql($t, $fp);
