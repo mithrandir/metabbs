@@ -63,6 +63,21 @@ function addComment(form, list) {
 	return false;
 }
 
+function deleteComment(form, id, leaveEntry) {
+	var submitButton = Form.getSubmitButton(form);
+	submitButton.disable();
+	new Ajax.Request(form.action, {
+		parameters: Form.serialize(form),
+		onComplete: function (transport) {
+			if (!leaveEntry)
+				$('comment_' + id).remove()
+			else
+				$('comment_' + id).replace(transport.responseText)
+			closeDialog()
+		}
+	});
+}
+
 function replyComment(form, id) {
 	var data = Form.serialize(form);
 	if (!checkForm(form)) return false;
@@ -187,7 +202,7 @@ function openDialog(href) {
 			var overlay = $('dialog-overlay');
 			var dialog = $('dialog');
 			overlay.style.top = getScrollTop() + 'px';
-			dialog.innerHTML = xhr.responseText;
+			dialog.update(xhr.responseText);
 			overlay.show();
 
 			addCloseButton();
@@ -208,11 +223,15 @@ function triggerDialogLinks() {
 	});
 }
 
+function closeDialog() {
+	$('dialog-overlay').hide();
+	fixIEDocumentHeight(false);
+}
+
 function triggerCloseLinks() {
 	$$('#dialog a.dialog-close').each(function (link) {
 		Event.observe(link, 'click', function (ev) {
-			$('dialog-overlay').hide();
-			fixIEDocumentHeight(false);
+			closeDialog();
 			Event.stop(ev);
 		});
 	});

@@ -10,12 +10,23 @@ if (is_post()) {
 		else
 			$comment->deleted_by = $account->name;
 		$comment->delete();
-		redirect_to(url_for($post));
+
+		if (is_xhr()) {
+			$template = get_template($board, '_comment');
+			apply_filters('PostViewComment', $comment);
+			$template->set('board', $board);
+			$template->set('comment', $comment);
+			$template->render_partial();
+			exit;
+		} else {
+			redirect_to(url_for($post));
+		}
 	}
 }
 
 $template = get_template($board, 'delete');
 $template->set('board', $board);
+$template->set('comment', $comment);
 $template->set('ask_password', $account->is_guest());
 $template->set('link_cancel', url_for($post));
 
