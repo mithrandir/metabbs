@@ -15,7 +15,7 @@ if (isset($_GET['format']) && $_GET['format'] == 'sql') {
 		$exporter->to_sql($t, $fp);
 	}
 	fclose($fp);
-	chmod($filename, 0606);
+	chmod('data/backup/' . $filename, 0606);
 
 	$backup_url = METABBS_BASE_PATH . 'data/backup/' . $filename;
 }
