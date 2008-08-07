@@ -61,8 +61,14 @@ form {
 	width: 12em;
 	background: #ccc url(header-right.png) no-repeat top right;
 }
+#posts td.author {
+	width: 10em;
+}
 #posts td.title {
 	text-align: left;
+}
+#posts td.date {
+	width: 12em;
 }
 .comment-count {
 	font-size: 0.8em;
