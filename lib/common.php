@@ -29,6 +29,7 @@ require METABBS_DIR . '/lib/plugin.php';
 require METABBS_DIR . '/lib/metadata.php';
 require METABBS_DIR . '/lib/trackback.php';
 require METABBS_DIR . '/lib/theme.php';
+require METABBS_DIR . '/lib/captcha.php';
 
 import_default_language();
 
@@ -50,4 +51,8 @@ $admin = $account->is_admin();
 
 $tz = $config->get('timezone');
 if ($tz) Timezone::set($tz);
+
+if ($guest) {
+	$captcha = new Captcha($config->get('captcha_name', false), $captcha_arg);
+}
 ?>

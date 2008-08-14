@@ -11,7 +11,6 @@
 	<td class="password"><input type="password" name="password" /></td>
 </tr>
 <? endif; ?>
-
 <tr>
 	<th>제목</th>
 	<td colspan="3"><input type="text" name="title" size="50" value="<?=$post->title?>" id="post_title" /></td>
@@ -28,19 +27,30 @@
 		</select>
 		<? endif; ?>
 
-		<? if ($admin): ?><input type="checkbox" name="notice" value="1" <?=$notice_checked?> /> 공지사항<? endif; ?>
-		<input type="checkbox" name="secret" value="1" <?=$secret_checked?> /> 비밀글
+		<? if ($admin): ?><input type="checkbox" id="post_notice" name="notice" value="1" <?=$notice_checked?> /> 공지사항<? endif; ?>
+		<input type="checkbox" id="post_secret" name="secret" value="1" <?=$secret_checked?> /> 비밀글
 	</td>
 </tr>
 
 <tr>
 	<td colspan="4" class="body"><textarea name="body" id="post_body" cols="40" rows="12"><?=$post->body?></textarea></td>
 </tr>
-
+<? if ($guest): ?>
+	<? if ($board->use_captcha() && isset($captcha) && $captcha->ready()): ?>
+<tr>
+	<th>CAPTCHA</th>
+	<td class="captcha" colspan="3"><?= $captcha->get_html() ?>
+		<? if (!empty($captcha->error)): ?>
+		<span style="captcha notice"><?=i($captcha->error)?></p>
+		<? endif; ?>
+	</td>
+</tr>
+	<? endif; ?>
+<? endif; ?>
 <? if ($preview): ?>
-	<tr>
-		<td colspan="4" class="preview"><?=$preview->body?></td>
-	</tr>
+<tr>
+	<td colspan="4" class="preview"><?=$preview->body?></td>
+</tr>
 <? endif; ?>
 
 <? foreach ($additional_fields as $field): ?>

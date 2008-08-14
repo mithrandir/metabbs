@@ -34,19 +34,20 @@ if (is_post()) {
 		$post->user_id = $account->id;
 		$post->name = $account->name;
 	}
+	if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) || isset($captcha) && !$captcha->ready() || !isset($captcha)) {
+		if ($_POST['action'] == 'preview') {
+			if (version_compare(phpversion(), '5.0.0', '<')) {
+				$preview = $post;
+			} else {
+				eval('$preview = clone $post;');
+			}
 
-	if ($_POST['action'] == 'preview') {
-		if (version_compare(phpversion(), '5.0.0', '<')) {
-			$preview = $post;
+			apply_filters('PostSave', $preview);
+			apply_filters('PostView', $preview);
 		} else {
-			eval('$preview = clone $post;');
+			define('SECURITY', 1);
+			include 'app/controllers/post/save.php';
 		}
-
-		apply_filters('PostSave', $preview);
-		apply_filters('PostView', $preview);
-	} else {
-		define('SECURITY', 1);
-		include 'app/controllers/post/save.php';
 	}
 } else {
 	$post = new Post;
