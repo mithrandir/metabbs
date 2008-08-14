@@ -30,6 +30,15 @@
 	<label><?=i('Screen name')?><span class="star">*</span></label>
 	<input type="text" name="user[name]" value="<?=$account->name?>" />
 </p>
+<? if (isset($captcha) && $captcha->ready()) { ?>
+<p>
+	<label><?=i('CAPTCHA')?><span class="star">*</span></label>
+	<?= $captcha->get_html() ?>
+</p>
+	<? if (isset($flash) && $error_field == 'captcha') { ?>
+<p style="captcha notice"><?=$flash?></p>
+	<? } ?>
+<? } ?>
 </fieldset>
 <fieldset>
 <h2>추가 정보</h2>
