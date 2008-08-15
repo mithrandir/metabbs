@@ -25,8 +25,13 @@ if (is_post()) {
 
 	apply_filters('PostComment', $_comment, array('reply' => TRUE));
 
+	if($config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest)
+		$captcha = new Captcha($config->get('captcha_name', false), $captcha_arg);
+
 	$post = $comment->get_post();
-	if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) || isset($captcha) && !$captcha->ready() || !isset($captcha)) {
+	if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
+		|| isset($captcha) && !$captcha->ready() 
+		|| !isset($captcha)) {
 		$post->add_comment($_comment);
 
 		if (is_xhr()) {

@@ -8,6 +8,8 @@ if (is_xhr() && isset($_GET['user'])) {
 	}
 	exit;
 }
+if($config->get('captcha_name', false) != "none" && $guest)
+	$captcha = new Captcha($config->get('captcha_name', false), $captcha_arg);
 if (is_post()) {
 	$info = $_POST['user'];
 	if (strlen($info['password']) < 5) {
@@ -24,7 +26,9 @@ if (is_post()) {
 		$account = new User($info);
 		$account->password = md5($account->password);
 
-		if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) || isset($captcha) && !$captcha->ready() || !isset($captcha))  {
+		if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
+			|| isset($captcha) && !$captcha->ready() 
+			|| !isset($captcha))  {
 			if ($account->valid()) {
 				$account->create();
 				redirect_to(url_with_referer_for('account', 'login'));

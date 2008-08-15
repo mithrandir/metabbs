@@ -22,7 +22,13 @@ if (!$account->is_guest()) {
 $comment->post_id = $post->id;
 
 apply_filters('PostComment', $comment, array('reply' => false));
-if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) || isset($captcha) && !$captcha->ready() || !isset($captcha)) {
+
+if($config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest)
+	$captcha = new Captcha($config->get('captcha_name', false), $captcha_arg);
+
+if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
+	|| isset($captcha) && !$captcha->ready() 
+	|| !isset($captcha)) {
 	$post->add_comment($comment);
 
 	if (is_xhr()) {

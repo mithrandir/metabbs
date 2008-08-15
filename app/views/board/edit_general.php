@@ -18,8 +18,10 @@
 	<dd><?=check_box('board', 'use_category', $board->use_category)?></dd>
 	<dt><?=label_tag("Use trackback", "board", "use_trackback")?></dt>
 	<dd><?=check_box('board', 'use_trackback', $board->use_trackback)?></dd>
+<? if($config->get('captcha_name', false) != "none") { ?>
 	<dt><?=label_tag("Use CAPTCHA", "captcha", "use_captcha")?></dt>
 	<dd><?=check_box('board', 'use_captcha', $board->use_captcha())?></dd>
+<? } ?>
 </dl>
 <dl>
 	<dt><?=label_tag("Sorting", "board", "order_by")?></dt>
