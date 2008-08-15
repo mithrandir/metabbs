@@ -8,8 +8,10 @@ if (is_xhr() && isset($_GET['user'])) {
 	}
 	exit;
 }
+
 if($config->get('captcha_name', false) != "none" && $guest)
 	$captcha = new Captcha($config->get('captcha_name', false), $captcha_arg);
+
 if (is_post()) {
 	$info = $_POST['user'];
 	if (strlen($info['password']) < 5) {
