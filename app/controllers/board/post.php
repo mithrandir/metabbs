@@ -1,6 +1,9 @@
 <?php
 permission_required('write', $board);
 
+if($config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest)
+	$captcha = new Captcha($config->get('captcha_name', false), $captcha_arg);
+
 if (is_post()) {
 	check_post_max_size_overflow();
 
@@ -34,9 +37,6 @@ if (is_post()) {
 		$post->user_id = $account->id;
 		$post->name = $account->name;
 	}
-
-	if($config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest)
-		$captcha = new Captcha($config->get('captcha_name', false), $captcha_arg);
 
 	if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
 		|| isset($captcha) && !$captcha->ready() 

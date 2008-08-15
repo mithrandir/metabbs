@@ -9,6 +9,9 @@ if (is_post() && !isset($_POST['comment'])) {
 	);
 }
 
+if($config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest)
+	$captcha = new Captcha($config->get('captcha_name', false), $captcha_arg);
+
 if (is_post()) {
 	$_comment = new Comment($_POST['comment']);
 	$_comment->user_id = $account->id;
@@ -24,9 +27,6 @@ if (is_post()) {
 	}
 
 	apply_filters('PostComment', $_comment, array('reply' => TRUE));
-
-	if($config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest)
-		$captcha = new Captcha($config->get('captcha_name', false), $captcha_arg);
 
 	$post = $comment->get_post();
 	if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
