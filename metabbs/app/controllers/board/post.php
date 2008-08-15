@@ -34,7 +34,13 @@ if (is_post()) {
 		$post->user_id = $account->id;
 		$post->name = $account->name;
 	}
-	if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) || isset($captcha) && !$captcha->ready() || !isset($captcha)) {
+
+	if($config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest)
+		$captcha = new Captcha($config->get('captcha_name', false), $captcha_arg);
+
+	if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
+		|| isset($captcha) && !$captcha->ready() 
+		|| !isset($captcha)) {
 		if ($_POST['action'] == 'preview') {
 			if (version_compare(phpversion(), '5.0.0', '<')) {
 				$preview = $post;

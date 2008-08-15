@@ -51,8 +51,4 @@ $admin = $account->is_admin();
 
 $tz = $config->get('timezone');
 if ($tz) Timezone::set($tz);
-
-if ($guest) {
-	$captcha = new Captcha($config->get('captcha_name', false), $captcha_arg);
-}
 ?>
