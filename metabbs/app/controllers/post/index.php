@@ -23,6 +23,9 @@ if (!in_array($post->id, $_SESSION['seen_posts'])) {
 
 $style = $board->get_style();
 
+if($config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest)
+	$captcha = new Captcha($config->get('captcha_name', false), $captcha_arg);
+
 if ($post->user_id) {
 	$user = $post->get_user();
 }
