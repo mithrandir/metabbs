@@ -23,8 +23,8 @@ $comment->post_id = $post->id;
 
 apply_filters('PostComment', $comment, array('reply' => false));
 
-if($config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest)
-	$captcha = new Captcha($config->get('captcha_name', false), $captcha_arg);
+$captcha = $config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest
+	? new Captcha($config->get('captcha_name', false), $captcha_arg) : null;
 
 if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
 	|| isset($captcha) && !$captcha->ready() 
