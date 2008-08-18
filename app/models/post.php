@@ -118,6 +118,10 @@ class Post extends Model {
 		$this->comment_count = $this->get_real_comment_count();
 		$this->db->execute("UPDATE $this->table SET comment_count=$this->comment_count WHERE id=$this->id");
 	}
+	function update_attachment_count() {
+		$this->attachment_count = $this->get_attachment_count();
+		$this->db->execute("UPDATE $this->table SET attachment_count=$this->attachment_count WHERE id=$this->id");
+	}
 	function get_trackbacks() {
 		return $this->db->fetchall("SELECT * FROM $this->trackback_table WHERE post_id=$this->id", 'Trackback');
 	}

@@ -43,6 +43,7 @@ if (isset($attachments)) {
 		move_uploaded_file($attachment->tmp_name, 'data/uploads/' . $attachment->id);
 		chmod('data/uploads/' . $attachment->id, 0606);
 	}
+	$post->update_attachment_count();
 }
 
 if (isset($_POST['meta'])) {

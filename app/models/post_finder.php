@@ -63,7 +63,7 @@ class PostFinder {
 		return implode(' AND ', $and_parts);
 	}
 	function get_fields() {
-		$fields = 'id, board_id, user_id, category_id, name, title, created_at, notice, views, secret, moved_to, comment_count';
+		$fields = 'id, board_id, user_id, category_id, name, title, created_at, notice, views, secret, moved_to, comment_count, attachment_count';
 		if ($this->get_post_body) $fields .= ', body';
 		return $fields;
 	}
