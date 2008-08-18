@@ -1,8 +1,8 @@
 <?php
 permission_required('write', $board);
 
-if($config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest)
-	$captcha = new Captcha($config->get('captcha_name', false), $captcha_arg);
+$captcha = $config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest 
+	? new Captcha($config->get('captcha_name', false), $captcha_arg) : null;
 
 if (is_post()) {
 	check_post_max_size_overflow();
