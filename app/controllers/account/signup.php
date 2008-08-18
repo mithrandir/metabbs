@@ -9,7 +9,8 @@ if (is_xhr() && isset($_GET['user'])) {
 	exit;
 }
 
-$captcha = $config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest ? new Captcha($config->get('captcha_name', false), $captcha_arg) : null;
+$captcha = $config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest 
+	? new Captcha($config->get('captcha_name', false), $captcha_arg) : null;
 
 if (is_post()) {
 	$info = $_POST['user'];
