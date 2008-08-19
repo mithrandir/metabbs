@@ -16,6 +16,10 @@ if (!file_exists(METABBS_DIR . '/metabbs.conf.php')) {
 	exit;
 }
 
+if (!defined('METABBS_HOST_URL')) {
+	define('METABBS_HOST_URL', ($_SERVER['SERVER_PORT'] != 443 ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . ($_SERVER['SERVER_PORT'] != 80 && $_SERVER['SERVER_PORT'] != 443 ? ':' . $_SERVER['SERVER_PORT'] : ''));
+}
+
 ini_set('include_path', METABBS_DIR . PATH_SEPARATOR . ini_get('include_path'));
 
 require METABBS_DIR . '/lib/compat.php';

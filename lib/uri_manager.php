@@ -47,7 +47,7 @@ function query_string_for($params) {
  * @return http 프로토콜에 맞춘 전체 url
  */
 function full_url_for($controller, $action = '') {
-	return 'http://'.$_SERVER['HTTP_HOST']._url_for($controller, $action);
+	return METABBS_HOST_URL._url_for($controller, $action);
 }
 
 /**
