@@ -105,7 +105,7 @@ class Captcha {
 				$html = "<input type=\"text\" name=\"recaptcha_challenge_field\" id=\"recaptcha_challenge_field\"/>\n";
 				$html .= "<img src=\"/captcha/visual\" width=\"120\" height=\"18\" alt=\"Visual CAPTCHA\" style=\"border:1px solid gray;\"/>\n";
 				if (!empty($this->flite_path))
-					$html .= "<a href=\"/captcha/audio\">".i("Can't see the image? Click for audible version.")."</a>\n";
+					$html .= "<a href=\"/captcha/audio\">".i("Can't see the image? Click for audible version")."</a>\n";
 				break;
 		}
 		return $html;

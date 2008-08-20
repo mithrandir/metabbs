@@ -162,3 +162,4 @@ $lang['Public Key'] = '공개키';
 $lang['Private Key'] = '개인키';
 $lang['Use CAPTCHA'] = 'CAPTCHA 사용';
 $lang['The CAPTCHA solution was incorrect'] = '입력하신 CAPTCHA정보가 일치하지 않습니다';
+$lang['Can\'t see the image? Click for audible version'] = '오디오로 듣기';
