@@ -17,6 +17,8 @@
 		<?=option_tag($theme, $theme, $theme == $current_theme)?>
 		<? endforeach; ?>
 		</select>
+		<?=check_box('settings', 'use_forget_password', $config->get('use_forget_password', false))?>
+		<?=label_tag(i('Use \'Forget Password\' Page'), 'settings', 'use_forget_password')?>
 	</dd>
 
 	<dt><?=label_tag(i('Default language'), 'settings', 'default_language')?></dt>
