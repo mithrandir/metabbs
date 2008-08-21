@@ -85,6 +85,22 @@ function login_required() {
 }
 
 /**
+ * utf8로 인코딩된 메일을 보낸다.
+ */
+function sendmail_utf8($from_email, $from_name, $to_email, $to_name, $subject, $message, $charset = "UTF-8") {
+	$eol = "\r\n";
+	$encoded_from_name = empty($from_name) ? $from_email : "=?{$charset}?B?".base64_encode($from_name)."?= <{$from_email}>";
+	$encoded_to_name = empty($to_name) ? $to_email : "=?{$charset}?B?".base64_encode($to_name)."?= <{$to_email}>";
+	$encoded_subject = "=?{$charset}?B?".base64_encode($subject)."?=".$eol;
+
+	$headers = "From: {$encoded_from_name}".$eol;
+	$headers .= "Reply-To: {$encoded_from_name}".$eol;
+	$headers .= "Content-Type: text/html; charset=\"{$charset}\"".$eol;
+
+	return mail($encoded_to_name, $encoded_subject, $message, $headers);	
+}
+
+/**
  * 사용자 계정을 관리
  */
 class UserManager
@@ -120,7 +136,7 @@ class UserManager
 	 */
 	function login($user, $password, $autologin) {
 		$user = User::auth($user, md5($password));
-		if ($user->exists() && !$user->get_attribute('pwresetcode')) {
+		if ($user->exists() /*&& !$user->get_attribute('pwresetcode')*/) {
 			$_SESSION['user_id'] = $user->id;
 			if ($autologin) {
 				cookie_register('user_id', $user->id);
