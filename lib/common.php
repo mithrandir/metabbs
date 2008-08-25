@@ -33,7 +33,6 @@ require METABBS_DIR . '/lib/metadata.php';
 require METABBS_DIR . '/lib/trackback.php';
 require METABBS_DIR . '/lib/theme.php';
 require METABBS_DIR . '/lib/captcha.php';
-require METABBS_DIR . '/lib/feed.php';
 
 import_default_language();
 
