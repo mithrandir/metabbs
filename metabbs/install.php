@@ -88,6 +88,10 @@ require_once 'lib/tag_helper.php';
 $backend = isset($_GET['backend']) ? $_GET['backend'] : 'mysql';
 require "lib/backends/$backend/installer.php";
 
+$path = dirname($_SERVER['SCRIPT_NAME']);
+if ($path == '\\' || $path == '/') $path = '';
+$metabbs_base_path = $path . '/';
+
 import_default_language();
 print_header();
 
@@ -106,8 +110,16 @@ if (file_exists('metabbs.conf.php')) {
 
 if (!isset($_POST['config'])) {
 ?>
-	<h2>데이터베이스 정보</h2>
 	<form method="post" action="install.php?backend=<?=$backend?>">
+	<h2>서버 정보</h2>
+	<table>
+	<tr>
+		<th><?=label_tag("Base Path", 'admin', 'base_path')?></th>
+		<td><input type="text" name="base_path" id="base_path" value="<?=$metabbs_base_path?>" /></td>
+	</tr>
+	</table>
+
+	<h2>데이터베이스 정보</h2>
 	<table>
 <? /* will not be supported in 0.9 series
 	<tr>
@@ -195,6 +207,7 @@ if (!isset($_POST['config'])) {
 	foreach ($_POST['config'] as $key => $value)
 		$config->set($key, $value);
 	$config->set('backend', $backend);
+	$config->set('base_path', $_POST['base_path']);
     $config->set('revision', METABBS_DB_REVISION);
 	$config->write_to_file();
 	chmod('metabbs.conf.php', 0606);

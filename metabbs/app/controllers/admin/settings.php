@@ -10,6 +10,7 @@ if (is_post()) {
     }
 	$config->set('global_header', $settings['global_header']);
 	$config->set('global_footer', $settings['global_footer']);
+	$config->set('base_path', $settings['base_path']);
 	$config->set('theme', $settings['theme']);
 	$config->set('use_forget_password', $settings['use_forget_password']);
 	$config->set('default_language', $settings['default_language']);

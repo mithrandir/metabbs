@@ -1,18 +1,17 @@
 <?php
 header("Content-Type: text/html; charset=utf-8");
 
-if (!defined('METABBS_BASE_PATH')) {
-	$path = dirname($_SERVER['SCRIPT_NAME']);
-	if ($path == '\\' || $path == '/') $path = '';
-	define('METABBS_BASE_PATH', $path . '/');
-}
+// pre-define METABBS_BASE_PATH
+$path = dirname($_SERVER['SCRIPT_NAME']);
+if ($path == '\\' || $path == '/') $path = '';
+$metabbs_base_path = $path . '/';
 
 if (!defined('METABBS_DIR')) {
 	define('METABBS_DIR', realpath(dirname(__FILE__) . '/..'));
 }
 
 if (!file_exists(METABBS_DIR . '/metabbs.conf.php')) {
-	echo '<h1>Config file not found.</h1><p>Did you install metaBBS? :) <a href="' . METABBS_BASE_PATH . 'install.php">Go to install page &raquo;</a></p>';
+	echo '<h1>Config file not found.</h1><p>Did you install metaBBS? :) <a href="' . $metabbs_base_path . 'install.php">Go to install page &raquo;</a></p>';
 	exit;
 }
 
@@ -34,6 +33,7 @@ require METABBS_DIR . '/lib/metadata.php';
 require METABBS_DIR . '/lib/trackback.php';
 require METABBS_DIR . '/lib/theme.php';
 require METABBS_DIR . '/lib/captcha.php';
+require METABBS_DIR . '/lib/feed.php';
 
 import_default_language();
 

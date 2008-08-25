@@ -10,6 +10,9 @@
 	<dt><?=label_tag(i('Global footer'), 'settings', 'global_footer')?></dt>
 	<dd><?=text_field('settings', 'global_footer', $config->get('global_footer'), 30)?></dd>
 
+	<dt><?=label_tag(i('Base Path'), 'settings', 'base_path')?></dt>
+	<dd><?=text_field('settings', 'base_path', $config->get('base_path'), 30)?></dd>
+
 	<dt><?=label_tag(i('Site theme'), 'settings', 'theme')?></dt>
 	<dd>
 		<select name="settings[theme]" id="settings_theme">
