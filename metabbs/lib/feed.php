@@ -12,3 +12,17 @@ function render_board_feed($board, $format) {
 	render_feed($title, full_url_for($board), "The latest posts from $title",
 			$board->get_feed_posts($board->posts_per_page), $format);
 }
+
+function str_trim($str) {
+	return str_replace('　', '', str_replace('%20', '', preg_replace("/([\r]|[\n]|[\s])+/", '', trim($str))));
+}
+
+function array_trim($items) {
+	$result = array();
+	foreach ($items as $key=>$value) {
+		if (strlen(str_trim($value)) > 0) {
+			$result[$key] = str_trim($value);
+		}
+	}
+	return $result;
+}

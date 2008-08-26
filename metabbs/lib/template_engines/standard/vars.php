@@ -67,6 +67,7 @@ if (isset($categories)) {
 }
 $manage_url = url_for($board, 'manage');
 
+$tagable = $board->use_tag();
 if ($this->view == 'view') {
 	$layout->add_meta('Author', htmlspecialchars(isset($post->name_orig) ? $post->name_orig : $post->name));
 	$form_id = 'comment-form';

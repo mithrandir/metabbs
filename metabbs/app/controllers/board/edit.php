@@ -33,6 +33,7 @@ if (is_post()) {
 		} else if ($_board->name != $board->name && !$_board->validate()) {
 			$flash = "Board '$_board->name' already exists.";
 		}
+		$board->set_attribute('use_tag', $_POST['board']['use_tag']);
 		$board->set_attribute('use_captcha', $_POST['board']['use_captcha']);
 		$sorting_changed = $_board->order_by != $board->order_by;
 		if (isset($flash)) {

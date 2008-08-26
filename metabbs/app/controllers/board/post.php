@@ -19,7 +19,8 @@ if (is_post()) {
 			'category_id' => isset($_POST['category']) ? $_POST['category'] : 0,
 			'notice' => isset($_POST['notice']) ? $_POST['notice'] : 0,
 			'secret' => isset($_POST['secret']) ? $_POST['secret'] : 0,
-			'body' => $_POST['body']
+			'body' => $_POST['body'],
+			'tags' => $_POST['tags']
 		);
 	}
 

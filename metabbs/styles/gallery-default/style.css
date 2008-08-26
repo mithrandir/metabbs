@@ -130,6 +130,11 @@ input.button {
 	margin-top: 0.5em;
 	font-size: 0.8em;
 }
+#post .edit-info, #tags {
+	font-size: 0.85em;
+	color: #999;
+	margin: 2em 0 1em 1em;
+}
 #attachments {
 	border-bottom: 1px dotted #ccc;
 	list-style: none;
@@ -221,11 +226,11 @@ input.button {
 #post-form .options td { padding: 0 0.5em; }
 #post_title { width: 95%; }
 #post_body { width: 96.5%; }
-#upload, #trackback {
+#upload, #trackback, #tag {
 	padding: 1em 1em;
 	border-top: 1px solid #ddd;
 }
-#upload h2, #trackback h2 {
+#upload h2, #trackback h2, #tag h2 {
 	font-size: 1.1em;
 	margin: 0;
 }
