@@ -21,6 +21,8 @@ class Post extends Model {
 		$this->comment_table = get_table_name('comment');
 		$this->trackback_table = get_table_name('trackback');
 		$this->attachment_table = get_table_name('attachment');
+		$this->tag_table = get_table_name('tag');
+		$this->tag_post_table = get_table_name('tag_post');
 	}
 	function find($id) {
 		return find('post', $id);
@@ -32,7 +34,7 @@ class Post extends Model {
 		$this->last_update_at = $this->created_at;
 		Model::create();
 		$this->update_sort_key();
-
+		$this->arrange_tags_after_create();
 		foreach ($this->meta as $k => $v)
 			$this->set_attribute($k, $v);
 	}
@@ -40,6 +42,7 @@ class Post extends Model {
 		$this->edited_at = time();
 		Model::update();
 		$this->update_sort_key();
+		$this->arrange_tags_after_update();
 	}
 	function update_sort_key() {
 		if ($this->notice) {
@@ -142,10 +145,72 @@ class Post extends Model {
 	function get_attachment_count() {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->attachment_table WHERE post_id=$this->id");
 	}
+	function get_tags() {
+		return $this->db->fetchall("SELECT t.* FROM $this->tag_post_table AS tp INNER JOIN $this->tag_table AS t ON tp.post_id = $this->id AND tp.tag_id = t.id ORDER BY created_at ASC", 'Tag');
+	}
+	function get_tag_count() {
+		return $this->db->fetchone("SELECT COUNT(*) FROM $this->tag_post_table AS tp INNER JOIN $this->tag_table AS t ON tp.post_id = $this->id AND tp.tag_id = t.id ORDER BY created_at ASC", 'Tag');
+	}
+	function find_tag_by_name($name) {
+		return $this->db->fetchrow("SELECT * FROM $this->tag_table WHERE board_id = $this->board_id AND name = '$name' LIMIT 1", 'Tag');
+	}
+	function add_tag_by_name($name) {
+		$tag = $this->find_tag_by_name($name);
+		if($tag->exists()) {
+			return $tag->increase_tag_post($this);
+		} else {
+			$tag = new Tag(array('name'=>$name, 'board_id'=>$this->board_id));
+			$tag->add_tag_post($this);
+		}
+		return true;
+	}
+	function delete_tag_by_name($name) {
+		$tag = $this->find_tag_by_name($name);
+		if (!$tag->exists()) return false;
+
+		$tag->delete_tag_post($this);
+		return true;
+	}
+	function arrange_tags_after_create() {
+		$tags = array();
+
+		if (!empty($this->tags))
+			foreach (array_trim(explode(',', $this->tags)) as $tag_name)
+				if (!empty($tag_name) && $this->add_tag_by_name($tag_name))
+					array_push($tags, $tag_name);
+
+		if (count($tags) > 0)
+			$this->db->execute("UPDATE $this->table SET tags='".implode(', ', $tags)."', tag_count = ".count($tags)." WHERE id=$this->id");
+	}
+	function arrange_tags_after_update() {
+		$old_tags = array();
+
+		foreach ($this->get_tags() as $tag)
+			array_push($old_tags, $tag->name);
+	
+		$new_tags = empty($this->tags) ? array() : array_trim(explode(',', $this->tags));
+
+		$atags = empty($old_tags) ? $new_tags : (empty($new_tags) ? array() : array_diff($new_tags, $old_tags));
+		$dtags = empty($new_tags) ? $old_tags : (empty($old_tags) ? array() : array_diff($old_tags, $new_tags));
+		$tags = array_intersect($old_tags, $new_tags);
+
+		foreach ($atags as $tag_name)
+			if (!empty($tag_name) && $this->add_tag_by_name($tag_name))
+				array_push($tags, $tag_name);
+
+		foreach ($dtags as $tag_name)
+			if (!empty($tag_name))
+				$this->delete_tag_by_name($tag_name);
+
+		if (count($tags) > 0)
+			$this->db->execute("UPDATE $this->table SET tags='".implode(', ', $tags)."', tag_count = ".count($tags)." WHERE id=$this->id");
+	}
 	function delete() {
 		$this->db->execute("DELETE FROM $this->table WHERE moved_to=$this->id");
 		$this->db->execute("DELETE FROM $this->comment_table WHERE post_id=$this->id");
 		$this->db->execute("DELETE FROM $this->trackback_table WHERE post_id=$this->id");
+		foreach($this->get_tags() as $tag)
+				$this->delete_tag_by_name($tag->name);
 		Model::delete();
 	}
 	function update_view_count() {

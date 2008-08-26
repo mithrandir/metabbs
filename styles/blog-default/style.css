@@ -146,10 +146,10 @@ h1 {
 #post-form .options td { padding: 0 0.5em; }
 #post_title { width: 95%; }
 #post_body { width: 96.5%; }
-#upload, #trackback {
+#upload, #trackback, #tag {
 	padding: 1em;
 }
-#upload h2, #trackback h2 {
+#upload h2, #trackback h2, #tag h2 {
 	font-size: 1.1em;
 	margin: 0;
 }

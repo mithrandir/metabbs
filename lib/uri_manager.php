@@ -60,6 +60,16 @@ function full_url_for($controller, $action = '') {
 function url_for($controller, $action = null, $params = array()) {
 	return _url_for($controller, $action, $params);
 }
+/**
+ * 예외적 상항에 따른 url_for
+ */
+function url_for_list($controller, $action , $params = null) {
+	$url = METABBS_BASE_URI;
+	$url .= $controller . '/'. $action;
+	if ($params) $url .= query_string_for($params);
+
+	return $url;
+}
 
 function get_search_params() {
 	$params = array();

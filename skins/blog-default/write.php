@@ -76,6 +76,15 @@
 </div>
 <? endif; ?>
 
+<? if ($tagable): ?>
+<div id="tag">
+<h2>태그</h2>
+<ul id="tag_input">
+	<li><input type="text" name="tags" size="63" value="<?=$post->tags?>" id="post_tags" /></li>
+</ul>
+</div>
+<? endif; ?>
+
 <? if ($admin): ?>
 <div id="trackback">
 <h2>트랙백 보내기</h2>
