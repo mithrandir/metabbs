@@ -40,5 +40,5 @@ $default_language = $config->get('default_language', SOURCE_LANGUAGE);
 $current_tz = Timezone::get();
 $current_theme = get_current_theme();
 $themes = get_themes();
-$captcha = new Captcha($config->get('captcha_name', false), null);
+//$captcha = new Captcha($config->get('captcha_name', false), null);
 ?>

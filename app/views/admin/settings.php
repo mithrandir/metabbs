@@ -53,7 +53,7 @@
 	<dd>
 		<select name="settings[captcha_name]">
 		<?=option_tag('none', '사용안합니다.', false)?>
-		<? foreach($captcha->libs as $name => $lib) { ?>
+		<? foreach($external_libs['captcha'] as $name => $lib) { ?>
 		<?=option_tag($name, $lib["title"], $config->get('captcha_name', false) == $name)?>
 		<? } ?>
 		</select>
