@@ -13,17 +13,6 @@ if(!function_exists('scandir')) {
 } 
 
 class Captcha {
-	var $libs = array(
-		"phpcaptcha" => array(
-			"title" =>"PHP CAPTCHA", 
-			"lib_src"=>"lib/external/phpcaptcha/php-captcha.inc.php"
-		),
-/*		"recaptcha" => array(
-			"title" =>"ReCAPTCHA", 
-			"lib_src"=>"lib/external/recaptcha/recaptchalib.php"
-		)*/
-	);
-
 	function Captcha($name, $arg) {
 		$this->name = $name;
 		switch ($this->name) {
@@ -48,8 +37,9 @@ class Captcha {
 	}
 
 	function ready() {
-		if (!file_exists($this->libs[$this->name]["lib_src"])) {
-			$this->error = "Library not exists on '{$this->libs[$this->name]['lib_src']}'.";
+		global $external_libs;
+		if (!file_exists($external_libs['captcha'][$this->name]['src'])) {
+			$this->error = "Library not exists on '{$external_libs['captcha'][$this->name]['src']}'.";
 			return false;
 		}
 		switch ($this->name) {
@@ -70,7 +60,6 @@ class Captcha {
 	}
 
 	function is_valid($arg) {
-		include_once $this->libs[$this->name]["lib_src"];
 		switch ($this->name) {
 			case "recaptcha":
 				if (empty($arg['recaptcha_challenge_field']) || empty($arg['recaptcha_response_field'])) {
@@ -96,7 +85,6 @@ class Captcha {
 	}
 
 	function get_html() {
-		include_once $this->libs[$this->name]["lib_src"];
 		switch ($this->name) {
 			case "recaptcha":
 				$html = recaptcha_get_html($this->publickey, $this->error);
@@ -114,10 +102,12 @@ class Captcha {
 
 $captcha_arg = array();
 switch ($config->get('captcha_name', false)) {
-	case "phpcaptcha":
+	case 'phpcaptcha':
+		include_once $external_libs['captcha']['phpcaptcha']['src'];
 		$captcha_arg['flite_path'] = $config->get('flite_path', false);
 		break;
-	case "recaptcha":
+	case 'recaptcha':
+		include_once $external_libs['captcha']['recaptcha']['src'];
 		$captcha_arg['privatekey'] = $config->get('captcha_privatekey', false);
 		$captcha_arg['publickey'] = $config->get('captcha_publickey', false);
 		break;
