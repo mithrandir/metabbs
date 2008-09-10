@@ -30,28 +30,11 @@ function create_thumbnail($path, $dest, $kind = 0, $size = 130) {
 				$src_h = $height;
 				$dst_x = 0;
 				$dst_y = 0;
-				$dst_w = $width * ($size / $height);
+				$dst_w = $width / $height * $size;
 				$dst_h = $size;
 				break;
 			// 큰축을 size로 고정 축소
 			case 1:
-				if ($width <= $size || $height <= $size) return false;
-				$src_x = 0;
-				$src_y = 0;
-				$src_w = $width;
-				$src_h = $height;
-				$dst_x = 0;
-				$dst_y = 0;
-				if($width > $height) {
-					$dst_w = $width * ($size / $height);
-					$dst_h = $size;
-				} else {
-					$dst_w = $size;
-					$dst_h = $height * ($size / $width);
-				}
-				break;
-			// 작은축을 size로 고정 축소
-			case 2:
 				if ($width <= $size || $height <= $size) return false;
 				$src_x = 0;
 				$src_y = 0;
@@ -65,6 +48,23 @@ function create_thumbnail($path, $dest, $kind = 0, $size = 130) {
 				} else {
 					$dst_w = $size;
 					$dst_h = $height / $width * $size;
+				}
+				break;
+			// 작은축을 size로 고정 축소
+			case 2:
+				if ($width <= $size || $height <= $size) return false;
+				$src_x = 0;
+				$src_y = 0;
+				$src_w = $width;
+				$src_h = $height;
+				$dst_x = 0;
+				$dst_y = 0;
+				if($width > $height) {
+					$dst_w = $size;
+					$dst_h = $height / $width * $size;
+				} else {
+					$dst_w = $width / $height * $size;
+					$dst_h = $size;
 				}
 				break;
 			// size의 정사각형으로 잘라내기 축소
