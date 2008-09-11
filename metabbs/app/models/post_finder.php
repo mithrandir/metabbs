@@ -76,7 +76,9 @@ class PostFinder {
 		return implode(' AND ', $and_parts);
 	}
 	function get_fields() {
+
 		$fields = 'id, board_id, user_id, category_id, name, title, created_at, notice, views, secret, moved_to, comment_count, attachment_count, tags';
+		apply_filters('PostFinderFields', $fields);
 		if ($this->get_post_body) $fields .= ', body';
 		return $fields;
 	}
@@ -85,6 +87,7 @@ class PostFinder {
 		$offset = ($this->page - 1) * $this->board->posts_per_page;
 		$limit = $this->board->posts_per_page;
 		$condition = $this->get_condition();
+		apply_filters('PostFinderConditions', $condition, $this->board);
 		return $this->db->fetchall("SELECT $fields FROM $this->table WHERE $condition ORDER BY sort_key, id DESC LIMIT $offset, $limit", 'Post');
 	}
 	function get_notice_posts() {
