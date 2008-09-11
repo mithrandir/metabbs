@@ -211,6 +211,7 @@ class Post extends Model {
 		$this->db->execute("DELETE FROM $this->trackback_table WHERE post_id=$this->id");
 		foreach($this->get_tags() as $tag)
 				$this->delete_tag_by_name($tag->name);
+		apply_filters('PostDelete', $this);
 		Model::delete();
 	}
 	function update_view_count() {

@@ -80,6 +80,7 @@ class Board extends Model {
 			delete_all('post', "moved_to IN (".implode(',', $ids).")");
 		}
 		delete_all('post', "board_id=$this->id");
+		apply_filters('BoardDelete', $this);
 		Model::delete();
 	}
 	function get_recent_comments($count) {

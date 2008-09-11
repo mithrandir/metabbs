@@ -11,6 +11,10 @@ class User extends Model {
 		$this->post_table = get_table_name('post');
 		$this->comment_table = get_table_name('comment');
 	}
+	function delete() {
+		apply_filters('UserDelete', $this);
+		Model::delete();
+	}
 	function find($id) {
 		$db = get_conn();
 		$table = get_table_name('user');
@@ -160,6 +164,10 @@ class Guest extends Model
 	var $name = 'guest';
 	var $email, $url;
 	var $signature;
+	function delete() {
+		apply_filters('UserDelete', $this);
+		Model::delete();
+	}
 	function is_guest() {
 		return true;
 	}
