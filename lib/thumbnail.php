@@ -33,7 +33,7 @@ function create_thumbnail($path, $dest, $kind = 0, $size = 130) {
 				$dst_w = $width / $height * $size;
 				$dst_h = $size;
 				break;
-			// 큰축을 size로 고정 축소
+			// 작은축을 size로 고정 축소
 			case 1:
 				if ($width <= $size || $height <= $size) return false;
 				$src_x = 0;
@@ -50,7 +50,7 @@ function create_thumbnail($path, $dest, $kind = 0, $size = 130) {
 					$dst_h = $height / $width * $size;
 				}
 				break;
-			// 작은축을 size로 고정 축소
+			// 큰축을 size로 고정 축소
 			case 2:
 				if ($width <= $size || $height <= $size) return false;
 				$src_x = 0;
