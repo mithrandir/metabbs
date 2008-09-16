@@ -12,7 +12,11 @@
 </ul>
 
 <h3>동작</h3>
-<p><input type="radio" name="action" value="delete" checked="checked" id="delete_box" /> <label for="delete_box">지우기</label></p>
+<p><input type="radio" name="action" value="hide" checked="checked" id="hide_box" /> <label for="hide_box">비밀글로 바꾸기</label></p>
+
+<p><input type="radio" name="action" value="show" id="show_box" /> <label for="show_box">비밀글 풀기</label></p>
+
+<p><input type="radio" name="action" value="delete" id="delete_box" /> <label for="delete_box">지우기</label></p>
 
 <? if ($board->use_category) { ?>
 <p>
