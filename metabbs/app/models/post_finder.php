@@ -76,7 +76,6 @@ class PostFinder {
 		return implode(' AND ', $and_parts);
 	}
 	function get_fields() {
-
 		$fields = 'id, board_id, user_id, category_id, name, title, created_at, notice, views, secret, moved_to, comment_count, attachment_count, tags';
 		apply_filters('PostFinderFields', $fields);
 		if ($this->get_post_body) $fields .= ', body';
@@ -96,6 +95,7 @@ class PostFinder {
 	}
 	function get_post_count() {
 		$condition = $this->get_condition();
+		apply_filters('PostFinderConditions', $condition, $this->board);
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->table WHERE $condition");
 	}
 }
