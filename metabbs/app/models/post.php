@@ -152,7 +152,7 @@ class Post extends Model {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->tag_post_table AS tp INNER JOIN $this->tag_table AS t ON tp.post_id = $this->id AND tp.tag_id = t.id ORDER BY created_at ASC", 'Tag');
 	}
 	function find_tag_by_name($name) {
-		return $this->db->fetchrow("SELECT * FROM $this->tag_table WHERE board_id = $this->board_id AND name = '$name' LIMIT 1", 'Tag');
+		return $this->db->fetchrow("SELECT * FROM $this->tag_table WHERE board_id = ? AND name = ? LIMIT 1", 'Tag', array($this->board_id, $this->db->escape($name)));
 	}
 	function add_tag_by_name($name) {
 		$tag = $this->find_tag_by_name($name);
@@ -177,7 +177,7 @@ class Post extends Model {
 		if (!empty($this->tags))
 			foreach (array_trim(explode(',', $this->tags)) as $tag_name)
 				if (!empty($tag_name) && $this->add_tag_by_name($tag_name))
-					array_push($tags, $tag_name);
+					array_push($tags, $this->db->escape($tag_name));
 
 		if (count($tags) > 0)
 			$this->db->execute("UPDATE $this->table SET tags='".implode(', ', $tags)."', tag_count = ".count($tags)." WHERE id=$this->id");
@@ -196,7 +196,7 @@ class Post extends Model {
 
 		foreach ($atags as $tag_name)
 			if (!empty($tag_name) && $this->add_tag_by_name($tag_name))
-				array_push($tags, $tag_name);
+				array_push($tags, $this->db->escape($tag_name));
 
 		foreach ($dtags as $tag_name)
 			if (!empty($tag_name))
