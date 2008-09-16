@@ -83,6 +83,7 @@ function get_search_params() {
 		$keys[] = 'body';
 		$keys[] = 'comment';
 		$keys[] = 'author';
+		$keys[] = 'tag';
 	}
 	if ($keys) $keys[] = 'page';
 		
