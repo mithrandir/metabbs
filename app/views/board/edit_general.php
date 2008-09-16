@@ -29,7 +29,7 @@
 	<dt><?=label_tag("Sorting", "board", "order_by")?></dt>
 	<dd>
 		<select name="board[order_by]">
-		<?=option_tag('', '최근에 작성된 글부터 보여줍니다.', !$board->order_by)?>
+		<?=option_tag('created_at DESC', '최근에 작성된 글부터 보여줍니다.', $board->order_by == 'created_at DESC')?>
 		<?=option_tag(
 			'IF(created_at > edited_at, created_at, edited_at) DESC',
 			'최근에 수정된 글부터 보여줍니다.',
