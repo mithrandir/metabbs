@@ -178,7 +178,8 @@ class Guest extends Model
 		switch ($action) {
 			case 'list':
 				return $object->get_attribute('always_show_list', false)
-					|| $this->level >= $object->perm_read;
+					|| ($object->restrict_access() && $object->is_member($this) && $this->level >= $object->perm_read)
+					|| (!$object->restrict_access() && $this->level >= $object->perm_read);
 			break;
 			case 'read':
 				$board = $object->get_board();
@@ -188,7 +189,9 @@ class Guest extends Model
 					else
 						return false;
 				}
-				return $this->level >= $board->perm_read;
+				return ($board->restrict_access() && $board->is_member($this) && $this->level >= $board->perm_read) 
+					|| (!$board->restrict_access() && $this->level >= $board->perm_read);
+
 			break;
 			case 'admin':
 				return false;
