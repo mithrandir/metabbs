@@ -31,7 +31,7 @@ if ($board->use_attachment && isset($_FILES['upload'])) {
 
 if ($post->exists()) {
 	$post->update();
-	$post->arrange_tags_after_update()
+	$post->arrange_tags_after_update();
 	apply_filters('AfterUpdatePost', $post);
 } else {
 	$board->add_post($post);
