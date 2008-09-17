@@ -23,7 +23,7 @@ function array_trim($items) {
 	$result = array();
 	foreach ($items as $key=>$value) {
 		if (strlen(str_trim($value)) > 0) {
-			$result[$key] = str_trim($value);
+			$result[$key] = trim($value);
 		}
 	}
 	return $result;
