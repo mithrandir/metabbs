@@ -12,6 +12,7 @@ class Post extends Model {
 	var $comment_count = 0;
 	var $sort_key = 0;
 	var $meta = array();
+	var $tags = '';
 
 	function _init() {
 		$this->table = get_table_name('post');

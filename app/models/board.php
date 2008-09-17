@@ -56,7 +56,9 @@ class Board extends Model {
 	function add_post(&$post) {
 		$post->board_id = $this->id;
 		$post->create();
-		$post->arrange_tags_after_create();
+		$board = $post->get_board();
+		if($board->get_attribute('use_tag', false));
+			$post->arrange_tags_after_create();
 	}
 	function get_post_count() {
 		if (!isset($this->_count))
