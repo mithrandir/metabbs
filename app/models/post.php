@@ -34,7 +34,6 @@ class Post extends Model {
 		$this->last_update_at = $this->created_at;
 		Model::create();
 		$this->update_sort_key();
-		$this->arrange_tags_after_create();
 		foreach ($this->meta as $k => $v)
 			$this->set_attribute($k, $v);
 	}
@@ -42,7 +41,6 @@ class Post extends Model {
 		$this->edited_at = time();
 		Model::update();
 		$this->update_sort_key();
-		$this->arrange_tags_after_update();
 	}
 	function update_sort_key() {
 		if ($this->notice) {
@@ -155,20 +153,20 @@ class Post extends Model {
 		return $this->db->fetchrow("SELECT * FROM $this->tag_table WHERE board_id = ? AND name = ? LIMIT 1", 'Tag', array($this->board_id, $this->db->escape($name)));
 	}
 	function add_tag_by_name($name) {
-		$tag = $this->find_tag_by_name($name);
-		if($tag->exists()) {
-			return $tag->increase_tag_post($this);
-		} else {
+		$tag = Tag::find_by_name($name);
+		if (!$tag->exists()) {
+			unset($tag);
 			$tag = new Tag(array('name'=>$name, 'board_id'=>$this->board_id));
-			$tag->add_tag_post($this);
-		}
+			$tag->create();
+		} 
+		$tag->relate_to_post($this);
 		return true;
 	}
 	function delete_tag_by_name($name) {
-		$tag = $this->find_tag_by_name($name);
+		$tag = Tag::find_by_name($name);
 		if (!$tag->exists()) return false;
 
-		$tag->delete_tag_post($this);
+		$tag->unrelate_to_post($this);
 		return true;
 	}
 	function arrange_tags_after_create() {
@@ -179,8 +177,9 @@ class Post extends Model {
 				if (!empty($tag_name) && $this->add_tag_by_name($tag_name))
 					array_push($tags, $this->db->escape($tag_name));
 
-		if (count($tags) > 0)
-			$this->db->execute("UPDATE $this->table SET tags='".implode(', ', $tags)."', tag_count = ".count($tags)." WHERE id=$this->id");
+		if (count($tags) > 0) {
+			$this->db->execute("UPDATE $this->table SET tags='".implode(',', $tags)."', tag_count = ".count($tags)." WHERE id=$this->id");
+		}
 	}
 	function arrange_tags_after_update() {
 		$old_tags = array();
@@ -201,9 +200,10 @@ class Post extends Model {
 		foreach ($dtags as $tag_name)
 			if (!empty($tag_name))
 				$this->delete_tag_by_name($tag_name);
-
-		if (count($tags) > 0)
-			$this->db->execute("UPDATE $this->table SET tags='".implode(', ', $tags)."', tag_count = ".count($tags)." WHERE id=$this->id");
+		
+		if (count($tags) > 0) {
+			$this->db->execute("UPDATE $this->table SET tags='".implode(',', $tags)."', tag_count = ".count($tags)." WHERE id=$this->id");
+		}
 	}
 	function delete() {
 		$this->db->execute("DELETE FROM $this->table WHERE moved_to=$this->id");

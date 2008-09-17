@@ -27,6 +27,7 @@ require METABBS_DIR . '/app/models/attachment.php';
 require METABBS_DIR . '/app/models/user.php';
 require METABBS_DIR . '/app/models/plugin.php';
 require METABBS_DIR . '/app/models/tag.php';
+require METABBS_DIR . '/app/models/tag_post.php';
 
 require METABBS_DIR . '/lib/template.php';
 require METABBS_DIR . '/lib/uri_manager.php';
