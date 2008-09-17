@@ -12,8 +12,10 @@ class Tag extends Model {
 	function find($id) {
 		return find('tag', $id);
 	}
+	function find_by_name($name) {
+		return find_by('tag', 'name', $name);
+	}
 	function create() {
-		$this->post_count = 1;
 		$this->updated_at = time();
 		Model::create();
 	}
@@ -21,30 +23,37 @@ class Tag extends Model {
 		$this->updated_at = time();
 		Model::update();
 	}
-	function delete() {
-		Model::delete();
-	}
 	function add_tag_post($post) {
 		$this->create();
 		$this->db->execute("INSERT INTO $this->tag_post_table (post_id, tag_id, created_at) VALUES($post->id, $this->id, ".time().")");
 	}
-	function increase_tag_post($post) {
-		$tag = $this->db->fetchrow("SELECT t.* FROM $this->tag_post_table AS tp INNER JOIN $this->table AS t ON tp.post_id = $post->id AND tp.tag_id = t.id AND t.name = '$this->name' AND board_id = $post->board_id LIMIT 1", 'tag');
-		if ($tag->exists()) return false;  
-
-		$this->db->execute("INSERT INTO $this->tag_post_table (post_id, tag_id, created_at) VALUES($post->id, $this->id, ".time().")");
-		$this->post_count++;
-		$this->update();
-
-		return true;
+	function relate_to_post($post) {
+		$tag_post = TagPost::find_by_tag_and_post($this, $post);
+		if(!$tag_post->exists()) {
+			unset($tag_post);
+			$tag_post = new TagPost(array('tag_id' => $this->id, 'post_id' => $post->id));
+			$tag_post->create();
+			
+			$this->post_count++;
+			$this->update();
+			return true;
+		}
+		return false;
 	}
-	function delete_tag_post($post) {
-		$this->db->execute("DELETE FROM $this->tag_post_table WHERE post_id = $post->id AND tag_id = $this->id");
-		$this->post_count--;
-		$this->update();
+	function unrelate_to_post($post) {
+		$tag_post = TagPost::find_by_tag_and_post($this, $post);
+		if($tag_post->exists()) {
+			$tag_post->delete();
 
-		if ($this->post_count < 1) 
-			$this->delete();
+			$this->post_count--;
+			$this->update();
+
+			if ($this->post_count < 1) 
+				$this->delete();
+
+			return true;
+		}
+		return false;
 	}
 }
 ?>
