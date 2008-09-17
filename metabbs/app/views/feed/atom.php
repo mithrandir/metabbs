@@ -9,7 +9,7 @@
 	<entry>
 		<title><![CDATA[<?=$post->title?>]]></title>
 		<link href="<?=full_url_for($post)?>" />
-		<id><?=full_url_for($post)?></id>
+		<id><?=$post->permalink?></id>
 <? if (!$post->secret) { ?>
 		<content type="html"><? if (!$post->secret) { ?><![CDATA[
 	<? foreach ($post->get_attachments() as $attachment) { ?>
