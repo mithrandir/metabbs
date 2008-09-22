@@ -55,5 +55,18 @@ class Tag extends Model {
 		}
 		return false;
 	}
+
+	function get_random_tags_by_duration($board, $limit, $duration) {
+		$db = get_conn();
+		$table = get_table_name('tag');
+		$tag_post_table = get_table_name('tag_post');
+		return $db->fetchall("SELECT name, COUNT(name) AS count FROM $table AS t INNER JOIN $tag_post_table AS tp ON t.id = tp.tag_id AND t.board_id = ".$board->id." AND tp.created_at > ".(time()-$duration)." GROUP BY name ORDER BY RAND() LIMIT $limit" );
+	}
+	function get_max_count_by_duration($board, $duration) {
+		$db = get_conn();
+		$table = get_table_name('tag');
+		$tag_post_table = get_table_name('tag_post');
+		return $db->fetchone("SELECT MAX(count) AS count FROM (SELECT count(name) as count FROM $table AS t INNER JOIN $tag_post_table AS tp ON t.id = tp.tag_id AND t.board_id = ".$board->id." AND tp.created_at > ".(time()-$duration)." GROUP BY name) AS temp");
+	}
 }
 ?>
