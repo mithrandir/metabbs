@@ -191,9 +191,9 @@ function get_plugins() {
 
 function import_plugin($plugin) {
 	if (file_exists(METABBS_DIR."/plugins/$plugin.php")) {
-		include_once("plugins/$plugin.php");
+		include_once(METABBS_DIR."/plugins/$plugin.php");
 	} else if (file_exists(METABBS_DIR."/plugins/$plugin/plugin.php")) {
-		include_once("plugins/$plugin/plugin.php");
+		include_once(METABBS_DIR."/plugins/$plugin/plugin.php");
 	}
 }
 
