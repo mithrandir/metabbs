@@ -14,6 +14,9 @@ $captcha = $config->get('captcha_name', false) != "none" && $guest
 
 if (is_post()) {
 	$info = $_POST['user'];
+	apply_filters('beforeAccountSignup', $info);
+
+	// validate
 	if (strlen($info['password']) < 5) {
 		$account = new Guest($info);
 		$account->password = "";
@@ -24,6 +27,11 @@ if (is_post()) {
 		$account->password = "";
 		$flash = "Two password fields' content must be same";
 		$error_field = 'password';
+	} else if (!empty($info['email']) && !preg_match("(^[_0-9a-zA-Z-.]+@[0-9a-zA-Z-]+(.[_0-9a-zA-Z-]+)*$)", $info['email'])) {
+		$account = new Guest($info);
+		$account->password = "";
+		$flash = "Please enter a valid 'Your E-Mail Address'";
+		$error_field = 'email';
 	} else {
 		$account = new User($info);
 		$account->password = md5($account->password);

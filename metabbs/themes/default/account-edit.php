@@ -9,6 +9,9 @@
 <p>
 	<label><?=i('Password')?></label>
 	<input type="password" name="user[password]" class="ignore" />
+	<? if (isset($flash) && $error_field == 'password') { // error ?>
+	<?=$flash?>
+	<? } ?>
 </p>
 <p>
 	<label><?=i('Screen name')?><span class="star">*</span></label>
@@ -20,6 +23,9 @@
 <p>
 	<label><?=i('E-Mail Address')?></label>
 	<input type="text" name="user[email]" size="50" class="ignore" value="<?=$account->email?>" />
+	<? if (isset($flash) && $error_field == 'email') { // error ?>
+	<?=$flash?>
+	<? } ?>
 </p>
 <p>
 	<label><?=i('Homepage')?></label>
