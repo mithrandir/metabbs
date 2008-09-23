@@ -19,7 +19,7 @@
 	<input type="password" name="user[password]" class="blank" /> <?=$flash?>
 <? } else { ?>
 	<input type="password" name="user[password]" /> 
-	<?=i('Password must be longer than 5')?>.
+	<?=i('Password length must be longer than 5')?>.
 <? } ?>
 </p>
 <p>
@@ -45,6 +45,9 @@
 <p>
 	<label><?=i('E-Mail Address')?></label>
 	<input type="text" name="user[email]" size="50" class="ignore" value="<?=$account->email?>" />
+	<? if (isset($flash) && $error_field == 'email') { // error ?>
+	<?=$flash?>
+	<? } ?>
 </p>
 <p>
 	<label><?=i('Homepage')?></label>
