@@ -1,17 +1,4 @@
 <?php
-if(!function_exists('scandir')) {
-    function scandir($dir, $sortorder = 0) {
-        if(is_dir($dir) && $dirlist = @opendir($dir)) {
-            while(($file = readdir($dirlist)) !== false) {
-                $files[] = $file;
-            }
-            closedir($dirlist);
-            ($sortorder == 0) ? asort($files) : rsort($files); // arsort was replaced with rsort
-            return $files;
-        } else return false;
-    }
-} 
-
 class Captcha {
 	function Captcha($name, $arg) {
 		$this->name = $name;
