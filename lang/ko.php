@@ -169,6 +169,7 @@ $lang['Use \'Forget Password\' Page'] = '\'암호 찾기\' 사용';
 $lang['Your account does not exist'] = '해당 계정이 존재하지 않습니다';
 $lang['Your e-mail account is empty'] = '입력하신 계정의 이메일 필드가 공란입니다';
 $lang['Please enter a valid \'Your E-Mail Address\''] = '입력하신 이메일이 이메일형식에 맞지 않습니다';
+$lang['Please enter a valid \'Homepage Address\''] = '입력하신 홈페이지주소가 도메인형식에 맞지 않습니다';
 $lang['Your account\'s Name is incorrect'] = '입력하신 계정의 이름이 맞지 않습니다';
 $lang['Reset password was sent by e-mail'] = '패스워드 초기화 메일을 보냈습니다';
 $lang['The Code does not matched'] = '코드가 맞지 않습니다';

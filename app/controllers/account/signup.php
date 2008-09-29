@@ -16,45 +16,36 @@ if (is_post()) {
 	$info = $_POST['user'];
 	apply_filters('beforeAccountSignup', $info);
 
-	// validate
-	if (strlen($info['password']) < 5) {
-		$account = new Guest($info);
-		$account->password = "";
-		$flash = "Password length must be longer than 5";
-		$error_field = 'password';
-	} else if ($info['password'] != $info['password_again']) {
-		$account = new Guest($info);
-		$account->password = "";
-		$flash = "Two password fields' content must be same";
-		$error_field = 'password';
-	} else if (!empty($info['email']) && !preg_match("(^[_0-9a-zA-Z-.]+@[0-9a-zA-Z-]+(.[_0-9a-zA-Z-]+)*$)", $info['email'])) {
-		$account = new Guest($info);
-		$account->password = "";
-		$flash = "Please enter a valid 'Your E-Mail Address'";
-		$error_field = 'email';
-	} else {
-		$account = new User($info);
-		$account->password = md5($account->password);
+	if (strlen($info['password']) < 5)
+		$error->add('Password length must be longer than 5', 'password');
+	
+	if ($info['password'] != $info['password_again'])
+		$error->add('Two password fields\' content must be same', 'password_again');
 
-		if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
-			|| isset($captcha) && !$captcha->ready() 
-			|| !isset($captcha))  {
-			if ($account->valid()) {
-				$account->create();
-				redirect_to(url_with_referer_for('account', 'login'));
-			} else {
-				$account = new Guest($info);
-				$account->user = $account->password = "";
-				$flash = "User ID already exists";
-				$error_field = 'user';
-			}
-		} else {
-			$flash = $captcha->error;
-			$error_field = 'captcha';
-		}
-	}
-	if(!empty($flash)) 
-		$flash = i($flash) . '.';
+	if (!empty($info['email']) && !Validate::email($info['email']))
+		$error->add('Please enter a valid \'Your E-Mail Address\'', 'email');
+
+	if (!empty($info['url']) && !Validate::domain($info['url']))
+		$error->add('Please enter a valid \'Homepage Address\'', 'url');
+
+	if (!(isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
+		|| isset($captcha) && !$captcha->ready() 
+		|| !isset($captcha)))
+		$error->add($captcha->error, 'captcha');
+
+	$account = new User($info);
+	$account->password = md5($account->password);
+	if (!$account->valid()) 
+		$error->add('User ID already exists', 'user');
+
+	if(!$error->exists()) {
+		$account->create();
+		redirect_to(url_with_referer_for('account', 'login'));
+	} 
+	unset($account);
+	$account = new Guest($info);
+	$account->password = "";
+
 } else {
 	$account->name = '';
 }

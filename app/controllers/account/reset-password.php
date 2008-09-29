@@ -5,19 +5,27 @@ if (!isset($_GET['code']) || !isset($_GET['id']) || empty($_GET['code']) || empt
 }
 
 $user = User::find($_GET['id']);
-if (!is_null($user->id)) {
+if ($user->exists()) {
 	$code = $user->get_attribute('pwresetcode');
 
 	if (!empty($code) && $_GET['code'] == $code) {
 		if (is_post()) {
-			$user->password = md5($_POST['password']);
-			$user->update();
+			if (strlen($_POST['password']) < 5)
+				$error->add('Password length must be longer than 5', 'password');
+			
+			if ($_POST['password'] != $_POST['password_again'])
+				$error->add('Two password fields\' content must be same', 'password_again');
 
-			$user->remove_attribute('pwresetcode');
-			redirect_to(url_for('account', 'login', array('url'=> urlencode(METABBS_HOST_URL))));
+			if(!$error->exists()) {
+				$user->password = md5($_POST['password']);
+				$user->update();
+
+				$user->remove_attribute('pwresetcode');
+				redirect_to(url_for('account', 'login', array('url'=> urlencode(METABBS_HOST_URL))));
+			}
 		}
 	} else
-		$error = i('The Code does not matched').".";
+		$error->add('The Code does not matched');
 
 } else
-	$error = i('Your account does not exist').".";
+	$error->add('Your account does not exist');
