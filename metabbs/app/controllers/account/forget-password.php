@@ -4,10 +4,9 @@ if(!$config->get('use_forget_password', false)) {
 	exit;
 }
 
-$flash = null;
 if (is_post()) {
 	$user = User::find_by_user($_POST['user']);
-	if (!is_null($user->id)) {
+	if ($user->exists()) {
 		if (!empty($user->email)) {
 			if ($user->name == trim($_POST['name'])) {
 				$code = md5(microtime() . uniqid(rand(), true));
@@ -17,13 +16,12 @@ if (is_post()) {
 				$message = "다음 링크 '<a href=\"".$url."\" onclick=\"window.open(this.href); return false;\">비밀번호 초기화</a>'를 클릭해서 비밀번호를 변경하시길 바랍니다.";
 				sendmail_utf8('metabbs@'.$_SERVER['SERVER_NAME'], "MetaBBS", $user->email, $user->name, 'MetaBBS - '.i("Reset Password"), $message);
 
-				$flash = i('Reset password was sent by e-mail').".";
+				$error->add('Reset password was sent by e-mail');
 			} else
-				$error = i('Your account\'s Name is incorrect').".";
+				$error->add('Your account\'s Name is incorrect', 'name');
 		} else
-			$error = i('Your e-mail account is empty').".";
+			$error->add('Your e-mail account is empty');
 	} else
-		$error = i('Your account does not exist').".";
-} else
-	$error = null;
+		$error->add('Your account does not exist', 'user');
+}
 ?>
