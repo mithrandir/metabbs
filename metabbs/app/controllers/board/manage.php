@@ -52,6 +52,8 @@ if (isset($_POST['action'])) {
 		}
 		break;
 	}
-	redirect_to(url_for($board));
+	$params = null;
+	apply_filters('BeforeRedirectAtManagePosts', $params, $board);
+	redirect_to(url_for($board, '', $params));
 }
 ?>
