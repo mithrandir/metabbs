@@ -65,7 +65,9 @@ if (isset($categories)) {
 } else {
 	$categories = null;
 }
-$manage_url = url_for($board, 'manage');
+$params = null;
+apply_filters('ManageURLAtStandardVars', $params, $board);
+$manage_url = url_for($board, 'manage', $params);
 
 $tagable = $board->use_tag();
 if ($this->view == 'view') {
