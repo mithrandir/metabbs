@@ -17,7 +17,7 @@ if (is_post()) {
 		$post->delete();
 
 		$params = null;
-		apply_filters('BeforeRedirectAtDeletePost', $board, $params);
+		apply_filters('BeforeRedirectAtDeletePost', $params, $board);
 		redirect_to(url_for($board, '', $params));
 	}
 }
