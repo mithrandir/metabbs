@@ -15,6 +15,9 @@ if (is_post()) {
 			$attachment->delete();
 		}
 		$post->delete();
-		redirect_to(url_for($board));
+
+		$params = null;
+		apply_filters('BeforeRedirectAtDeletePost', $board, $params);
+		redirect_to(url_for($board, '', $params));
 	}
 }
