@@ -13,6 +13,7 @@ class Metadata {
 		while ($data = $result->fetch()) {
 			$this->attributes[$data['key']] = $data['value'];
 		}
+		$this->loaded = true;
 	}
 	function reload() {
 		$this->loaded = false;

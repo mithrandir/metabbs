@@ -56,6 +56,9 @@ class Board extends Model {
 	function add_post(&$post) {
 		$post->board_id = $this->id;
 		$post->create();
+		$board = $post->get_board();
+		if($board->get_attribute('use_tag', false));
+			$post->arrange_tags_after_create();
 	}
 	function get_post_count() {
 		if (!isset($this->_count))
@@ -80,6 +83,7 @@ class Board extends Model {
 			delete_all('post', "moved_to IN (".implode(',', $ids).")");
 		}
 		delete_all('post', "board_id=$this->id");
+		apply_filters('BoardDelete', $this);
 		Model::delete();
 	}
 	function get_recent_comments($count) {
@@ -131,6 +135,12 @@ class Board extends Model {
 	}
 	function restrict_comment() {
 		return $this->get_attribute('restrict_comment', false);
+	}
+	function use_tag() {
+		return $this->get_attribute('use_tag', false);
+	}
+	function use_captcha() {
+		return $this->get_attribute('use_captcha', false);
 	}
 	function reset_sort_keys() {
 		if (!$this->order_by) $this->order_by = 'id DESC';

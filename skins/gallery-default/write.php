@@ -35,6 +35,18 @@
 <tr>
 	<td colspan="4" class="body"><textarea name="body" id="post_body" cols="40" rows="12"><?=$post->body?></textarea></td>
 </tr>
+<? if ($guest): ?>
+	<? if ($board->use_captcha() && isset($captcha) && $captcha->ready()): ?>
+<tr>
+	<th>CAPTCHA</th>
+	<td class="captcha" colspan="3"><?= $captcha->get_html() ?>
+		<? if (!empty($captcha->error)): ?>
+		<span style="captcha notice"><?=i($captcha->error)?></p>
+		<? endif; ?>
+	</td>
+</tr>
+	<? endif; ?>
+<? endif; ?>
 
 <? foreach ($additional_fields as $field): ?>
 <tr>
@@ -55,6 +67,15 @@
 	<li><input type="file" name="upload[]" size="50" /></li>
 </ul>
 <p><a href="#" onclick="addFileEntry(); return false" class="button">파일 추가...</a></p>
+</div>
+<? endif; ?>
+
+<? if ($tagable): ?>
+<div id="tag">
+<h2>태그</h2>
+<ul id="tag_input">
+	<li><input type="text" name="tags" size="63" value="<?=$post->tags?>" id="post_tags" /></li>
+</ul>
 </div>
 <? endif; ?>
 

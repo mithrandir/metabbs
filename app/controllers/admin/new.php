@@ -1,9 +1,11 @@
 <?php
 $profiles = array(
-	'board' => array(),
+	'board' => array(
+		'order_by' => 'created_at DESC'),
 	'gallery' => array(
 		'use_attachment' => true,
 		'style' => 'gallery-default',
+		'order_by' => 'created_at DESC',
 	),
 	'blog' => array(
 		'use_attachment' => true,
@@ -11,6 +13,7 @@ $profiles = array(
 		'posts_per_page' => 5,
 		'perm_write' => 255,
 		'style' => 'blog-default',
+		'order_by' => 'created_at DESC',
 	)
 );
 

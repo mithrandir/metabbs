@@ -9,6 +9,9 @@ if (is_post() && !isset($_POST['comment'])) {
 	);
 }
 
+$captcha = $config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest
+	? new Captcha($config->get('captcha_name', false), $captcha_arg) : null;
+
 if (is_post()) {
 	$_comment = new Comment($_POST['comment']);
 	$_comment->user_id = $account->id;
@@ -26,23 +29,28 @@ if (is_post()) {
 	apply_filters('PostComment', $_comment, array('reply' => TRUE));
 
 	$post = $comment->get_post();
-	$post->add_comment($_comment);
+	if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
+		|| isset($captcha) && !$captcha->ready() 
+		|| !isset($captcha)) {
+		$post->add_comment($_comment);
 
-	if (is_xhr()) {
-		apply_filters('PostViewComment', $_comment);
-		$template = get_template($board, '_comment');
-		$template->set('board', $board);
-		$template->set('comment', $_comment);
-		$template->render_partial();
-		exit;
-	} else {
-		redirect_to(url_for($post));
+		if (is_xhr()) {
+			apply_filters('PostViewComment', $_comment);
+			$template = get_template($board, '_comment');
+			$template->set('board', $board);
+			$template->set('comment', $_comment);
+			$template->render_partial();
+			exit;
+		} else {
+			redirect_to(url_for($post));
+		}
 	}
 } else {
 	$post = $comment->get_post();
 
 	$template = get_template($board, 'reply');
 	$template->set('board', $board);
+	$template->set('captcha', $captcha);
 	$template->set('comment', $comment);
 	$template->set('name', cookie_get('name'));
 	$template->set('link_cancel', url_for($post));

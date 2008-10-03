@@ -65,8 +65,11 @@ if (isset($categories)) {
 } else {
 	$categories = null;
 }
-$manage_url = url_for($board, 'manage');
+$params = null;
+apply_filters('ManageURLAtStandardVars', $params, $board);
+$manage_url = url_for($board, 'manage', $params);
 
+$tagable = $board->use_tag();
 if ($this->view == 'view') {
 	$layout->add_meta('Author', htmlspecialchars(isset($post->name_orig) ? $post->name_orig : $post->name));
 	$form_id = 'comment-form';

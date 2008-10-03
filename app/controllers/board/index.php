@@ -19,7 +19,7 @@ $finder->exclude_notice = $style->skin->get_option('exclude_notice');
 if (isset($_GET['keyword']) && trim($_GET['keyword'])) {
 	$keyword = $_GET['keyword'];
 	$finder->set_keyword($keyword);
-	foreach (array('author', 'title', 'body', 'comment') as $key) {
+	foreach (array('author', 'title', 'body', 'comment', 'tag') as $key) {
 		if (isset($_GET[$key]) && $_GET[$key]) {
 			$finder->add_condition($key);
 		}

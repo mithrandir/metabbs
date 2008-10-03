@@ -31,6 +31,8 @@ if ($board->use_attachment && isset($_FILES['upload'])) {
 
 if ($post->exists()) {
 	$post->update();
+	if($board->get_attribute('use_tag', false))
+		$post->arrange_tags_after_update();
 	apply_filters('AfterUpdatePost', $post);
 } else {
 	$board->add_post($post);
@@ -43,6 +45,7 @@ if (isset($attachments)) {
 		move_uploaded_file($attachment->tmp_name, 'data/uploads/' . $attachment->id);
 		chmod('data/uploads/' . $attachment->id, 0606);
 	}
+	$post->update_attachment_count();
 }
 
 if (isset($_POST['meta'])) {
@@ -59,5 +62,7 @@ if (isset($_POST['trackback']) && isset($_POST['trackback']['to'])
 	send_trackback($_POST['trackback']);
 }
 
-redirect_to(url_for($post));
+$params = null;
+apply_filters('BeforeRedirectAtSavePost', $params, $post);
+redirect_to(url_for($post, '', $params));
 ?>

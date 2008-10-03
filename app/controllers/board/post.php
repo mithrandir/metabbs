@@ -1,6 +1,9 @@
 <?php
 permission_required('write', $board);
 
+$captcha = $config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest 
+	? new Captcha($config->get('captcha_name', false), $captcha_arg) : null;
+
 if (is_post()) {
 	check_post_max_size_overflow();
 
@@ -16,7 +19,8 @@ if (is_post()) {
 			'category_id' => isset($_POST['category']) ? $_POST['category'] : 0,
 			'notice' => isset($_POST['notice']) ? $_POST['notice'] : 0,
 			'secret' => isset($_POST['secret']) ? $_POST['secret'] : 0,
-			'body' => $_POST['body']
+			'body' => $_POST['body'],
+			'tags' => $_POST['tags']
 		);
 	}
 
@@ -35,18 +39,22 @@ if (is_post()) {
 		$post->name = $account->name;
 	}
 
-	if ($_POST['action'] == 'preview') {
-		if (version_compare(phpversion(), '5.0.0', '<')) {
-			$preview = $post;
-		} else {
-			eval('$preview = clone $post;');
-		}
+	if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
+		|| isset($captcha) && !$captcha->ready() 
+		|| !isset($captcha)) {
+		if ($_POST['action'] == 'preview') {
+			if (version_compare(phpversion(), '5.0.0', '<')) {
+				$preview = $post;
+			} else {
+				eval('$preview = clone $post;');
+			}
 
-		apply_filters('PostSave', $preview);
-		apply_filters('PostView', $preview);
-	} else {
-		define('SECURITY', 1);
-		include 'app/controllers/post/save.php';
+			apply_filters('PostSave', $preview);
+			apply_filters('PostView', $preview);
+		} else {
+			define('SECURITY', 1);
+			include 'app/controllers/post/save.php';
+		}
 	}
 } else {
 	$post = new Post;

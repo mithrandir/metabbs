@@ -60,6 +60,10 @@
 	width: 8em;
 	float: left;
 }
+#signup-form fieldset input.error,
+#signup-form fieldset textarea.error {
+	border: 2px solid red;
+}
 fieldset {
 	border: none;
 	margin: 0 0 1em 0;

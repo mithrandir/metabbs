@@ -47,7 +47,7 @@ function query_string_for($params) {
  * @return http 프로토콜에 맞춘 전체 url
  */
 function full_url_for($controller, $action = '') {
-	return 'http://'.$_SERVER['HTTP_HOST']._url_for($controller, $action);
+	return METABBS_HOST_URL._url_for($controller, $action);
 }
 
 /**
@@ -59,6 +59,16 @@ function full_url_for($controller, $action = '') {
  */
 function url_for($controller, $action = null, $params = array()) {
 	return _url_for($controller, $action, $params);
+}
+/**
+ * 예외적 상항에 따른 url_for
+ */
+function url_for_list($controller, $action , $params = null) {
+	$url = METABBS_BASE_URI;
+	$url .= $controller . '/'. $action;
+	if ($params) $url .= query_string_for($params);
+
+	return $url;
 }
 
 function get_search_params() {
@@ -73,6 +83,7 @@ function get_search_params() {
 		$keys[] = 'body';
 		$keys[] = 'comment';
 		$keys[] = 'author';
+		$keys[] = 'tag';
 	}
 	if ($keys) $keys[] = 'page';
 		

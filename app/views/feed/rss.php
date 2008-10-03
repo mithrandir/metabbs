@@ -9,7 +9,7 @@
 <? foreach ($posts as $post) { ?>
 		<item>
 			<title><![CDATA[<?=$post->title?>]]></title>
-			<link><?=full_url_for($post)?></link>
+			<link><?=$post->permalink?></link>
 			<description><? if (!$post->secret) { ?><![CDATA[
 	<? foreach ($post->get_attachments() as $attachment) { ?>
 	<? if ($attachment->is_image()) { ?><img src="<?=full_url_for($attachment)?>" alt="<?=$attachment->filename?>" /><? } } ?>

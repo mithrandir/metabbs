@@ -10,7 +10,15 @@
 	</p>
 	<? endif; ?>
 	<p><textarea name="body" cols="40" rows="5"><?=$comment_body?></textarea></p>
-
+<? if ($board->use_captcha() && isset($captcha) && $captcha->ready()): ?>
+	<p>
+		<label for="recaptcha_challenge_field">CAPTCHA</label>
+		<?= $captcha->get_html() ?>
+		<? if (!empty($captcha->error)): ?>
+		<span style="captcha notice"><?=i($captcha->error)?></p>
+		<? endif; ?>
+    </p>
+<? endif; ?>
 	<div class="buttons"><input type="submit" value="댓글 달기" class="button" />
 	<? if ($link_cancel): ?><a href="<?=$link_cancel?>" class="button dialog-close">취소</a><? endif; ?></div>
 	</form>

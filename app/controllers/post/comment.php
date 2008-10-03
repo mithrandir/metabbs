@@ -23,15 +23,23 @@ $comment->post_id = $post->id;
 
 apply_filters('PostComment', $comment, array('reply' => false));
 
-$post->add_comment($comment);
-if (is_xhr()) {
-	$template = get_template($board, '_comment');
-	apply_filters('PostViewComment', $comment);
-	$template->set('board', $board);
-	$template->set('comment', $comment);
-	$template->render_partial();
-	exit;
-} else {
-	redirect_to(url_for($post));
+$captcha = $config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest
+	? new Captcha($config->get('captcha_name', false), $captcha_arg) : null;
+
+if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
+	|| isset($captcha) && !$captcha->ready() 
+	|| !isset($captcha)) {
+	$post->add_comment($comment);
+
+	if (is_xhr()) {
+		$template = get_template($board, '_comment');
+		apply_filters('PostViewComment', $comment);
+		$template->set('board', $board);
+		$template->set('comment', $comment);
+		$template->render_partial();
+		exit;
+	} else {
+		redirect_to(url_for($post));
+	}
 }
 ?>

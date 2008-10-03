@@ -11,6 +11,10 @@ class User extends Model {
 		$this->post_table = get_table_name('post');
 		$this->comment_table = get_table_name('comment');
 	}
+	function delete() {
+		apply_filters('UserDelete', $this);
+		Model::delete();
+	}
 	function find($id) {
 		$db = get_conn();
 		$table = get_table_name('user');
@@ -160,6 +164,10 @@ class Guest extends Model
 	var $name = 'guest';
 	var $email, $url;
 	var $signature;
+	function delete() {
+		apply_filters('UserDelete', $this);
+		Model::delete();
+	}
 	function is_guest() {
 		return true;
 	}
@@ -170,7 +178,8 @@ class Guest extends Model
 		switch ($action) {
 			case 'list':
 				return $object->get_attribute('always_show_list', false)
-					|| $this->level >= $object->perm_read;
+					|| ($object->restrict_access() && $object->is_member($this) && $this->level >= $object->perm_read)
+					|| (!$object->restrict_access() && $this->level >= $object->perm_read);
 			break;
 			case 'read':
 				$board = $object->get_board();
@@ -180,7 +189,9 @@ class Guest extends Model
 					else
 						return false;
 				}
-				return $this->level >= $board->perm_read;
+				return ($board->restrict_access() && $board->is_member($this) && $this->level >= $board->perm_read) 
+					|| (!$board->restrict_access() && $this->level >= $board->perm_read);
+
 			break;
 			case 'admin':
 				return false;

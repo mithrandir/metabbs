@@ -19,8 +19,6 @@ class MetadataTest extends UnitTestCase {
 	}
 	
 	function testGet() {
-		$this->assertEqual('', $this->metadata->get('foo'));
-
 		$this->metadata->load();
 		$this->assertEqual('bar', $this->metadata->get('foo'));
 	}

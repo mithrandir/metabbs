@@ -47,6 +47,19 @@ class PostFinder {
 							$or_parts[] = "0";
 						}
 					break;
+					case 'tag':
+						$result = $this->db->query("SELECT tp.post_id FROM ".get_table_name('tag')." AS t INNER JOIN ".get_table_name('tag_post')." AS tp ON t.id = tp.tag_id WHERE t.name='$keyword'");
+						// TODO: subquery
+						$ids = array();
+						if ($result->count()) {
+							while ($data = $result->fetch()) {
+								$ids[] = $data['post_id'];
+							}
+							$or_parts[] = "id IN (".implode(',', $ids).")";
+						} else {
+							$or_parts[] = "0";
+						}
+					break;
 					case 'author':
 						$or_parts[] = "name LIKE '%$keyword%'";
 					break;
@@ -63,7 +76,8 @@ class PostFinder {
 		return implode(' AND ', $and_parts);
 	}
 	function get_fields() {
-		$fields = 'id, board_id, user_id, category_id, name, title, created_at, notice, views, secret, moved_to, comment_count';
+		$fields = 'id, board_id, user_id, category_id, name, title, created_at, notice, views, secret, moved_to, comment_count, attachment_count, tags';
+		apply_filters('PostFinderFields', $fields);
 		if ($this->get_post_body) $fields .= ', body';
 		return $fields;
 	}
@@ -72,6 +86,7 @@ class PostFinder {
 		$offset = ($this->page - 1) * $this->board->posts_per_page;
 		$limit = $this->board->posts_per_page;
 		$condition = $this->get_condition();
+		apply_filters('PostFinderConditions', $condition, $this->board);
 		return $this->db->fetchall("SELECT $fields FROM $this->table WHERE $condition ORDER BY sort_key, id DESC LIMIT $offset, $limit", 'Post');
 	}
 	function get_notice_posts() {
@@ -80,6 +95,7 @@ class PostFinder {
 	}
 	function get_post_count() {
 		$condition = $this->get_condition();
+		apply_filters('PostFinderConditions', $condition, $this->board);
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->table WHERE $condition");
 	}
 }

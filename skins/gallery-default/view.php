@@ -22,6 +22,14 @@
 
 			<div class="body"><?=$post->body?></div>
 
+			<? if ($tagable && $post->tags): ?>
+			<p id="tags">태그 : 
+			<? foreach ($post->get_tags() as $tag): ?>
+				<a href="<?=url_for_list('board', $board->name, array('tag'=>1, 'keyword'=>urlencode($tag->name)))?>"><?=$tag->name?></a>
+			<? endforeach; ?>
+			</p>
+			<? endif; ?>
+
 			<? if ($signature): ?>
 			<div class="signature"><?=$signature?></div>
 			<? endif; ?>

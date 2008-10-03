@@ -14,6 +14,14 @@
 	<?=$post->date?>
 </div>
 <div class="body"><?=$post->body?></div>
+<? if ($tagable && $post->tags): ?>
+<div id="tags">
+	<p id="tag-title">태그 : 
+	<? foreach ($post->get_tags() as $tag): ?>
+		<a href="<?=url_for_list('board', $board->name, array('tag'=>1, 'keyword'=>urlencode($tag->name)))?>"><?=$tag->name?></a>
+	<? endforeach; ?>
+</div>
+<? endif; ?>
 <div class="responses">
 	<a href="<?=$post->url?>#comments">댓글 <?=$post->comment_count?>개</a>,
 	<? if ($board->use_trackback): ?>
