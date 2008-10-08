@@ -1,7 +1,7 @@
 <?php
 class User extends Model {
 	var $model = 'user';
-
+	var $user, $name;
 	var $email, $url;
 	var $level = 1;
 	var $token;
@@ -20,8 +20,8 @@ class User extends Model {
 		$table = get_table_name('user');
 		return $db->fetchrow("SELECT * FROM $table WHERE id=?", 'User', array($id));
 	}
-	function get_posts($offset, $limit) {
-		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE user_id=$this->id ORDER BY id DESC LIMIT $offset, $limit", 'Post');
+	function get_posts($offset = 0, $limit = null, $order_by = 'id DESC') {
+		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE user_id=$this->id ".($order_by ? " ORDER BY $order_by":'').($limit ? " LIMIT".($offset != 0 ? " $offset, ":'').' '.$limit : ''), 'Post');
 	}
 	function get_post_count() {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->post_table WHERE user_id=$this->id");
@@ -47,10 +47,10 @@ class User extends Model {
 		$table = get_table_name('user');
 		return $db->fetchrow("SELECT * FROM $table WHERE user=?", 'User', array($user));
 	}
-	function find_all($offset, $limit) {
+	function find_all($offset = 0, $limit = null, $order_by = 'id DESC') {
 		$db = get_conn();
 		$table = get_table_name('user');
-		return $db->fetchall("SELECT * FROM $table LIMIT $offset, $limit", 'User');
+		return $db->fetchall("SELECT * FROM $table".($order_by ? " ORDER BY $order_by":'').($limit ? " LIMIT".($offset != 0 ? " $offset, ":'').' '.$limit : ''), 'User');
 	}
 	function search($key, $value) {
 		$db = get_conn();
