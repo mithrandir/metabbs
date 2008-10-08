@@ -115,17 +115,15 @@ class Layout {
 
 function get_header_path() {
 	global $view, $config;
-	if ($view == ADMIN_VIEW)
-		return 'elements/admin_header.php';
-	else
-		return $config->get('global_header', 'elements/default_header.php');
+	$header_path = $view == ADMIN_VIEW ? 'elements/admin_header.php' : $config->get('global_header', 'elements/default_header.php');
+	apply_filters('GetHeaderPath', $header_path);
+	return $header_path;
 }
 function get_footer_path() {
 	global $view, $config;
-	if ($view == ADMIN_VIEW)
-		return 'elements/admin_footer.php';
-	else
-		return $config->get('global_footer', 'elements/default_footer.php');
+	$footer_path = $view == ADMIN_VIEW ? 'elements/admin_footer.php' : $config->get('global_footer', 'elements/default_footer.php');
+	apply_filters('GetFooterPath', $footer_path);
+	return $footer_path;
 }
 
 function meta_format_date($format, $now) {
