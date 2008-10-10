@@ -14,7 +14,7 @@ $captcha = $config->get('captcha_name', false) != "none" && $guest
 
 if (is_post()) {
 	$info = $_POST['user'];
-	apply_filters('beforeAccountSignup', $info);
+	apply_filters('BeforeAccountSignup', $info);
 
 	if (strlen($info['password']) < 5)
 		$error->add('Password length must be longer than 5', 'password');
