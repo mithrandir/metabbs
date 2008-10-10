@@ -3,7 +3,7 @@ login_required();
 
 if (is_post()) {
 	$info = $_POST['user'];
-	apply_filters('beforeAccountEdit', $info);
+	apply_filters('BeforeAccountEdit', $info);
 
 	$old_password = $account->password;	
 	$account->import($info);

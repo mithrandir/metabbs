@@ -86,7 +86,8 @@ function get_search_params() {
 		$keys[] = 'tag';
 	}
 	if ($keys) $keys[] = 'page';
-		
+
+	apply_filters('GetSearchParams', $keys);		
 	foreach ($keys as $k) {
 		if ($k == 'page')
 			$params['page'] = get_requested_page();
