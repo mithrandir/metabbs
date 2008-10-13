@@ -5,12 +5,9 @@ if (isset($_GET['redirect'])) { // backward compatibility
 }
 require_once(dirname(__FILE__).'/lib/common.php');
 
+if (!isset($layout)) $layout = new Layout;
 import_enabled_plugins();
-
-if (!isset($layout)) { 
-	$layout = new Layout;
-	apply_filters('LayoutAtSiteManager', $layout);
-}
+apply_filters('LayoutAtSiteManager', $layout);
 
 /**
  * 외부 페이지를 위한 API
