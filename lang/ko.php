@@ -173,3 +173,5 @@ $lang['Please enter a valid \'Homepage Address\''] = '입력하신 홈페이지�
 $lang['Your account\'s Name is incorrect'] = '입력하신 계정의 이름이 맞지 않습니다';
 $lang['Reset password was sent by e-mail'] = '패스워드 초기화 메일을 보냈습니다';
 $lang['The Code does not matched'] = '코드가 맞지 않습니다';
+$lang['Information has changed'] = '정보가 수정되었습니다';
+$lang['Succeeded to join'] = '가입이 완료되었습니다';

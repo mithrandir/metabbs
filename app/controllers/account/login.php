@@ -1,9 +1,9 @@
 <?php
 if (is_post()) {
-	$account = UserManager::login($_POST['user'], $_POST['password'], isset($_POST['autologin']));
+	$account = UserManager::login($params['user'], $params['password'], isset($params['autologin']));
 	if (!$account) {
 		$account = new Guest;
-		$error->add('Login failed');
+		$error_messages->add('Login failed');
 	} else {
 		redirect_back();
 	}

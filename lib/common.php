@@ -35,7 +35,7 @@ require METABBS_DIR . '/lib/theme.php';
 require METABBS_DIR . '/lib/captcha.php';
 require METABBS_DIR . '/lib/feed.php';
 require METABBS_DIR . '/lib/validate.php';
-require METABBS_DIR . '/lib/error_message.php';
+require METABBS_DIR . '/lib/message.php';
 
 import_default_language();
 

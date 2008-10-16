@@ -70,6 +70,26 @@ function url_for_list($controller, $action , $params = null) {
 
 	return $url;
 }
+/**
+ * _GET, _POST, _COOKIE 변수 통채로 가져오는 함수
+ */
+function get_params($defaults = null, $overwrite = false, $super_globals = array('_GET', '_POST', '_COOKIE'))
+{
+    $ret = array();
+
+    foreach($super_globals as $sg)
+        foreach($GLOBALS[$sg] as $k=>$v)
+            $ret[$k] = $v;
+
+    if($defaults) foreach($defaults as $k=>$v)
+        if(!isset($ret[$k]))
+            $ret[$k] = $v;
+
+    if($overwrite)
+        $_REQUEST = $ret;
+
+    return $ret;
+}
 
 function get_search_params() {
 	$params = array();

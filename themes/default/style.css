@@ -43,6 +43,46 @@
 	font-size: 14px;
 }
 
+#meta.theme-only #flash_message,
+#flash_message {
+	border: 1px solid green; 
+	padding: 7px; 
+	background: #9e9; 
+	color: green;
+}
+#meta.theme-only #error_messages,
+#error_messages {
+	border: 2px solid red;
+/*	padding: 7px;
+	padding-bottom: 12px;*/
+	margin-bottom: 20px;
+	background-color: #f0f0f0;
+}
+#meta.theme-only #error_messages h2,
+#error_messages h2 {
+	text-align: left;
+	font-weight: bold;
+	padding: 5px 5px 5px 15px;
+	font-size: 12px;
+/*	margin: -7px;*/
+	background-color: #c00;
+	color: #fff;
+}
+#meta.theme-only #error_messages ul {
+	padding: 1em;
+	margin: 0 1em;
+}
+
+#meta.theme-only #error_messages li,
+#error_messages li {
+	font-size: 12px;
+	list-style: square;
+	margin: 0;
+}
+.field_error {
+	border: 2px solid red;
+}
+
 #meta.theme-only {
 	font-size: 13px;
 	font-family: Verdana, Arial, sans-serif;
@@ -56,14 +96,15 @@
 	font-size: 1.2em;
 	margin: 0;
 }
-#signup-form label, #login-form label.field {
+#signup-form label,
+#account-edit-form label,
+#forget-password label,
+#reset-password label,
+#login-form label.field {
 	width: 8em;
 	float: left;
 }
-#signup-form fieldset input.error,
-#signup-form fieldset textarea.error {
-	border: 2px solid red;
-}
+
 fieldset {
 	border: none;
 	margin: 0 0 1em 0;
@@ -101,10 +142,10 @@ fieldset {
 #profile #info {
 	border-top: 1px solid #ccc;
 }
-.meta-error {
+/*.meta-error {
 	background-color: #f7f7f7;
 	border: 1px solid #ddd;
 	width: 20em;
 	padding: 0.5em;
 	margin-bottom: 1em;
-}
+}*/
