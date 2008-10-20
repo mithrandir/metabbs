@@ -57,7 +57,7 @@ function print_header() {
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>MetaBBS Installation</title>
-  <link rel="stylesheet" href="elements/style.css" type="text/css" />
+  <link rel="stylesheet" href="media/style.css" type="text/css" />
 </head>
 <body id="installer">
 <div id="meta-admin">
