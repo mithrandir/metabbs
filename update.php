@@ -32,7 +32,7 @@ if (isset($_GET['rev'])) {
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>MetaBBS Updater</title>
-	<link rel="stylesheet" href="<?=METABBS_BASE_PATH?>elements/style.css" type="text/css" />
+	<link rel="stylesheet" href="<?=METABBS_BASE_PATH?>media/style.css" type="text/css" />
 </head>
 <body>
 <div id="header">
