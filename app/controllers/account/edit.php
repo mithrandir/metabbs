@@ -2,7 +2,7 @@
 login_required();
 
 if (is_post()) {
-	$info = $_POST['user'];
+	$info = $params['user'];
 	apply_filters('beforeAccountEdit', $info);
 
 	$old_password = $account->password;	
