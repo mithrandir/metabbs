@@ -53,7 +53,7 @@ if (is_post()) {
 			apply_filters('PostView', $preview);
 		} else {
 			define('SECURITY', 1);
-			include 'containers/controllers/post/save.php';
+			include 'containers/metabbs/controllers/post/save.php';
 		}
 	}
 } else {

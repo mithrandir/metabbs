@@ -12,4 +12,4 @@
 
 <p><?=i('Board URL')?>: <a href="<?=full_url_for($board)?>" onclick="return false"><?=full_url_for($board)?></a></p>
 
-<?php include('containers/views/board/edit_'.$_GET['tab'].'.php'); ?>
+<?php include('containers/metabbs/views/board/edit_'.$_GET['tab'].'.php'); ?>
