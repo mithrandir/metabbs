@@ -6,7 +6,7 @@
 </tr>
 <tbody id="boards-body">
 <? foreach ($boards as $board) { ?>
-<? include('app/views/admin/_board.php'); ?>
+<? include('containers/views/admin/_board.php'); ?>
 <? } ?>
 </tbody>
 </table>

@@ -54,6 +54,6 @@ if (is_post() && isset($_POST['post']) && (!$account->is_guest() || $post->passw
 		apply_filters('PostView', $preview);
 	} else {
 		define('SECURITY', 1);
-		include 'app/controllers/post/save.php';
+		include 'containers/controllers/post/save.php';
 	}
 }

@@ -18,8 +18,8 @@ $view = DEFAULT_VIEW;
 
 import_enabled_plugins();
 
-@include 'app/controllers/' . $controller . '.php';
-$action_dir = 'app/controllers/' . $controller;
+@include 'containers/controllers/' . $controller . '.php';
+$action_dir = 'containers/controllers/' . $controller;
 if (!run_custom_handler($controller, $action)) {
 	$found = @include $action_dir . '/' . $action . '.php';
 	if (!$found) {
@@ -60,7 +60,7 @@ ob_start();
 if (isset($template)) {
 	$template->set('title', $title); // XXX
 	$template->render();
-} else include "app/views/$controller/$action.php";
+} else include "containers/views/$controller/$action.php";
 $content = ob_get_contents();
 ob_end_clean();
 
