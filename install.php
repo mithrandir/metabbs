@@ -235,7 +235,7 @@ if (!isset($_POST['config'])) {
 	init_db();
 
 	pass("Creating admin user");
-	require_once 'app/models/user.php';
+	require_once 'cores/models/user.php';
 	require_once 'cores/account.php';
 	$user = new User;
 	$user->user = $_POST['admin_id'];
