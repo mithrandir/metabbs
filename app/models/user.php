@@ -12,6 +12,9 @@ class User extends Model {
 		$this->comment_table = get_table_name('comment');
 	}
 	function delete() {
+		$this->db->execute("UPDATE $this->post_table SET user_id = 0 WHERE user_id=$this->id");
+		$this->db->execute("UPDATE $this->comment_table SET user_id = 0 WHERE user_id=$this->id");
+		
 		apply_filters('UserDelete', $this);
 		Model::delete();
 	}
@@ -47,10 +50,17 @@ class User extends Model {
 		$table = get_table_name('user');
 		return $db->fetchrow("SELECT * FROM $table WHERE user=?", 'User', array($user));
 	}
-	function find_all($offset, $limit) {
+	function find_all($limit = null, $offset = 0, $order_by = 'id DESC') {
 		$db = get_conn();
 		$table = get_table_name('user');
-		return $db->fetchall("SELECT * FROM $table LIMIT $offset, $limit", 'User');
+		return $db->fetchall("SELECT * FROM $table" . ($order_by ? " ORDER BY $order_by":'') . ($limit ? " LIMIT ".($offset != 0 ? "$offset, ":'') .$limit:''), 'User');
+	}
+	function find_all_with_conditions($conditions, $limit = null, $offset = 0, $order_by = 'id DESC') {
+		if(empty($conditions)) return false;
+	
+		$db = get_conn();
+		$table = get_table_name('user');
+		return $db->fetchall("SELECT * FROM $table WHERE $conditions" . ($order_by ? " ORDER BY $order_by":'') . ($limit ? " LIMIT ".($offset != 0 ? "$offset, ":'') .$limit:''), 'User');
 	}
 	function search($key, $value) {
 		$db = get_conn();
