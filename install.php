@@ -176,7 +176,7 @@ if (!isset($_POST['config'])) {
             @unlink(dirname(__FILE__).'/metabbs.conf.php');
 			if (isset($GLOBALS['config'])) {
 				$conn = get_conn();
-				@include("db/uninstall.php");
+				@include("lib/schema/uninstall.php");
 			}
         }
     }
@@ -201,7 +201,7 @@ if (!isset($_POST['config'])) {
 		chmod($dir, 0707);
 	}
 
-	include 'db/schema.php';
+	include 'lib/schema/schema.php';
 
 	pass("Creating directories");
 	foreach ($_POST['config'] as $key => $value)
