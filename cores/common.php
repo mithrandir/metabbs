@@ -21,21 +21,21 @@ if (!defined('METABBS_HOST_URL')) {
 
 ini_set('include_path', METABBS_DIR . PATH_SEPARATOR . ini_get('include_path'));
 
-require METABBS_DIR . '/lib/compat.php';
-require METABBS_DIR . '/lib/core.php';
-require METABBS_DIR . '/lib/permission.php';
-require METABBS_DIR . '/lib/request.php';
-require METABBS_DIR . '/lib/i18n.php';
-require METABBS_DIR . '/lib/cookie.php';
-require METABBS_DIR . '/lib/tag_helper.php';
-require METABBS_DIR . '/lib/plugin.php';
-require METABBS_DIR . '/lib/metadata.php';
-require METABBS_DIR . '/lib/trackback.php';
-require METABBS_DIR . '/lib/theme.php';
-require METABBS_DIR . '/lib/captcha.php';
-require METABBS_DIR . '/lib/feed.php';
-require METABBS_DIR . '/lib/validate.php';
-require METABBS_DIR . '/lib/message.php';
+require METABBS_DIR . '/cores/compat.php';
+require METABBS_DIR . '/cores/core.php';
+require METABBS_DIR . '/cores/permission.php';
+require METABBS_DIR . '/cores/request.php';
+require METABBS_DIR . '/cores/i18n.php';
+require METABBS_DIR . '/cores/cookie.php';
+require METABBS_DIR . '/cores/tag_helper.php';
+require METABBS_DIR . '/cores/plugin.php';
+require METABBS_DIR . '/cores/metadata.php';
+require METABBS_DIR . '/cores/trackback.php';
+require METABBS_DIR . '/cores/theme.php';
+require METABBS_DIR . '/cores/captcha.php';
+require METABBS_DIR . '/cores/feed.php';
+require METABBS_DIR . '/cores/validate.php';
+require METABBS_DIR . '/cores/message.php';
 
 import_default_language();
 

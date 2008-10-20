@@ -77,16 +77,16 @@ function print_footer() {
 }
 ini_set('include_path', METABBS_DIR . PATH_SEPARATOR . ini_get('include_path'));
 
-require_once 'lib/query.php';
-require_once 'lib/model.php';
-require_once 'lib/config.php';
+require_once 'cores/query.php';
+require_once 'cores/model.php';
+require_once 'cores/config.php';
 $config = new Config('metabbs.conf.php');
 
-require_once 'lib/i18n.php';
-require_once 'lib/tag_helper.php';
+require_once 'cores/i18n.php';
+require_once 'cores/tag_helper.php';
 
 $backend = isset($_GET['backend']) ? $_GET['backend'] : 'mysql';
-require "lib/backends/$backend/installer.php";
+require "cores/backends/$backend/installer.php";
 
 $path = dirname($_SERVER['SCRIPT_NAME']);
 if ($path == '\\' || $path == '/') $path = '';
@@ -176,7 +176,7 @@ if (!isset($_POST['config'])) {
             @unlink(dirname(__FILE__).'/metabbs.conf.php');
 			if (isset($GLOBALS['config'])) {
 				$conn = get_conn();
-				@include("lib/schema/uninstall.php");
+				@include("cores/schema/uninstall.php");
 			}
         }
     }
@@ -201,7 +201,7 @@ if (!isset($_POST['config'])) {
 		chmod($dir, 0707);
 	}
 
-	include 'lib/schema/schema.php';
+	include 'cores/schema/schema.php';
 
 	pass("Creating directories");
 	foreach ($_POST['config'] as $key => $value)
@@ -236,7 +236,7 @@ if (!isset($_POST['config'])) {
 
 	pass("Creating admin user");
 	require_once 'app/models/user.php';
-	require_once 'lib/account.php';
+	require_once 'cores/account.php';
 	$user = new User;
 	$user->user = $_POST['admin_id'];
 	$user->name = $_POST['admin_name'];

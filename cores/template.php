@@ -36,7 +36,7 @@ class Skin {
 			$this->engine = 'default';
 			$this->options = array();
 		}
-		require_once "lib/template_engines/$this->engine.php";
+		require_once "cores/template_engines/$this->engine.php";
 		$this->template_class = $this->engine.'Template';
 	}
 	function get_template($view) {
