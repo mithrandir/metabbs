@@ -116,16 +116,16 @@ class Layout {
 function get_header_path() {
 	global $view, $config;
 	if ($view == ADMIN_VIEW)
-		return 'elements/admin_header.php';
+		return 'themes/default/admin_header.php';
 	else
-		return $config->get('global_header', 'elements/default_header.php');
+		return $config->get('global_header', 'themes/default/default_header.php');
 }
 function get_footer_path() {
 	global $view, $config;
 	if ($view == ADMIN_VIEW)
-		return 'elements/admin_footer.php';
+		return 'themes/default/admin_footer.php';
 	else
-		return $config->get('global_footer', 'elements/default_footer.php');
+		return $config->get('global_footer', 'themes/default/default_footer.php');
 }
 
 function meta_format_date($format, $now) {
