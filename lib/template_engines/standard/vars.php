@@ -132,7 +132,7 @@ if (!isset($link_cancel)) $link_cancel = '';
 if (isset($keyword)) $keyword = htmlspecialchars($keyword);
 
 if ($this->view == 'reply')
-	$form_id = 'reply-form';
+	$form_id = 'reply-form' . $comment->id . rand(0, 10);
 else if ($this->view == 'edit_comment')
 	$form_id = 'edit-form';
 ?>

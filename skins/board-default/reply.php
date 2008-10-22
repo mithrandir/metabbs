@@ -3,7 +3,7 @@
 <? include "comment_form.php"; ?>
 
 <script type="text/javascript">
-Event.observe('reply-form', 'submit', function (event) {
+Event.observe('<?=$form_id?>', 'submit', function (event) {
 	replyComment(this, <?=$comment->id?>);
 	Event.stop(event)
 })
