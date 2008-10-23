@@ -3,7 +3,7 @@
 if (isset($_GET['redirect'])) { // backward compatibility
 	define("METABBS_BASE_URI", METABBS_BASE_PATH);
 }
-require_once(dirname(__FILE__).'/cores/common.php');
+require_once(dirname(__FILE__).'/core/common.php');
 if (!isset($layout)) $layout = new Layout;
 import_enabled_plugins();
 
@@ -49,7 +49,7 @@ class SiteManager
 	 * 최근 글 목록을 가져온다.
 	 * @param $board_name 게시판 이름
 	 * @param $count 개수
-	 * @return 최근 글을 지정한 개수만큼 리턴한다. 
+	 * @return 최근 글을 지정한 개수만큼 리턴한다.
 	 */
 	function getLatestPosts($board_name, $count) {
 		$board = Board::find_by_name($board_name);

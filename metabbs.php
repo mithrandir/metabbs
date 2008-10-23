@@ -1,6 +1,6 @@
 <?php
-require 'cores/common.php';
-require 'cores/uri_parser.php';
+require 'core/common.php';
+require 'core/uri_parser.php';
 
 $parser = new URIParser;
 $uri = $parser->parse($_SERVER['PATH_INFO']);

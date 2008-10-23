@@ -21,21 +21,21 @@ if (!defined('METABBS_HOST_URL')) {
 
 ini_set('include_path', METABBS_DIR . PATH_SEPARATOR . ini_get('include_path'));
 
-require METABBS_DIR . '/cores/compat.php';
-require METABBS_DIR . '/cores/core.php';
-require METABBS_DIR . '/cores/permission.php';
-require METABBS_DIR . '/cores/request.php';
-require METABBS_DIR . '/cores/i18n.php';
-require METABBS_DIR . '/cores/cookie.php';
-require METABBS_DIR . '/cores/tag_helper.php';
-require METABBS_DIR . '/cores/plugin.php';
-require METABBS_DIR . '/cores/metadata.php';
-require METABBS_DIR . '/cores/trackback.php';
-require METABBS_DIR . '/cores/theme.php';
-require METABBS_DIR . '/cores/captcha.php';
-require METABBS_DIR . '/cores/feed.php';
-require METABBS_DIR . '/cores/validate.php';
-require METABBS_DIR . '/cores/message.php';
+require METABBS_DIR . '/core/compat.php';
+require METABBS_DIR . '/core/core.php';
+require METABBS_DIR . '/core/permission.php';
+require METABBS_DIR . '/core/request.php';
+require METABBS_DIR . '/core/i18n.php';
+require METABBS_DIR . '/core/cookie.php';
+require METABBS_DIR . '/core/tag_helper.php';
+require METABBS_DIR . '/core/plugin.php';
+require METABBS_DIR . '/core/metadata.php';
+require METABBS_DIR . '/core/trackback.php';
+require METABBS_DIR . '/core/theme.php';
+require METABBS_DIR . '/core/captcha.php';
+require METABBS_DIR . '/core/feed.php';
+require METABBS_DIR . '/core/validate.php';
+require METABBS_DIR . '/core/message.php';
 
 import_default_language();
 
@@ -47,7 +47,7 @@ session_save_path($session_dir);
 session_start();
 
 $account = UserManager::get_user();
-if (!$account) { 
+if (!$account) {
 	$account = new Guest;
 	$guest = true;
 } else {

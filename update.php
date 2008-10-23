@@ -1,7 +1,7 @@
 <?php
-require_once "cores/common.php";
-require_once "cores/backends/$backend/installer.php";
-include 'cores/schema/schema.php';
+require_once "core/common.php";
+require_once "core/backends/$backend/installer.php";
+include 'core/schema/schema.php';
 
 function print_rev_info() {
 	global $current;
@@ -58,7 +58,7 @@ if ($current < METABBS_DB_REVISION) {
 		echo '<ul>';
 		foreach ($revs as $r) {
 			echo "<li>Applying patch: r$r";
-			include "cores/schema/update_$r.php";
+			include "core/schema/update_$r.php";
 			if (isset($description)) {
 				echo " ($description)";
 				unset($description);

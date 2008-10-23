@@ -10,7 +10,7 @@ class Captcha {
 				break;
 			case "phpcaptcha":
 				if (isset($arg['flite_path'])) $this->flite_path = $arg['flite_path'];
-				$base = 'cores/external/phpcaptcha/fonts';
+				$base = 'core/external/phpcaptcha/fonts';
 				$dirs = scandir($base."/");
 				$this->fonts = array();
 
@@ -38,7 +38,7 @@ class Captcha {
 				break;
 			case "phpcaptcha":
 				if (count($this->fonts) == 0) {
-					$this->error = "Copy fonts to '/cores/external/phpcaptcha/fonts'";
+					$this->error = "Copy fonts to '/core/external/phpcaptcha/fonts'";
 					return false;
 				}
 				break;

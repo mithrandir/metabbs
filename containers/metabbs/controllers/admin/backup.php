@@ -6,7 +6,7 @@ if (isset($_GET['format']) && $_GET['format'] == 'sql') {
 	}
 
 	@set_time_limit(0);
-	require 'cores/backends/'.$config->get('backend').'/installer.php';
+	require 'core/backends/'.$config->get('backend').'/installer.php';
 	$db = get_conn();
 	$exporter = new SQLExporter;
 	$filename = "metabbs_backup_" . date('Ymd') . '_' . md5(microtime() . uniqid(rand(), true)) . ".sql";

@@ -3,7 +3,7 @@
 <dl>
 	<dt><?=label_tag(i('Admin password'), 'settings', 'admin_password')?></dt>
 	<dd><?=password_field('settings', 'admin_password')?></dd>
-	
+
 	<dt><?=label_tag(i('Global header'), 'settings', 'global_header')?></dt>
 	<dd><?=text_field('settings', 'global_header', $config->get('global_header'), 30)?></dd>
 
@@ -69,9 +69,9 @@
 <ol>
 	<li>Download 'php-captcha.inc.php' and TrueType fonts(english) on <a href="http://www.ejeliot.com/pages/2" onclick="window.open(this.href);return false;">http://www.ejeliot.com/pages/2</a></li>
 	<li>Comment out 'session_start()'(ex: // session_start()) on 'php-captcha.inc.php' line 46</li>
-	<li>Copy 'php-captcha.inc.php' to '/cores/external/phpcaptcha' </li>
-	<li>Copy TrueType fonts to '/cores/external/phpcaptcha/fonts' </li>
-	<li>Insert this line 'RewriteRule captcha/(visual|audio) cores/external/phpcaptcha/$1-captcha.php' to file '.htaccess'</li>
+	<li>Copy 'php-captcha.inc.php' to '/core/external/phpcaptcha' </li>
+	<li>Copy TrueType fonts to '/core/external/phpcaptcha/fonts' </li>
+	<li>Insert this line 'RewriteRule captcha/(visual|audio) core/external/phpcaptcha/$1-captcha.php' to file '.htaccess'</li>
 </ol>
 <?		break; ?>
 <?		case "recaptcha": ?>
@@ -84,7 +84,7 @@
 <h3>Notice</h3>
 <ol>
 	<li>Download 'recaptchalib.php' on <a href="http://recaptcha.net/plugins/php/" onclick="window.open(this.href);return false;">http://recaptcha.net/plugins/php/</a></li>
-	<li>Copy 'recaptchalib.php' to '/cores/external/recaptcha' </li>
+	<li>Copy 'recaptchalib.php' to '/core/external/recaptcha' </li>
 	<li>Get Public Key and Private Key on <a href="http://recaptcha.net/whyrecaptcha.html" onclick="window.open(this.href);return false;">http://recaptcha.net/whyrecaptcha.html</a> </li>
 <?		break; ?>
 <? } ?>

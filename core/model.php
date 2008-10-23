@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__FILE__)."/../cores/models/metadata.php";
+require_once dirname(__FILE__)."/../core/models/metadata.php";
 
 /**
  * 테이블 접미사를 지정한다.
@@ -120,7 +120,7 @@ class Model
 		if ($this->exists()) $this->metadata->load();
 		return $this->metadata->attributes;
 	}
-	
+
 	function set_attribute($key, $value) {
 		$this->metadata->model = &$this; // workaround for PHP4 -_-
 		$this->metadata->set($key, $value);

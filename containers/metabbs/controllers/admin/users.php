@@ -1,5 +1,5 @@
 <?php
-require 'cores/page.php';
+require 'core/page.php';
 $page = get_requested_page();
 if (isset($_GET['key']) && isset($_GET['query'])) {
 	$users = User::search($_GET['key'], $_GET['query']);
