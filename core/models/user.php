@@ -164,6 +164,9 @@ class User extends Model {
 			break;
 		}
 	}
+	function get_id() {
+		return $this->user;
+	}
 }
 
 class Guest extends Model

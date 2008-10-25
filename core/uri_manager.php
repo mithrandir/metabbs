@@ -58,7 +58,24 @@ function full_url_for($controller, $action = '') {
  * @return 생성된 url 주소
  */
 function url_for($controller, $action = null, $params = array()) {
-	return _url_for($controller, $action, $params);
+	if (is_a($controller, 'Board')) {
+		$u = METABBS_BASE_URI . urlencode($controller->get_id());
+		if ($action) $u .= '/' . $action;
+		if ($params) $u .= query_string_for($params);
+		return $u;
+	} elseif (is_a($controller, 'Post')) {
+		$board = $controller->get_board();
+		$u = url_for($board) . '/' . $controller->get_id();
+		if ($action) $u .= '/' . $action;
+		if ($params) $u .= query_string_for($params);
+		return $u;
+	} elseif (is_a($controller, 'User')) {
+		$u = METABBS_BASE_URI . '~' . urlencode($controller->get_id());
+		if ($params) $u .= query_string_for($params);
+		return $u;
+	} else {
+		return _url_for($controller, $action, $params);
+	}
 }
 /**
  * 예외적 상항에 따른 url_for
