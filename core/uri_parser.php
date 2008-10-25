@@ -21,7 +21,10 @@ class URIParser {
 				return array('board', 'index', $parts[0]);
 		else
 			if (is_numeric($parts[1]))
-				return array('post', @$parts[2] ? $parts[2] : 'index', $parts[1]);
+				if (@$parts[2] == 'attachments')
+					return array('attachment', 'index', $parts[3]);
+				else
+					return array('post', @$parts[2] ? $parts[2] : 'index', $parts[1]);
 			else
 				return array('board', $parts[1], $parts[0]);
 	}

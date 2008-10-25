@@ -73,6 +73,10 @@ function url_for($controller, $action = null, $params = array()) {
 		$u = METABBS_BASE_URI . '~' . urlencode($controller->get_id());
 		if ($params) $u .= query_string_for($params);
 		return $u;
+	} elseif (is_a($controller, 'Attachment')) {
+		$u = url_for($controller->get_post()) . '/attachments/' . urlencode($controller->get_id());
+		if ($params) $u .= query_string_for($params);
+		return $u;
 	} else {
 		return _url_for($controller, $action, $params);
 	}
