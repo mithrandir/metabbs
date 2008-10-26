@@ -13,7 +13,13 @@
 	<? if ($post->category): ?><a href="<?=$post->category->url?>"><?=$post->category->name?></a>, <? endif; ?>
 	<?=$post->date?>
 </div>
-<div class="body"><?=$post->body?></div>
+<div class="body">
+<? if ($post->secret): ?>
+비밀글입니다.
+<? else: ?>
+<?=$post->body?>
+<? endif; ?>
+</div>
 <? if ($tagable && $post->tags): ?>
 <div id="tags">
 	<p id="tag-title">태그 : 
