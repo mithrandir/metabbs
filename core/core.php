@@ -31,6 +31,7 @@ require METABBS_DIR . '/core/models/tag_post.php';
 
 require METABBS_DIR . '/core/template.php';
 require METABBS_DIR . '/core/uri_manager.php';
+require METABBS_DIR . '/core/dispatcher.php';
 require METABBS_DIR . '/core/account.php';
 require METABBS_DIR . '/core/timezone.php';
 require METABBS_DIR . '/core/external.php';
