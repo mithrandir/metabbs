@@ -8,10 +8,11 @@
 <? endif; ?>
 <div class="buttons"><input type="submit" value="지우기" class="button" /> <a href="<?=$link_cancel?>" class="button dialog-close">취소</a></div>
 </form>
-
+<? if (isset($comment)): ?>
 <script type="text/javascript">
 Event.observe('delete-form', 'submit', function (event) {
 	deleteComment(this, <?=$comment->id?>, <?=$comment->has_child() ? 'true' : 'false'?>);
 	Event.stop(event)
 })
 </script>
+<? endif; ?>

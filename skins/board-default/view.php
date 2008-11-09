@@ -14,7 +14,7 @@
 			<? if ($tagable && $post->tags): ?>
 			<p id="tags">태그 : 
 			<? foreach ($post->get_tags() as $tag): ?>
-				<a href="<?=url_for_list('board', $board->name, array('tag'=>1, 'keyword'=>urlencode($tag->name)))?>"><?=$tag->name?></a>
+				<a href="<?=url_for_metabbs('board',null, array('board_name' => $board->name, 'tag'=>1, 'keyword'=>urlencode($tag->name)))?>"><?=$tag->name?></a>
 			<? endforeach; ?>
 			</p>
 			<? endif; ?>
@@ -82,7 +82,7 @@
 <? if ($link_list): ?><a href="<?=$link_list?>">목록보기</a> <? endif; ?>
 <? if ($link_new_post): ?><a href="<?=$link_new_post?>">글쓰기</a> <? endif; ?>
 <? if ($link_edit): ?><a href="<?=$link_edit?>">고치기</a> <? endif; ?>
-<? if ($link_delete): ?><a href="<?=$link_delete?>">지우기</a> <? endif; ?>
+<? if ($link_delete): ?><a href="<?=$link_delete?>" class="dialog">지우기</a> <? endif; ?>
 </div>
 
 <p id="neighbor-posts">

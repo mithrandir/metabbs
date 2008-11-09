@@ -8,13 +8,13 @@ if (!defined('METABBS_BASE_URI')) {
 	}
 }
 
-/**
- * 해당 컨트롤러와 액션에 맞는 url의 내용을 생성한다. 이 함수가 구체적인 url을 만든다.
+/** ==> 이동
+ * 해당 컨트롤러와 액션에 맞는 url의 내용을 생성한다. 이 함수가 구체적인 url을 만든다. ==> 삭제
  * @param $controller 컨트롤러
  * @param $action 액션
  * @param $params 전달할 패러미터
  * @return 생성된 URL 주소의 문자열
- */
+ */ 
 function _url_for($controller, $action = null, $params = null) {
 	$url = METABBS_BASE_URI;
 	if (is_string($controller)) {
@@ -30,17 +30,17 @@ function _url_for($controller, $action = null, $params = null) {
 
 	return $url;
 }
-
+// query_string_for ==> 삭제
 function query_string_for($params) {
 	$_params = array();
 
 	foreach ($params as $key => $value) {
 		$_params[] = "$key=$value";
 	}
-		return '?' . implode('&', $_params);
+	return '?' . implode('&', $_params);
 }
 
-/**
+/** ==> 삭제
  * 전체 url 주소를 생성한다.
  * @param $controller 컨트롤러 명
  * @param $action 액션 명
@@ -50,7 +50,7 @@ function full_url_for($controller, $action = '') {
 	return METABBS_HOST_URL._url_for($controller, $action);
 }
 
-/**
+/** ==> 삭제
  * _url_for를 호출하여 일반적인 주소를 만든다.
  * @param $controller 컨트롤러 명
  * @param $action 액션 명
@@ -81,7 +81,7 @@ function url_for($controller, $action = null, $params = array()) {
 		return _url_for($controller, $action, $params);
 	}
 }
-/**
+/** => 삭제
  * 예외적 상항에 따른 url_for
  */
 function url_for_list($controller, $action , $params = null) {
@@ -91,7 +91,7 @@ function url_for_list($controller, $action , $params = null) {
 
 	return $url;
 }
-/**
+/** => 이동
  * _GET, _POST, _COOKIE 변수 통채로 가져오는 함수
  */
 function get_params($defaults = null, $overwrite = false, $super_globals = array('_GET', '_POST', '_COOKIE'))
@@ -137,7 +137,7 @@ function get_search_params() {
 	return $params;
 }
 
-/**
+/** => 삭제
  * 리퍼러 정보를 포함한 url을 생성한다.
  * @param $controller 컨트롤러 명
  * @param $action 액션 명칭
@@ -153,7 +153,7 @@ function url_with_referer_for($controller, $action = null, $params = array()) {
 	return url_for($controller, $action, $params);
 }
 
-/**
+/** => 이동
  * 지정한 주소로 리다이렉트한다.
  * @param $url 이동할 주소
  */
@@ -162,7 +162,7 @@ function redirect_to($url) {
 	exit;
 }
 
-/**
+/** => 수정, 이동
  * 리퍼러나 지정된 주소를 기초로 뒤로 돌아간다.
  */
 function redirect_back() {

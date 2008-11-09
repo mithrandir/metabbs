@@ -38,3 +38,4 @@ if ($newer_post) apply_filters('PostView', $newer_post);
 
 $comments = $post->get_comments($style->skin->get_option('build_comment_tree', true));
 apply_filters_array('PostViewComment', $comments);
+?>

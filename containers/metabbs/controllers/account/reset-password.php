@@ -22,7 +22,8 @@ if ($user->exists()) {
 
 				$user->remove_attribute('pwresetcode');
 				Flash::set('Password was Changed');
-				redirect_to(url_for('account', 'login', array('url'=> urlencode(METABBS_HOST_URL))));
+//				redirect_to(url_for('account', 'login', array('url'=> urlencode(METABBS_HOST_URL))));
+				redirect_to(url_for_metabbs('account', 'login', array('url'=> urlencode(METABBS_HOST_URL))));
 			}
 		}
 	} else

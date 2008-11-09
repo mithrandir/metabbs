@@ -32,8 +32,10 @@ $template->set('post_count', $count = $board->get_post_count());
 $template->set('posts_count', $count); // backward compatibility
 if (isset($notices)) $template->set('notices', $notices);
 
-$template->set('link_rss', url_for($board, 'rss'));
-$template->set('link_new_post', $account->has_perm('write', $board) ? url_for($board, 'post', get_search_params()) : null);
+//$template->set('link_rss', url_for($board, 'rss'));
+//$template->set('link_new_post', $account->has_perm('write', $board) ? url_for($board, 'post', get_search_params()) : null);
+$template->set('link_rss', url_for_metabbs(null, 'rss'));
+$template->set('link_new_post', $account->has_perm('write', $board) ? url_for_metabbs(null, 'post', get_search_params()) : null);
 $template->set('admin', $account->has_perm('admin', $board));
 
 $page_count = $matched_post_count ? ceil($matched_post_count / $board->posts_per_page) : 1;
@@ -61,5 +63,5 @@ if ($page_group_end != $page_count) {
 	$pages[] = link_to_page($page_count);
 }
 $template->set('pages', $pages);
-$layout->add_link('alternate', 'application/rss+xml', url_for($board, 'rss'), 'RSS Feed');
+$layout->add_link('alternate', 'application/rss+xml', url_for_metabbs(null, 'rss'), 'RSS Feed');
 $template->render();

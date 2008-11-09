@@ -11,7 +11,8 @@ function link_user(&$model) {
 	$user = $model->get_user();
 	$model->name_orig = $model->name;
 	if ($user->level > 0) {
-		$model->name = "<a href=\"".url_for($user)."\" class=\"dialog\">$model->name</a>";
+//		$model->name = "<a href=\"".url_for($user)."\" class=\"dialog\">$model->name</a>";
+		$model->name = "<a href=\"".url_for_metabbs('user', null, array('user'=>$user->user))."\" class=\"dialog\">$model->name</a>";
 	}
 }
 add_filter('PostList', 'link_user', 600);

@@ -2,7 +2,7 @@
 function get_global_template_vars() {
 	return array(
 		'account' => $GLOBALS['account'],
-		'action' => $GLOBALS['action'],
+//		'action' => $GLOBALS['action'],
 	);
 }
 

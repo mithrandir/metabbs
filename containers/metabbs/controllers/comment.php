@@ -1,4 +1,4 @@
 <?php
-$comment = Comment::find($id);
+$comment = Comment::find($params['id']);
 $board = $comment->get_board();
 ?>

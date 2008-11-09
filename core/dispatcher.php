@@ -28,10 +28,14 @@ class Dispatcher {
 		if(empty($uri)) $uri = rtrim($_SERVER['PATH_INFO'], '/');
 		$this->params = get_params(null, false, array('_GET', '_POST'));
 		$this->routes = array('container'=>null, 'controller'=> null, 'action'=>null);
-		$this->parts = explode('/',$uri, 5);
-		$this->parts[0] = $uri;
-		// part중에 공백이 있으면 뺀다.
-		$this->part_count = count($this->parts) - 1;
+		$this->parts = array();
+		$temp_parts = explode('/',$uri, 5);
+		$temp_parts[0] = $uri;
+		foreach($temp_parts as $part) {
+			if(!empty($part))
+				array_push($this->parts, $part);
+		}
+		$this->part_count = (count($this->parts) - 1) > 1 ? count($this->parts) - 1 : 0;
 
 		$this->left_route_map($this->parts, $this->part_count, $this->routes, $this->params);
 	}
@@ -42,14 +46,16 @@ class Dispatcher {
 		if (preg_match('/^\/(admin)/', $parts[0], $match)) {
 			// default container		
 			$routes['container'] = $match[1];
-			if (isset($parts[2])) {
+			if (isset($parts[2]) && !empty($parts[2])) {
 				// custom route mappings
+				// ...
+
 
 				// default route mappings
-				$routes['controller'] = isset($parts[2]) && !empty($parts[2]) ? $parts[2]:'index';
-				if ($part_count > 4) {
-					$params['id'] = $parts[3];
+				$routes['controller'] = $parts[2];
+				if (isset($parts[4]) && !empty($parts[4])) {
 					$routes['action'] = isset($parts[4]) && !empty($parts[4]) ? $parts[4]:'view';
+					$params['id'] = $parts[3];
 				} else {
 					$routes['action'] = isset($parts[3]) && !empty($parts[3]) ? $parts[3]:'index';
 				}
@@ -58,42 +64,61 @@ class Dispatcher {
 			}
 
 		} else {
-			// default container		
+			// default container
 			$routes['container'] = 'metabbs';
-			if (isset($parts[1])) {
+			if (isset($parts[1]) && !empty($parts[1])) {
 				// custom route mappings
 				$board = Board::find_by_name($parts[1]);
 				if ($board->exists()) {
-					$params['board_name'] = $parts[1];
-					$parts[1] = isset($parts[2]) && is_numeric($parts[2]) ? 'post':'board'; 
+					$params['board-name'] = $parts[1];
+					if (isset($parts[2]) && is_numeric($parts[2])) {
+						$routes['controller'] = 'post';
+						$routes['action'] = isset($parts[3]) && !empty($parts[3]) ? $parts[3]:'index';
+						$params['id'] = intval($parts[2]);
+					} else {
+						$routes['controller'] = 'board';
+						$routes['action'] = isset($parts[2]) && !empty($parts[2]) ? $parts[2]:'index';
+					}
+					return;
+				}
+
+				if ($parts[1] == 'user') {
+					$routes['controller'] = 'user';
+					$user = User::find_by_user($parts[2]);
+					if ($user->exists()) {
+						$routes['action'] = 'index';
+						$params['user'] = $parts[2];
+						return;
+					}
 				}
 
 				// default route mappings
-				$routes['controller'] = isset($parts[1]) && !empty($parts[1]) ? $parts[1]:'index';
-				if ($part_count > 3) {
+				$routes['controller'] = $parts[1];
+				$routes['action'] = isset($parts[2]) && !empty($parts[2]) ? $parts[2]:'index';
+				if (isset($parts[3]) && !empty($parts[3])) {
+					$routes['action'] = isset($parts[3]) && !empty($parts[3]) ? $parts[3]:'index';
 					$params['id'] = $parts[2];
-					$routes['action'] = isset($parts[3]) && !empty($parts[3]) ? $parts[3]:'view';
-				} else {
-					$routes['action'] = isset($parts[2]) && !empty($parts[2]) ? $parts[2]:'index';
 				}
+
 			} else {
 				$routes['controller'] = 'index';
 			}
 		}
 	}
 	// route => path
-	function right_route_map($routes, $params) {
+	function right_route_map(&$routes, &$params) {
 		$parts = array();
 
 		// custom route mappings
 		if ($routes['container'] == 'metabbs' 
-			&& (isset($params['board_name']) || isset($this->params['board_name']))
+			&& (isset($params['board-name']) || isset($this->params['board-name']))
 			&& ($routes['controller'] == 'board' || $routes['controller'] == 'post')) {
-			if (isset($params['board_name']) && !empty($params['board_name'])) {
-				array_push($parts, $params['board_name']);
+			if (isset($params['board-name']) && !empty($params['board-name'])) {
+				array_push($parts, $params['board-name']);
+				unset($params['board-name']);
 			} else {
-				if (isset($this->params['board_name']) && !empty($this->params['board_name'])) {
-					array_push($parts, $this->params['board_name']);
+				if (isset($this->params['board-name']) && !empty($this->params['board-name'])) {
+					array_push($parts, $this->params['board-name']);
 				}
 			}
 			if (isset($params['id']) && !empty($params['id']))
@@ -103,6 +128,12 @@ class Dispatcher {
 			return $parts;
 		}
 
+		if ($routes['container'] == 'metabbs' && isset($params['user']) && $routes['controller'] == 'user') {
+			array_push($parts, $routes['controller']);
+			array_push($parts, $params['user']);
+			unset($params['user']);
+			return $parts;
+		}
 
 		// default route mappings
 		if (!empty($routes['container'])) {
@@ -163,31 +194,75 @@ class Dispatcher {
 	function get_routes() {
 		return $this->routes;
 	}
-
 	function get_params() {
 		return $this->params;
+	}
+	function get_container_path() {
+		return METABBS_DIR . '/containers/'. $this->routes['container'] . '.php';
+	}
+	function get_controller_path() {
+		return METABBS_DIR . '/containers/'. $this->routes['container'] .'/controllers/' . $this->routes['controller'] . '.php';
+	}
+	function get_action_dir() {
+		return METABBS_DIR . '/containers/'. $this->routes['container'] .'/controllers/' . $this->routes['controller'];
+	}
+	function get_action_path() {
+		return METABBS_DIR . '/containers/'. $this->routes['container'] .'/controllers/' . $this->routes['controller'] . '/' . $this->routes['action'] . '.php';
+	}
+	function get_view_path() {
+		return METABBS_DIR . '/containers/'. $this->routes['container'] .'/views/' . $this->routes['controller'] . '/' . $this->routes['action'] . '.php';
 	}
 
 	function query_string_for($params) {
 		$_params = array();
 
 		foreach ($params as $key => $value) {
-			if(!in_array($key, array('id', 'board_name')))
+			if(!in_array($key, array('id', 'board-name')))
 				$_params[] = "$key=$value";
 		}
 		return $_params ? '?' . implode('&', $_params) : '';
 	}
 }
 
-function url_for_new($routes = array(), $params = array()){
+// url_for_metabbs -> url_for
+function url_for_metabbs($controller = null, $action = null, $params = array()){
 	global $dispatcher;
+	$routes = array();
+	if (!is_null($controller)) $routes['controller'] = $controller;
+	if (!is_null($action)) $routes['action'] = $action;
+	return $dispatcher->url_for($routes, $params);
+}
+function url_for_admin($controller = null, $action = null, $params = array()){
+	global $dispatcher;
+	$routes = array();
+	$routes['container'] = 'admin';
+	if (!is_null($controller)) $routes['controller'] = $controller;
+	if (!is_null($action)) $routes['action'] = $action;
 	return $dispatcher->url_for($routes, $params);
 }
 
-function url_with_referer_for_new($routes = array(), $params = array()){
+// url_with_referer_for_metabbs -> url_with_referer
+function url_with_referer_for_metabbs($controller = null, $action = null, $params = array()){
 	global $dispatcher;
+	$routes = array();
+	if (!is_null($controller)) $routes['controller'] = $controller;
+	if (!is_null($action)) $routes['action'] = $action;
 	$params['url'] = isset($params['url']) ? urlencode($params['url']) : urlencode($_SERVER['REQUEST_URI']);
 	return $dispatcher->url_for($routes, $params);
+}
+
+function url_with_referer_for_admin($controller = null, $action = null, $params = array()){
+	global $dispatcher;
+	$routes = array();
+	$routes['container'] = 'admin';
+	if (!is_null($controller)) $routes['controller'] = $controller;
+	if (!is_null($action)) $routes['action'] = $action;
+	$params['url'] = isset($params['url']) ? urlencode($params['url']) : urlencode($_SERVER['REQUEST_URI']);
+	return $dispatcher->url_for($routes, $params);
+}
+
+function full_url_for_metabbs($controller = null, $action = null, $params = array()) {
+	return METABBS_HOST_URL.url_for_metabbs($controller, $action, $params);
 }
 
 /* DEBUG CODE */

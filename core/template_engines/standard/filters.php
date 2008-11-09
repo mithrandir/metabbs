@@ -21,8 +21,14 @@ function modern_common_filter(&$post) {
 	modern_load_post_category($post);
 }
 function modern_list_filter(&$post) {
+	global $params;
 	modern_common_filter($post);
-	$post->url = url_for($post, '', get_search_params());
+
+//	$post->url = url_for($post, '', get_search_params());
+	$_params = array('id'=> $post->id);
+	if($params['page']) $_params['page'] = $params['page'];
+	$post->url = url_for_metabbs(null, 'view', $_params);
+
 	$post->date = date('Y-m-d', $post->created_at);
 	$post->time = date('H:i:s', $post->created_at);
 	if (isset($post->attachments)) {
@@ -37,10 +43,12 @@ add_filter('PostList', 'modern_list_filter', 32768);
 function modern_view_filter(&$post) {
 	modern_common_filter($post);
 	$board = $post->get_board();
-	$post->url = url_for($post);
+//	$post->url = url_for($post);
+	$post->url = url_for_metabbs(null, 'view', array('id'=> $post->id));
 	$post->date = date('Y-m-d H:i:s', $post->created_at);
 	if ($board->use_trackback) {
-		$post->trackback_url = full_url_for($post, 'trackback');
+//		$post->trackback_url = full_url_for($post, 'trackback');
+		$post->trackback_url = full_url_for_metabbs(null, 'trackback', array('id'=> $post->id));
 	}
 	$post->edited = $post->is_edited();
 	if ($post->edited) {
@@ -57,17 +65,20 @@ function modern_comment_filter(&$comment) {
 	$comment->author = $comment->name;
 	$comment->date = date('Y-m-d H:i:s', $comment->created_at);
 	if ($account->has_perm('reply', $comment)) {
-		$comment->reply_url = url_for($comment, 'reply');
+//		$comment->reply_url = url_for($comment, 'reply');
+		$comment->reply_url = url_for_metabbs('comment', 'reply', array('id'=> $comment->id));
 	} else {
 		$comment->reply_url = null;
 	}
 	if ($account->has_perm('delete', $comment)) {
-		$comment->delete_url = url_for($comment, 'delete');
+//		$comment->delete_url = url_for($comment, 'delete');
+		$comment->delete_url = url_for_metabbs('comment', 'delete', array('id'=> $comment->id));
 	} else {
 		$comment->delete_url = null;
 	}
 	if ($account->has_perm('edit', $comment)) {
-		$comment->edit_url = url_for($comment, 'edit');
+///		$comment->edit_url = url_for($comment, 'edit');
+		$comment->edit_url = url_for_metabbs('comment', 'edit', array('id'=> $comment->id));
 	} else {
 		$comment->edit_url = null;
 	}

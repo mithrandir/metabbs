@@ -53,8 +53,8 @@ if (is_post()) {
 	$template->set('captcha', $captcha);
 	$template->set('comment', $comment);
 	$template->set('name', cookie_get('name'));
-	$template->set('link_cancel', url_for($post));
-
+//	$template->set('link_cancel', url_for($post));
+	$template->set('link_cancel', url_for_metabbs('post', null, array('id'=>$post->id, 'board-name'=>$board->name)));
 	if (is_xhr()) {
 		$template->render_partial();
 		exit;

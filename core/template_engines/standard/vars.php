@@ -1,5 +1,6 @@
 <?php
-global $controller, $action, $layout;
+//global $controller, $action, $layout;
+global $routes, $params, $layout;
 
 if (isset($board)) {
 	$admin = $account->has_perm('admin', $board);
@@ -7,13 +8,18 @@ if (isset($board)) {
 }
 $guest = $account->is_guest();
 if ($guest) {
-	$link_login = url_with_referer_for('account', 'login');
-	$link_signup = url_with_referer_for('account', 'signup');
+//	$link_login = url_with_referer_for('account', 'login');
+//	$link_signup = url_with_referer_for('account', 'signup');
+	$link_login = url_with_referer_for_metabbs('account', 'login');
+	$link_signup = url_with_referer_for_metabbs('account', 'signup');
 } else {
-	$link_logout = url_with_referer_for('account', 'logout');
-	$link_account = url_with_referer_for('account', 'edit');
+//	$link_logout = url_with_referer_for('account', 'logout');
+//	$link_account = url_with_referer_for('account', 'edit');
+	$link_logout = url_with_referer_for_metabbs('account', 'logout');
+	$link_account = url_with_referer_for_metabbs('account', 'edit');
 	if ($account->is_admin()) {
-		$link_admin = url_for('admin');
+//		$link_admin = url_for('admin');
+		$link_admin = url_for_metabbs('admin');
 	} else {
 		$link_admin = null;
 	}
@@ -59,7 +65,8 @@ if (isset($categories)) {
 			$categories[$k]->selected = '';
 		}
 		$categories[$k]->name = htmlspecialchars($c->name);
-		$categories[$k]->url = url_for($board, '', array('category' => $c->id));
+//		$categories[$k]->url = url_for($board, '', array('category' => $c->id));
+		$categories[$k]->url = url_for_metabbs('board', null, array('board-name'=>$board->name ,'category' => $c->id));
 		$categories[$k]->post_count = $c->get_post_count();
 	}
 } else {
@@ -67,7 +74,8 @@ if (isset($categories)) {
 }
 $params = null;
 apply_filters('ManageURLAtStandardVars', $params, $board);
-$manage_url = url_for($board, 'manage', $params);
+//$manage_url = url_for($board, 'manage', $params);
+$manage_url = url_for_metabbs('board', 'manage', $params);
 
 $tagable = $board->use_tag();
 if ($this->view == 'view') {
@@ -114,11 +122,13 @@ if (isset($comments)) {
 	$comments = flatten_comments($comments);
 }
 if (isset($post) && $post->exists() && $account->has_perm('comment', $post)) {
-	$comment_url = url_for($post, 'comment');
+//	$comment_url = url_for($post, 'comment');
+	$comment_url = url_for_metabbs('comment', null, array('id'=>$comment->id));
 }
-if ($controller == 'comment') {
-	$comment_url = url_for($GLOBALS['comment'], $action);
-	if ($action == 'edit') {
+if ($routes['controller'] == 'comment') {
+//	$comment_url = url_for($GLOBALS['comment'], $action);
+	$comment_url = url_for_metabbs('comment', $routes['action'], array('id'=>$GLOBALS['comment']->id));
+	if ($routes['action'] == 'edit') {
 		$comment_author = htmlspecialchars($comment->name);
 		$comment_body = htmlspecialchars($comment->body);
 	}
