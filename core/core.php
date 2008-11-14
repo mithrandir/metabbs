@@ -16,7 +16,7 @@ $__db = get_conn();
 set_table_prefix($config->get('prefix', 'meta_'));
 
 require METABBS_DIR . '/core/models/site.php';
-require METABBS_DIR . '/core/models/board.php';
+require METABBS_DIR . '/core/models/container.php';
 require METABBS_DIR . '/core/models/category.php';
 require METABBS_DIR . '/core/models/uncategorized_posts.php';
 require METABBS_DIR . '/core/models/post.php';
@@ -30,8 +30,7 @@ require METABBS_DIR . '/core/models/tag.php';
 require METABBS_DIR . '/core/models/tag_post.php';
 
 require METABBS_DIR . '/core/template.php';
-require METABBS_DIR . '/core/uri_manager.php';
-require METABBS_DIR . '/core/dispatcher.php';
+//require METABBS_DIR . '/core/uri_manager.php';
 require METABBS_DIR . '/core/account.php';
 require METABBS_DIR . '/core/timezone.php';
 require METABBS_DIR . '/core/external.php';

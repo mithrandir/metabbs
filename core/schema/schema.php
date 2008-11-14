@@ -1,8 +1,8 @@
 <?php
-define('METABBS_DB_REVISION', 1277);
+define('METABBS_DB_REVISION', 1336);
 
 function run($conn) {
-	$t = new Table('board');
+	$t = new Table('container');
 	$t->column('name', 'string', 45);
 	$t->column('posts_per_page', 'integer');
 	$t->column('style', 'string', 45);
