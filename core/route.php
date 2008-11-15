@@ -1,6 +1,6 @@
 <?php
 function remove_empty_elements($array) {
-	return array_filter($array, create_function('$elem', 'return !empty($elem);'));
+	return array_values(array_filter($array, create_function('$elem', 'return !empty($elem);')));
 }
 
 function url_for($route) {
@@ -24,12 +24,17 @@ class Route {
 	var $params = array();
 
 	function to_uri() {
-		$parts = array($this->container);
-		if ($this->id)
-			$parts[] = $this->id;
-		if ($this->view != 'index' ||
-				($this->view == 'view' && !$this->id))
-			$parts[] = $this->view;
+		if ($this->container) {
+			$parts = array($this->container);
+			if ($this->id)
+				$parts[] = $this->id;
+
+			list(, $action) = explode('/', $this->view, 2);
+			if ($action != 'index')
+				$parts[] = $this->view;
+		} else {
+			$parts = array($this->view);
+		}
 
 		return implode('/', $parts) . query_string_for($this->params);
 	}
@@ -41,6 +46,15 @@ class Route {
 		$parts = remove_empty_elements(explode('/', substr($uri, 1)));
 		$count = count($parts);
 
+		if ($parts[0] == 'user') {
+			$r->view = 'user/index';
+			$r->id = $parts[1];
+			return $r;
+		} else if ($parts[0] == 'account') {
+			$r->view = 'account/' . $parts[1];
+			return $r;
+		}
+
 		// Possible URI patterns:
 		// {container}
 		// {container}/{view}
@@ -48,13 +62,13 @@ class Route {
 		// {container}/{id}/{view}
 
 		$r->container = $parts[0];
-		$r->view = 'index';
+		$r->view = 'container/index';
 		if ($count >= 2)
 			if (is_numeric($parts[1])) {
 				$r->id = $parts[1];
-				$r->view = $count >= 3 ? $parts[2] : 'view';
+				$r->view = 'entry/' . ($count >= 3 ? $parts[2] : 'index');
 			} else {
-				$r->view = $parts[1];
+				$r->view = 'container/' . $parts[1];
 			}
 
 		return $r;
