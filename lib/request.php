@@ -28,4 +28,12 @@ function get_upload_size_limit() {
 	//return min(ini_get('post_max_size'), ini_get('upload_max_filesize'));
 	return ini_get('upload_max_filesize');
 }
+
+function check_post_max_size_overflow() {
+	// If the size of post data is greater than post_max_size, the $_POST and $_FILES superglobals are empty. (see http://php.net/manual/en/ini.core.php#ini.post-max-size)
+	if (empty($_POST) && empty($_FILES)) {
+		header('HTTP/1.1 413 Request Entity Too Large');
+		print_notice(i('Max upload size exceeded'), i('Please upload files smaller than %s.', get_upload_size_limit()));
+	}
+}
 ?>

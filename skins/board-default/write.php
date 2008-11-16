@@ -1,6 +1,6 @@
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" action="">
 <div id="post-form">
-<h1><div class="title-wrap">글쓰기</div></h1>
+<h1><span class="title-wrap">글쓰기</span></h1>
 <table>
 <? if ($guest): ?>
 <tr>
@@ -11,7 +11,6 @@
 	<td class="password"><input type="password" name="password" /></td>
 </tr>
 <? endif; ?>
-
 <tr>
 	<th>제목</th>
 	<td colspan="3"><input type="text" name="title" size="50" value="<?=$post->title?>" id="post_title" /></td>
@@ -28,14 +27,31 @@
 		</select>
 		<? endif; ?>
 
-		<? if ($admin): ?><input type="checkbox" name="notice" value="1" <?=$notice_checked?> /> 공지사항<? endif; ?>
-		<input type="checkbox" name="secret" value="1" <?=$secret_checked?> /> 비밀글
+		<? if ($admin): ?><input type="checkbox" id="post_notice" name="notice" value="1" <?=$notice_checked?> /> 공지사항<? endif; ?>
+		<input type="checkbox" id="post_secret" name="secret" value="1" <?=$secret_checked?> /> 비밀글
 	</td>
 </tr>
 
 <tr>
 	<td colspan="4" class="body"><textarea name="body" id="post_body" cols="40" rows="12"><?=$post->body?></textarea></td>
 </tr>
+<? if ($guest): ?>
+	<? if ($board->use_captcha() && isset($captcha) && $captcha->ready()): ?>
+<tr>
+	<th>CAPTCHA</th>
+	<td class="captcha" colspan="3"><?= $captcha->get_html() ?>
+		<? if (!empty($captcha->error)): ?>
+		<span style="captcha notice"><?=i($captcha->error)?></p>
+		<? endif; ?>
+	</td>
+</tr>
+	<? endif; ?>
+<? endif; ?>
+<? if ($preview): ?>
+<tr>
+	<td colspan="4" class="preview"><?=$preview->body?></td>
+</tr>
+<? endif; ?>
 
 <? foreach ($additional_fields as $field): ?>
 <tr>
@@ -59,6 +75,15 @@
 </div>
 <? endif; ?>
 
+<? if ($tagable): ?>
+<div id="tag">
+<h2>태그</h2>
+<ul id="tag_input">
+	<li><input type="text" name="tags" size="63" value="<?=$post->tags?>" id="post_tags" /></li>
+</ul>
+</div>
+<? endif; ?>
+
 <? if ($admin): ?>
 <div id="trackback">
 <h2>트랙백 보내기</h2>
@@ -70,7 +95,10 @@
 </div>
 
 <div id="meta-nav">
-<? if ($editing): ?><input type="submit" value="고치기" class="button" /><? else: ?><input type="submit" value="글쓰기" class="button" /><? endif; ?>
+	<button type="submit" name="action" value="save" class="save">
+		<? if ($editing): ?>고치기<? else: ?>글쓰기<? endif; ?>
+	</button>
+	<button type="submit" name="action" value="preview">미리보기</button>
 <? if ($link_cancel): ?><a href="<?=$link_cancel?>">취소</a><? endif; ?>
 <a href="<?=$link_list?>">목록으로</a>
 </div>

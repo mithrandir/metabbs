@@ -2,15 +2,10 @@
 if (!defined('SECURITY')) {
 	return;
 }
-$limit = get_upload_size_limit();
-
-// If the size of post data is greater than post_max_size, the $_POST and $_FILES superglobals are empty. (see http://php.net/manual/en/ini.core.php#ini.post-max-size)
-if (empty($_POST) && empty($_FILES)) {
-	print_notice('Max upload size exceeded', 'Please upload files smaller than ' . $limit . '.');
-}
 
 if (!$post->valid()) {
-	// TODO: more friendly error message
+	header('HTTP/1.1 403 Forbidden');
+	print_notice(i('Some fields are empty.'), i('Please fill out all fields.'));
 	exit;
 }
 
@@ -21,25 +16,36 @@ apply_filters('PostSave', $post);
 if ($board->use_attachment && isset($_FILES['upload'])) {
 	$uploads = $_FILES['upload'];
 	$attachments = array();
+	$limit = get_upload_size_limit();
 	foreach ($uploads['name'] as $key => $filename) {
 		if (!$filename) continue;
+		if ($uploads['size'][$key] == 0 ||
+			$uploads['error'][$key] == UPLOAD_ERR_INI_SIZE) {
+			header('HTTP/1.1 413 Request Entity Too Large');
+			print_notice(i('Max upload size exceeded'), i('Please upload files smaller than %s.', $limit));
+		}
 		if (!is_uploaded_file($uploads['tmp_name'][$key])) continue;
-		if ($uploads['size'][$key] == 0) print_notice('Max upload size exceeded', 'Please upload files smaller than ' . $limit . '.');
-		$attachments[] = new Attachment(array('filename' => $filename, 'tmp_name' => $uploads['tmp_name'][$key], 'type' => $uploads['type'][$key]));
+		$attachments[] = new Attachment(array('filename' => stripslashes($filename), 'tmp_name' => $uploads['tmp_name'][$key], 'type' => $uploads['type'][$key]));
 	}
 }
 
 if ($post->exists()) {
 	$post->update();
+	if($board->get_attribute('use_tag', false))
+		$post->arrange_tags_after_update();
+	apply_filters('AfterUpdatePost', $post);
 } else {
 	$board->add_post($post);
+	apply_filters('AfterAddPost', $post);
 }
 
 if (isset($attachments)) {
 	foreach ($attachments as $attachment) {
 		$post->add_attachment($attachment);
 		move_uploaded_file($attachment->tmp_name, 'data/uploads/' . $attachment->id);
+		chmod('data/uploads/' . $attachment->id, 0606);
 	}
+	$post->update_attachment_count();
 }
 
 if (isset($_POST['meta'])) {
@@ -56,5 +62,7 @@ if (isset($_POST['trackback']) && isset($_POST['trackback']['to'])
 	send_trackback($_POST['trackback']);
 }
 
-redirect_to(url_for($post));
+$params = null;
+apply_filters('BeforeRedirectAtSavePost', $params, $post);
+redirect_to(url_for($post, '', $params));
 ?>

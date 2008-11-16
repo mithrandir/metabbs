@@ -63,29 +63,98 @@ function addComment(form, list) {
 	return false;
 }
 
+function deleteComment(form, id, leaveEntry) {
+	var submitButton = Form.getSubmitButton(form);
+	submitButton.disable();
+	new Ajax.Request(form.action, {
+		parameters: Form.serialize(form),
+		onComplete: function (transport) {
+			if (!leaveEntry)
+				$('comment_' + id).remove()
+			else
+				$('comment_' + id).replace(transport.responseText)
+			closeDialog()
+		}
+	});
+}
+
+function markCommentParents() {
+	$$('li').filter(function (comment) {
+		return comment.identify().startsWith('comment_')
+	}).each(function (comment) {
+		var i = 0;
+		var p = comment.classNames().filter(function (cl) {
+			if (!cl.startsWith('parent-'))
+				return true;
+			else {
+				i++;
+				return i == 1;
+			}
+		})
+		comment.className = p.join(' ')
+	}).each(function (comment) {
+		var classes = comment.classNames().filter(function (cl) {
+			return cl.startsWith('parent-');
+		})
+
+		$$('.parent-' + comment.id.split('_')[1]).each(function (el) {
+			classes.each(function (cl) { el.addClassName(cl) })
+		})
+	})
+}
+
+function findReplyEntryFor(id) {
+	markCommentParents();
+
+	var entry = $$('.parent-' + id).last()
+	if (!entry)
+		entry = $('comment_' + id)
+	return entry
+}
+
+function recalcDepth(comment) {
+	markCommentParents();
+	var depth = comment.classNames().filter(function (cl) {
+		return cl.startsWith('parent-')
+	}).size() - 1
+	comment.style.marginLeft = (depth * 2) + 'em'
+}
+
 function replyComment(form, id) {
 	var data = Form.serialize(form);
 	if (!checkForm(form)) return false;
-	new Ajax.Updater({success: id}, form.action, {
+	var entry = findReplyEntryFor(id);
+	new Ajax.Updater({success: entry}, form.action, {
 		parameters: data,
-		insertion: Insertion.Bottom,
+		insertion: Insertion.After,
 		onFailure: function (transport) {
 			alert(transport.responseText);
 		},
 		onComplete: function (transport) {
-			Form.getSubmitButton(form).enable();
-			$('sending').remove();
-			if (transport.status == 200) {
-				$('reply-form').remove();
-			}
+			var comment = entry.next('li');
+			recalcDepth(comment);
+
+			triggerDialogLinks();
+			closeDialog();
+			comment.scrollTo();
 		}
 	});
 	return false;
 }
 
-function editComment(id, url) {
-	new Ajax.Updater($(id).getElementsByClassName('comment')[0], url, {
-		method: 'GET'
+function editComment(form, id) {
+	var submitButton = Form.getSubmitButton(form);
+	submitButton.disable();
+	var origMargin = $('comment_' + id).style.marginLeft
+	new Ajax.Request(form.action, {
+		parameters: Form.serialize(form),
+		onComplete: function (transport) {
+			$('comment_' + id).replace(transport.responseText)
+			$('comment_' + id).style.marginLeft = origMargin
+
+			triggerDialogLinks()
+			closeDialog()
+		}
 	});
 }
 
@@ -138,7 +207,7 @@ function highlightText(text, element) {
 function highlightSearchKeyword() {
 	var kw = location.search.toQueryParams()['keyword'];
 	if (!kw) return;
-	highlightText(kw, $('body'));
+	if ($('body')) highlightText(kw, $('body'));
 }
 
 // dialog
@@ -155,23 +224,46 @@ function addDialogOverlay() {
 
 function addCloseButton() {
 	new Insertion.Top('dialog', '<a href="#" class="dialog-close" id="dialog-close">X</a>');
+	$('dialog-close').focus();
+}
+
+function fixIEDocumentHeight(mode) {
+	if (!Prototype.Browser.IE) return;
+	if (mode == true) {
+		$$('html', 'body').each(function (el) {
+			el.setAttribute('originalHeight', el.style.height);
+			el.style.height = {html: '93%', body: '100%'}[el.tagName.toLowerCase()];
+		});
+	} else {
+		$$('html', 'body').each(function (el) {
+			el.style.height = el.getAttribute('originalHeight');
+		});
+	}
+}
+
+function getScrollTop() {
+	if (document.documentElement && document.documentElement.scrollTop)
+		return document.documentElement.scrollTop;
+	else if (document.body)
+		return document.body.scrollTop;
 }
 
 function openDialog(href) {
-	var overlay = $('dialog-overlay');
-	if (document.documentElement && document.documentElement.scrollTop){
-		overlay.style.top = document.documentElement.scrollTop + 'px';
-	} else if (document.body) {
-		overlay.style.top = document.body.scrollTop + 'px';
-	}
-
-	new Ajax.Updater('dialog', href, {
+	new Ajax.Request(href, {
 		method: 'get',
-		onComplete: function () {
+		onComplete: function (xhr) {
+			fixIEDocumentHeight(true);
+			var overlay = $('dialog-overlay');
+			var dialog = $('dialog');
+			overlay.style.top = getScrollTop() + 'px';
+			dialog.update(xhr.responseText);
+			overlay.show();
+
 			addCloseButton();
 			triggerCloseLinks();
 			fixFormActions(href);
-			$('dialog-overlay').show();
+			dialog.style.top = '50%';
+			dialog.style.marginTop = '-' + parseInt(dialog.getHeight()/2) + 'px';
 		}
 	});
 }
@@ -185,10 +277,15 @@ function triggerDialogLinks() {
 	});
 }
 
+function closeDialog() {
+	$('dialog-overlay').hide();
+	fixIEDocumentHeight(false);
+}
+
 function triggerCloseLinks() {
 	$$('#dialog a.dialog-close').each(function (link) {
 		Event.observe(link, 'click', function (ev) {
-			$('dialog-overlay').hide();
+			closeDialog();
 			Event.stop(ev);
 		});
 	});

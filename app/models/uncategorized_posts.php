@@ -16,7 +16,7 @@ class UncategorizedPosts {
 		return $this->_count;
 	}
 	function exists() {
-		return $this->get_post_count() > 0;
+		return $this->board->have_empty_item() || $this->get_post_count() > 0;
 	}
 }
 ?>

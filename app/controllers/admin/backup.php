@@ -1,18 +1,22 @@
 <?php
 if (isset($_GET['format']) && $_GET['format'] == 'sql') {
+	if (!file_exists('data/backup')) {
+		mkdir('data/backup');
+		chmod('data/backup', 0707);
+	}
+
 	@set_time_limit(0);
 	require 'lib/backends/'.$config->get('backend').'/installer.php';
 	$db = get_conn();
 	$exporter = new SQLExporter;
-	$data = '';
+	$filename = "metabbs_backup_" . date('Ymd') . '_' . md5(microtime() . uniqid(rand(), true)) . ".sql";
+	$fp = fopen('data/backup/' . $filename, 'w');
 	foreach ($db->get_created_tables() as $t) {
-		$data .= $exporter->to_sql($t);
+		$exporter->to_sql($t, $fp);
 	}
-	header('Content-Type: application/octet-stream');
-	header('Content-Length: ' . strlen($data));
-	header('Content-Disposition: attachment; filename="metabbs_backup_'.date('Ymd').'.sql"');
-	header('Content-Transfer-Encoding: binary');
-	echo $data;
-	exit;
+	fclose($fp);
+	chmod('data/backup/' . $filename, 0606);
+
+	$backup_url = METABBS_BASE_PATH . 'data/backup/' . $filename;
 }
 ?>

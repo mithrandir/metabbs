@@ -16,7 +16,7 @@ class Board extends Model {
 	var $get_post_body = FALSE;
 
 	function _init() {
-		$this->admin_table = get_table_name('board_admin');
+		$this->member_table = get_table_name('board_member');
 		$this->post_table = get_table_name('post');
 		$this->comment_table = get_table_name('comment');
 		$this->category_table = get_table_name('category');
@@ -56,6 +56,9 @@ class Board extends Model {
 	function add_post(&$post) {
 		$post->board_id = $this->id;
 		$post->create();
+		$board = $post->get_board();
+		if($board->get_attribute('use_tag', false));
+			$post->arrange_tags_after_create();
 	}
 	function get_post_count() {
 		if (!isset($this->_count))
@@ -63,10 +66,11 @@ class Board extends Model {
 		return $this->_count;
 	}
 	function get_categories() {
-		return find_all('category', "board_id=$this->id");
+		return find_all('category', "board_id=$this->id", "position");
 	}
 	function add_category($category) {
 		$category->board_id = $this->id;
+		$category->position = $this->db->fetchone("SELECT MAX(position) FROM {$category->table} WHERE board_id = $category->board_id") + 1;
 		$category->create();
 	}
 	function delete() {
@@ -79,6 +83,7 @@ class Board extends Model {
 			delete_all('post', "moved_to IN (".implode(',', $ids).")");
 		}
 		delete_all('post', "board_id=$this->id");
+		apply_filters('BoardDelete', $this);
 		Model::delete();
 	}
 	function get_recent_comments($count) {
@@ -91,27 +96,51 @@ class Board extends Model {
 		$this->db->execute("UPDATE $this->table SET style=? WHERE id=$this->id", array($style));
 		$this->style = $style;
 	}
-	function get_admins() {
-		if (!isset($this->_admins)) {
+	function get_members() {
+		if (!isset($this->_members)) {
 			$table = get_table_name('user');
-			$this->_admins = $this->db->fetchall("SELECT u.* FROM $this->admin_table a, $table u WHERE u.level=255 OR (a.board_id=$this->id AND a.user_id=u.id) GROUP BY u.id", "User");
+			$this->_members = $this->db->fetchall("SELECT u.*, a.admin FROM $this->member_table a, $table u WHERE u.level=255 OR (a.board_id=$this->id AND a.user_id=u.id) GROUP BY u.id", "User");
 		}
-		return $this->_admins;
+		return $this->_members;
 	}
-	function is_admin($user) {
-		foreach ($this->get_admins() as $admin) {
-			if ($admin->id == $user->id) return true;
+	function is_member($user) {
+		foreach ($this->get_members() as $member) {
+			if ($member->id == $user->id) return true;
 		}
 		return false;
 	}
-	function add_admin($user) {
-		foreach ($this->get_admins() as $admin) {
-			if ($admin->id == $user->id) return;
+	function is_admin($user) {
+		foreach ($this->get_members() as $member) {
+			if ($member->id == $user->id && $member->admin) return true;
 		}
-		$this->db->execute("INSERT INTO $this->admin_table (board_id, user_id) VALUES($this->id, $user->id)");
+		return false;
 	}
-	function drop_admin($admin) {
-		$this->db->execute("DELETE FROM $this->admin_table WHERE board_id=$this->id AND user_id=$admin->id");
+	function add_member($user) {
+		foreach ($this->get_members() as $member) {
+			if ($member->id == $user->id) return;
+		}
+		$this->db->execute("INSERT INTO $this->member_table (board_id, user_id, admin) VALUES($this->id, $user->id, 0)");
+	}
+	function drop_member($user) {
+		$this->db->execute("DELETE FROM $this->member_table WHERE board_id=$this->id AND user_id=$user->id");
+	}
+	function toggle_member_class($user) {
+		$this->db->execute("UPDATE $this->member_table SET admin = 1 - admin WHERE board_id=$this->id AND user_id=$user->id");
+	}
+	function restrict_access() {
+		return $this->get_attribute('restrict_access', false);
+	}
+	function restrict_write() {
+		return $this->get_attribute('restrict_write', false);
+	}
+	function restrict_comment() {
+		return $this->get_attribute('restrict_comment', false);
+	}
+	function use_tag() {
+		return $this->get_attribute('use_tag', false);
+	}
+	function use_captcha() {
+		return $this->get_attribute('use_captcha', false);
 	}
 	function reset_sort_keys() {
 		if (!$this->order_by) $this->order_by = 'id DESC';
@@ -122,6 +151,9 @@ class Board extends Model {
 			$this->db->execute("UPDATE $this->post_table SET sort_key=2147483648-$key WHERE notice=0");
 		else
 			$this->db->execute("UPDATE $this->post_table SET sort_key=$key WHERE notice=0");
+	}
+	function have_empty_item() {
+		return $this->get_attribute('have_empty_item', false);
 	}
 }
 ?>

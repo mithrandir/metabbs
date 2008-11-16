@@ -69,5 +69,29 @@ class ModelTest extends UnitTestCase {
 		$this->assertEqual("DELETE FROM test_animal WHERE id=42", $this->db->query);
 		$this->assertNull($model->id);
 	}
+
+	function testGetAttribute() {
+		$model = new Animal(array('id' => 42));
+		$this->assertEqual('', $model->get_attribute('no'));
+	}
+
+	function testSetAttribute() {
+		$model = new Animal(array('id' => 42));
+		$model->set_attribute('foo', 'bar');
+		$this->assertEqual('bar', $model->get_attribute('foo'));
+		$model->set_attribute('foo', 'baz');
+		$this->assertEqual('baz', $model->get_attribute('foo'));
+	}
+
+	function testGetAttributes() {
+		$model = new Animal(array('id' => 42));
+		$this->assertEqual(array(), $model->get_attributes());
+
+		$model->set_attribute('first', '1');
+		$model->set_attribute('second', '2');
+		$attributes = $model->get_attributes();
+		$this->assertEqual('1', $attributes['first']);
+		$this->assertEqual('2', $attributes['second']);
+	}
 }
 ?>

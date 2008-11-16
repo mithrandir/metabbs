@@ -1,7 +1,7 @@
 <?php
 class User extends Model {
 	var $model = 'user';
-
+	var $user, $name;
 	var $email, $url;
 	var $level = 1;
 	var $token;
@@ -11,13 +11,17 @@ class User extends Model {
 		$this->post_table = get_table_name('post');
 		$this->comment_table = get_table_name('comment');
 	}
+	function delete() {
+		apply_filters('UserDelete', $this);
+		Model::delete();
+	}
 	function find($id) {
 		$db = get_conn();
 		$table = get_table_name('user');
 		return $db->fetchrow("SELECT * FROM $table WHERE id=?", 'User', array($id));
 	}
-	function get_posts($offset, $limit) {
-		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE user_id=$this->id ORDER BY id DESC LIMIT $offset, $limit", 'Post');
+	function get_posts($offset = 0, $limit = null, $order_by = 'id DESC') {
+		return $this->db->fetchall("SELECT * FROM $this->post_table WHERE user_id=$this->id ".($order_by ? " ORDER BY $order_by":'').($limit ? " LIMIT".($offset != 0 ? " $offset, ":'').' '.$limit : ''), 'Post');
 	}
 	function get_post_count() {
 		return $this->db->fetchone("SELECT COUNT(*) FROM $this->post_table WHERE user_id=$this->id");
@@ -43,10 +47,10 @@ class User extends Model {
 		$table = get_table_name('user');
 		return $db->fetchrow("SELECT * FROM $table WHERE user=?", 'User', array($user));
 	}
-	function find_all($offset, $limit) {
+	function find_all($offset = 0, $limit = null, $order_by = 'id DESC') {
 		$db = get_conn();
 		$table = get_table_name('user');
-		return $db->fetchall("SELECT * FROM $table LIMIT $offset, $limit", 'User');
+		return $db->fetchall("SELECT * FROM $table".($order_by ? " ORDER BY $order_by":'').($limit ? " LIMIT".($offset != 0 ? " $offset, ":'').' '.$limit : ''), 'User');
 	}
 	function search($key, $value) {
 		$db = get_conn();
@@ -83,22 +87,50 @@ class User extends Model {
 	}
 	function has_perm($action, $object) {
 		if ($this->is_admin()) return true;
+		if (is_a($object, 'Board'))
+			$board = $object;
+		else if (method_exists($object, 'get_board'))
+			$board = $object->get_board();
+		if (isset($board) && $board->is_admin($this))
+			return true;
+
 		switch ($action) {
 			case 'list':
-				return $this->level >= $object->perm_read;
+				if ($board->get_attribute('always_show_list', false))
+					return true;
+
+				if ($this->level < $board->perm_read)
+					return false;
+
+				if ($board->restrict_access())
+					return $board->is_member($this);
+				else
+					return true;
 			break;
 			case 'read':
-				$board = $object->get_board();
 				if ($object->secret && $object->user_id != $this->id &&
 					!$this->has_perm('admin', $board))
 					return false;
-				return $this->level >= $board->perm_read;
+
+				if ($this->level < $board->perm_read)
+					return false;
+
+				if ($board->restrict_access())
+					return $board->is_member($this);
+				else
+					return true;
 			break;
 			case 'admin':
 				return $object->is_admin($this);
 			break;
 			case 'write':
-				return $this->level >= $object->perm_write;
+				if ($this->level < $object->perm_write)
+					return false;
+
+				if ($object->restrict_write())
+					return $object->is_member($this);
+				else
+					return true;
 			break;
 			case 'delete':
 			case 'edit':
@@ -106,13 +138,19 @@ class User extends Model {
 					$board = $object->get_board();
 				else
 					$board = $object;
+
 				return $this->has_perm('admin', $board) ||
 					(isset($object->user_id) && $object->user_id == $this->id);
 			break;
 			case 'reply':
 			case 'comment':
-				$board = $object->get_board();
-				return $this->level >= $board->perm_comment;
+				if ($this->level < $board->perm_comment)
+					return false;
+
+				if ($board->restrict_comment())
+					return $board->is_member($this);
+				else
+					return true;
 			break;
 		}
 	}
@@ -126,6 +164,10 @@ class Guest extends Model
 	var $name = 'guest';
 	var $email, $url;
 	var $signature;
+	function delete() {
+		apply_filters('UserDelete', $this);
+		Model::delete();
+	}
 	function is_guest() {
 		return true;
 	}
@@ -135,7 +177,9 @@ class Guest extends Model
 	function has_perm($action, $object) {
 		switch ($action) {
 			case 'list':
-				return $this->level >= $object->perm_read;
+				return $object->get_attribute('always_show_list', false)
+					|| ($object->restrict_access() && $object->is_member($this) && $this->level >= $object->perm_read)
+					|| (!$object->restrict_access() && $this->level >= $object->perm_read);
 			break;
 			case 'read':
 				$board = $object->get_board();
@@ -145,13 +189,16 @@ class Guest extends Model
 					else
 						return false;
 				}
-				return $this->level >= $board->perm_read;
+				return ($board->restrict_access() && $board->is_member($this) && $this->level >= $board->perm_read) 
+					|| (!$board->restrict_access() && $this->level >= $board->perm_read);
+
 			break;
 			case 'admin':
 				return false;
 			break;
 			case 'write':
-				return $this->level >= $object->perm_write;
+				return ($object->restrict_write() && $object->is_member($this) && $this->level >= $object->perm_write)
+					|| (!$object->restrict_write() && $this->level >= $object->perm_write);
 			break;
 			case 'delete':
 			case 'edit':
@@ -172,7 +219,8 @@ class Guest extends Model
 			case 'reply':
 			case 'comment':
 				$board = $object->get_board();
-				return $this->level >= $board->perm_comment;
+				return ($board->restrict_comment() && $board->is_member($this) && $this->level >= $board->perm_comment)
+					|| (!$board->restrict_comment() && $this->level >= $board->perm_comment);
 			break;
 		}
 	}

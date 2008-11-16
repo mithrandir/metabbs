@@ -44,6 +44,14 @@ class QueryTest extends UnitTestCase {
 		$this->assertEqual(42, $person->id);
 		$this->assertEqual('John Doe', $person->name);
 	}
+
+	function testFindFirst() {
+		$this->db->data = array(array('id' => 1, 'name' => '홍길동'), array('id' => 2, 'name' => '갑순이'));
+		$person = find_first('person', 'hello');
+		$this->assertEqual("SELECT * FROM test_person WHERE hello", $this->db->query);
+		$this->assertEqual(1, $person->id);
+		$this->assertEqual('홍길동', $person->name);
+	}
 	
 	function testFindAll() {
 		$this->db->data = array(array('id' => 1, 'name' => '홍길동'), array('id' => 2, 'name' => '갑순이'));

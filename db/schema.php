@@ -1,5 +1,5 @@
 <?php
-define('METABBS_DB_REVISION', 949);
+define('METABBS_DB_REVISION', 1277);
 
 function run($conn) {
 	$t = new Table('board');
@@ -19,12 +19,13 @@ function run($conn) {
 	$t->add_index('name');
 	$conn->add_table($t);
 
-	$t = new Table('board_admin');
+	$t = new Table('board_member');
 	$t->column('board_id', 'integer');
 	$t->column('user_id', 'integer');
+	$t->column('admin', 'boolean');
 	$t->add_index('board_id');
 	$conn->add_table($t);
-	$conn->query("INSERT INTO ".get_table_name('board_admin')." (board_id, user_id) VALUES(0, 0)"); // insert dummy data
+	$conn->query("INSERT INTO ".get_table_name('board_member')." (board_id, user_id) VALUES(0, 0)"); // insert dummy data
 
 	$t = new Table('post');
 	$t->column('board_id', 'integer');
@@ -32,8 +33,9 @@ function run($conn) {
 	$t->column('category_id', 'integer');
 	$t->column('name', 'string', 45);
 	$t->column('title', 'string', 255);
-	$t->column('body', 'text');
+	$t->column('body', 'longtext');
 	$t->column('password', 'string', 32);
+	$t->column('tags', 'string', 255);
 	$t->column('created_at', 'timestamp');
 	$t->column('notice', 'boolean');
 	$t->column('views', 'integer');
@@ -43,17 +45,20 @@ function run($conn) {
 	$t->column('moved_to', 'integer');
 	$t->column('last_update_at', 'timestamp');
 	$t->column('comment_count', 'integer');
+	$t->column('attachment_count', 'integer');
+	$t->column('tag_count', 'integer');
 	$t->column('sort_key', 'integer');
 	$t->add_index('board_id');
 	$t->add_index('category_id');
 	$t->add_index('user_id');
 	$conn->add_table($t);
 
-	$t = new Table('post_meta');
-	$t->column('post_id', 'integer');
+	$t = new Table('metadata');
+	$t->column('model', 'string', 20);
+	$t->column('model_id', 'integer');
 	$t->column('key', 'string', 45);
 	$t->column('value', 'string', 255);
-	$t->add_index('post_id');
+	$t->add_index('model_id');
 	$conn->add_table($t);
 
 	$t = new Table('comment');
@@ -85,6 +90,23 @@ function run($conn) {
 	$t->add_index('post_id');
 	$conn->add_table($t);
 
+	$t = new Table('tag');
+	$t->column('name', 'string', 255);
+	$t->column('board_id', 'integer');
+	$t->column('post_count', 'integer');
+	$t->column('updated_at', 'timestamp');
+	$t->add_index('name');
+	$t->add_index('board_id');
+	$conn->add_table($t);
+
+	$t = new Table('tag_post');
+	$t->column('post_id', 'integer');
+	$t->column('tag_id', 'integer');
+	$t->column('created_at', 'timestamp');
+	$t->add_index('post_id');
+	$t->add_index('tag_id');
+	$conn->add_table($t);
+
 	$t = new Table('user');
 	$t->column('user', 'string', 45);
 	$t->column('password', 'string', 32);
@@ -99,6 +121,7 @@ function run($conn) {
 	$t = new Table('category');
 	$t->column('board_id', 'integer');
 	$t->column('name', 'string', 45);
+	$t->column('position', 'integer');
 	$t->add_index('board_id');
 	$conn->add_table($t);
 

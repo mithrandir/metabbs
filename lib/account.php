@@ -40,7 +40,7 @@ function admin() {
  */
 function login() {
 	global $board;
-	return link_to_account(i('Login'), 'login', 'link-login', isset($board) ? $board : 'account');
+	return link_to_account(i('Login'), 'login', 'link-login');
 }
 
 /**
@@ -72,11 +72,32 @@ function editinfo() {
  */
 function access_denied() {
 	global $account;
+	header('HTTP/1.1 403 Forbidden');
+	print_notice(i('Access denied'), i('You have no permission to access this page.') . ' ' . ($account->is_guest() ? login() : ''));
+}
+
+function login_required() {
+	global $account;
 	if ($account->is_guest()) {
-		redirect_to(url_with_referer_for('account', 'login'));
-	} else {
-		print_notice('Access denied', 'You have no permission to access this page.');
+		header('HTTP/1.1 403 Forbidden');
+		print_notice(i('Access denied'), i('Please login to access this page.') . ' ' . ($account->is_guest() ? login() : ''));
 	}
+}
+
+/**
+ * utf8로 인코딩된 메일을 보낸다.
+ */
+function sendmail_utf8($from_email, $from_name, $to_email, $to_name, $subject, $message, $charset = "UTF-8") {
+	$eol = "\r\n";
+	$encoded_from_name = empty($from_name) ? $from_email : "=?{$charset}?B?".base64_encode($from_name)."?= <{$from_email}>";
+	$encoded_to_name = empty($to_name) ? $to_email : "=?{$charset}?B?".base64_encode($to_name)."?= <{$to_email}>";
+	$encoded_subject = "=?{$charset}?B?".base64_encode($subject)."?=".$eol;
+
+	$headers = "From: {$encoded_from_name}".$eol;
+	$headers .= "Reply-To: {$encoded_from_name}".$eol;
+	$headers .= "Content-Type: text/html; charset=\"{$charset}\"".$eol;
+
+	return mail($encoded_to_name, $encoded_subject, $message, $headers);	
 }
 
 /**
@@ -115,7 +136,7 @@ class UserManager
 	 */
 	function login($user, $password, $autologin) {
 		$user = User::auth($user, md5($password));
-		if ($user->exists()) {
+		if ($user->exists() /*&& !$user->get_attribute('pwresetcode')*/) {
 			$_SESSION['user_id'] = $user->id;
 			if ($autologin) {
 				cookie_register('user_id', $user->id);

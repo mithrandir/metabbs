@@ -1,14 +1,17 @@
 <?php
 if (!isset($id)) {
-	print_notice('No post id', 'Please append the post id.');
+	header('HTTP/1.1 404 Not Found');
+	print_notice(i('No post id'), i('Please append the post id.'));
 }
 $post = Post::find($id);
 if (!$post->exists()) {
-	print_notice('Post not found', "Post #$id is not exist.");
+	header('HTTP/1.1 404 Not Found');
+	print_notice(i('Post not found'), i("Post #%d doesn't exist.", $id));
 }
 if ($post->moved_to) {
+	if ($action == 'index') $action = '';
 	redirect_to(url_for(new Post(array('id' => $post->moved_to)), $action));
 }
 $board = $post->get_board();
-$title = $board->get_title() . " - $post->title";
+$title = htmlspecialchars($board->get_title() . " - $post->title");
 ?>

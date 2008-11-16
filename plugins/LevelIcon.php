@@ -6,9 +6,14 @@ class LevelIcon extends Plugin {
 
 	function on_install() {
 		mkdir('data/icons');
+		chmod('data/icons', 0707);
 		copy(dirname(__FILE__).'/icons/admin.png', 'data/icons/255.png');
 		copy(dirname(__FILE__).'/icons/user.png', 'data/icons/1.png');
 		copy(dirname(__FILE__).'/icons/guest.png', 'data/icons/0.png');
+
+		chmod('data/icons/255.png', 0606);
+		chmod('data/icons/1.png', 0606);
+		chmod('data/icons/0.png', 0606);
 	}
 	function on_init() {
 		if (!file_exists(METABBS_DIR . '/data/icons'))
@@ -47,7 +52,7 @@ class LevelIcon extends Plugin {
 		$model->name = $this->prepend_level_icon($level, $model->name);
 	}
 	function user_info_level_icon_filter(&$user) {
-		$user->name = $this->prepend_level_icon($user->level, htmlspecialchars($user->name));
+		$user->name = $this->prepend_level_icon($user->level, $user->name);
 	}
 	function delete_icon($level) {
 		if (isset($this->icons[$level])) {
@@ -63,6 +68,7 @@ class LevelIcon extends Plugin {
 				$ext = strrchr($_FILES['icon']['name'], '.');
 				$this->delete_icon($level);
 				move_uploaded_file($_FILES['icon']['tmp_name'], 'data/icons/'.$level.$ext);
+				chmod('data/icons/'.$level.$ext, 0606);
 				$this->icons[$level] = $level.$ext;
 			}
 		}

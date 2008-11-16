@@ -35,9 +35,10 @@ if (isset($_GET['rev'])) {
 	<link rel="stylesheet" href="<?=METABBS_BASE_PATH?>elements/style.css" type="text/css" />
 </head>
 <body>
-<div id="meta-admin">
-<h1>MetaBBS Updater</h1>
-<div id="body">
+<div id="header">
+<h1 style="float: none">MetaBBS Updater</h1>
+</div>
+<div id="content">
 <?php
 if ($current < METABBS_DB_REVISION) {
 	if (is_post()) {

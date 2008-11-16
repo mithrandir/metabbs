@@ -1,11 +1,13 @@
 <?php
 if (!$id) {
-	print_notice('No board name', 'Please append the board name.');
+	header('HTTP/1.1 404 Not Found');
+	print_notice(i('No board name'), i('Please append the board name.'));
 }
 require 'lib/page.php';
 $board = Board::find_by_name($id);
 if (!$board->exists()) {
-	print_notice('Board not found', "Board <em>$id</em> is not exist.");
+	header('HTTP/1.1 404 Not Found');
+	print_notice(i('Board not found'), i("Board %s doesn't exist.", $id));
 }
-$title = $board->get_title();
+$title = htmlspecialchars($board->get_title());
 ?>

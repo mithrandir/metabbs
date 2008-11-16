@@ -33,10 +33,9 @@ class SQLExporter {
 	function SQLExporter() {
 		$this->db = get_conn();
 	}
-	function to_sql($t) {
+	function to_sql($t, $fp = NULL) {
 		$sql = array();
 		$columns = $this->db->get_columns($t);
-		array_unshift($columns, 'id');
 		$_columns = array();
 		foreach ($columns as $c) {
 			$_columns[] = "`$c`";
@@ -48,16 +47,21 @@ class SQLExporter {
 			foreach ($columns as $c) {
 				$values[] = "'".$this->db->escape($data[$c])."'";
 			}
-			$sql[] = $prefix . implode(",", $values) . ");";
+			$line = $prefix . implode(",", $values) . ");";
+			if (!$fp)
+				$sql[] = $line;
+			else
+				fwrite($fp, $line . "\n");
 		}
-		return implode("\n", $sql)."\n\n";
+		if (!$fp) return implode("\n", $sql)."\n\n";
+		else fwrite($fp, "\n");
 	}
 }
 function db_info_form() {
-	field('host', 'Hostname', 'localhost', 'text', 'Host이름을 입력합니다. 대부분 localhost입니다.');
-	field('user', 'User ID', 'root', 'text', 'Database 사용자의 아이디를 입력합니다.');
-	field('password', 'Password', '', 'password', 'Database의 비밀번호를 입력합니다.');
-	field('dbname', 'DB name', '', 'text', 'Database 이름을 입력합니다.');
+	field('host', 'Hostname', 'localhost', 'text');
+	field('user', 'User ID', 'root', 'text');
+	field('password', 'Password', '', 'password');
+	field('dbname', 'DB name', '', 'text');
 }
 function is_supported() {
 	return function_exists('mysql_connect');

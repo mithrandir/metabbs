@@ -80,7 +80,7 @@ $comment_fixture = array(
 );
 
 $fixtures = array(
-	'post_meta' => array(), // dummy
+	'metadata' => array(), // dummy
 	'board' => $board_fixture,
 	'post'  => $post_fixture,
 	'comment' => $comment_fixture,

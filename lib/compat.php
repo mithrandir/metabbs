@@ -76,4 +76,28 @@ if (!function_exists('array_combine')) {
 		return $r;
 	}
 }
+
+/**
+ * PHP 4를 위해 PHP 5 객체 복제 흉내내기
+ */
+if (version_compare(phpversion(), '5.0') < 0) {
+	eval('function clone($object) { return $object; }');
+}
+
+/**
+ * PHP 4에 없는 함수들 추가
+ */
+if(!function_exists('scandir')) {
+    function scandir($dir, $sortorder = 0) {
+        if(is_dir($dir) && $dirlist = @opendir($dir)) {
+            while(($file = readdir($dirlist)) !== false) {
+                $files[] = $file;
+            }
+            closedir($dirlist);
+            ($sortorder == 0) ? asort($files) : rsort($files); // arsort was replaced with rsort
+            return $files;
+        } else return false;
+    }
+} 
+
 ?>

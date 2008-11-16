@@ -62,9 +62,9 @@ class Style {
 		$this->name = $name;
 		include "styles/$name/style.php";
 		$this->skin = new Skin($skin);
-		$this->fullname = $style_name;
-		$this->creator = $style_creator;
-		$this->license = $style_license;
+		$this->fullname = isset($style_name) ? $style_name : $name;
+		$this->creator = @$style_creator;
+		$this->license = @$style_license;
 	}
 	function get_path() {
 		return METABBS_BASE_PATH . 'styles/' . $this->name;
@@ -82,21 +82,30 @@ define('ADMIN_VIEW', 1);
 class Layout {
 	var $stylesheets = array();
 	var $javascripts = array();
+	var $metadata = array();
 	var $header, $footer;
+	var $head = '';
+	var $title = 'MetaBBS';
 
+	function Layout() {
+		$this->add_meta('Generator', 'MetaBBS '.METABBS_VERSION);
+	}
 	function add_stylesheet($path) {
-		$this->stylesheets[] = $path;
+		$this->add_link('stylesheet', 'text/css', $path);
 	}
 	function add_javascript($path) {
-		$this->javascripts[] = $path;
+		$this->head .= "<script type=\"text/javascript\" src=\"$path\"></script>\n";
+	}
+	function add_meta($name, $content) {
+		$this->head .= "<meta name=\"$name\" content=\"".htmlspecialchars($content)."\" />\n";
+	}
+	function add_link($rel, $type, $href, $title = '') {
+		$this->head .= '<link rel="' . $rel . '" href="' . $href . '" type="' . $type . '"';
+		if ($title) $this->head .= ' title="' . $title . '"';
+		$this->head .= " />\n";
 	}
 	function print_head() {
-		foreach ($this->stylesheets as $stylesheet) {
-			echo '<link rel="stylesheet" href="'.$stylesheet.'" type="text/css" />';
-		}
-		foreach ($this->javascripts as $javascript) {
-			echo '<script type="text/javascript" src="' . $javascript . '"></script>';
-		}
+		echo $this->head;
 	}
 	function wrap($header, $footer) {
 		$this->header .= $header;
@@ -106,17 +115,15 @@ class Layout {
 
 function get_header_path() {
 	global $view, $config;
-	if ($view == ADMIN_VIEW)
-		return 'elements/admin_header.php';
-	else
-		return $config->get('global_header', 'elements/default_header.php');
+	$header_path = $view == ADMIN_VIEW ? 'elements/admin_header.php' : $config->get('global_header', 'elements/default_header.php');
+	apply_filters('GetHeaderPath', $header_path);
+	return $header_path;
 }
 function get_footer_path() {
 	global $view, $config;
-	if ($view == ADMIN_VIEW)
-		return 'elements/admin_footer.php';
-	else
-		return $config->get('global_footer', 'elements/default_footer.php');
+	$footer_path = $view == ADMIN_VIEW ? 'elements/admin_footer.php' : $config->get('global_footer', 'elements/default_footer.php');
+	apply_filters('GetFooterPath', $footer_path);
+	return $footer_path;
 }
 
 function meta_format_date($format, $now) {
@@ -162,14 +169,8 @@ function human_readable_size($size) {
 	return round($size, 1) . $units[$i];
 }
 function print_notice($text, $description) {
-	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-	echo '<html>';
-	echo '<body>';
-	echo '<h2>' . $text . '</h2>';
-	echo '<p>' . $description . '</p>';
-	echo '</body>';
-	echo '</html>';
+	$theme = get_current_theme();
+	include 'themes/'.$theme.'/error.php';
 	exit;
 }
 ?>

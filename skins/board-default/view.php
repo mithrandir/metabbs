@@ -1,5 +1,5 @@
 <div id="post">
-	<h1><div class="title-wrap"><?=$post->title?></div></h1>
+	<h1><span class="title-wrap"><?=$post->title?></span></h1>
 
 	<table>
 	<tr>
@@ -10,6 +10,18 @@
 
 		<td id="post-content">
 			<div class="body"><?=$post->body?></div>
+
+			<? if ($tagable && $post->tags): ?>
+			<p id="tags">태그 : 
+			<? foreach ($post->get_tags() as $tag): ?>
+				<a href="<?=url_for_list('board', $board->name, array('tag'=>1, 'keyword'=>urlencode($tag->name)))?>"><?=$tag->name?></a>
+			<? endforeach; ?>
+			</p>
+			<? endif; ?>
+
+			<? if ($post->edited): ?>
+			<p class="edit-info"><?=$post->edited_by?> 님이 <?=$post->edited_at?>에 고쳤습니다.</p>
+			<? endif; ?>
 
 			<? if ($signature): ?>
 			<div class="signature"><?=$signature?></div>
@@ -25,6 +37,7 @@
 			<? endforeach; ?>
 			</ul>
 			<? endif; ?>
+
 		</td>
 	</tr>
 	</table>
@@ -54,6 +67,13 @@
 	</ol>
 
 	<? include "comment_form.php"; ?>
+
+	<script type="text/javascript">
+	Event.observe('comment-form', 'submit', function (event) {
+		addComment('comment-form', $$('#comments ol')[0])
+		Event.stop(event);
+	});
+	</script>
 </div>
 </div>
 </div>
@@ -64,3 +84,13 @@
 <? if ($link_edit): ?><a href="<?=$link_edit?>">고치기</a> <? endif; ?>
 <? if ($link_delete): ?><a href="<?=$link_delete?>">지우기</a> <? endif; ?>
 </div>
+
+<p id="neighbor-posts">
+<? if ($newer_post): ?>
+<a href="<?=$newer_post->url?>">&larr; <?=$newer_post->title?></a>
+<? endif; ?>
+<? if ($newer_post and $older_post): ?> | <? endif; ?>
+<? if ($older_post): ?>
+<a href="<?=$older_post->url?>"><?=$older_post->title?> &rarr;</a>
+<? endif; ?>
+</p>

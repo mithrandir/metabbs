@@ -1,4 +1,7 @@
 <?php
+if (!is_writable('fixtures'))
+	die('fixtures/ directory should be writable by the web server.');
+
 require 'simpletest/unit_tester.php';
 
 $cases = array();

@@ -1,14 +1,12 @@
 <?php
-function modern_common_filter(&$post) {
-	$post->author = $post->name;
-	$post->title = htmlspecialchars($post->title);
+function modern_load_post_category(&$post) {
 	$board = $post->get_board();
 	if ($board->use_category) {
 		if (!$post->category_id) {
 			//$post->category = new UncategorizedPosts($board);
 			$post->category = null;
 		} else {
-			$post->category = $post->get_category();
+			$post->category = clone($post->get_category());
 			$post->category->name = htmlspecialchars($post->category->name);
 			$post->category->url = url_for($board, '', array('category' => $post->category->id));
 		}
@@ -16,17 +14,30 @@ function modern_common_filter(&$post) {
 		$post->category = null;
 	}
 }
+
+function modern_common_filter(&$post) {
+	$post->author = $post->name;
+	$post->title = htmlspecialchars($post->title);
+	modern_load_post_category($post);
+}
 function modern_list_filter(&$post) {
 	modern_common_filter($post);
 	$post->url = url_for($post, '', get_search_params());
 	$post->date = date('Y-m-d', $post->created_at);
 	$post->time = date('H:i:s', $post->created_at);
+	if (isset($post->attachments)) {
+		foreach ($post->attachments as $k => $v) {
+			modern_attachment_filter($post->attachments[$k]);
+		}
+		$post->attachment_count = count($post->attachments);
+	}
 }
 add_filter('PostList', 'modern_list_filter', 32768);
 
 function modern_view_filter(&$post) {
 	modern_common_filter($post);
 	$board = $post->get_board();
+	$post->url = url_for($post);
 	$post->date = date('Y-m-d H:i:s', $post->created_at);
 	if ($board->use_trackback) {
 		$post->trackback_url = full_url_for($post, 'trackback');
@@ -62,4 +73,15 @@ function modern_comment_filter(&$comment) {
 	}
 }
 add_filter('PostViewComment', 'modern_comment_filter', 32768);
+
+function modern_attachment_filter(&$attachment) {
+	$attachment->filename = shorten_path(htmlspecialchars($attachment->filename));
+	$attachment->url = htmlspecialchars(url_for($attachment));
+	$attachment->size = human_readable_size($attachment->get_size());
+	if ($attachment->is_image()) {
+		$attachment->thumbnail_url = url_for($attachment).'?thumb=1';
+	} else {
+		$attachment->thumbnail_url = null;
+	}
+}
 ?>

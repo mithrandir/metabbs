@@ -11,9 +11,8 @@ $__admin_menu = array();
 function register_plugin($name) {
 	global $__plugins;
 	$plugin = Plugin::find_by_name($name);
-	if ($plugin->enabled) {
+	if ($plugin->enabled)
 		$plugin->on_init();
-	}
 	$__plugins[$name] = $plugin;
 	ksort($__plugins);
 }
@@ -109,11 +108,11 @@ function remove_all_filters($event) {
  * @param $event 해당 이벤트
  * @param $model 적용할 모델
  */
-function apply_filters($event, &$model) {
+function apply_filters($event, &$model, $args = array()) {
 	global $filters;
 	if (isset($filters[$event])) {
 		foreach ($filters[$event] as $callback) {
-			call_user_func_array($callback, array(&$model));
+			call_user_func_array($callback, array(&$model, $args));
 		}
 	}
 }
@@ -123,9 +122,9 @@ function apply_filters($event, &$model) {
  * @param $event 해당 이벤트
  * @param $array 적용 모델을 담고 있는 배열
  */
-function apply_filters_array($event, &$array) {
+function apply_filters_array($event, &$array, $args = array()) {
 	foreach (array_keys($array) as $key) {
-		apply_filters($event, $array[$key]);
+		apply_filters($event, $array[$key], $args);
 	}
 }
 
@@ -192,9 +191,9 @@ function get_plugins() {
 
 function import_plugin($plugin) {
 	if (file_exists(METABBS_DIR."/plugins/$plugin.php")) {
-		include_once("plugins/$plugin.php");
+		include_once(METABBS_DIR."/plugins/$plugin.php");
 	} else if (file_exists(METABBS_DIR."/plugins/$plugin/plugin.php")) {
-		include_once("plugins/$plugin/plugin.php");
+		include_once(METABBS_DIR."/plugins/$plugin/plugin.php");
 	}
 }
 

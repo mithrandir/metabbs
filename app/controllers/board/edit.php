@@ -33,6 +33,8 @@ if (is_post()) {
 		} else if ($_board->name != $board->name && !$_board->validate()) {
 			$flash = "Board '$_board->name' already exists.";
 		}
+		$board->set_attribute('use_tag', $_POST['board']['use_tag']);
+		$board->set_attribute('use_captcha', $_POST['board']['use_captcha']);
 		$sorting_changed = $_board->order_by != $board->order_by;
 		if (isset($flash)) {
 			$view = ADMIN_VIEW;
@@ -41,6 +43,12 @@ if (is_post()) {
 	}
 	$board->import($_POST['board']);
 	$board->update();
+	if ($_GET['tab'] == 'permission') {
+		$board->set_attribute('always_show_list', $_POST['board']['always_show_list']);
+		$board->set_attribute('restrict_write', $_POST['board']['restrict_write']);
+		$board->set_attribute('restrict_comment', $_POST['board']['restrict_comment']);
+		$board->set_attribute('restrict_access', $_POST['board']['restrict_access']);
+	}
 	if ($sorting_changed) $board->reset_sort_keys();
 	if ($_GET['tab'] == 'category') {
 		foreach ($_POST['categories'] as $_category) {
@@ -48,10 +56,12 @@ if (is_post()) {
 				$board->add_category(new Category(array('name' => $_category)));
 			}
 		}
+		$board->set_attribute('have_empty_item', $_POST['category']['have_empty_item']);
 	}
 	redirect_to(url_for($board, 'edit', array('tab'=>$_GET['tab'])));
 }
 $view = ADMIN_VIEW;
 $styles = get_styles();
 $current_style = $board->get_style();
+$un = new UncategorizedPosts($board); 
 ?>

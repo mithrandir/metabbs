@@ -1,11 +1,13 @@
 <?php
-global $controller, $action;
+global $controller, $action, $layout;
 
-if (isset($board))
+if (isset($board)) {
 	$admin = $account->has_perm('admin', $board);
+	$board->title = $board->get_title();
+}
 $guest = $account->is_guest();
 if ($guest) {
-	$link_login = url_with_referer_for($board, 'login');
+	$link_login = url_with_referer_for('account', 'login');
 	$link_signup = url_with_referer_for('account', 'signup');
 } else {
 	$link_logout = url_with_referer_for('account', 'logout');
@@ -17,18 +19,21 @@ if ($guest) {
 	}
 }
 
-// for write.php
-if ($controller == 'post' && $action == 'edit' ||
-	$controller == 'board' && $action == 'post') {
+if ($this->view == 'write') {
 	if ($board->use_category)
 		$categories = $board->get_categories();
 	else
 		$categories = null;
+	$un = new UncategorizedPosts($board);
+	if ($board->have_empty_item())
+		array_unshift($categories, $un);
+	
 	$notice_checked = $post->notice ? 'checked="checked"' : '';
 	$secret_checked = $post->secret ? 'checked="checked"' : '';
 	$editing = $action == 'edit';
-	$post->author = $post->name;
-	//$post->body = htmlspecialchars($post->body);
+	$post->author = htmlspecialchars($post->name);
+	$post->title = htmlspecialchars($post->title);
+	$post->body = htmlspecialchars($post->body);
 	$additional_fields = array();
 	foreach ($extra_attributes as $attr) {
 		$attr->name = htmlspecialchars($attr->name);
@@ -53,53 +58,44 @@ if (isset($categories)) {
 		} else {
 			$categories[$k]->selected = '';
 		}
+		$categories[$k]->name = htmlspecialchars($c->name);
 		$categories[$k]->url = url_for($board, '', array('category' => $c->id));
 		$categories[$k]->post_count = $c->get_post_count();
 	}
 } else {
 	$categories = null;
 }
-$manage_url = url_for($board, 'manage');
+$params = null;
+apply_filters('ManageURLAtStandardVars', $params, $board);
+$manage_url = url_for($board, 'manage', $params);
 
-// for view.php
+$tagable = $board->use_tag();
+if ($this->view == 'view') {
+	$layout->add_meta('Author', htmlspecialchars(isset($post->name_orig) ? $post->name_orig : $post->name));
+	$form_id = 'comment-form';
+}
 if (isset($post) && !$board->use_trackback) {
 	$post->trackback_url = null;
 	$trackbacks = array();
 }
 if (isset($trackbacks)) {
 	foreach ($trackbacks as $k => $v) {
+		$trackbacks[$k]->title = htmlspecialchars($v->title);
+		$trackbacks[$k]->blog_name = htmlspecialchars($v->blog_name);
 		if ($admin)
 			$trackbacks[$k]->delete_url = url_for($v, 'delete');
 		else
 			$trackbacks[$k]->delete_url = null;
 	}
 }
-if (isset($newer_post)) {
-	if (!$newer_post->exists()) {
-		$newer_post = null;
-	} else {
-		$newer_post->url = url_for($newer_post);
-		$newer_post->title = htmlspecialchars($newer_post->title);
-	}
-}
-if (isset($older_post)) {
-	if (!$older_post->exists()) {
-		$older_post = null;
-	} else {
-		$older_post->url = url_for($older_post);
-		$older_post->title = htmlspecialchars($older_post->title);
-	}
-}
+if (isset($newer_post) && !$newer_post->exists()) 
+	$newer_post = null;
+if (isset($older_post) && !$older_post->exists()) 
+	$older_post = null;
+
 if (isset($attachments)) {
 	foreach ($attachments as $k => $v) {
-		$attachments[$k]->filename = shorten_path(htmlspecialchars($v->filename));
-		$attachments[$k]->url = htmlspecialchars(url_for($v));
-		$attachments[$k]->size = human_readable_size($v->get_size());
-		if ($v->is_image()) {
-			$attachments[$k]->thumbnail_url = url_for($v).'?thumb=1';
-		} else {
-			$attachments[$k]->thumbnail_url = null;
-		}
+		modern_attachment_filter($attachments[$k]);
 	}
 }
 if (isset($comments)) {
@@ -123,14 +119,20 @@ if (isset($post) && $post->exists() && $account->has_perm('comment', $post)) {
 if ($controller == 'comment') {
 	$comment_url = url_for($GLOBALS['comment'], $action);
 	if ($action == 'edit') {
-		$comment_author = $comment->name;
-		$comment_body = $comment->body;
+		$comment_author = htmlspecialchars($comment->name);
+		$comment_body = htmlspecialchars($comment->body);
 	}
 }
 if (isset($comment_url) && !isset($comment_author)) {
-	$comment_author = cookie_get('name');
+	$comment_author = htmlspecialchars(cookie_get('name'));
 	$comment_body = "";
 }
 if (!isset($signature)) $signature = '';
 if (!isset($link_cancel)) $link_cancel = '';
+if (isset($keyword)) $keyword = htmlspecialchars($keyword);
+
+if ($this->view == 'reply')
+	$form_id = 'reply-form' . $comment->id . rand(0, 10);
+else if ($this->view == 'edit_comment')
+	$form_id = 'edit-form';
 ?>

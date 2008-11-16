@@ -34,6 +34,11 @@ class TextColumn extends Column {
 		return "`$this->name` text NOT NULL";
 	}
 }
+class LongTextColumn extends Column {
+	function to_spec() {
+		return "`$this->name` longtext NOT NULL";
+	}
+}
 class TimestampColumn extends Column {
 	function to_spec() {
 		return "`$this->name` integer(10) NOT NULL";
@@ -149,6 +154,10 @@ class MySQLConnection
 	function add_field($t, $name, $type, $length = NULL) {
 		$table = new Table($t);
 		$this->execute("ALTER TABLE $table->table ADD " . $table->_column($name, $type, $length));
+	}
+	function change_field($t, $old_name, $new_name, $type, $length = NULL) {
+		$table = new Table($t);
+		$this->execute("ALTER TABLE $table->table CHANGE `$old_name` " . $table->_column($new_name, $type, $length));
 	}
 	function drop_field($t, $name) {
 		$this->execute("ALTER TABLE ".get_table_name($t)." DROP COLUMN $name");

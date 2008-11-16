@@ -23,9 +23,9 @@ class Emoticon extends Plugin {
 		'8-|' => 'face-glasses.png'
 	);
 	function on_init() {
-		add_filter('PostList', array(&$this, 'emote_filter'), 1000);
-		add_filter('PostView', array(&$this, 'emote_filter'), 1000);
-		add_filter('PostViewComment', array(&$this, 'emote_filter'), 1000);
+		add_filter('PostList', array(&$this, 'emote_filter'), 1000, META_FILTER_APPEND);
+		add_filter('PostView', array(&$this, 'emote_filter'), 1000, META_FILTER_APPEND);
+		add_filter('PostViewComment', array(&$this, 'emote_filter'), 1000, META_FILTER_APPEND);
 	}
 	function emote_filter(&$model) {
 		if (!$model->body) return;

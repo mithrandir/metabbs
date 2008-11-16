@@ -33,10 +33,9 @@ class Language {
 	 * @param $path 언어 파일의 경로
 	 */
 	function load_from_file($path) {
-		$map = Config::_parse($path);
-		foreach ($map as $msg => $trans) {
-			$this->add_translation($msg, $trans);
-		}
+		$lang = array();
+		include $path;
+		$this->messages += $lang;
 	}
 
 	/**

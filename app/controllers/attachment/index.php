@@ -2,7 +2,8 @@
 list($id) = explode('_', $id, 2);
 $attachment = Attachment::find($id);
 if (!$attachment->exists() || !$attachment->file_exists()) {
-	print_notice('Attachment not found', "Attachment #$id is not exist or broken.<br />Please check the attachment id.");
+	header('HTTP/1.1 404 Not Found');
+	print_notice(i('Attachment not found'), i("Attachment #%d doesn't exist.", $id));
 }
 permission_required('read', Post::find($attachment->post_id));
 if (isset($_GET['thumb'])) {
@@ -11,6 +12,7 @@ if (isset($_GET['thumb'])) {
 	$ext = get_image_extension($orig_path);
 	$thumb_path = 'data/thumb/'.$attachment->id.'-small.'.$ext;
 	if (create_thumbnail($orig_path, $thumb_path)) {
+		chmod($thumb_path, 0606);
 		redirect_to(METABBS_BASE_PATH.$thumb_path);
 	}
 }

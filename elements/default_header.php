@@ -3,10 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title><?=$title?></title>
+	<title><?=$layout->title?></title>
 	<?php $layout->print_head(); ?>
-<? if (isset($board)) { ?>
-	<link rel="alternate" href="<?=url_for($board, 'rss')?>" type="application/rss+xml" title="RSS" /> 
-<? } ?>
 </head>
 <body>

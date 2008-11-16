@@ -15,12 +15,9 @@ if (is_post()) {
 			$attachment->delete();
 		}
 		$post->delete();
-		redirect_to(url_for($board));
+
+		$params = null;
+		apply_filters('BeforeRedirectAtDeletePost', $params, $board);
+		redirect_to(url_for($board, '', $params));
 	}
 }
-
-$template = get_template($board, 'delete');
-$template->set('board', $board);
-$template->set('ask_password', $account->is_guest());
-$template->set('link_cancel', url_for($post));
-?>

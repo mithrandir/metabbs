@@ -11,7 +11,7 @@ class IPBlock extends Plugin {
 				$ip = rtrim(fgets($fp, 20));
 				if (preg_match('/^'.str_replace('*', '.*', str_replace('.', '\.', $ip)).'$/', $_SERVER['REMOTE_ADDR'])) {
 					header('HTTP/1.1 403 Forbidden');
-					echo 'You are blocked by administrator.';
+					print_notice(i('Access denied'), 'You are blocked by the administrator. (Your IP address: ' . $_SERVER['REMOTE_ADDR'] . ')');
 					exit;
 				}
 			}

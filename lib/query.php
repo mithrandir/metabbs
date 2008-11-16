@@ -1,26 +1,52 @@
 <?php
-$__cache = array();
+class ObjectCache {
+	var $map = array();
 
-function find($model, $id) {
-	return find_by($model, 'id', $id);
+	function has($key) {
+		return array_key_exists($key, $this->map);
+	}
+
+	function get($key) {
+		return $this->map[$key];
+	}
+
+	function put($key, $object) {
+		$this->map[$key] = $object;
+	}
+
+	function reset() {
+		$this->map = array();
+	}
 }
 
-function find_and_cache($model, $id) {
+$__cache = new ObjectCache;
+
+function find($model, $id) {
 	global $__cache;
-	$key = $model.'_'.$id;
-	if (!isset($__cache[$key])) {
-		$o = find($model, $id);
-		$__cache[$key] = $o;
-	} else {
-		$o = $__cache[$key];
-	}
-	return $o;
+	$key = $model . '#' . $id;
+	if (!$__cache->has($key)) {
+		$object = find_by($model, 'id', $id);
+		$__cache->put($key, $object);
+		return $object;
+	} else return $__cache->get($key);
+}
+
+// deprecated; use find
+function find_and_cache($model, $id) {
+	return find($model, $id);
 }
 
 function find_by($model, $key, $value) {
 	global $__db;
+	return find_first($model, $__db->quote_identifier($key)."=".$__db->quote($value));
+}
+
+function find_first($model, $condition = '') {
+	global $__db;
 	$table = get_table_name($model);
-	$result = $__db->query("SELECT * FROM $table WHERE ".$__db->quote_identifier($key)."=".$__db->quote($value));
+	$query = "SELECT * FROM $table";
+	if ($condition) $query .= " WHERE $condition";
+	$result = $__db->query($query);
 	return new $model($result->fetch());
 }
 
