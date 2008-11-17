@@ -22,5 +22,6 @@ $template->set('link_new_post', $account->has_perm('write', $board) ? url_for($b
 $template->set('link_edit', $account->has_perm('edit', $post) ? url_for($post, 'edit', $params) : '');
 $template->set('link_delete', $account->has_perm('delete', $post) ? url_for($post, 'delete', $params) : '');
 $template->set('commentable', $account->has_perm('comment', $post));
-$template->set('password_required', $password_required);
+$template->set('readable', $readable);
+$template->set('ask_password', $ask_password);
 $template->render();

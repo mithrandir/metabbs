@@ -1,5 +1,5 @@
 <?php
-permission_required('read', $post);
+//permission_required('read', $post);
 
 if (isset($_GET['search'])) {
 	$board->search = array_merge($board->search, $_GET['search']);
@@ -39,8 +39,8 @@ if ($newer_post) apply_filters('PostView', $newer_post);
 $comments = $post->get_comments($style->skin->get_option('build_comment_tree', true));
 apply_filters_array('PostViewComment', $comments);
 
-if ($account->has_perm('read', $post) === ASK_PASSWORD) {
-	$password_required = !is_post() || md5($_POST['password']) != $post->password;
-} else {
-	$password_required = FALSE;
+$readable = $account->has_perm('read', $post);
+if ($readable === ASK_PASSWORD) {
+	$ask_password = TRUE;
+	$readable = is_post() && md5($_POST['password']) != $post->password;
 }

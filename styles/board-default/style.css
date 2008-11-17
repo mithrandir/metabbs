@@ -295,3 +295,12 @@ input.button, button {
 	width: 14.5em;
 	margin: 0 auto 1em auto;
 }
+.body.secret {
+	background: url(../../themes/default/error.png) top left no-repeat;
+	margin: 1em;
+	padding: 0.5em 0 1em 64px !important;
+	height: 3em;
+}
+.body.secret p {
+	margin: 0 0 0 1em;
+}

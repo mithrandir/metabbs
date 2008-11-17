@@ -9,7 +9,7 @@
 		</td>
 
 		<td id="post-content">
-		<? if (!$password_required): ?>
+		<? if ($readable): ?>
 			<div class="body"><?=$post->body?></div>
 
 			<? if ($tagable && $post->tags): ?>
@@ -39,18 +39,25 @@
 			</ul>
 			<? endif; ?>
 		<? else: ?>
-			<div class="body">
+			<div class="body secret">
+			<p>
+				이 글은 비밀글입니다. <? if ($ask_password || $guest): ?>내용을 보려면
+				<? if ($ask_password): ?>암호를 입력하시거나, <? endif; ?>
+				<? if ($guest): ?>읽기 권한이 있는 사용자로 <a href="<?=$link_login?>" class="dialog">로그인</a>하세요.<? endif; ?>
+				<? endif; ?>
+			</p>
+			<? if ($ask_password): ?>
 			<form method="post" action="">
-				<p>이 글은 비밀글입니다. 내용을 보려면 암호를 입력하세요.</p>
 				<p><input type="password" name="password" /> <input type="submit" value="확인" /></p>
 			</form>
+			<? endif; ?>
 			</div>
 		<? endif; ?>
 		</td>
 	</tr>
 	</table>
 
-<? if (!$password_required): ?>
+<? if ($readable): ?>
 <div id="responses">
 <? if ($post->trackback_url): ?>
 <div id="trackbacks">
