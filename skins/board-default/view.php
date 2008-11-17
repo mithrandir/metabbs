@@ -9,6 +9,7 @@
 		</td>
 
 		<td id="post-content">
+		<? if (!$password_required): ?>
 			<div class="body"><?=$post->body?></div>
 
 			<? if ($tagable && $post->tags): ?>
@@ -37,11 +38,18 @@
 			<? endforeach; ?>
 			</ul>
 			<? endif; ?>
-
+		<? else: ?>
+			<div class="body">
+			<form method="post" action="">
+				<p>이 글은 비밀글입니다. 내용을 보려면 암호를 입력하세요.</p>
+				<p><input type="password" name="password" /> <input type="submit" value="확인" /></p>
+			</form>
+			</div>
+		<? endif; ?>
 		</td>
 	</tr>
 	</table>
-
+<? if (!$password_required): ?>
 <div id="responses">
 <? if ($post->trackback_url): ?>
 <div id="trackbacks">
@@ -77,6 +85,7 @@
 </div>
 </div>
 </div>
+<? endif; ?>
 
 <div id="meta-nav">
 <? if ($link_list): ?><a href="<?=$link_list?>">목록보기</a> <? endif; ?>
