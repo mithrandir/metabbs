@@ -15,8 +15,8 @@ if (is_post()) {
 	if (!empty($account->email) && !Validate::email($account->email))
 		$error->add('Please enter a valid \'Your E-Mail Address\'', 'email');
 
-	if (!empty($account->url) && !Validate::domain($account->url))
-		$error->add('Please enter a valid \'Homepage Address\'', 'url');	
+//	if (!empty($account->url) && !Validate::domain($account->url))
+//		$error->add('Please enter a valid \'Homepage Address\'', 'url');	
 
 	if(!$error->exists()) {
 		if (!$account->password)

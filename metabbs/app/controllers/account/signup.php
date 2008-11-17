@@ -25,8 +25,8 @@ if (is_post()) {
 	if (!empty($info['email']) && !Validate::email($info['email']))
 		$error->add('Please enter a valid \'Your E-Mail Address\'', 'email');
 
-	if (!empty($info['url']) && !Validate::domain($info['url']))
-		$error->add('Please enter a valid \'Homepage Address\'', 'url');
+//	if (!empty($info['url']) && !Validate::domain($info['url']))
+//		$error->add('Please enter a valid \'Homepage Address\'', 'url');
 
 	if (!(isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
 		|| isset($captcha) && !$captcha->ready() 
