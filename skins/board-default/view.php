@@ -49,6 +49,7 @@
 		</td>
 	</tr>
 	</table>
+
 <? if (!$password_required): ?>
 <div id="responses">
 <? if ($post->trackback_url): ?>
