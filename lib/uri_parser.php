@@ -1,6 +1,8 @@
 <?php
 class URIParser {
 	function parse($uri) {
+		if ($uri == '/') return FALSE;
+
 		$parts = explode('/', substr($uri, 1));
 		$len = count($parts);
 		// 몇몇 주소는 예전 방식으로 처리
