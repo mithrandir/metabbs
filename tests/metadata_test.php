@@ -5,6 +5,8 @@ require_once "../app/models/metadata.php";
 
 class MetaModel extends Model {
 	var $model = 'meta_model';
+
+	function exists() { return true; } // workaround;
 }
 
 class MetadataTest extends UnitTestCase {
@@ -13,15 +15,18 @@ class MetadataTest extends UnitTestCase {
 		$this->metadata2 = new Metadata(new MetaModel(array('id' => 123)));
 	}
 
+	function tearDown() {
+		global $__db;
+		$__db->execute('ROLLBACK');
+		$__db->execute('BEGIN');
+	}
+
 	function testLoad() {
 		$this->metadata->load();
 		$this->assertEqual('bar', $this->metadata->attributes['foo']);
 	}
 	
 	function testGet() {
-		$this->assertEqual('', $this->metadata->get('foo'));
-
-		$this->metadata->load();
 		$this->assertEqual('bar', $this->metadata->get('foo'));
 	}
 
