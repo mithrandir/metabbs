@@ -20,7 +20,7 @@ if (!function_exists('rollback')) {
 }
 
 if (!file_exists('fixtures/.schema')) {
-	include "../db/schema.php";
+	include "../lib/schema/schema.php";
 	run($__db);
 	touch('fixtures/.schema');
 }

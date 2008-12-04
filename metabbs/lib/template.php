@@ -76,6 +76,24 @@ class Style {
 	}
 }
 
+class Theme {
+	function Theme($name) {
+		$this->name = $name;
+		$this->engine = 'default';
+		$this->template_class = $this->engine.'Template';
+	}
+	function get_path() {
+		return METABBS_BASE_PATH . 'themes/' . get_current_theme() . '/' . $this->name . '.php';
+	}
+	function get_template($view) {
+//		var_dump($this->template_class);
+//		var_dump($this->get_path());
+//		var_dump($view);
+//		$template = new $this->template_class($this->get_path(), $view);
+		return $template;
+	}
+}
+
 define('DEFAULT_VIEW', 0);
 define('ADMIN_VIEW', 1);
 
@@ -115,13 +133,13 @@ class Layout {
 
 function get_header_path() {
 	global $view, $config;
-	$header_path = $view == ADMIN_VIEW ? 'elements/admin_header.php' : $config->get('global_header', 'elements/default_header.php');
+	$header_path = $view == ADMIN_VIEW ? 'media/admin_header.php' : $config->get('global_header', 'media/default_header.php');
 	apply_filters('GetHeaderPath', $header_path);
 	return $header_path;
 }
 function get_footer_path() {
 	global $view, $config;
-	$footer_path = $view == ADMIN_VIEW ? 'elements/admin_footer.php' : $config->get('global_footer', 'elements/default_footer.php');
+	$footer_path = $view == ADMIN_VIEW ? 'media/admin_footer.php' : $config->get('global_footer', 'media/default_footer.php');
 	apply_filters('GetFooterPath', $footer_path);
 	return $footer_path;
 }
