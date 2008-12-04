@@ -23,7 +23,7 @@ function create_thumbnail($path, $dest, $kind = 0, $options = array('size'=>130)
 		switch($kind) {
 			// 가로폭이 size로 고정 축소
 			case 0:
-				if ($width <= $options['size'] || $height <= $options['size']) return false;
+				if ($width < $options['size'] || $height < $options['size']) return false;
 				$src_x = 0;
 				$src_y = 0;
 				$src_w = $width;
@@ -35,7 +35,7 @@ function create_thumbnail($path, $dest, $kind = 0, $options = array('size'=>130)
 				break;
 			// 작은축을 size로 고정 축소
 			case 1:
-				if ($width <= $options['size'] || $height <= $options['size']) return false;
+				if ($width < $options['size'] || $height < $options['size']) return false;
 				$src_x = 0;
 				$src_y = 0;
 				$src_w = $width;
@@ -52,7 +52,7 @@ function create_thumbnail($path, $dest, $kind = 0, $options = array('size'=>130)
 				break;
 			// 큰축을 size로 고정 축소
 			case 2:
-				if ($width <= $options['size'] || $height <= $options['size']) return false;
+				if ($width < $options['size'] || $height < $options['size']) return false;
 				$src_x = 0;
 				$src_y = 0;
 				$src_w = $width;
@@ -69,7 +69,7 @@ function create_thumbnail($path, $dest, $kind = 0, $options = array('size'=>130)
 				break;
 			// size의 정사각형으로 잘라내기 축소
 			case 3:
-				if ($width <= $options['size'] || $height <= $options['size']) return false;
+				if ($width < $options['size'] || $height < $options['size']) return false;
 				$src_x = 0;
 				$src_y = 0;
 				if($width > $height) {
@@ -86,7 +86,7 @@ function create_thumbnail($path, $dest, $kind = 0, $options = array('size'=>130)
 				break;
 			// width, height 로 zoom & crop
 			case 4:
-				if ($width <= $options['width'] || $height <= $options['height']) return false;
+				if ($width < $options['width'] || $height < $options['height']) return false;
 				$src_x = 0;
 				$src_y = 0;
 				$src_w = $width;

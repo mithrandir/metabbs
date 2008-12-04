@@ -12,7 +12,7 @@ if (!$uri) {
 }
 
 $layout = new Layout;
-$layout->add_javascript(METABBS_BASE_PATH . 'elements/prototype.js');
+$layout->add_javascript(METABBS_BASE_PATH . 'media/prototype.js');
 $title = &$layout->title;
 $view = DEFAULT_VIEW;
 
@@ -38,8 +38,8 @@ if (isset($board)) {
 }
 
 if ($view == ADMIN_VIEW) {
-	$layout->add_stylesheet(METABBS_BASE_PATH . 'elements/style.css');
-	$layout->add_javascript(METABBS_BASE_PATH . 'elements/admin.js');
+	$layout->add_stylesheet(METABBS_BASE_PATH . 'media/style.css');
+	$layout->add_javascript(METABBS_BASE_PATH . 'media/admin.js');
 	$layout->header = $layout->footer = '';
 } else {
 	if (isset($style)) {
@@ -53,7 +53,7 @@ if ($view == ADMIN_VIEW) {
 	$css = 'themes/'.get_current_theme().'/style.css';
 	if (file_exists($css))
 		$layout->add_stylesheet(METABBS_BASE_PATH . $css);
-	$layout->add_javascript(METABBS_BASE_PATH . 'elements/script.js');
+	$layout->add_javascript(METABBS_BASE_PATH . 'media/script.js');
 }
 
 ob_start();

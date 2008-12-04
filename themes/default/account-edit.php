@@ -18,7 +18,7 @@
 	<input type="text" name="user[name]" value="<?=$account->name?>" />
 </p>
 <p>
-	<label><?=i('E-Mail Address')?></label>
+	<label><?=i('E-Mail Address')?><span class="star">*</span></label>
 	<input type="text" name="user[email]" size="50" class="ignore <?=marked_by_error_message('email', $error_messages)?>" value="<?=$account->email?>" />
 </p>
 </fieldset>

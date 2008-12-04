@@ -87,7 +87,7 @@ function import_language($language) {
 		return TRUE;
 	}
 
-	$path = METABBS_DIR . '/lang/' . $language . '.php';
+	$path = METABBS_DIR . '/lib/lang/' . $language . '.php';
 	if (file_exists($path)) {
 		$lang->load_from_file($path);
 		return TRUE;
