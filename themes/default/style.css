@@ -43,6 +43,46 @@
 	font-size: 14px;
 }
 
+#meta.theme-only #flash_message,
+#flash_message {
+	border: 1px solid green; 
+	padding: 7px; 
+	background: #9e9; 
+	color: green;
+}
+#meta.theme-only #error_messages,
+#error_messages {
+	border: 2px solid red;
+/*	padding: 7px;
+	padding-bottom: 12px;*/
+	margin-bottom: 20px;
+	background-color: #f0f0f0;
+}
+#meta.theme-only #error_messages h2,
+#error_messages h2 {
+	text-align: left;
+	font-weight: bold;
+	padding: 5px 5px 5px 15px;
+	font-size: 12px;
+/*	margin: -7px;*/
+	background-color: #c00;
+	color: #fff;
+}
+#meta.theme-only #error_messages ul {
+	padding: 1em;
+	margin: 0 1em;
+}
+
+#meta.theme-only #error_messages li,
+#error_messages li {
+	font-size: 12px;
+	list-style: square;
+	margin: 0;
+}
+.field_error {
+	border: 2px solid red;
+}
+
 #meta.theme-only {
 	font-size: 13px;
 	font-family: Verdana, Arial, sans-serif;

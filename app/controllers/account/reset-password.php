@@ -11,12 +11,12 @@ if ($user->exists()) {
 	if (!empty($code) && $_GET['code'] == $code) {
 		if (is_post()) {
 			if (strlen($_POST['password']) < 5)
-				$error->add('Password length must be longer than 5', 'password');
+				$error_messages->add('Password length must be longer than 5', 'password');
 			
 			if ($_POST['password'] != $_POST['password_again'])
-				$error->add('Two password fields\' content must be same', 'password_again');
+				$error_messages->add('Two password fields\' content must be same', 'password_again');
 
-			if(!$error->exists()) {
+			if(!$error_messages->exists()) {
 				$user->password = md5($_POST['password']);
 				$user->update();
 
@@ -25,7 +25,7 @@ if ($user->exists()) {
 			}
 		}
 	} else
-		$error->add('The Code does not matched');
+		$error_messages->add('The Code does not matched');
 
 } else
-	$error->add('Your account does not exist');
+	$error_messages->add('Your account does not exist');
