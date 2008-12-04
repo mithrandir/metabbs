@@ -4,7 +4,7 @@ if (is_post()) {
 	apply_filters('BeforeLogin', $account, $_POST);
 	if (!$account) {
 		$account = new Guest;
-		$error->add('Login failed');
+		$error_messages->add('Login failed');
 	} else {
 		redirect_back();
 	}

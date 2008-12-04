@@ -9,6 +9,8 @@
 <? endif; ?>
 </div>
 
+<?=flash_message_box()?>
+
 <div id="board-info">
 모두 <?=$post_count?>개의 글이 있습니다.
 <a href="<?=$link_rss?>" class="feed"><img src="<?=$skin_dir?>/feed.png" alt="RSS" /></a>
