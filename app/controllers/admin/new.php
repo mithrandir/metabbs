@@ -18,17 +18,20 @@ $profiles = array(
 );
 
 $board = new Board(array('name' => $_POST['name']));
-if (empty($_POST['name'])) {
-	echo "Board name is empty.";
-	exit;
-} else if (!$board->validate()) {
-	header('HTTP/1.1 409 Conflict');
-	echo "Board '$board->name' already exists.";
-	exit;
-} else {
+if (empty($_POST['name']))
+	$error_messages->add('Board name is empty');
+
+if (!$board->validate())
+	$error_messages->add("Board '$board->name' already exists");
+
+// 이름 규칙 영문_-만
+
+if (!$error_messages->exists()) {
 	$profile = $profiles[$_POST['profile']];
 	$board->import($profile);
 	$board->create();
+	Flash::set('Board has been created');
 	redirect_to(url_for('admin'));
 }
+$boards = Board::find_all();
 ?>

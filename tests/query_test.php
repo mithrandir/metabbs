@@ -1,6 +1,6 @@
 <?php
-require_once "../lib/backends/mock.php";
-require_once "../lib/query.php";
+require_once "../core/backends/mock.php";
+require_once "../core/query.php";
 
 class Person extends Model {
 	function Person($data = array()) {

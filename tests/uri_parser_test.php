@@ -1,5 +1,5 @@
 <?php
-require_once "../lib/uri_parser.php";
+require_once "../core/uri_parser.php";
 
 class URIParserTest extends UnitTestCase {
 	function setUp() {

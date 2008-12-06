@@ -1,6 +1,6 @@
 <?php
-require_once "../lib/backends/mock.php";
-require_once "../lib/model.php";
+require_once "../core/backends/mock.php";
+require_once "../core/model.php";
 
 class Animal extends Model {
 	var $model = 'animal';

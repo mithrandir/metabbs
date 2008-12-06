@@ -1,5 +1,5 @@
 <?php
-require_once "../lib/model.php";
+require_once "../core/model.php";
 require_once "../app/models/board.php";
 require_once "../app/models/post.php";
 
