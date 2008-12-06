@@ -12,4 +12,6 @@
 
 <p><?=i('Board URL')?>: <a href="<?=full_url_for($board)?>" onclick="return false"><?=full_url_for($board)?></a></p>
 
+<?=flash_message_box()?>
+<?=error_message_box($error_messages)?>
 <?php include('app/views/board/edit_'.$_GET['tab'].'.php'); ?>
