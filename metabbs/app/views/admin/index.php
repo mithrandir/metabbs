@@ -1,4 +1,7 @@
 <h2><?=i('Boards')?></h2>
+
+<?=flash_message_box()?>
+<?=error_message_box($error_messages)?>
 <table id="contents">
 <tr>
 	<th class="name"><?=i('Name')?></th>

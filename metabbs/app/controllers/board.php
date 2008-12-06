@@ -10,4 +10,5 @@ if (!$board->exists()) {
 	print_notice(i('Board not found'), i("Board %s doesn't exist.", $id));
 }
 $title = htmlspecialchars($board->get_title());
+$error_messages = new Message();
 ?>
