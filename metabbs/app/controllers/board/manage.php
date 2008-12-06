@@ -21,7 +21,7 @@ if (isset($_POST['action'])) {
 		}
 		break;
 		case 'delete':
-		include 'lib/thumbnail.php';
+		include 'core/thumbnail.php';
 		foreach ($_POST['posts'] as $post_id) {
 			$post = Post::find($post_id);
 			$attachments = $post->get_attachments();

@@ -1,10 +1,10 @@
 <?php
 global $__db;
 
-require_once "../lib/model.php";
-require_once "../lib/query.php";
-require_once "../lib/backends/mysql/backend.php";
-require_once "../lib/backends/mysql/installer.php";
+require_once "../core/model.php";
+require_once "../core/query.php";
+require_once "../core/backends/mysql/backend.php";
+require_once "../core/backends/mysql/installer.php";
 
 $__db = new MySQLConnection;
 $__db->connect("localhost", "root", "");
@@ -20,7 +20,7 @@ if (!function_exists('rollback')) {
 }
 
 if (!file_exists('fixtures/.schema')) {
-	include "../lib/schema/schema.php";
+	include "../core/schema/schema.php";
 	run($__db);
 	touch('fixtures/.schema');
 }

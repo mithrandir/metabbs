@@ -1,6 +1,6 @@
 <?php
-require_once '../lib/config.php';
-require_once '../lib/i18n.php';
+require_once '../core/config.php';
+require_once '../core/i18n.php';
 
 define('METABBS_DIR', 'fixtures'); // XXX
 

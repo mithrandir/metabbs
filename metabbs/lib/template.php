@@ -36,7 +36,7 @@ class Skin {
 			$this->engine = 'default';
 			$this->options = array();
 		}
-		require_once "lib/template_engines/$this->engine.php";
+		require_once "core/template_engines/$this->engine.php";
 		$this->template_class = $this->engine.'Template';
 	}
 	function get_template($view) {
@@ -86,10 +86,10 @@ class Theme {
 		return METABBS_BASE_PATH . 'themes/' . get_current_theme() . '/' . $this->name . '.php';
 	}
 	function get_template($view) {
+/* DEBUG */
 //		var_dump($this->template_class);
-//		var_dump($this->get_path());
-//		var_dump($view);
-//		$template = new $this->template_class($this->get_path(), $view);
+		require_once "core/template_engines/$this->engine.php";
+		$template = new $this->template_class($this->get_path(), $view);
 		return $template;
 	}
 }

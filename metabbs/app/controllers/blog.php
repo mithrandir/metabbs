@@ -13,7 +13,7 @@ class Blog extends Board
 
 $board = Blog::find_by_name('blog'); //XXX
 
-require_once 'lib/page.php';
+require_once 'core/page.php';
 $controller = 'board';
 $layout->title = htmlspecialchars($board->get_title());
 ?>

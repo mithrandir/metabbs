@@ -1,5 +1,5 @@
 <?php
-require_once "../lib/plugin.php";
+require_once "../core/plugin.php";
 
 class PluginHandlerTest extends UnitTestCase {
 	function setUp() {

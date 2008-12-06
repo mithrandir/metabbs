@@ -58,6 +58,7 @@ if (is_post()) {
 		}
 		$board->set_attribute('have_empty_item', $_POST['category']['have_empty_item']);
 	}
+	Flash::set('Board has been changed');
 	redirect_to(url_for($board, 'edit', array('tab'=>$_GET['tab'])));
 }
 $view = ADMIN_VIEW;
