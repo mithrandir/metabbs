@@ -1,5 +1,5 @@
 <?php
-class Message {
+class Notice {
 	var $messages = array();
 	
 	function exists() {
