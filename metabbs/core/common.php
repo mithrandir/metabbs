@@ -57,4 +57,6 @@ $admin = $account->is_admin();
 
 $tz = $config->get('timezone');
 if ($tz) Timezone::set($tz);
+
+$error_messages = new Notice();
 ?>
