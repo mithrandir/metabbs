@@ -44,7 +44,7 @@ if ($current < METABBS_DB_REVISION) {
 	if (is_post()) {
 		// find updates
 		$revs = array();
-		$dh = opendir('db');
+		$dh = opendir('core/schema');
 		while ($f = readdir($dh)) {
 			if (preg_match('/^update_([0-9]+)\.php$/', $f, $matches)) {
 				if ($matches[1] > $current) {
