@@ -39,8 +39,9 @@ function admin() {
  * @return 로그인 링크
  */
 function login() {
-	global $board;
-	return link_to_account(i('Login'), 'login', 'link-login');
+	$link_to_login = link_to_account(i('Login'), 'login', 'link-login');
+	apply_filters('LinkToLogin', $link_to_login);
+	return $link_to_login;
 }
 
 /**
@@ -48,7 +49,9 @@ function login() {
  * @return 로그아웃 링크
  */
 function logout() {
-	return link_to_account(i('Logout'), 'logout', 'link-logout');
+	$link_to_logout = link_to_account(i('Logout'), 'logout', 'link-logout');
+	apply_filters('LinkToLogout', $link_to_logout);
+	return $link_to_logout;
 }
 
 /**
