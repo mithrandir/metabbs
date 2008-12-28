@@ -12,7 +12,7 @@
 <h1><?=i('MetaBBS Administration')?></h1>
 
 <div id="account">
-<?=htmlspecialchars($account->name)?>님, 환영합니다. <a href="<?=url_with_referer_for('account', 'logout')?>"><?=i('Logout')?> &raquo;</a></p>
+<?=htmlspecialchars($account->name)?>님, 환영합니다. <a href="<?=url_with_referer_for('account', 'edit')?>">정보 수정</a> | <a href="<?=url_with_referer_for('account', 'logout')?>"><?=i('Logout')?></a></p>
 </div>
 
 <ul id="nav">

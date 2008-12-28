@@ -6,7 +6,7 @@ header("Content-Type: text/html; charset=UTF-8");
 define('METABBS_DIR', '.');
 
 function pass($msg) {
-	echo "<div class=\"flash pass\">$msg ... <strong>OK :)</strong></div>";
+	echo "<div class=\"flash pass\">$msg ... <strong>OK</strong></div>";
 }
 function warn($msg) {
 	echo "<div class=\"flash warn\"><strong>Warning:</strong> $msg</div>";
@@ -31,13 +31,13 @@ function get_backends() {
 }
 function capture_errors($errno, $errstr, $errfile, $errline) {
 	if ($errno & (E_ERROR | E_USER_ERROR)) {
-		global $safe;
-		$safe = true;
+		//global $safe;
+		//$safe = true;
 		fail($errstr);
 	}
 }
 function send_self_request($path) {
-	$fp = fsockopen($_SERVER['HTTP_HOST'], $_SERVER['SERVER_PORT']);
+	$fp = fsockopen($_SERVER['HTTP_HOST'], $_SERVER['SERVER_PORT'], $_, $_, 3);
 	if (!$fp) return "";
 	fwrite($fp, "GET $path HTTP/1.1\r\n");
 	fwrite($fp, "Host: $_SERVER[HTTP_HOST]\r\n");
@@ -58,6 +58,18 @@ function print_header() {
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>MetaBBS Installation</title>
   <link rel="stylesheet" href="media/style.css" type="text/css" />
+	<script type="text/javascript">
+	function toggleAdvancedOptions(link) {
+		var adv = document.getElementById('advanced')
+		if (adv.style.display == 'none') {
+			adv.style.display = 'table'
+			link.innerHTML = '숨기기'
+		} else {
+			adv.style.display = 'none'
+			link.innerHTML = '보이기'
+		}
+	}
+	</script>
 </head>
 <body id="installer">
 <div id="meta-admin">
@@ -95,11 +107,9 @@ $metabbs_base_path = $path . '/';
 import_default_language();
 print_header();
 
-if (is_writable('.')) {
-	pass('Permission check');
-} else {
+if (!is_writable('.')) {
 	$path = realpath('.');
-	fail("Please change permission of $path to 0707");
+	fail(i("Please change permission of %s to 0707", $path));
 }
 
 if (file_exists('metabbs.conf.php')) {
@@ -111,14 +121,6 @@ if (file_exists('metabbs.conf.php')) {
 if (!isset($_POST['config'])) {
 ?>
 	<form method="post" action="install.php?backend=<?=$backend?>">
-	<h2>서버 정보</h2>
-	<table>
-	<tr>
-		<th><?=label_tag("Base Path", 'admin', 'base_path')?></th>
-		<td><input type="text" name="base_path" id="base_path" value="<?=$metabbs_base_path?>" /></td>
-	</tr>
-	</table>
-
 	<h2>데이터베이스 정보</h2>
 	<table>
 <? /* will not be supported in 0.9 series
@@ -126,20 +128,19 @@ if (!isset($_POST['config'])) {
 		<>Backend</label>
 		<select name="backend" id="backend" onchange="location.replace('?backend='+this.value)">
 <?php
-        foreach (get_backends() as $b) {
-                $sel = ($b == $backend) ? ' selected="selected"' : '';
-                echo "<option value=\"$b\"$sel>$b</option>";
-        }
+		foreach (get_backends() as $b) {
+				$sel = ($b == $backend) ? ' selected="selected"' : '';
+				echo "<option value=\"$b\"$sel>$b</option>";
+		}
 ?>
-                </select>
-                <span class="desc">어떤 방식으로 데이터를 저장할 것인지 선택합니다.</span>
+				</select>
+				<span class="desc">어떤 방식으로 데이터를 저장할 것인지 선택합니다.</span>
 	</p>
 <?php
 	if (!is_supported()) {
 		fail('Your server doesn\'t support <em>' . $backend . '</em>');
 	} */
-    db_info_form();
-	field('prefix', 'Table Prefix', 'meta_', 'text', '테이블 이름 앞에 붙는 식별자입니다. 여러 곳에 설치할 때만 바꾸세요.');
+	db_info_form();
 ?>
 </table>
 
@@ -163,24 +164,22 @@ if (!isset($_POST['config'])) {
 	</tr>
 </table>
 
-<p><?=submit_tag("Install")?></p>
+<h2>고급 설정 <span><a href="#advanced" onclick="toggleAdvancedOptions(this)">보이기</a></span></h2>
+
+<table id="advanced" style="display: none">
+<? field('prefix', 'Table Prefix', 'meta_', 'text', '테이블 이름 앞에 붙는 식별자입니다. 여러 곳에 설치할 때만 바꾸세요.'); ?>
+<tr>
+	<th><?=label_tag("Base Path", 'admin', 'base_path')?></th>
+	<td><input type="text" name="base_path" id="base_path" value="<?=$metabbs_base_path?>" /></td>
+	<td>MetaBBS URL을 강제로 설정합니다.</td>
+</tr>
+</table>
+
+<p class="install"><?=submit_tag("Install")?></p>
 </form>
 <?php
 } else {
 	set_error_handler('capture_errors');
-
-    $safe = false;
-    function check_unexcepted_exit() {
-        global $safe;
-        if (!$safe) {
-            @unlink(dirname(__FILE__).'/metabbs.conf.php');
-			if (isset($GLOBALS['config'])) {
-				$conn = get_conn();
-				@include("core/schema/uninstall.php");
-			}
-        }
-    }
-    register_shutdown_function('check_unexcepted_exit');
 
 	$_POST['admin_id'] = trim($_POST['admin_id']);
 	$_POST['admin_password'] = trim($_POST['admin_password']);
@@ -201,6 +200,19 @@ if (!isset($_POST['config'])) {
 		chmod($dir, 0707);
 	}
 
+	$safe = false;
+	function check_unexcepted_exit() {
+		global $safe;
+		if (!$safe) {
+			@unlink(dirname(__FILE__).'/metabbs.conf.php');
+			if (isset($GLOBALS['config'])) {
+				$conn = get_conn();
+				@include("core/schema/uninstall.php");
+			}
+		}
+	}
+	register_shutdown_function('check_unexcepted_exit');
+
 	include 'core/schema/schema.php';
 
 	pass("Creating directories");
@@ -208,7 +220,7 @@ if (!isset($_POST['config'])) {
 		$config->set($key, $value);
 	$config->set('backend', $backend);
 	$config->set('base_path', $_POST['base_path']);
-    $config->set('revision', METABBS_DB_REVISION);
+	$config->set('revision', METABBS_DB_REVISION);
 	$config->write_to_file();
 	chmod('metabbs.conf.php', 0606);
 	
@@ -244,9 +256,9 @@ if (!isset($_POST['config'])) {
 	$user->level = 255;
 	$user->create();
 
-    $safe = true;
+	$safe = true;
 
-    $admin_url = ($rewrite ? '' : 'metabbs.php/') . 'account/login/?url=../../admin/';
+	$admin_url = ($rewrite ? '' : 'metabbs.php/') . 'account/login/?url=../../admin/';
 
 	echo "<h2>Installation Finished</h2>";
 	echo "<p>Thank you for installing MetaBBS. :-)</p>";

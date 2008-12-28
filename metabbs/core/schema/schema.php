@@ -25,7 +25,7 @@ function run($conn) {
 	$t->column('admin', 'boolean');
 	$t->add_index('board_id');
 	$conn->add_table($t);
-	$conn->query("INSERT INTO ".get_table_name('board_member')." (board_id, user_id) VALUES(0, 0)"); // insert dummy data
+	$conn->query("INSERT INTO ".get_table_name('board_member')." (board_id, user_id, admin) VALUES(0, 0, 0)"); // insert dummy data
 
 	$t = new Table('post');
 	$t->column('board_id', 'integer');
