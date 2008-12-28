@@ -250,3 +250,20 @@ pre.code {
 .field_error {
 	border: 2px solid red;
 }
+
+h2 span {
+	font-size: 0.75em;
+	margin-left: 0.5em;
+}
+
+#installer table {
+	width: 40em;
+}
+
+.install {
+	margin-top: 1.5em;
+}
+
+.install input {
+	font-size: 1.2em;
+}
