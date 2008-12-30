@@ -1,7 +1,7 @@
 <?php
 if (!defined('METABBS_BASE_URI')) {
-	if (isset($_SERVER['REDIRECT_URL']) ||
-		$config->get('force_fancy_url', false)) {
+	if ($config->get('force_fancy_url', false) ||
+			strpos($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']) !== 0) {
 		define('METABBS_BASE_URI', METABBS_BASE_PATH);
 	} else {
 		define('METABBS_BASE_URI', $_SERVER['SCRIPT_NAME'] . '/');
