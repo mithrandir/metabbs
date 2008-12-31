@@ -42,9 +42,6 @@ function print_unread_messages($messages) {
 		<div class="message-body">
 		<?=format_plain($message->body)?>
 		</div>
-		<? if ($message->post_id) { ?>
-		(from <?=link_to_post($post = $message->get_post())?><? if ($post->category_id) { ?> / Category: <? $category = $post->get_category(); echo htmlspecialchars($category->name); ?><? } ?>)
-		<? } ?>
 		<div class="message-nav">
 		<? if ($n > 0) { ?><a href="#" onclick="showMessage(<?=$n?>); return false">&lsaquo; Previous</a><? } ?>
 		<strong><?=$n+1?></strong> / <?=$messages_count?>
@@ -109,7 +106,7 @@ class Messenger extends Plugin {
 		}
 		add_handler('message', 'read', array(&$this, 'action_read'));
 		add_handler('user', 'send-message', array(&$this, 'action_send_message'));
-		add_filter('PostComment', array(&$this, 'notify_reply'), 1024);
+		add_filter('AfterPostComment', array(&$this, 'notify_reply'), 1024);
 		add_filter('UserInfo', array(&$this, 'add_message_link'), 200);
 	}
 	function notify_reply(&$comment) {
@@ -121,7 +118,7 @@ class Messenger extends Plugin {
 			$message = new Message;
 			$message->from = $account->id;
 			$message->to = $parent->user_id;
-			$message->body = $comment->body;
+			$message->body = "{$post->title}에 쓰신 댓글에 답이 달렸습니다.\n" . full_url_for($comment);
 			$message->post_id = $comment->post_id;
 			$message->sent_at = time();
 			$message->read = 0;
@@ -132,7 +129,7 @@ class Messenger extends Plugin {
 			$message = new Message;
 			$message->from = $account->id;
 			$message->to = $post->user_id;
-			$message->body = $comment->body;
+			$message->body = "{$post->title}에 댓글이 달렸습니다.\n" . full_url_for($comment);
 			$message->post_id = $comment->post_id;
 			$message->sent_at = time();
 			$message->read = 0;
