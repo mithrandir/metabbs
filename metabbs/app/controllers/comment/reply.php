@@ -34,6 +34,8 @@ if (is_post()) {
 		|| !isset($captcha)) {
 		$post->add_comment($_comment);
 
+		apply_filters('AfterPostComment', $comment, array('reply' => TRUE));
+
 		if (is_xhr()) {
 			apply_filters('PostViewComment', $_comment);
 			$template = get_template($board, '_comment');
