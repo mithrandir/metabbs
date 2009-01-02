@@ -15,6 +15,19 @@ function modern_load_post_category(&$post) {
 	}
 }
 
+function modern_load_tags(&$post) {
+	$board = $post->get_board();
+	if (!$board->use_tag()) return;
+	$tags = $post->get_tags();
+	foreach ($tags as $k => $v) {
+		$tags[$k]->name = htmlspecialchars($v->name);
+		$tags[$k]->url = url_for_list('board', $board->name, array('tag' => 1, 'keyword' => urlencode($v->name)));
+		$tags[$k]->last = false;
+	}
+	$tags[$k]->last = true;
+	$post->tags = &$tags;
+}
+
 function modern_common_filter(&$post) {
 	$post->author = $post->name;
 	$post->title = htmlspecialchars($post->title);
@@ -31,6 +44,7 @@ function modern_list_filter(&$post) {
 		}
 		$post->attachment_count = count($post->attachments);
 	}
+	modern_load_tags($post);
 }
 add_filter('PostList', 'modern_list_filter', 32768);
 

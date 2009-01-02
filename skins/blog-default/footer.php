@@ -25,7 +25,7 @@
 <div>
 	<input type="hidden" name="title" value="1" />
 	<input type="hidden" name="body" value="1" /> 
-<? if ($tagable): ?>
+<? if ($taggable): ?>
 	<input type="hidden" name="tag" value="1" />
 <? endif; ?>
 	<input type="text" name="keyword" value="<?=@$keyword?>" />
