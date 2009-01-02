@@ -1,6 +1,10 @@
 <?php
 class URIParser {
 	function parse($uri) {
+		return array_map('urldecode', $this->_parse($uri));
+	}
+
+	function _parse($uri) {
 		$parts = explode('/', $uri, 4);
 		$len = count($parts);
 		if ($len == 4) { // /controller/action/id
