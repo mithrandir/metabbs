@@ -10,6 +10,6 @@
 <p><input type="submit" value="<?=i('Login')?>" /> 
 <a href="<?=url_with_referer_for('account', 'signup')?>"><?=i('Sign up')?></a>
 <? if($config->get('use_forget_password', false)): ?> <a href="<?=url_with_referer_for('account', 'forget-password')?>"><?=i('Forget Password')?></a><? endif; ?>
-<? if (!is_xhr() && isset($_GET['url']) && !empty($_GET['url'])): ?> <a href="<?=$_GET['url']?>"><?=('Cancel')?></a><? endif; ?>
+<? if (!is_xhr() && isset($_GET['url']) && !empty($_GET['url'])): ?> <a href="<?=$_GET['url']?>"><?=i('Cancel')?></a><? endif; ?>
 </p>
 </form>

@@ -69,10 +69,19 @@ $params = null;
 apply_filters('ManageURLAtStandardVars', $params, $board);
 $manage_url = url_for($board, 'manage', $params);
 
-$tagable = $board->use_tag();
+$taggable = $board->use_tag();
 if ($this->view == 'view') {
 	$layout->add_meta('Author', htmlspecialchars(isset($post->name_orig) ? $post->name_orig : $post->name));
 	$form_id = 'comment-form';
+	if ($taggable) {
+		$tags = $post->get_tags();
+		foreach ($tags as $k => $v) {
+			$tags[$k]->name = htmlspecialchars($v->name);
+			$tags[$k]->url = url_for_list('board', $board->name, array('tag' => 1, 'keyword' => urlencode($v->name)));
+			$tags[$k]->last = false;
+		}
+		$tags[$k]->last = true;
+	}
 }
 if (isset($post) && !$board->use_trackback) {
 	$post->trackback_url = null;

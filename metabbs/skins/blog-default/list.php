@@ -20,11 +20,11 @@
 <?=$post->body?>
 <? endif; ?>
 </div>
-<? if ($tagable && $post->tags): ?>
+<? if ($taggable && $post->tags): ?>
 <div id="tags">
-	<p id="tag-title">태그 : 
-	<? foreach ($post->get_tags() as $tag): ?>
-		<a href="<?=url_for_list('board', $board->name, array('tag'=>1, 'keyword'=>urlencode($tag->name)))?>"><?=$tag->name?></a>
+	<p id="tag-title">태그: 
+	<? foreach ($post->tags as $tag): ?>
+		<a href="<?=$tag->url?>"><?=$tag->name?></a><? if (!$tag->last): ?>, <? endif; ?>
 	<? endforeach; ?>
 </div>
 <? endif; ?>

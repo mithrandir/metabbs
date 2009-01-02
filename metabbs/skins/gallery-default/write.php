@@ -48,6 +48,16 @@
 	<? endif; ?>
 <? endif; ?>
 
+<? if ($taggable): ?>
+	<tr>
+		<th>태그</th>
+		<td colspan="3">
+			<input type="text" name="tags" value="<?=$post->tags?>" size="40" id="post_tags" /><br />
+			태그 사이는 쉼표(,)로 구분합니다.
+		</td>
+	</tr>
+<? endif; ?>
+
 <? foreach ($additional_fields as $field): ?>
 <tr>
 	<th><?=$field->name?></th>
@@ -67,15 +77,6 @@
 	<li><input type="file" name="upload[]" size="50" /></li>
 </ul>
 <p><a href="#" onclick="addFileEntry(); return false" class="button">파일 추가...</a></p>
-</div>
-<? endif; ?>
-
-<? if ($tagable): ?>
-<div id="tag">
-<h2>태그</h2>
-<ul id="tag_input">
-	<li><input type="text" name="tags" size="63" value="<?=$post->tags?>" id="post_tags" /></li>
-</ul>
 </div>
 <? endif; ?>
 
