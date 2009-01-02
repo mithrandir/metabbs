@@ -1,13 +1,6 @@
 <?php
 if (is_post()) {
 	$settings = $_POST['settings'];
-    if ($settings['admin_password']) { 
-        $new_password = md5($settings['admin_password']);
-        if ($new_password != $account->password) {
-            $account->password = $new_password;
-            $account->update();
-        }
-    }
 	$config->set('global_header', $settings['global_header']);
 	$config->set('global_footer', $settings['global_footer']);
 	$config->set('base_path', $settings['base_path']);
