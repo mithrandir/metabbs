@@ -1,5 +1,5 @@
 <?php
-define('METABBS_DB_REVISION', 1277);
+define('METABBS_DB_REVISION', 1369);
 
 function run($conn) {
 	$t = new Table('board');
@@ -127,6 +127,7 @@ function run($conn) {
 
 	$t = new Table('plugin');
 	$t->column('name', 'string', 45);
+	$t->column('installed_version', 'integer');
 	$t->column('enabled', 'boolean');
 	$t->add_index('name');
 	$t->add_index('enabled');
