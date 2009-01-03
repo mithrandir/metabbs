@@ -11,8 +11,12 @@ $__admin_menu = array();
 function register_plugin($name) {
 	global $__plugins;
 	$plugin = Plugin::find_by_name($name);
-	if ($plugin->enabled)
+	if ($plugin->enabled) {
 		$plugin->on_init();
+		if ($plugin->version > $plugin->installed_version && $plugin->on_update())
+			update_all('plugin', array('installed_version' => $plugin->version),
+					'id='.$plugin->id);
+	}
 	$__plugins[$name] = $plugin;
 	ksort($__plugins);
 }

@@ -6,6 +6,8 @@ class Plugin extends Model {
 	var $enabled = false;
 	var $description = '';
 	var $plugin_name;
+	var $installed_version = 0;
+	var $version = 0;
 
 	function _init() {
 		$this->table = get_table_name('plugin');
@@ -38,6 +40,10 @@ class Plugin extends Model {
 	function on_init() { }
 	function on_install() { }
 	function on_uninstall() { }
+	function on_update() {
+		// 업데이트 성공하면 true, 실패하면 false
+		return true;
+	}
 }
 function get_enabled_plugins() {
 	$db = get_conn();
