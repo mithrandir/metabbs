@@ -23,10 +23,10 @@ if (is_post()) {
 		$error_messages->add('Two password fields\' content must be same', 'password_again');
 
 	if (!empty($info['email']) && !Validate::email($info['email']))
-		$error_messages->add('Please enter a valid \'Your E-Mail Address\'', 'email');
+		$error_messages->add('Please enter a valid E-Mail address', 'email');
 
-//	if (!empty($info['url']) && !Validate::domain($info['url']))
-//		$error_messages->add('Please enter a valid \'Homepage Address\'', 'url');
+	if (!empty($info['url']) && strlen($info['url']) > 255)
+		$error_messages->add('Please enter a homepage address shorter than 255 characters', 'url');
 
 	if (!(isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
 		|| isset($captcha) && !$captcha->ready() 
