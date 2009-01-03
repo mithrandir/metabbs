@@ -13,10 +13,10 @@ if (is_post()) {
 		$error_messages->add('Password length must be longer than 5', 'password');
 
 	if (!empty($account->email) && !Validate::email($account->email))
-		$error_messages->add('Please enter a valid \'Your E-Mail Address\'', 'email');
+		$error_messages->add('Please enter a valid E-Mail Address', 'email');
 
 	if (!empty($account->url) && strlen($account->url) > 255)
-		$error_messages->add('Please enter a valid \'Homepage Address\'', 'url');	
+		$error_messages->add('Please enter a homepage address shorter than 255 characters', 'url');	
 
 	if(!$error_messages->exists()) {
 		if (!$account->password)
