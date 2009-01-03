@@ -75,12 +75,14 @@ if ($this->view == 'view') {
 	$form_id = 'comment-form';
 	if ($taggable) {
 		$tags = $post->get_tags();
-		foreach ($tags as $k => $v) {
-			$tags[$k]->name = htmlspecialchars($v->name);
-			$tags[$k]->url = url_for_list('board', $board->name, array('tag' => 1, 'keyword' => urlencode($v->name)));
-			$tags[$k]->last = false;
+		if ($tags) {
+			foreach ($tags as $k => $v) {
+				$tags[$k]->name = htmlspecialchars($v->name);
+				$tags[$k]->url = url_for_list('board', $board->name, array('tag' => 1, 'keyword' => urlencode($v->name)));
+				$tags[$k]->last = false;
+			}
+			$tags[$k]->last = true;
 		}
-		$tags[$k]->last = true;
 	}
 }
 if (isset($post) && !$board->use_trackback) {
