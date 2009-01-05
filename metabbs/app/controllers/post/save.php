@@ -38,6 +38,7 @@ if ($post->exists()) {
 	$board->add_post($post);
 	apply_filters('AfterAddPost', $post);
 }
+apply_filters('AfterPostSave', $post);
 
 if (isset($attachments)) {
 	foreach ($attachments as $attachment) {

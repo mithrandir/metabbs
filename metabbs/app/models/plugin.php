@@ -36,6 +36,10 @@ class Plugin extends Model {
 	function get_plugin_name() {
 		return $this->plugin_name ? $this->plugin_name : $this->get_id();
 	}
+	function update_to($version) {
+		update_all('plugin', array('installed_version' => $version), 'id='.$this->id);
+		$this->installed_version = $version;
+	}
 	/* callback methods */
 	function on_init() { }
 	function on_install() { }

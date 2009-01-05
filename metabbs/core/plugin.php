@@ -13,9 +13,8 @@ function register_plugin($name) {
 	$plugin = Plugin::find_by_name($name);
 	if ($plugin->enabled) {
 		$plugin->on_init();
-		if ($plugin->version > $plugin->installed_version && $plugin->on_update())
-			update_all('plugin', array('installed_version' => $plugin->version),
-					'id='.$plugin->id);
+		if ($plugin->version > $plugin->installed_version)
+			$plugin->on_update();
 	}
 	$__plugins[$name] = $plugin;
 	ksort($__plugins);
