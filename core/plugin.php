@@ -13,7 +13,8 @@ function register_plugin($name) {
 	$plugin = Plugin::find_by_name($name);
 	if ($plugin->enabled) {
 		$plugin->on_init();
-		if ($plugin->version > $plugin->installed_version)
+		if (isset($plugin->installed_version) &&
+				$plugin->version > $plugin->installed_version)
 			$plugin->on_update();
 	}
 	$__plugins[$name] = $plugin;
