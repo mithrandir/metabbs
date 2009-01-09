@@ -6,7 +6,7 @@ class Plugin extends Model {
 	var $enabled = false;
 	var $description = '';
 	var $plugin_name;
-	var $installed_version = 0;
+	//var $installed_version = 0;
 	var $version = 0;
 
 	function _init() {
@@ -45,8 +45,7 @@ class Plugin extends Model {
 	function on_install() { }
 	function on_uninstall() { }
 	function on_update() {
-		// 업데이트 성공하면 true, 실패하면 false
-		return true;
+		$this->update_to($this->version);
 	}
 }
 function get_enabled_plugins() {
