@@ -22,13 +22,18 @@ if (!$account->is_guest()) {
 $comment->post_id = $post->id;
 
 apply_filters('PostComment', $comment, array('reply' => false));
+apply_filters('ValidateCommentCreate', $_POST, $error_messages);
 
-$captcha = $config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest
-	? new Captcha($config->get('captcha_name', false), $captcha_arg) : null;
+if (empty($post->name))
+	$error_messages->add('Please enter the name', 'author');
 
-if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
-	|| isset($captcha) && !$captcha->ready() 
-	|| !isset($captcha)) {
+if (empty($post->body))
+	$error_messages->add('Please enter the body', 'body');
+
+if ($account->is_guest() && strlen($post->password) < 5)
+		$error_messages->add('Password length must be longer than 5', 'password');
+
+if(!$error_messages->exists()) {
 	$post->add_comment($comment);
 
 	apply_filters('AfterPostComment', $comment, array('reply' => false));

@@ -23,9 +23,6 @@ if (!in_array($post->id, $_SESSION['seen_posts'])) {
 
 $style = $board->get_style();
 
-$captcha = $config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest
-	? new Captcha($config->get('captcha_name', false), $captcha_arg) : null;
-
 if ($post->user_id) {
 	$user = $post->get_user();
 }
@@ -38,3 +35,4 @@ if ($newer_post) apply_filters('PostView', $newer_post);
 
 $comments = $post->get_comments($style->skin->get_option('build_comment_tree', true));
 apply_filters_array('PostViewComment', $comments);
+?>

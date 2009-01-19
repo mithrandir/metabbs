@@ -139,9 +139,6 @@ class Board extends Model {
 	function use_tag() {
 		return $this->get_attribute('use_tag', false);
 	}
-	function use_captcha() {
-		return $this->get_attribute('use_captcha', false);
-	}
 	function reset_sort_keys() {
 		if (!$this->order_by) $this->order_by = 'id DESC';
 		$this->db->execute("UPDATE $this->post_table SET sort_key=-id WHERE notice=1");

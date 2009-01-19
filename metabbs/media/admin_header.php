@@ -29,8 +29,5 @@
 </div>
 
 <div id="content">
-<? if (isset($flash)) { ?>
-<div class="flash <?=$flash_class?>">
-<p><?=$flash?></p>
-</div>
-<? } ?>
+<?=flash_message_box()?>
+<?=error_message_box($error_messages)?>

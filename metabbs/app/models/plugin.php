@@ -22,6 +22,10 @@ class Plugin extends Model {
 		$plugin->name = $name;
 		return $plugin;
 	}
+	function is_enabled($name){
+		$plugin = find_by('plugin', 'name', $name);
+		return $plugin->exists() && $plugin->enabled;
+	}
 	function get_id() {
 		return $this->name;
 	}

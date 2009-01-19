@@ -29,14 +29,13 @@ if (is_post()) {
 	if ($_GET['tab'] == 'general') {
 		$_board = new Board($_POST['board']);
 		if (empty($_board->name)) {
-			$flash = 'Board name is empty.';
+			$error_messages->add("Board name is empty");
 		} else if ($_board->name != $board->name && !$_board->validate()) {
-			$flash = "Board '$_board->name' already exists.";
+			$error_messages->add("Board '$_board->name' already exists");
 		}
 		$board->set_attribute('use_tag', $_POST['board']['use_tag']);
-		$board->set_attribute('use_captcha', $_POST['board']['use_captcha']);
 		$sorting_changed = $_board->order_by != $board->order_by;
-		if (isset($flash)) {
+		if ($error_messages->exists()) {
 			$view = ADMIN_VIEW;
 			return;
 		}

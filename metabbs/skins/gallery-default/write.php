@@ -35,18 +35,6 @@
 <tr>
 	<td colspan="4" class="body"><textarea name="body" id="post_body" cols="40" rows="12"><?=$post->body?></textarea></td>
 </tr>
-<? if ($guest): ?>
-	<? if ($board->use_captcha() && isset($captcha) && $captcha->ready()): ?>
-<tr>
-	<th>CAPTCHA</th>
-	<td class="captcha" colspan="3"><?= $captcha->get_html() ?>
-		<? if (!empty($captcha->error)): ?>
-		<span style="captcha notice"><?=i($captcha->error)?></p>
-		<? endif; ?>
-	</td>
-</tr>
-	<? endif; ?>
-<? endif; ?>
 
 <? if ($taggable): ?>
 	<tr>
