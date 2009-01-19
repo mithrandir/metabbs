@@ -9,9 +9,6 @@ if (is_post() && !isset($_POST['comment'])) {
 	);
 }
 
-$captcha = $config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest
-	? new Captcha($config->get('captcha_name', false), $captcha_arg) : null;
-
 if (is_post()) {
 	$_comment = new Comment($_POST['comment']);
 	$_comment->user_id = $account->id;
@@ -25,13 +22,20 @@ if (is_post()) {
 	} else {
 		cookie_register('name', $_comment->name);
 	}
-
-	apply_filters('PostComment', $_comment, array('reply' => TRUE));
-
 	$post = $comment->get_post();
-	if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
-		|| isset($captcha) && !$captcha->ready() 
-		|| !isset($captcha)) {
+	apply_filters('PostComment', $_comment, array('reply' => TRUE));
+	apply_filters('ValidateCommentReply', $_POST, $error_messages);
+
+	if (empty($post->name))
+		$error_messages->add('Please enter the name', 'author');
+
+	if (empty($post->body))
+		$error_messages->add('Please enter the body', 'body');
+
+	if ($account->is_guest() && strlen($post->password) < 5)
+			$error_messages->add('Password length must be longer than 5', 'password');
+
+	if(!$error_messages->exists()) {
 		$post->add_comment($_comment);
 
 		apply_filters('AfterPostComment', $comment, array('reply' => TRUE));
@@ -40,6 +44,7 @@ if (is_post()) {
 			apply_filters('PostViewComment', $_comment);
 			$template = get_template($board, '_comment');
 			$template->set('board', $board);
+			$template->set('error_messages', $error_messages);
 			$template->set('comment', $_comment);
 			$template->render_partial();
 			exit;
@@ -52,7 +57,7 @@ if (is_post()) {
 
 	$template = get_template($board, 'reply');
 	$template->set('board', $board);
-	$template->set('captcha', $captcha);
+	$template->set('error_messages', $error_messages);
 	$template->set('comment', $comment);
 	$template->set('name', cookie_get('name'));
 	$template->set('link_cancel', url_for($post));

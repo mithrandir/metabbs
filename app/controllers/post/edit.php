@@ -31,29 +31,51 @@ if (is_post()) {
 }
 permission_required('edit', $post);
 
-if (is_post() && isset($_POST['post']) && (!$account->is_guest() || $post->password == md5($_POST['post']['password']))) {
+if (is_post()) {
+	$post_password = $_POST['post']['password'];
 	unset($_POST['post']['password']);
 	$post->import($_POST['post']);
 	$post->edited_at = time();
 	$post->edited_by = $account->id;
-	if ($board->use_attachment && isset($_POST['delete'])) {
-		foreach ($_POST['delete'] as $id) {
-			$attachment = Attachment::find($id);
-			$attachment->delete();
-			@unlink('data/uploads/'.$id);
-		}
-	}
-	if ($_POST['action'] == 'preview') {
-		if (version_compare(phpversion(), '5.0.0', '<')) {
-			$preview = $post;
-		} else {
-			eval('$preview = clone $post;');
-		}
 
-		apply_filters('PostSave', $preview);
-		apply_filters('PostView', $preview);
-	} else {
-		define('SECURITY', 1);
-		include 'app/controllers/post/save.php';
+	apply_filters('ValidatePostModify', $_POST, $error_messages);
+
+	if (empty($post->name))
+		$error_messages->add('Please enter the name', 'author');
+
+	if (empty($post->title))
+		$error_messages->add('Please enter the title', 'title');
+
+	if (empty($post->body))
+		$error_messages->add('Please enter the body', 'body');
+
+	if ($account->is_guest() && strlen($post->password) < 5)
+		$error_messages->add('Password length must be longer than 5', 'password');
+
+	if ($account->is_guest() && $post->password != md5($post_password))
+		$error_messages->add('Password fields\' content is not matched', 'password');
+
+	if(!$error_messages->exists()) {	
+		if ($_POST['action'] == 'preview') {
+			if (version_compare(phpversion(), '5.0.0', '<')) {
+				$preview = $post;
+			} else {
+				eval('$preview = clone $post;');
+			}
+
+			apply_filters('PostSave', $preview);
+			apply_filters('PostView', $preview);
+		} else {
+			if ($board->use_attachment && isset($_POST['delete'])) {
+				foreach ($_POST['delete'] as $id) {
+					$attachment = Attachment::find($id);
+					$attachment->delete();
+					@unlink('data/uploads/'.$id);
+				}
+			}
+
+			define('SECURITY', 1);
+			include 'app/controllers/post/save.php';
+		}
 	}
 }

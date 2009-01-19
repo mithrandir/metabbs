@@ -9,12 +9,9 @@ if (is_xhr() && isset($_GET['user'])) {
 	exit;
 }
 
-$captcha = $config->get('captcha_name', false) != "none" && $guest 
-	? new Captcha($config->get('captcha_name', false), $captcha_arg) : null;
-
 if (is_post()) {
 	$info = $_POST['user'];
-	apply_filters('BeforeAccountSignup', $info);
+	apply_filters('ValidateAccountSignup', $_POST, $error_messages);
 
 	if (strlen($info['password']) < 5)
 		$error_messages->add('Password length must be longer than 5', 'password');
@@ -27,11 +24,6 @@ if (is_post()) {
 
 	if (!empty($info['url']) && strlen($info['url']) > 255)
 		$error_messages->add('Please enter a homepage address shorter than 255 characters', 'url');
-
-	if (!(isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
-		|| isset($captcha) && !$captcha->ready() 
-		|| !isset($captcha)))
-		$error_messages->add($captcha->error, 'captcha');
 
 	$account = new User($info);
 	$account->password = md5($account->password);

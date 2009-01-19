@@ -9,10 +9,10 @@ if (isset($user) && $user->exists() && $user->signature)
 
 $template->set('board', $board);
 $template->set('post', $post);
-$template->set('captcha', $captcha);
 $template->set('older_post', $older_post);
 $template->set('newer_post', $newer_post);
 $template->set('comments', $comments);
+$template->set('error_messages', $error_messages);
 
 $params = get_search_params();
 if (!isset($params['page']))

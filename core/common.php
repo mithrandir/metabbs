@@ -32,7 +32,6 @@ require METABBS_DIR . '/core/plugin.php';
 require METABBS_DIR . '/core/metadata.php';
 require METABBS_DIR . '/core/trackback.php';
 require METABBS_DIR . '/core/theme.php';
-require METABBS_DIR . '/core/captcha.php';
 require METABBS_DIR . '/core/feed.php';
 require METABBS_DIR . '/core/validate.php';
 require METABBS_DIR . '/core/message.php';

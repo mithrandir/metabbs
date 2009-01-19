@@ -27,12 +27,6 @@
 	<label><?=i('E-Mail Address')?><span class="star">*</span></label>
 	<input type="text" name="user[email]" size="50" class="<?=marked_by_error_message('email', $error_messages)?>" value="<?=$account->email?>" />
 </p>
-<? if (isset($captcha) && $captcha->ready()) { ?>
-<p>
-	<label><?=i('CAPTCHA')?><span class="star">*</span></label>
-	<?= $captcha->get_html() ?>
-</p>
-<? } ?>
 </fieldset>
 <fieldset>
 <h2>추가 정보</h2>

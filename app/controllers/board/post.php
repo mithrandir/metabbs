@@ -1,16 +1,13 @@
 <?php
 permission_required('write', $board);
 
-$captcha = $config->get('captcha_name', false) != "none" && $board->use_captcha() && $guest 
-	? new Captcha($config->get('captcha_name', false), $captcha_arg) : null;
-
 if (is_post()) {
 	check_post_max_size_overflow();
 
 	if (!$account->has_perm('admin', $board)) {
 		unset($_POST['post']['notice']);
 	}
-	
+
 	if (!isset($_POST['post'])) {
 		$_POST['post'] = array(
 			'name' => $_POST['author'],
@@ -39,9 +36,21 @@ if (is_post()) {
 		$post->name = $account->name;
 	}
 
-	if (isset($captcha) && $captcha->ready() && $captcha->is_valid($_POST) 
-		|| isset($captcha) && !$captcha->ready() 
-		|| !isset($captcha)) {
+	apply_filters('ValidatePostCreate', $_POST, $error_messages);
+
+	if (empty($post->name))
+		$error_messages->add('Please enter the name', 'author');
+
+	if (empty($post->title))
+		$error_messages->add('Please enter the title', 'title');
+
+	if (empty($post->body))
+		$error_messages->add('Please enter the body', 'body');
+
+	if ($account->is_guest() && strlen($post->password) < 5)
+		$error_messages->add('Password length must be longer than 5', 'password');
+
+	if(!$error_messages->exists()) {
 		if ($_POST['action'] == 'preview') {
 			if (version_compare(phpversion(), '5.0.0', '<')) {
 				$preview = $post;
