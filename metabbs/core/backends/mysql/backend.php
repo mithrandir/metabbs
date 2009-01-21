@@ -189,8 +189,7 @@ class MySQLConnection
 		return "`$id`";
 	}
 	function quote($value) {
-		if (is_numeric($value)) return $value;
-		else if (is_bool($value)) return (int)$value;
+		if (is_bool($value)) return (int)$value;
 		else return "'".$this->escape($value)."'";
 	}
 }
