@@ -39,24 +39,25 @@
 	<td colspan="4" class="body"><textarea name="body" id="post_body" cols="40" rows="12" class="<?=marked_by_error_message('body', $error_messages)?>"><?=$post->body?></textarea></td>
 </tr>
 
-<? if ($preview): ?>
-<tr>
-	<td colspan="4" class="preview"><?=$preview->body?></td>
+<? if ($taggable): ?>
+<tr class="tag">
+	<th>태그</th>
+	<td colspan="3">
+		<input type="text" name="tags" value="<?=$post->tags?>" size="50" id="post_tags" /><br />
+		태그 사이는 쉼표(,)로 구분합니다.
+	</td>
 </tr>
 <? endif; ?>
 
-<? if ($taggable): ?>
-	<tr>
-		<th>태그</th>
-		<td colspan="3">
-			<input type="text" name="tags" value="<?=$post->tags?>" size="40" id="post_tags" /><br />
-			태그 사이는 쉼표(,)로 구분합니다.
-		</td>
-	</tr>
+<? if ($preview): ?>
+<tr class="preview">
+	<th>미리보기</th>
+	<td colspan="3"><?=$preview->body?></td>
+</tr>
 <? endif; ?>
 
 <? foreach ($additional_fields as $field): ?>
-<tr>
+<tr class="additional_field">
 	<th><?=$field->name?></th>
 	<td colspan="3"><?=$field->output?></td>
 </tr>

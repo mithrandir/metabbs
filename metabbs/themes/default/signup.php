@@ -39,5 +39,5 @@
 	<textarea name="user[signature]" cols="50" rows="5" class="ignore"><?=$account->signature?></textarea>
 </p>
 </fieldset>
-<p><input type="submit" value="<?=i('Sign up')?>" /><? if (isset($_GET['url']) && !empty($_GET['url'])): ?> <a href="<?=$_GET['url']?>"><?=('Cancel')?></a><? endif; ?></p></p>
+<p><input type="submit" value="<?=i('Sign up')?>" class="button" /><? if (isset($_GET['url']) && !empty($_GET['url'])): ?> <a href="<?=$_GET['url']?>"><?=i('Cancel')?></a><? endif; ?></p></p>
 </form>
