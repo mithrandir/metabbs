@@ -20,7 +20,7 @@
 <?=$post->body?>
 <? endif; ?>
 </div>
-<? if ($taggable && $post->tags): ?>
+<? if ($taggable and $post->tags): ?>
 <div id="tags">
 	<p id="tag-title">태그: 
 	<? foreach ($post->tags as $tag): ?>
