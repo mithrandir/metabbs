@@ -45,6 +45,15 @@ form {
 	padding: 0.5em;
 	border-bottom: 1px solid #ddd;
 }
+#posts th a,
+#posts td a {
+	text-decoration: none;
+}
+#posts th a:hover,
+#posts td a:hover {
+	text-decoration: underline;
+}
+
 #posts tr.notice td {
 	background-color: #f4f4f4;
 }
@@ -54,21 +63,16 @@ form {
 #posts th.left {
 	background: #ccc url(header-left.png) no-repeat top left;
 }
-#posts th.author {
+#posts th.author,
+#posts td.author {
 	width: 10em;
 }
 #posts th.date {
 	width: 12em;
 	background: #ccc url(header-right.png) no-repeat top right;
 }
-#posts td.author {
-	width: 10em;
-}
 #posts td.title {
 	text-align: left;
-}
-#posts td.date {
-	width: 12em;
 }
 .comment-count {
 	font-size: 0.8em;
@@ -129,22 +133,23 @@ input.button, button {
 #post {
 	background: url(header.png) repeat-x;
 }
-#post h1 {
+#post h1.title {
 	font-size: 1.1em;
 	background: url(header-left.png) no-repeat;
 	margin: 0 !important;
-	height: 31px;
 	overflow: hidden;
+	min-height: 31px;
 }
 .title-wrap {
 	display: block;
 	background: url(header-right.png) no-repeat top right;
 	padding: 0.3em 1em;
 }
-#post table {
+#post table.body {
 	width: 100%;
 	border-collapse: collapse;
 	border-bottom: 1px solid #ddd;
+	background-color: #fff;
 }
 #post-side {
 	width: 12em;
@@ -156,9 +161,66 @@ input.button, button {
 	vertical-align: top;
 	line-height: 1.8;
 }
-#post-content .body {
+#post-content div.body {
 	padding: 0 1em;
 }
+
+#post-content div.body table {
+	border-width: 1px;
+	border-spacing: 2px;
+	border-color: gray;
+	border-style: outset;
+	border-collapse: separate;
+}
+
+#post-content div.body th {
+	background-color: #ccc;
+}
+
+#post-content div.body th,
+#post-content div.body td {
+	border-width: 1px;
+	padding: 1px;
+	border-style: inset;
+	border-color: gray;
+}
+
+#post-content div.body pre code {
+	-x-system-font:none;
+	background-color:#F5F5F5;
+	border-left:5px solid #C0C0C0;
+	display:block;
+	font-family:Courier New,Fixedsys;
+	font-size:12px;
+	font-size-adjust:none;
+	font-stretch:normal;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	line-height:160%;
+	padding:5px;
+	white-space:pre-wrap;
+	width:97%;
+}
+
+#post-content div.body blockquote {
+	border-left:2px solid #DDDDDD;
+	color:#50B4CA;
+	margin:1.7em auto;
+	padding:0 10px;
+	width:90%;
+}
+
+#post-content .signature {
+	border: 1px solid #ccc;
+	background-color: #f4f4f4;
+	padding: 0.5em;
+	margin: 1em;
+}
+#post-content .signature p {
+	margin: 0;
+}
+
 #post .author {
 	font-weight: bold;
 }
@@ -166,10 +228,15 @@ input.button, button {
 	margin-top: 0.5em;
 	font-size: 0.8em;
 }
-#post .edit-info, #tags {
+#tags {
 	font-size: 0.85em;
 	color: #999;
-	margin: 2em 0 1em 1em;
+	margin: 1em;
+}
+#post .edit-info {
+	font-size: 0.85em;
+	color: #999;
+	margin: 1em;
 }
 #attachments {
 	border-top: 1px dotted #ccc;
@@ -177,7 +244,7 @@ input.button, button {
 	padding: 0.5em;
 	margin: 0;
 }
-#attachments li a {
+#attachments li a.file {
 	background: transparent url(attachment.gif) 5px center no-repeat;
 	padding-left: 22px;
 }
@@ -191,10 +258,10 @@ input.button, button {
 	margin-top: 1.5em;
 	background-color: #f8f8f8;
 }
-#trackbacks{
+#trackbacks {
 	border-bottom: 1px solid #ddd;
 }
-#trackback-url{
+#trackback-url {
 	margin: 0;
 	padding: 1em;
 }
@@ -217,12 +284,29 @@ input.button, button {
 .comment .actions a {
 	font-weight: bold;
 }
-#comment-form {
+#comment-form,
+#reply-form,
+#edit-form,
+#login-form {
 	padding: 1.5em;
 }
-#comment-form label {
+#comment-form label,
+#reply-form label,
+#edit-form label,
+#login-form lable {
 	font-weight: bold;
 	margin-right: 0.5em;
+}
+#comment-form textarea,
+#reply-form textarea,
+#edit-form textarea,
+#login-form textarea {
+	width: 95%;
+}
+
+#comment_author,
+#comment_password {
+	width: 9em;
 }
 #comment_author {
 	margin-right: 1.5em;
@@ -231,17 +315,18 @@ input.button, button {
 #post-form {
 	background: #f4f4f4 url(header.png) repeat-x;
 	border-bottom: 1px solid #ddd;
-	width: 50em;
+	width: 100%;
 }
 #post-form h1 {
 	font-size: 1.1em;
 	background: url(header-left.png) no-repeat;
 	margin: 0;
-	height: 31px;
+/*	height: 31px;*/
 }
 #post-form table {
 	width: 100%;
-	margin-left: 0.5em;
+/*	margin-left: 0.5em;*/
+	background-color: #f4f4f4;
 }
 #post-form td {
 	padding: 0.8em 0.5em;
@@ -259,13 +344,18 @@ input.button, button {
 	padding-bottom: 1em;
 }
 #post-form .options td { padding: 0 0.5em; }
-#post_title { width: 95%; }
+#post-form .preview td {
+	background-color: white;
+	padding: 2em;
+}
+#post_title,
+#post_tags { width: 95%; }
 #post_body { width: 96.5%; }
-#upload, #trackback, #tag {
+#upload, #trackback {
 	padding: 1em;
 	border-top: 1px solid #ddd;
 }
-#upload h2, #trackback h2, #tag h2 {
+#upload h2, #trackback h2 {
 	font-size: 1.1em;
 	margin: 0;
 }

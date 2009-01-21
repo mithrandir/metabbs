@@ -1,3 +1,7 @@
+#meta a {
+	color: #000;
+}
+
 #dialog {
 	font-size: 13px;
 	font-family: Verdana, Tahoma, sans-serif;
@@ -97,13 +101,39 @@
 	font-size: 1.2em;
 	margin: 0;
 }
-#signup-form label, #login-form label.field {
-	width: 8em;
-	float: left;
-}
+
 #signup-form fieldset input.error,
 #signup-form fieldset textarea.error {
 	border: 2px solid red;
+}
+#login-form label.field,
+#signup-form label,
+#account-edit-form label,
+#forget-password-form label,
+#reset-password-form label,
+#signup-form label {
+	width: 8em;
+	float: left;
+	font-weight: bold;
+}
+#login-form input.button,
+#signup-form input.button,
+#account-edit-form input.button,
+#forget-password-form input.button,
+#reset-password-form input.button,
+#signup-form input.button {
+	float: none;
+	width: 81px;
+	height: 27px;
+	background: url(button.png) no-repeat;
+	text-decoration: none;
+	padding: 4px 0;
+	text-align: center;
+	margin-right: 1em;
+	border: none;
+	cursor: pointer;
+	font-size: 1em;
+	font-weight: bold;
 }
 fieldset {
 	border: none;

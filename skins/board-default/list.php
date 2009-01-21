@@ -41,7 +41,7 @@
 		<td class="title">
 			<? if ($post->category): ?><span class="category"><?=$post->category->name?></span><? endif; ?>
 			<? if ($post->secret): ?>비밀글<? endif; ?>
-			<a href="<?=$post->url?>"><?=$post->title?></a>
+			<a href="<?=$post->url?>" title="<?=$post->title?>"><?=utf8_strcut($post->title, 50)?></a>
 			<? if ($post->comment_count): ?><span class="comment-count"><?=$post->comment_count?></span><? endif; ?>
 		</td>
 		<td class="date"><?=$post->date?></td>
@@ -71,6 +71,6 @@
 	<input type="checkbox" name="tag" id="search_tag" value="1" <?=$tag_checked?> /> <label for="search_tag">태그</label> 
 <? endif; ?>
 	<input type="text" name="keyword" value="<?=$keyword?>" />
-	<input type="submit" value="검색" />
+	<input type="submit" value="검색" class="button"/>
 </div>
 </form>

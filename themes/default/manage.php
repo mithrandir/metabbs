@@ -1,4 +1,4 @@
-<form method="post" style="line-height: 1.5">
+<form method="post" style="line-height: 1.5" id="manage">
 <? foreach ($_POST['posts'] as $id) { ?>
 <input type="hidden" name="posts[]" value="<?=$id?>" />
 <? } ?>
