@@ -52,12 +52,7 @@ if (is_post()) {
 
 	if(!$error_messages->exists()) {
 		if ($_POST['action'] == 'preview') {
-			if (version_compare(phpversion(), '5.0.0', '<')) {
-				$preview = $post;
-			} else {
-				eval('$preview = clone $post;');
-			}
-
+			$preview = clone($post);
 			apply_filters('PostSave', $preview);
 			apply_filters('PostView', $preview);
 		} else {
