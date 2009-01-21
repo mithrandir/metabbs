@@ -11,7 +11,7 @@
 		<td id="post-content">
 			<div class="body"><?=$post->body?></div>
 
-			<? if ($taggable && $tags): ?>
+			<? if ($taggable and $tags): ?>
 			<p id="tags">태그: 
 			<? foreach ($tags as $tag): ?>
 				<a href="<?=$tag->url?>"><?=$tag->name?></a><? if (!$tag->last): ?>,</a><? endif; ?>
