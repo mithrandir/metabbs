@@ -6,11 +6,13 @@ if (is_post()) {
 		$_POST['post'] = @array(
 			'title' => $_POST['title'],
 			'category_id' => isset($_POST['category']) ? $_POST['category'] : 0,
-			'notice' => isset($_POST['notice']) ? $_POST['notice'] : 0,
+			//'notice' => isset($_POST['notice']) ? $_POST['notice'] : 0,
 			'secret' => isset($_POST['secret']) ? $_POST['secret'] : 0,
 			'body' => $_POST['body'],
 			'tags' => $_POST['tags']
 		);
+		if (isset($_POST['notice']))
+			$_POST['post']['notice'] = true;
 		if (isset($_POST['author'])) {
 			$_POST['post']['name'] = $_POST['author'];
 			$_POST['post']['password'] = $_POST['password'];
