@@ -9,6 +9,9 @@ class Message extends Model {
 	function find($id) {
 		return find('message', $id);
 	}
+	function get_messages_of($user) {
+		return find_all('message', "`to`=$user->id", 'id DESC');
+	}
 	function get_unread_messages_of($user) {
 		return find_all('message', "`to`=$user->id AND NOT `read`");
 	}
@@ -94,17 +97,21 @@ class Messenger extends Plugin {
 	var $description = '답글이 달리면 쪽지로 알립니다.';
 
 	function on_init() {
-		global $account, $layout;
-		$messages = Message::get_unread_messages_of($account);
-		if ($messages) {
-			ob_start();
-			print_unread_messages($messages);
-			$content = ob_get_contents();
-			ob_end_clean();
-			$layout->footer .= $content;
-			$layout->add_stylesheet(METABBS_BASE_PATH . 'plugins/Messenger/style.css');
+		global $account, $layout, $controller;
+		if ($controller != 'message') {
+			$messages = Message::get_unread_messages_of($account);
+			if ($messages) {
+				ob_start();
+				print_unread_messages($messages);
+				$content = ob_get_contents();
+				ob_end_clean();
+				$layout->footer .= $content;
+				$layout->add_stylesheet(METABBS_BASE_PATH . 'plugins/Messenger/style.css');
+			}
 		}
+		add_handler('message', 'index', array(&$this, 'action_index'));
 		add_handler('message', 'read', array(&$this, 'action_read'));
+		add_handler('message', 'delete', array(&$this, 'action_delete'));
 		add_handler('user', 'send-message', array(&$this, 'action_send_message'));
 		add_filter('AfterPostComment', array(&$this, 'notify_reply'), 1024);
 		add_filter('UserInfo', array(&$this, 'add_message_link'), 200);
@@ -140,6 +147,11 @@ class Messenger extends Plugin {
 		if ($GLOBALS['account']->is_guest()) return;
 		$user->additional_info .= "<p>".link_to('Send Message', $user, 'send-message')."</p>";
 	}
+	function action_index() {
+		global $messages, $account;
+		$messages = Message::get_messages_of($account);
+		ini_set("include_path", dirname(__FILE__) . PATH_SEPARATOR . ini_get("include_path"));
+	}
 	function action_read() {
 		global $id, $account;
 		if ($id == 'all') {
@@ -151,6 +163,13 @@ class Messenger extends Plugin {
 			}
 			redirect_back();
 		}
+	}
+	function action_delete() {
+		global $id, $account;
+		$message = Message::find($id);
+		if ($message->to == $account->id)
+			$message->delete();
+		redirect_back();
 	}
 	function action_send_message() {
 		global $template, $id, $user, $account;
@@ -166,7 +185,7 @@ class Messenger extends Plugin {
 			$message->read = 0;
 			$message->create();
 
-			redirect_to(url_for($user));
+			redirect_back();
 		}
 		ini_set("include_path", dirname(__FILE__) . PATH_SEPARATOR . ini_get("include_path"));
 	}
