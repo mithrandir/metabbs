@@ -45,15 +45,6 @@ form {
 	padding: 0.5em;
 	border-bottom: 1px solid #ddd;
 }
-#posts th a,
-#posts td a {
-	text-decoration: none;
-}
-#posts th a:hover,
-#posts td a:hover {
-	text-decoration: underline;
-}
-
 #posts tr.notice td {
 	background-color: #f4f4f4;
 }
@@ -63,8 +54,7 @@ form {
 #posts th.left {
 	background: #ccc url(header-left.png) no-repeat top left;
 }
-#posts th.author,
-#posts td.author {
+#posts .author {
 	width: 10em;
 }
 #posts th.date {
@@ -139,6 +129,7 @@ input.button, button {
 	margin: 0 !important;
 	overflow: hidden;
 	min-height: 31px;
+	_height: 31px;
 }
 .title-wrap {
 	display: block;
@@ -166,10 +157,8 @@ input.button, button {
 }
 
 #post-content div.body table {
-	border-width: 1px;
+	border: 1px outset gray;
 	border-spacing: 2px;
-	border-color: gray;
-	border-style: outset;
 	border-collapse: separate;
 }
 
@@ -179,28 +168,21 @@ input.button, button {
 
 #post-content div.body th,
 #post-content div.body td {
-	border-width: 1px;
 	padding: 1px;
-	border-style: inset;
-	border-color: gray;
+	border: 1px inset gray;
 }
 
 #post-content div.body pre code {
-	-x-system-font:none;
-	background-color:#F5F5F5;
-	border-left:5px solid #C0C0C0;
-	display:block;
-	font-family:Courier New,Fixedsys;
-	font-size:12px;
-	font-size-adjust:none;
-	font-stretch:normal;
-	font-style:normal;
-	font-variant:normal;
-	font-weight:normal;
-	line-height:160%;
-	padding:5px;
-	white-space:pre-wrap;
-	width:97%;
+	-x-system-font: none;
+	background-color: #F5F5F5;
+	border-left: 5px solid #C0C0C0;
+	display: block;
+	font-family: Courier New,Fixedsys;
+	font-size: 12px;
+	line-height: 160%;
+	padding: 5px;
+	white-space: pre-wrap;
+	width: 97%;
 }
 
 #post-content div.body blockquote {
