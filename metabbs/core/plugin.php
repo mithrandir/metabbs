@@ -181,23 +181,30 @@ function run_before_handler($controller, $action) {
 	}
 }
 
-function get_plugins() {
-	$dir = METABBS_DIR . '/plugins/';
+function import_plugins_from($dir) {
 	$dp = opendir($dir);
-	$plugins = array();
 	while ($file = readdir($dp)) {
 		list($name, ) = explode('.', $file);
-		import_plugin($name);
+		import_plugin($name, $dir);
 	}
 	closedir($dp);
+}
+
+function get_plugins() {
+	global $config;
+	import_plugins_from(METABBS_DIR . '/plugins/');
+	$extra = $config->get('plugin_extra_path');
+	if ($extra)
+		import_plugins_from($extra);
 	return $GLOBALS['__plugins'];
 }
 
-function import_plugin($plugin) {
-	if (file_exists(METABBS_DIR."/plugins/$plugin.php")) {
-		include_once(METABBS_DIR."/plugins/$plugin.php");
-	} else if (file_exists(METABBS_DIR."/plugins/$plugin/plugin.php")) {
-		include_once(METABBS_DIR."/plugins/$plugin/plugin.php");
+function import_plugin($plugin, $dir = '') {
+	if (!$dir) $dir = METABBS_DIR . '/plugins/';
+	if (file_exists("$dir$plugin.php")) {
+		include_once("$dir$plugin.php");
+	} else if (file_exists("$dir$plugin/plugin.php")) {
+		include_once("$dir$plugin/plugin.php");
 	}
 }
 

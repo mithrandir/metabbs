@@ -12,6 +12,10 @@ if (is_post()) {
 	$config->set('timezone', $settings['timezone']);
 	Timezone::set($settings['timezone']);
 	$config->set('force_fancy_url', $settings['force_fancy_url']);
+	if ($settings['plugin_extra_path'] &&
+			substr($settings['plugin_extra_path'], -1, 1) != '/')
+		$settings['plugin_extra_path'] .= '/';
+	$config->set('plugin_extra_path', $settings['plugin_extra_path']);
 	$config->write_to_file();
 	Flash::set('Setting saved');
 	redirect_to(url_for('admin', 'settings'));	
