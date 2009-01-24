@@ -7,6 +7,7 @@ add_filter('PostList', 'format_body', 500);
 add_filter('PostView', 'format_body', 500);
 add_filter('PostViewRSS', 'format_body', 500);
 add_filter('PostViewComment', 'format_body', 500);
+add_filter('CommentViewFeed', 'format_body', 500);
 
 function link_user(&$model) {
 	$user = $model->get_user();
@@ -25,6 +26,7 @@ function sanitize(&$model) {
 add_filter('PostList', 'sanitize', 0);
 add_filter('PostView', 'sanitize', 0);
 add_filter('PostViewComment', 'sanitize', 0);
+add_filter('CommentViewFeed', 'sanitize', 0);
 add_filter('UserInfo', 'sanitize', 0);
 
 include dirname(__FILE__).'/../core/template_engines/standard/filters.php';
