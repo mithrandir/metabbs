@@ -344,6 +344,7 @@ class BBCode extends Plugin {
 		add_filter('PostView', array(&$this, 'format'), 500);
 		add_filter('PostViewRSS', array(&$this, 'format'), 500);
 		add_filter('PostViewComment', array(&$this, 'format'), 500);
+		add_filter('CommentViewFeed', array(&$this, 'format'), 500);
 	}
 	function format(&$post) {
 		if (!$post->body) return;

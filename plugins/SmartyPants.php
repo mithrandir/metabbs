@@ -1210,6 +1210,7 @@ class SmartyPants extends Plugin {
 		add_filter('PostView', array(&$this, 'format'), 1500);
 		add_filter('PostViewRSS', array(&$this, 'format'), 1500);
 		add_filter('PostViewComment', array(&$this, 'format'), 1500);
+		add_filter('CommentViewFeed', array(&$this, 'format'), 1500);
 	}
 
 	function format(&$model) {

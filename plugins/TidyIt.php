@@ -24,6 +24,7 @@ class TidyIt extends Plugin {
 		add_filter('PostView', array(&$this, 'format'), 2000);
 		add_filter('PostViewRSS', array(&$this, 'format'), 2000);
 		add_filter('PostViewComment', array(&$this, 'format'), 2000);
+		add_filter('CommentViewFeed', array(&$this, 'format'), 2000);
 	}
 
 	function format(&$model) {
