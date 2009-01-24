@@ -3,10 +3,14 @@ function render_feed($title, $url, $description, $posts, $format) {
 	foreach($posts as $post)
 		$post->permalink = full_url_for($post);
 	apply_filters_array('PostViewRSS', $posts);
-	header("Content-Type: text/xml; charset=UTF-8");
-	echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+	feed_header();
 	include "app/views/feed/$format.php";
 	exit;
+}
+
+function feed_header() {
+	header("Content-Type: text/xml; charset=UTF-8");
+	echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 }
 
 function render_board_feed($board, $format) {
