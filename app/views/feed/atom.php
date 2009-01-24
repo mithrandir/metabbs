@@ -14,7 +14,7 @@
 		<content type="html"><? if (!$post->secret) { ?><![CDATA[
 	<? foreach ($post->get_attachments() as $attachment) { ?>
 	<? if ($attachment->is_image()) { ?><img src="<?=full_url_for($attachment)?>" alt="<?=$attachment->filename?>" /><? } } ?>
-<?=format($post->body)?>]]><? } ?></content>
+<?=$post->body?>]]><? } ?></content>
 <? } ?>
 		<author><name><![CDATA[<?=$post->name?>]]></name></author>
 		<updated><?=meta_format_date_RFC822($post->created_at)?></updated>

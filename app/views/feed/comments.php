@@ -8,7 +8,7 @@
 	<entry>
 		<title>Commented by <?=$comment->name?> at <?=date('Y-m-d H:i:s', $comment->created_at)?></title>
 		<link href="<?=full_url_for($comment)?>" />
-		<content type="html"><![CDATA[<?=format($comment->body)?>]]></content>
+		<content type="html"><![CDATA[<?=$comment->body?>]]></content>
 		<author><name><![CDATA[<?=$comment->name?>]]></name></author>
 		<updated><?=meta_format_date_RFC822($comment->created_at)?></updated>
 	</entry>

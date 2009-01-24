@@ -13,7 +13,7 @@
 			<description><? if (!$post->secret) { ?><![CDATA[
 	<? foreach ($post->get_attachments() as $attachment) { ?>
 	<? if ($attachment->is_image()) { ?><img src="<?=full_url_for($attachment)?>" alt="<?=$attachment->filename?>" /><? } } ?>
-<?=format($post->body)?>]]><? } ?></description>
+<?=$post->body?>]]><? } ?></description>
 			<author><![CDATA[<?=$post->name?>]]></author>
 			<pubDate><?=meta_format_date_RFC822($post->created_at)?></pubDate>
 <? if ($board->use_category && $category = $post->get_category()) { ?>
