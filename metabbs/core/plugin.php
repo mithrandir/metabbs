@@ -190,21 +190,34 @@ function import_plugins_from($dir) {
 	closedir($dp);
 }
 
+function plugin_dirs() {
+	static $dirs;
+	if (!isset($dirs)) {
+		global $config;
+		$dirs = array(METABBS_DIR . '/plugins/');
+		$extra = $config->get('plugin_extra_path');
+		if ($extra)
+			$dirs[] = $extra;
+	}
+	return $dirs;
+}
+
 function get_plugins() {
-	global $config;
-	import_plugins_from(METABBS_DIR . '/plugins/');
-	$extra = $config->get('plugin_extra_path');
-	if ($extra)
-		import_plugins_from($extra);
+	foreach (plugin_dirs() as $dir)
+		import_plugins_from($dir);
 	return $GLOBALS['__plugins'];
 }
 
 function import_plugin($plugin, $dir = '') {
-	if (!$dir) $dir = METABBS_DIR . '/plugins/';
-	if (file_exists("$dir$plugin.php")) {
-		include_once("$dir$plugin.php");
-	} else if (file_exists("$dir$plugin/plugin.php")) {
-		include_once("$dir$plugin/plugin.php");
+	if (!$dir) {
+		foreach (plugin_dirs() as $dir)
+			import_plugin($plugin, $dir);
+	} else {
+		if (file_exists("$dir$plugin.php")) {
+			include_once("$dir$plugin.php");
+		} else if (file_exists("$dir$plugin/plugin.php")) {
+			include_once("$dir$plugin/plugin.php");
+		}
 	}
 }
 
