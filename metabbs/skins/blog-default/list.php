@@ -17,6 +17,13 @@
 <? if ($post->secret): ?>
 비밀글입니다.
 <? else: ?>
+<? foreach ($post->attachments as $attachment): ?>
+<? if ($attachment->thumbnail_url): ?>
+<p><img src="<?=$attachment->url?>" alt="<?=$attachment->filename?>" /></p>
+<? else: ?>
+<p>첨부 파일: <a href="<?=$attachment->url?>"><?=$attachment->filename?></a> (<?=$attachment->size?>)</p>
+<? endif; ?>
+<? endforeach; ?>
 <?=$post->body?>
 <? endif; ?>
 </div>
