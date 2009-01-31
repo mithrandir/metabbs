@@ -2,9 +2,7 @@
 $plugins = get_plugins();
 
 function compare_plugin_names($a, $b) {
-	if ($a->plugin_name == $b->plugin_name)
-		return 0;
-	return ($a->plugin_name < $b->plugin_name) ? -1 : 1;
+	return strcmp($a->get_plugin_name(), $b->get_plugin_name());
 }
 usort($plugins, 'compare_plugin_names');
 ?>
