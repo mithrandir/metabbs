@@ -71,6 +71,13 @@ form {
 	padding-left: 15px;
 	color: #666;
 }
+.attachment-count {
+	font-size: 0.8em;
+	background: transparent url(attachment.gif) center left no-repeat;
+	margin-left: 0.5em;
+	padding-left: 15px;
+	color: #666;
+}
 .title .category {
 	font-weight: bold;
 	border-right: 1px solid #999;
