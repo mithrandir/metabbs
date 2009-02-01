@@ -7,11 +7,11 @@
  */
 function get_account_control($account) {
 	if (!$account || $account->is_guest()) {
-		return array(login(), signup());
+		return array(link_to_login(), link_to_signup());
 	} else if ($account->is_admin()) {
-		return array(logout(), editinfo(), admin());
+		return array(link_to_logout(), link_to_editinfo(), link_to_admin());
 	} else {
-		return array(logout(), editinfo());
+		return array(link_to_logout(), link_to_editinfo());
 	}
 }
 
@@ -23,14 +23,14 @@ function get_account_control($account) {
  * @return 생성된 링크 문자열
  */
 function link_to_account($text, $action, $id, $controller = 'account') {
-	return link_text(url_with_referer_for($controller, $action), $text, array('id' => $id));
+	return link_text(url_with_referer_for($controller, $action), $text, array('id' => $id, 'class' => 'dialog'));
 }
 
 /**
  * 관리자용 링크를 구성한다.
  * @return 관리자 링크
  */
-function admin() {
+function link_to_admin() {
 	return link_text(url_for('admin'), i('Admin'), array('id' => 'link-admin'));
 }
 
@@ -38,7 +38,7 @@ function admin() {
  * 로그인 링크를 구성한다.
  * @return 로그인 링크
  */
-function login() {
+function link_to_login() {
 	$link_to_login = link_to_account(i('Login'), 'login', 'link-login');
 	apply_filters('LinkToLogin', $link_to_login);
 	return $link_to_login;
@@ -48,7 +48,7 @@ function login() {
  * 로그아웃 링크를 구성한다.
  * @return 로그아웃 링크
  */
-function logout() {
+function link_to_logout() {
 	$link_to_logout = link_to_account(i('Logout'), 'logout', 'link-logout');
 	apply_filters('LinkToLogout', $link_to_logout);
 	return $link_to_logout;
@@ -58,7 +58,7 @@ function logout() {
  * 가입 링크를 구성한다.
  * @return 가입 링크
  */
-function signup() {
+function link_to_signup() {
 	return link_to_account(i('Sign up'), 'signup', 'link-signup');
 }
 
@@ -66,7 +66,7 @@ function signup() {
  * 회원 정보 수정 링크를 구성한다.
  * @return 회원 정보 수정 링크
  */
-function editinfo() {
+function link_to_editinfo() {
 	return link_to_account(i('Edit Info'), 'edit', 'link-editinfo');
 }
 
@@ -76,14 +76,14 @@ function editinfo() {
 function access_denied() {
 	global $account;
 	header('HTTP/1.1 403 Forbidden');
-	print_notice(i('Access denied'), i('You have no permission to access this page.') . ' ' . ($account->is_guest() ? login() : ''));
+	print_notice(i('Access denied'), i('You have no permission to access this page.') . ' ' . ($account->is_guest() ? link_to_login() : ''));
 }
 
 function login_required() {
 	global $account;
 	if ($account->is_guest()) {
 		header('HTTP/1.1 403 Forbidden');
-		print_notice(i('Access denied'), i('Please login to access this page.') . ' ' . ($account->is_guest() ? login() : ''));
+		print_notice(i('Access denied'), i('Please login to access this page.') . ' ' . ($account->is_guest() ? link_to_login() : ''));
 	}
 }
 
