@@ -43,6 +43,7 @@
 			<? if ($post->secret): ?>비밀글<? endif; ?>
 			<a href="<?=$post->url?>" title="<?=$post->title?>"><?=utf8_strcut($post->title, 50)?></a>
 			<? if ($post->comment_count): ?><span class="comment-count"><?=$post->comment_count?></span><? endif; ?>
+			<? if ($post->attachment_count): ?><span class="attachment-count"><?=$post->attachment_count?></span><? endif; ?>
 		</td>
 		<td class="date"><?=$post->date?></td>
 	</tr>
