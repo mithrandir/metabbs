@@ -227,4 +227,18 @@ function import_enabled_plugins() {
 		import_plugin($plugin->name);
 	}
 }
+function get_plugin_path($plugin) {
+	global $config;
+
+	$base_plugin_path = METABBS_DIR.'/plugins/'.$plugin;
+	if (file_exists($base_plugin_path))
+		return $base_plugin_path;
+
+	$extra = $config->get('plugin_extra_path');
+	$extra_plugin_path = realpath( $extra.'/'.$plugin) ;
+	if (file_exists($extra_plugin_path))
+		return $extra_plugin_path;
+
+	return false;
+}
 ?>
