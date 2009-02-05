@@ -96,13 +96,15 @@ class SimpleCaptcha extends Plugin {
 	}
 
 	function get_fonts() {
-		$base = METABBS_DIR . '/plugins/SimpleCaptcha/fonts';
-		$dirs = scandir($base."/");
+		global $config;
+		
+		$plugin_path = get_plugin_path('SimpleCaptcha');
+		$dirs = scandir($plugin_path."/fonts/");
 		$fonts = array();
 
 		foreach ($dirs as $dir) {
-			if (is_file("$base/$dir") && $dir != '.' && $dir != '..' && strstr($dir, ".ttf"))
-				array_push($fonts, "$base/$dir");
+			if (is_file($plugin_path.'/fonts/'.$dir) && $dir != '.' && $dir != '..' && strstr($dir, ".ttf"))
+				array_push($fonts, $plugin_path.'/fonts/'.$dir);
 		}
 
 		return $fonts;
