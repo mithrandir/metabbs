@@ -1,5 +1,5 @@
 <?php
-require METABBS_DIR . '/plugins/SimpleCaptcha/php-captcha.inc.php';
+require 'php-captcha.inc.php';
 
 class SimpleCaptcha extends Plugin {
 	var $plugin_name = 'SimpleCaptcha';
@@ -35,7 +35,6 @@ class SimpleCaptcha extends Plugin {
 <h2><?=i('Usage')?></h2>
 
 <ul>
-	<li>폰트를 <a href="http://www.gnome.org/fonts/">http://www.gnome.org/fonts/</a>에서 다운 받아서 fonts 폴더에 인스톨합니다.</li>
 	<li>다음 코드를 /themes/XXX/signup.php 에 추가하세요.
 <pre style="border: 1px solid gray;"><code>&lt;? if (Plugin::is_enabled('SimpleCaptcha')): ?&gt;
 &lt;p&gt;
