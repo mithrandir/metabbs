@@ -227,18 +227,24 @@ function import_enabled_plugins() {
 		import_plugin($plugin->name);
 	}
 }
+
 function get_plugin_path($plugin) {
 	global $config;
 
-	$base_plugin_path = METABBS_DIR.'/plugins/'.$plugin;
-	if (file_exists($base_plugin_path))
+	$base_plugin_path = METABBS_DIR.'/plugins/';
+	if (file_exists($base_plugin_path.$plugin.'.php')) {
 		return $base_plugin_path;
+	} else if (file_exists($base_plugin_path.$plugin.'/plugin.php')) {
+		return $base_plugin_path.$plugin;
+	}
 
 	$extra = $config->get('plugin_extra_path');
-	$extra_plugin_path = realpath( $extra.'/'.$plugin) ;
-	if (file_exists($extra_plugin_path))
-		return $extra_plugin_path;
-
+	$extra_plugin_path = realpath($extra);
+	if (file_exists($extra_plugin_path.'/'.$plugin.'.php')) {
+		return $extra_plugin_path;	
+	} else if (file_exists($extra_plugin_path.'/'.$plugin.'/plugin.php')) {
+		return $extra_plugin_path.'/'.$plugin;
+	}
 	return false;
 }
 ?>
