@@ -10,6 +10,7 @@
 </form>
 
 <form method="post" action="<?=url_for('user', 'edit')?>?page=<?=$page?>">
+<?=form_token_field()?>
 <table id="users">
 <tr>
 	<th><input type="checkbox" value="1" onchange="checkAll(this.form, this.checked)" /></th>

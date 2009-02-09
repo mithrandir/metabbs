@@ -1,5 +1,6 @@
 <?php
 if (is_post()) {
+	check_form_token();
 	$settings = $_POST['settings'];
 	$config->set('global_header', $settings['global_header']);
 	$config->set('global_footer', $settings['global_footer']);

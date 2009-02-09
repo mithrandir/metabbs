@@ -1,5 +1,6 @@
 <h2><?=i('Settings')?></h2>
 <form method="post" action="?">
+<?=form_token_field()?>
 <dl>
 	<dt><?=label_tag(i('Global header'), 'settings', 'global_header')?></dt>
 	<dd><?=text_field('settings', 'global_header', $config->get('global_header'), 30)?></dd>

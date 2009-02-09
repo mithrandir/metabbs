@@ -14,6 +14,7 @@
 </tbody>
 </table>
 <form method="post" action="<?=url_for('admin', 'new')?>">
+<?=form_token_field()?>
 <h3><?=i('New Board')?></h3>
 <dl>
 	<dt><?=i('Name')?></dt>
