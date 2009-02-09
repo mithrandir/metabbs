@@ -35,6 +35,7 @@ require METABBS_DIR . '/core/theme.php';
 require METABBS_DIR . '/core/feed.php';
 require METABBS_DIR . '/core/validate.php';
 require METABBS_DIR . '/core/message.php';
+require METABBS_DIR . '/core/csrf.php';
 
 import_default_language();
 
