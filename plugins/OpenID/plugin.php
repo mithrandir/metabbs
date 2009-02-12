@@ -13,6 +13,7 @@ class OpenID extends Plugin {
 	function on_init() {
 		global $account, $controller, $action, $layout;
 		$this->add_include_path();
+		add_filter('LinkToLogin', array(&$this, 'at_login_link'), 50);
 		add_filter('AfterLogout', array(&$this, 'unset_cookie'), 50);
 		if ($account->is_guest()) {
 			if (cookie_is_registered('openid') && $controller != 'openid') {
@@ -22,6 +23,15 @@ class OpenID extends Plugin {
 				$layout->header .= openid_form();
 			}
 		}
+	}
+	function on_settings() {
+		if (is_post()) {
+			$this->set_attribute('flite_path', 1);
+		}
+
+	}
+	function at_login_link(&$link, $board) {
+		$link = link_text(url_with_referer_for('openid', 'login'), i('Login'), array('id' => null));
 	}
 	function unset_cookie() {
 		cookie_unregister('openid');

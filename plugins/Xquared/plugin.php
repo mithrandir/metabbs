@@ -5,7 +5,6 @@ class Xquared extends Plugin {
 
 	function on_init() {
 		global $controller, $action, $layout;
-
 		ini_set('include_path', dirname(__FILE__).PATH_SEPARATOR.ini_get('include_path'));
 
 		add_filter('PostList', array(&$this, 'format'), 500);
@@ -13,8 +12,7 @@ class Xquared extends Plugin {
 		add_filter('PostViewRSS', array(&$this, 'format'), 500);
 
 		if(($controller == 'board' and $action == 'post') 
-			or ($controller == 'post' and $action == 'edit')
-			or ($controller == 'post' and $action == 'index'))
+			or ($controller == 'post' and $action == 'edit'))
 			$this->enable_editor();
 	}
 
@@ -49,9 +47,8 @@ var XquaredPluginUri = '$plugin_uri$xquared_path';
 
 		if($post->get_attribute('format') != 'xquared-html')
 			$post->body = format_plain($post->body);
-		else {
-			$post->body = '<div class="xed">'.$post->body.'</div>';
-		}
+		else 
+			$post->body = '<div class="xquared">'.$post->body.'</div>';
 	}
 }
 
