@@ -1,41 +1,43 @@
 <?php
 class Xquared extends Plugin {
-	var $plugin_name = 'Xquared 위지윔 편집기(0.7)';
-	var $description = '글 입력창을 Xquared 위지윔 편집기로 바꿉니다.';
+	var $plugin_name = 'Xquared 위지윅 편집기(0.9-20090206)';
+	var $description = '글 입력창을 Xquared 위지윅 편집기로 바꿉니다.';
 
 	function on_init() {
 		global $controller, $action, $layout;
 
 		ini_set('include_path', dirname(__FILE__).PATH_SEPARATOR.ini_get('include_path'));
-//		if(!class_exists('HTML_Safe'))
-//			include_once 'HTML_Safe.php';
 
 		add_filter('PostList', array(&$this, 'format'), 500);
 		add_filter('PostView', array(&$this, 'format'), 500);
 		add_filter('PostViewRSS', array(&$this, 'format'), 500);
 
-		if($controller == 'board' and $action == 'post' or $controller == 'post' and $action == 'edit')
+		if(($controller == 'board' and $action == 'post') 
+			or ($controller == 'post' and $action == 'edit')
+			or ($controller == 'post' and $action == 'index'))
 			$this->enable_editor();
 	}
 
 	function enable_editor() {
 		global $layout;
+		$xquared_version = '20090206';
+		$xquared_path = 'xquared-'.$xquared_version;
+		$plugin_uri = METABBS_BASE_PATH.'plugins/Xquared/';
 
-		$plugin_uri = METABBS_BASE_PATH.'plugins/Xquared';
-		$layout->add_stylesheet("$plugin_uri/xquared/stylesheets/xq_ui.css");
-		$layout->add_javascript("$plugin_uri/xquared/javascripts/XQuared.js?load_others=1");
-		$layout->add_javascript("$plugin_uri/xquared/javascripts/plugin/SpringnotePlugin.js");
-		$layout->add_javascript("$plugin_uri/xquared/javascripts/plugin/EditorResizePlugin.js");
-		$layout->add_javascript("$plugin_uri/xquared/javascripts/plugin/MacroPlugin.js");
-		$layout->add_javascript("$plugin_uri/xquared/javascripts/plugin/FlashMovieMacroPlugin.js");
-		$layout->add_javascript("$plugin_uri/xquared/javascripts/plugin/IFrameMacroPlugin.js");
-//		$layout->add_javascript("$plugin_uri/xquared/javascripts/plugin/JavascriptMacroPlugin.js");
+		$layout->add_stylesheet($plugin_uri.$xquared_path.'/stylesheets/xq_ui.css');
+		$layout->add_javascript($plugin_uri.$xquared_path.'/javascripts/XQuared.js?load_others=1');
+		$layout->add_javascript($plugin_uri.$xquared_path.'/javascripts/plugin/SpringnotePlugin.js');
+		$layout->add_javascript($plugin_uri.$xquared_path.'/javascripts/plugin/EditorResizePlugin.js');
+		$layout->add_javascript($plugin_uri.$xquared_path.'/javascripts/plugin/MacroPlugin.js');
+		$layout->add_javascript($plugin_uri.$xquared_path.'/javascripts/plugin/FlashMovieMacroPlugin.js');
+		$layout->add_javascript($plugin_uri.$xquared_path.'/javascripts/plugin/IFrameMacroPlugin.js');
+//		$layout->add_javascript($plugin_uri.$xquared_path.'/javascripts/plugin/JavascriptMacroPlugin.js');
 
-		$layout->add_javascript("$plugin_uri/plugin.js");
+		$layout->add_javascript($plugin_uri.'/plugin.js');
 		$layout->header = "
 <script type=\"text/javascript\">
 // <![CDATA[
-var XquaredPluginUri = '$plugin_uri';
+var XquaredPluginUri = '$plugin_uri$xquared_path';
 // ]]>
 </script>
 		".$layout->header;
@@ -48,8 +50,6 @@ var XquaredPluginUri = '$plugin_uri';
 		if($post->get_attribute('format') != 'xquared-html')
 			$post->body = format_plain($post->body);
 		else {
-//			$safe = new HTML_Safe;
-//			$post->body = '<div class="xed">'.$safe->parse($post->body).'</div>';
 			$post->body = '<div class="xed">'.$post->body.'</div>';
 		}
 	}
