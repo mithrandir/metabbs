@@ -1,5 +1,6 @@
 <?php
 if (is_post() && isset($_FILES['data']) && is_uploaded_file($_FILES['data']['tmp_name'])) {
+	check_form_token();
 	@set_time_limit(0);
 	$data = '';
 	$fp = fopen($_FILES['data']['tmp_name'], 'r');

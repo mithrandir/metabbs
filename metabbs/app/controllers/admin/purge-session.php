@@ -1,5 +1,6 @@
 <?php
 if (is_post()) {
+	check_form_token();
 	$count = 0;
 	$d = opendir('data/session');
 	while ($f = readdir($d)) {

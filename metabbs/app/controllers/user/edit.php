@@ -2,6 +2,7 @@
 if (!$account->is_admin()) {
 	access_denied();
 } else {
+	check_form_token();
 	if (isset($_POST['mass_operation'])) {
 		$level = $_POST['level'];
 		foreach ($_POST['user_id'] as $id => $check) {
