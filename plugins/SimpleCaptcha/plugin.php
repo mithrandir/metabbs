@@ -86,11 +86,12 @@ class SimpleCaptcha extends Plugin {
 		global $error_messages;
 		$config = new Config(METABBS_DIR . '/data/captcha.php');
 		$flite_path = $config->get('flite_path');
+		$path = METABBS_BASE_URI;
 
 		$html = "<input type=\"text\" name=\"recaptcha_challenge_field\" id=\"recaptcha_challenge_field\" class=\"".marked_by_error_message('captcha', $error_messages)."\"/>\n";
-		$html .= "<img src=\"/captcha/visual/\" width=\"120\" height=\"18\" alt=\"Visual CAPTCHA\" style=\"border:1px solid gray;\"/>\n";
+		$html .= "<img src=\"".$path."captcha/visual/\" width=\"120\" height=\"18\" alt=\"Visual CAPTCHA\" style=\"border:1px solid gray;\"/>\n";
 		if (!empty($flite_path))
-			$html .= "<a href=\"/captcha/audio/\">".i("Can't see the image? Click for audible version")."</a>\n";
+			$html .= "<a href=\"".$path."/captcha/audio/\">".i("Can't see the image? Click for audible version")."</a>\n";
 
 		return $html;
 	}
@@ -98,14 +99,17 @@ class SimpleCaptcha extends Plugin {
 	function get_fonts() {
 		global $config;
 		
-		$plugin_path = get_plugin_path('SimpleCaptcha');
-		$dirs = scandir($plugin_path."/fonts/");
+		$path = get_plugin_path('SimpleCaptcha') . '/fonts/';
+		$dir = opendir($path);
 		$fonts = array();
 
-		foreach ($dirs as $dir) {
-			if (is_file($plugin_path.'/fonts/'.$dir) && $dir != '.' && $dir != '..' && strstr($dir, ".ttf"))
-				array_push($fonts, $plugin_path.'/fonts/'.$dir);
+		while ($file = readdir($dir)) {
+			if ($file[0] != '.' && is_file($path . $file) &&
+					preg_match('/\.ttf$/', $file))
+				$fonts[] = $path . $file;
 		}
+
+		closedir($dir);
 
 		return $fonts;
 	}
