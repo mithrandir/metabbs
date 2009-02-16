@@ -5,16 +5,16 @@
 <? if ($guest): ?>
 <tr>
 	<th>이름</th>
-	<td class="name"><input type="text" name="author" value="<?=$post->author?>" /></td>
+	<td class="name"><input type="text" name="author" value="<?=$post->author?>" class="check" /></td>
 
 	<th>암호</th>
-	<td class="password"><input type="password" name="password" /></td>
+	<td class="password"><input type="password" name="password" class="check" /></td>
 </tr>
 <? endif; ?>
 
 <tr>
 	<th>제목</th>
-	<td colspan="3"><input type="text" name="title" size="50" value="<?=$post->title?>" id="post_title" /></td>
+	<td colspan="3"><input type="text" name="title" size="50" value="<?=$post->title?>" id="post_title" class="check" /></td>
 </tr>
 
 <tr class="options">
@@ -33,7 +33,7 @@
 </tr>
 
 <tr>
-	<td colspan="4" class="body"><textarea name="body" id="post_body" cols="40" rows="12"><?=$post->body?></textarea></td>
+	<td colspan="4" class="body"><textarea name="body" id="post_body" cols="40" rows="12" class="check"><?=$post->body?></textarea></td>
 </tr>
 
 <? if ($taggable): ?>
