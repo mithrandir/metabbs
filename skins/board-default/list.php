@@ -1,4 +1,4 @@
-<h2 title="board-title"><?=$board->title?></h2>
+<h1 id="board-title"><?=$board->title?></h1>
 
 <div id="account-info">
 <? if ($guest): ?>
