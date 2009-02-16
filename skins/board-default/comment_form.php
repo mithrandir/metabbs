@@ -9,7 +9,7 @@
 		<input type="password" name="password" id="comment_password" />
 	</p>
 	<? endif; ?>
-	<p><textarea name="body" cols="40" rows="5"><?=$comment_body?></textarea></p>
+	<p><textarea name="body" cols="40" rows="5"id="comment_body"><?=$comment_body?></textarea></p>
 
 	<div class="buttons"><input type="submit" value="댓글 달기" class="button" />
 	<? if ($link_cancel): ?><a href="<?=$link_cancel?>" class="button dialog-close">취소</a><? endif; ?></div>
