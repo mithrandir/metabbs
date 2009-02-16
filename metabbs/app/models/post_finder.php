@@ -35,7 +35,7 @@ class PostFinder {
 			if ($v) {
 				switch ($k) {
 					case 'comment':
-						$result = $this->db->query("SELECT post_id FROM ".get_table_name('comment')." WHERE board_id={$this->board->id} AND body LIKE '%$keyword%'");
+						$result = $this->db->query($q="SELECT post_id FROM ".get_table_name('comment')." WHERE board_id={$this->board->id} AND body LIKE '%$keyword%'");
 						// TODO: subquery
 						$ids = array();
 						if ($result->count()) {
