@@ -6,6 +6,7 @@
 <? if ($board->use_category) { ?>
 	<?=link_list_tab("?tab=category", 'category', i('Category'))?>
 <? } ?>
+	<?=link_list_tab("?tab=thumbnail", 'thumbnail', i('Thumbnail'))?>
 	<li>|</li>
 	<?=link_list_tab(url_for($board), 'preview', i('Preview').' &raquo;')?>
 </ul>

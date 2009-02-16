@@ -14,6 +14,10 @@ class Attachment extends Model {
 	function get_post() {
 		return Post::find($this->post_id);
 	}
+	function get_board() {
+		$post = $this->get_post();
+		return $post->exists() ? $post->get_board():null;
+	}
 	function is_image() {
 		return is_image($this->filename);
 	}
@@ -34,6 +38,35 @@ class Attachment extends Model {
 	}
 	function get_content_type() {
 		return $this->type ? $this->type : 'application/octet-stream';
+	}
+	function get_kind() {
+		$board = $this->get_board();
+		$kind = 0;
+		if ($board->exists())
+			$kind = $board->get_attribute('thumbnail_kind');
+
+		return $kind;
+	}
+	function get_options() {
+		$board = $this->get_board();
+		if ($board->exists()) {
+			$thumbnail_kind = $board->get_attribute('thumbnail_kind');
+			$thumbnail_size = $board->get_attribute('thumbnail_size');
+			$thumbnail_width = $board->get_attribute('thumbnail_width');
+			$thumbnail_height = $board->get_attribute('thumbnail_height');
+
+			switch ($thumbnail_kind) {
+				case 4:
+					$options = array('width' => $thumbnail_width, 'width' => $thumbnail_height);
+					break;
+				default:
+					$options = array('size' => empty($thumbnail_size) ? 100 : $thumbnail_size);
+			}
+		} else {
+			$options = array('size' => 100);
+		}
+
+		return $options;
 	}
 }
 ?>
