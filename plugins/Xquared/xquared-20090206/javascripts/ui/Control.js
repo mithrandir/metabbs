@@ -133,7 +133,7 @@ xq.ui.FormDialog = xq.Class(/** @lends xq.ui.FormDialog.prototype */ {
 		var targetElement = null;
 		var left = 0;
 		var top = 0;
-		document.title = target
+//		document.title = target
 		if(target === 'centerOfWindow') {
 			targetElement = document.documentElement || document.body;
 			left += targetElement.scrollLeft;

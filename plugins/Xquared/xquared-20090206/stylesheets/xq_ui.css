@@ -12,7 +12,7 @@
 
 .xquared div.toolbar {
 	position: relative;
-	background-color: #ebebeb;
+/*	background-color: #ebebeb;*/
 	background-position: 0 0;
 	background-repeat: repeat-x;
 	background-image: url(../images/toolbar/toolbarBg.gif);
@@ -267,6 +267,7 @@
 }
 .lightweight .dialog-content {
 	padding: 6px 8px 5px;
+	text-align: left;
 }
 
 /* modal dialog base */
