@@ -3,12 +3,13 @@ Form.getSubmitButton = function (form) {
 }
 
 function checkForm(form) {
+	className = 'blank'
 	var valid = !$(form).getElements().collect(function (el) {
 		if (!el.value && !el.hasClassName('ignore')) {
-			el.addClassName('blank');
+			el.addClassName(className);
 			return false;
 		} else {
-			el.removeClassName('blank');
+			el.removeClassName(className);
 			return true;
 		}
 	}).include(false);
@@ -18,10 +19,33 @@ function checkForm(form) {
 		//new Insertion.After(submitButton, '<span id="sending">Sending...</span>');
 		submitButton.disable();
 	} else {
-		document.getElementsByClassName('blank')[0].focus();
+		document.getElementsByClassName(className)[0].focus();
 	}
 	
 	return valid;
+}
+
+function validateForm(event) {
+	var valid = true;
+	var form = this;
+
+	$(form).select('.check').each(function (el) {
+		if (!el.value) {
+			valid = false;
+			el.addClassName('field_error');
+		} else {
+			el.removeClassName('field_error');
+		}
+	})
+
+	if (valid) {
+		var submitButton = Form.getSubmitButton(form);
+		//new Insertion.After(submitButton, '<span id="sending">Sending...</span>');
+		submitButton.disable();
+	} else {
+		$$('.field_error')[0].focus();
+		event.stop()
+	}
 }
 
 function toggleAll(form, bit) {
@@ -301,6 +325,9 @@ Event.observe(window, 'load', function () {
 	highlightSearchKeyword();
 	addDialogOverlay();
 	triggerDialogLinks();
+	$$('form').each(function (form) {
+		$(form).observe('submit', validateForm)
+	});
 	try { 
 		document.execCommand('BackgroundImageCache', false, true); 
 	} catch (e) {}

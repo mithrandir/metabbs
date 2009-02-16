@@ -8,15 +8,15 @@
 <? if ($guest): ?>
 <tr>
 	<th>이름</th>
-	<td class="name"><input type="text" name="author" value="<?=$post->author?>" class="<?=marked_by_error_message('author', $error_messages)?>"/></td>
+	<td class="name"><input type="text" name="author" value="<?=$post->author?>" class="check <?=marked_by_error_message('author', $error_messages)?>"/></td>
 
 	<th>암호</th>
-	<td class="password"><input type="password" name="password" class="<?=marked_by_error_message('password', $error_messages)?>"/></td>
+	<td class="password"><input type="password" name="password" class="check <?=marked_by_error_message('password', $error_messages)?>"/></td>
 </tr>
 <? endif; ?>
 <tr>
 	<th>제목</th>
-	<td colspan="3"><input type="text" name="title" size="50" value="<?=$post->title?>" id="post_title" class="<?=marked_by_error_message('title', $error_messages)?>"/></td>
+	<td colspan="3"><input type="text" name="title" size="50" value="<?=$post->title?>" id="post_title" class="check <?=marked_by_error_message('title', $error_messages)?>"/></td>
 </tr>
 
 <tr class="options">
@@ -36,7 +36,7 @@
 </tr>
 
 <tr>
-	<td colspan="4" class="body"><textarea name="body" id="post_body" cols="40" rows="12" class="<?=marked_by_error_message('body', $error_messages)?>"><?=$post->body?></textarea></td>
+	<td colspan="4" class="body"><textarea name="body" id="post_body" cols="40" rows="12" class="check <?=marked_by_error_message('body', $error_messages)?>"><?=$post->body?></textarea></td>
 </tr>
 
 <? if ($taggable): ?>
