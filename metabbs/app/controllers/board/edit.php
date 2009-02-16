@@ -57,7 +57,6 @@ if (is_post()) {
 		}
 		$board->set_attribute('have_empty_item', $_POST['category']['have_empty_item']);
 	} elseif ($_GET['tab'] == 'thumbnail') {
-		var_dump($_POST);
 		$board->set_attribute('thumbnail_kind', $_POST['thumbnail']['kind']);
 		$board->set_attribute('thumbnail_size', $_POST['thumbnail']['size']);
 		$board->set_attribute('thumbnail_width', $_POST['thumbnail']['width']);

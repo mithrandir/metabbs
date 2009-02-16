@@ -1,3 +1,5 @@
+<h2 title="board-title"><?=$board->title?></h2>
+
 <div id="account-info">
 <? if ($guest): ?>
 <a href="<?=$link_login?>" class="dialog">로그인</a>
