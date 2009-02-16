@@ -56,6 +56,19 @@ if (is_post()) {
 			}
 		}
 		$board->set_attribute('have_empty_item', $_POST['category']['have_empty_item']);
+	} elseif ($_GET['tab'] == 'thumbnail') {
+		var_dump($_POST);
+		$board->set_attribute('thumbnail_kind', $_POST['thumbnail']['kind']);
+		$board->set_attribute('thumbnail_size', $_POST['thumbnail']['size']);
+		$board->set_attribute('thumbnail_width', $_POST['thumbnail']['width']);
+		$board->set_attribute('thumbnail_height', $_POST['thumbnail']['height']);
+
+		$d = scandir('data/thumb');
+		foreach($d as $f) {
+			if ($f == '.' || $f == '..') continue;
+			$path = 'data/thumb/'.$f;
+			@unlink($path);
+		}
 	}
 	Flash::set('Board has been changed');
 	redirect_to(url_for($board, 'edit', array('tab'=>$_GET['tab'])));

@@ -11,7 +11,8 @@ if (isset($_GET['thumb'])) {
 	$orig_path = 'data/uploads/'.$attachment->id;
 	$ext = get_image_extension($orig_path);
 	$thumb_path = 'data/thumb/'.$attachment->id.'-small.'.$ext;
-	if (create_thumbnail($orig_path, $thumb_path)) {
+
+	if (create_thumbnail($orig_path, $thumb_path, $attachment->get_kind(), $attachment->get_options())) {
 		chmod($thumb_path, 0606);
 		redirect_to(METABBS_BASE_PATH.$thumb_path);
 	}
