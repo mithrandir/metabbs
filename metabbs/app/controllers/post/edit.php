@@ -11,8 +11,7 @@ if (is_post()) {
 			'body' => $_POST['body'],
 			'tags' => $_POST['tags']
 		);
-		if (isset($_POST['notice']))
-			$_POST['post']['notice'] = true;
+		$_POST['post']['notice'] = isset($_POST['notice']);
 		if (isset($_POST['author'])) {
 			$_POST['post']['name'] = $_POST['author'];
 			$_POST['post']['password'] = $_POST['password'];
