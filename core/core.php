@@ -1,5 +1,5 @@
 <?php
-define('METABBS_VERSION', '0.12-devel');
+define('METABBS_VERSION', '0.12');
 
 require METABBS_DIR . '/core/config.php';
 $config = new Config(METABBS_DIR . '/metabbs.conf.php');
