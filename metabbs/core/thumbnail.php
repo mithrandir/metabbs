@@ -21,7 +21,7 @@ function create_thumbnail($path, $dest, $kind = 0, $options = array('size'=>130)
 		ini_set('memory_limit', '-1');
 		list($width, $height, $type) = getimagesize($path);
 		switch($kind) {
-			// 가로폭이 size로 고정 축소
+			// 세로폭이 size로 고정 축소
 			case 0:
 				if ($width < $options['size'] || $height < $options['size']) return false;
 				$src_x = 0;
