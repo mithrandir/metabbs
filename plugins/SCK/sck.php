@@ -17,6 +17,8 @@ function sck_primary_menus() {
 function sck_menu_url($menu) {
 	if ($menu->type == 'board')
 		return url_for(new Board(array('name' => $menu->get_attribute('board_name'))));
+	else
+		return url_for($menu);
 }
 
 class Menu extends Model {

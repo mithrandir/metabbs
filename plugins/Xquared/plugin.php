@@ -1,6 +1,6 @@
 <?php
 class Xquared extends Plugin {
-	var $plugin_name = 'Xquared 위지윅 편집기(0.9-20090206)';
+	var $plugin_name = 'Xquared 위지윅 편집기';
 	var $description = '글 입력창을 Xquared 위지윅 편집기로 바꿉니다.';
 
 	function on_init() {

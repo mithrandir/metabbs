@@ -31,8 +31,7 @@ h1 {
 #menu li a:hover {
 	background-color: #666;
 }
-#add-menu {
-	margin-left: 5em;
+.admin-menu {
 	font-weight: bold;
 }
 
@@ -61,4 +60,19 @@ h1 {
 
 #board-title, #account-info {
 	display: none;
+}
+
+table.dashboard {
+	width: 100%;
+}
+
+.dashboard td {
+	padding-right: 1em;
+	padding-bottom: 1em;
+}
+
+.dashboard .unallocated {
+	border: 3px dashed #999;
+	height: 15em;
+	padding: 0 1em;
 }

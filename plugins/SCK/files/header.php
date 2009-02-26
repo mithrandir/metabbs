@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/../sck.php';
 $layout->add_stylesheet(METABBS_BASE_URI . 'sck/media/style.css');
+$admin = !$metabbs->isGuest() && $metabbs->user->is_admin();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -19,8 +20,8 @@ $layout->add_stylesheet(METABBS_BASE_URI . 'sck/media/style.css');
 	<li><a href="<?=sck_menu_url($menu)?>"><?=htmlspecialchars($menu->name)?></a></li>
 <?php endforeach; ?>
 
-<?php if ($metabbs->user->is_admin()): ?>
-	<li id="add-menu"><a href="<?=url_for('menu', 'add')?>"><?=i('Add Menu')?></a></li>
+<?php if ($admin): ?>
+	<li class="admin-menu"><a href="<?=url_for('menu', 'add')?>"><?=i('Add Menu')?></a></li>
 <?php endif; ?>
 </ul>
 
