@@ -1,26 +1,9 @@
 <?php
 function print_dashboard_entry($x, $y) {
-	global $account, $menu, $metabbs;
-	$admin = $account->is_admin();
+	global $menu, $metabbs;
 	$alloc = $menu->get_attribute("dashboard_$x,$y", false);
 ?>
-	<td>
-	<?php if (!$alloc && $admin): ?>
-		<form class="unallocated" method="POST" action="<?=url_for($menu, 'edit')?>">
-		<input type="hidden" name="position" value="<?=$x?>,<?=$y?>" />
-		<p>이 자리에 최근 게시물 출력:
-		<select name="board_name">
-		<?php foreach (Board::find_all() as $board): ?>
-			<option value="<?=$board->name?>"><?=$board->get_title()?></option>
-		<?php endforeach; ?>
-		</select>
-		<input type="submit" value="OK" />
-		</p>
-		</form>
-	<?php elseif ($alloc): ?>
-		<?php $metabbs->printLatestPosts($alloc, 5, 30); ?>
-	<?php endif; ?>
-	</td>
+	<td><?php if ($alloc) $metabbs->printLatestPosts($alloc, 5, 30); ?></td>
 <?php
 }
 ?>
@@ -35,3 +18,7 @@ function print_dashboard_entry($x, $y) {
 		<?php print_dashboard_entry(1, 1); ?>
 	</tr>
 </table>
+
+<?php if ($account->is_admin()): ?>
+<p><a href="<?=url_for($menu, 'edit')?>">Edit</a></p>
+<?php endif; ?>

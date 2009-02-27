@@ -69,9 +69,10 @@ table.dashboard {
 .dashboard td {
 	padding-right: 1em;
 	padding-bottom: 1em;
+	vertical-align: top;
 }
 
-.dashboard .unallocated {
+.dashboard.editing .entry {
 	border: 3px dashed #999;
 	height: 15em;
 	padding: 0 1em;
