@@ -1,3 +1,4 @@
+<?php $GLOBALS['sck_context'] = new SCKManagerMenu; ?>
 <h2><?=i('Add Menu')?></h2>
 
 <form method="post" action="">

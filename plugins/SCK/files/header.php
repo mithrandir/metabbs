@@ -21,14 +21,14 @@ $admin = !$metabbs->isGuest() && $metabbs->user->is_admin();
 <?php endforeach; ?>
 
 <?php if ($admin): ?>
-	<li class="admin-menu"><a href="<?=url_for('menu', 'add')?>"><?=i('Add Menu')?></a></li>
+	<li class="admin-menu"><a href="<?=url_for('sck', 'settings')?>"><?=i('Settings')?></a></li>
 <?php endif; ?>
 </ul>
 
 <div id="sidebar">
 <div id="account">
 <?php if ($metabbs->isGuest()): ?>
-	<a href="<?=url_with_referer_for('account', 'login')?>">로그인</a>
+	<?php $metabbs->printLoginForm(); ?>
 <?php else: ?>
 	<p><?=i('Welcome, %s.', $metabbs->user->name)?></p>
 	<p><a href="<?=url_with_referer_for('account', 'logout')?>"><?=i('Logout')?></a>
@@ -38,6 +38,13 @@ $admin = !$metabbs->isGuest() && $metabbs->user->is_admin();
 	<?php endif; ?></p>
 <?php endif; ?>
 </div>
+
+<h3>하위 메뉴</h3>
+<ul id="sidenav">
+<?php foreach (sck_sidemenu_items() as $item): ?>
+	<li><a href="<?=$item->url?>"><?=htmlspecialchars($item->text)?></a></li>
+<?php endforeach; ?>
+</ul>
 </div>
 
 <div id="content">

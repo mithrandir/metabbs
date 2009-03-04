@@ -37,18 +37,7 @@ class SCK extends Plugin {
 
 	function on_init() {
 		ini_set("include_path", dirname(__FILE__) . PATH_SEPARATOR . ini_get("include_path"));
-
-		add_handler('sck', 'media', array($this, 'serve_media'));
-
 		require_once 'sck.php';
-	}
-
-	function serve_media() {
-		global $id;
-		if ($id == 'style.css') {
-			header('Content-Type: text/css');
-			readfile(dirname(__FILE__) . '/files/style.css');
-		}
 	}
 }
 

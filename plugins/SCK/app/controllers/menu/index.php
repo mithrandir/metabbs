@@ -1,2 +1,3 @@
 <?php
-$menu = find('menu', $id);
+if ($id)
+	$menu = find('menu', $id);

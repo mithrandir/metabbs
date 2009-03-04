@@ -33,21 +33,29 @@ h1 {
 }
 .admin-menu {
 	font-weight: bold;
+	float: right;
+	margin-right: 1em;
 }
 
 #sidebar {
 	clear: left;
 	float: left;
 	margin-left: 1.5em;
-	background-color: #999;
 	width: 20%;
-	color: #f8f8f8;
+	padding: 1em;
+	border: 3px solid #000;
+	border-top: none;
+}
+#sidebar a {
+	border-bottom: 1px solid #aaa;
+	text-decoration: none;
+}
+#sidebar a:hover {
+	border-bottom-width: 2px;
 }
 #account {
-	padding: 1em;
-}
-#account a {
-	color: #fff;
+	border-bottom: 1px solid #999;
+	margin-bottom: 0.5em;
 }
 #content {
 	float: left;
