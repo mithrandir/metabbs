@@ -67,7 +67,7 @@ function openPlayer(id, url) {
 <? endif; ?>
 
 <div id="comments">
-	<ol>
+	<ol id="comment-list">
 	<? foreach ($comments as $comment): ?>
 		<? include "_comment.php"; ?>
 	<? endforeach; ?>
