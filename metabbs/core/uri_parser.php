@@ -1,7 +1,11 @@
 <?php
 class URIParser {
 	function parse($uri) {
-		return array_map('urldecode', $this->_parse($uri));
+		$result = $this->_parse($uri);
+		if (is_array($result))
+			return array_map('urldecode', $result);
+		else
+			return $result;
 	}
 
 	function _parse($uri) {
