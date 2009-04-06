@@ -1,5 +1,5 @@
 <?php
-global $controller, $action, $layout;
+global $layout, $routes;
 
 if (isset($board)) {
 	$admin = $account->has_perm('admin', $board);
@@ -30,7 +30,7 @@ if ($this->view == 'write') {
 	
 	$notice_checked = $post->notice ? 'checked="checked"' : '';
 	$secret_checked = $post->secret ? 'checked="checked"' : '';
-	$editing = $action == 'edit';
+	$editing = $routes['action'] == 'edit';
 	$post->author = htmlspecialchars($post->name);
 	$post->title = htmlspecialchars($post->title);
 	$post->body = htmlspecialchars($post->body);
@@ -59,7 +59,7 @@ if (isset($categories)) {
 			$categories[$k]->selected = '';
 		}
 		$categories[$k]->name = htmlspecialchars($c->name);
-		$categories[$k]->url = url_for($board, '', array('category' => $c->id));
+		$categories[$k]->url = url_for($board, null, array('category' => $c->id));
 		$categories[$k]->post_count = $c->get_post_count();
 	}
 } else {
@@ -78,7 +78,7 @@ if ($this->view == 'view') {
 		if ($tags) {
 			foreach ($tags as $k => $v) {
 				$tags[$k]->name = htmlspecialchars($v->name);
-				$tags[$k]->url = url_for_list('board', $board->name, array('tag' => 1, 'keyword' => urlencode($v->name)));
+				$tags[$k]->url = url_for($board, null, array('tag' => 1, 'keyword' => urlencode($v->name)));
 				$tags[$k]->last = false;
 			}
 			$tags[$k]->last = true;
@@ -127,9 +127,10 @@ if (isset($comments)) {
 if (isset($post) && $post->exists() && $account->has_perm('comment', $post)) {
 	$comment_url = url_for($post, 'comment');
 }
-if ($controller == 'comment') {
-	$comment_url = url_for($GLOBALS['comment'], $action);
-	if ($action == 'edit') {
+
+if ($routes['controller'] == 'comment') {
+	$comment_url = url_for($GLOBALS['comment'], $routes['action']);
+	if ($routes['action'] == 'edit') {
 		$comment_author = htmlspecialchars($comment->name);
 		$comment_body = htmlspecialchars($comment->body);
 	}

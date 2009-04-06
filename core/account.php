@@ -22,8 +22,11 @@ function get_account_control($account) {
  * @param $id 아이디
  * @return 생성된 링크 문자열
  */
-function link_to_account($text, $action, $id, $controller = 'account') {
-	return link_text(url_with_referer_for($controller, $action), $text, array('id' => $id, 'class' => 'dialog'));
+function link_to_account($text, $action, $id, $controller = null, $dialog = false) {
+	if (is_null($controller)) $controller = 'account';
+	$options = array('id' => $id);
+	if ($dialog) $options['class'] = 'dialog';
+	return link_text(url_with_referer_for($controller, $action), $text, $options);
 }
 
 /**
@@ -39,7 +42,7 @@ function link_to_admin() {
  * @return 로그인 링크
  */
 function link_to_login() {
-	$link_to_login = link_to_account(i('Login'), 'login', 'link-login');
+	$link_to_login = link_to_account(i('Login'), 'login', 'link-login', null, true);
 	apply_filters('LinkToLogin', $link_to_login);
 	return $link_to_login;
 }

@@ -30,8 +30,9 @@ require METABBS_DIR . '/app/models/tag.php';
 require METABBS_DIR . '/app/models/tag_post.php';
 
 require METABBS_DIR . '/core/template.php';
-require METABBS_DIR . '/core/uri_manager.php';
+//require METABBS_DIR . '/core/uri_manager.php';
 require METABBS_DIR . '/core/account.php';
 require METABBS_DIR . '/core/timezone.php';
 require METABBS_DIR . '/core/external.php';
+require METABBS_DIR . '/core/dispatcher.php';
 ?>

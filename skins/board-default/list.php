@@ -1,14 +1,9 @@
 <h1 id="board-title"><?=$board->title?></h1>
 
 <div id="account-info">
-<? if ($guest): ?>
-<a href="<?=$link_login?>" class="dialog">로그인</a>
-<a href="<?=$link_signup?>">회원가입</a>
-<? else: ?>
-<a href="<?=$link_logout?>">로그아웃</a>
-<a href="<?=$link_account?>">정보 수정</a>
-<? if ($link_admin): ?><a href="<?=$link_admin?>">관리자 페이지</a><? endif; ?>
-<? endif; ?>
+<? foreach (get_account_control($account) as $account_link):?>
+<?= $account_link ?> 
+<? endforeach; ?>
 </div>
 
 <?=flash_message_box()?>
@@ -20,7 +15,7 @@
 
 <? if ($categories): ?>
 <div id="categories">
-	<strong>분류:</strong> <a href="?">전체 보기</a>
+	<strong>분류:</strong> <a href="<?=url_for($board)?>">전체 보기</a>
 <? foreach ($categories as $category): ?>
 	&ndash; <a href="<?=$category->url?>"><?=$category->name?></a> <span class="post-count">(<?=$category->post_count?>)</span>
 <? endforeach; ?>

@@ -11,8 +11,8 @@ function say_hello_handler() {
 	echo "</pre>";
 }
 function collision_test_callback() {
-	global $controller, $action;
-	if ($controller == 'say' && $action == 'hello') {
+	global $routes;
+	if ($routes['controller'] == 'say' && $routes['action'] == 'hello') {
 		echo '<!-- collision! -->';
 	}
 }

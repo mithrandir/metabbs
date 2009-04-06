@@ -16,12 +16,12 @@
 </div>
 
 <ul id="nav">
-	<li><?=link_to(i('Boards'), 'admin')?></li>
-	<li><?=link_to(i('Users'), 'admin', 'users')?></li>
-	<li><?=link_to(i('Settings'), 'admin', 'settings')?></li>
-	<li><?=link_to(i('Plugins'), 'admin', 'plugins')?></li>
-	<li><?=link_to(i('Maintenance'), 'admin', 'maintenance')?></li>
-	<li><?=link_to(i('Information'), 'admin', 'info')?></li>
+	<li><?=link_admin_to(i('Boards'), 'board')?></li>
+	<li><?=link_admin_to(i('Users'), 'user')?></li>
+	<li><?=link_admin_to(i('Settings'), 'setting')?></li>
+	<li><?=link_admin_to(i('Plugins'), 'plugin')?></li>
+	<li><?=link_admin_to(i('Maintenance'), 'maintenance')?></li>
+	<li><?=link_admin_to(i('Information'), 'info')?></li>
 	<? foreach ($__admin_menu as $item): ?>
 	<li><?=$item?></li>
 	<? endforeach ?>
