@@ -8,7 +8,7 @@ function modern_load_post_category(&$post) {
 		} else {
 			$post->category = clone($post->get_category());
 			$post->category->name = htmlspecialchars($post->category->name);
-			$post->category->url = url_for($board, '', array('category' => $post->category->id));
+			$post->category->url = url_for($board, null, array('category' => $post->category->id));
 		}
 	} else {
 		$post->category = null;
@@ -22,7 +22,7 @@ function modern_load_tags(&$post) {
 	if ($tags) {
 		foreach ($tags as $k => $v) {
 			$tags[$k]->name = htmlspecialchars($v->name);
-			$tags[$k]->url = url_for_list('board', $board->name, array('tag' => 1, 'keyword' => urlencode($v->name)));
+			$tags[$k]->url = url_for($board, null, array('tag' => 1, 'keyword' => urlencode($v->name)));			
 			$tags[$k]->last = false;
 		}
 		$tags[$k]->last = true;
@@ -37,7 +37,7 @@ function modern_common_filter(&$post) {
 }
 function modern_list_filter(&$post) {
 	modern_common_filter($post);
-	$post->url = url_for($post, '', get_search_params());
+	$post->url = url_for($post, null, get_search_params());
 	$post->date = date('Y-m-d', $post->created_at);
 	$post->time = date('H:i:s', $post->created_at);
 	if (isset($post->attachments)) {
@@ -95,7 +95,7 @@ function modern_attachment_filter(&$attachment) {
 	$attachment->url = htmlspecialchars(url_for($attachment));
 	$attachment->size = human_readable_size($attachment->get_size());
 	if ($attachment->is_image()) {
-		$attachment->thumbnail_url = url_for($attachment).'?thumb=1';
+		$attachment->thumbnail_url = url_for($attachment, null, array('thumb' => 1));
 	} else {
 		$attachment->thumbnail_url = null;
 	}

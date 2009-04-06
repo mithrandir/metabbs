@@ -41,7 +41,7 @@ function validateForm(event) {
 	if (valid) {
 		var submitButton = Form.getSubmitButton(form);
 		//new Insertion.After(submitButton, '<span id="sending">Sending...</span>');
-		submitButton.disable();
+		//submitButton.disable();
 	} else {
 		$$('.field_error')[0].focus();
 		event.stop()

@@ -17,10 +17,10 @@ function ask_password_of($object, $retry = false) {
 			ask_password_of($object, true);
 		}
 	} else {
-		global $controller, $action, $id;
-		$params = array('controller' => $controller, 'action' => $action, 'id' => $id);
+		global $routes, $params;
+		$params = array('controller' => $routes['controller'], 'action' => $routes['action'], 'id' => $params['id']);
 		if ($retry) $params['retry'] = true;
-		redirect_to(url_for('auth', '', $params));
+		redirect_to(url_for('auth', null, $params));
 	}
 }
 ?>

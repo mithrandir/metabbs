@@ -2,7 +2,7 @@
 
 <?=flash_message_box()?>
 <?=error_message_box($error_messages)?>
-<form method="post" onsubmit="return checkForm(this)" action="?url=<?=$_GET['url']?>" id="account-edit-form">
+<form method="post" onsubmit="return checkForm(this)" action="<?=url_with_referer_for('account', 'edit', $params)?>" id="account-edit-form">
 <fieldset>
 <h2>기본 정보</h2>
 <p>
@@ -33,6 +33,6 @@
 	<textarea name="user[signature]" cols="50" rows="5" class="ignore"><?=$account->signature?></textarea>
 </p>
 <p><input type="submit" value="<?=i('Edit Info')?>" class="button"/>
-<? if (isset($_GET['url']) && !empty($_GET['url'])): ?> <a href="<?=$_GET['url']?>" class="button dialog-close"><?=i('Cancel')?></a><? endif; ?></p>
+<? if (isset($params['url']) && !empty($params['url'])): ?> <a href="<?=$params['url']?>" class="button dialog-close"><?=i('Cancel')?></a><? endif; ?></p>
 </fieldset>
 </form>

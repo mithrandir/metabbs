@@ -175,3 +175,4 @@ $lang['Edit done'] = '수정완료 하였습니다';
 $lang['Please change permission of %s to 0707'] = '%s 디렉토리의 권한을 0707로 바꾸세요';
 $lang['Kind'] = '종류';
 $lang['Thumbnail'] = '썸네일';
+$lang['Use Tag'] = '태그 사용';

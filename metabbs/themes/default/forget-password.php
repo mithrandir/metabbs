@@ -14,6 +14,6 @@
 	<input type="text" name="name" id="name" value="<?=isset($params['name'])?$params['name']:''?>" class="<?=marked_by_error_message('name', $error_messages)?>"/>
 </p>
 <p><input type="submit" value="<?=i('Reset Password')?>" class="button"/> 
-<? if (isset($_GET['url']) && !empty($_GET['url'])): ?> <a href="<?=$_GET['url']?>"><?=i('Cancel')?></a><? endif; ?></p>
+<? if (isset($params['url']) && !empty($params['url'])): ?> <a href="<?=$params['url']?>"><?=i('Cancel')?></a><? endif; ?></p>
 </form>
 <? } ?>

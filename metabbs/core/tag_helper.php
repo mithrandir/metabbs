@@ -24,6 +24,9 @@ function link_text($link, $text = '', $options = array()) {
 function link_to($text, $controller, $action = null, $params = array()) {
 	return link_text(url_for($controller, $action, $params), $text);
 }
+function link_admin_to($text, $controller, $action = null, $params = array()) {
+	return link_text(url_admin_for($controller, $action, $params), $text);
+}
 function link_with_id_to($id, $text, $controller, $action = null, $params = array()) {
 	return link_text(url_for($controller, $action, $params), $text, array("id" => $id));
 }

@@ -28,7 +28,7 @@ class Attachment extends Model {
 		return 'data/uploads/' . $this->id;
 	}
 	function get_size() {
-		return filesize($this->get_filename());
+		return $this->file_exists() ? filesize($this->get_filename()) : false;
 	}
 	function file_exists() {
 		return file_exists($this->get_filename());
