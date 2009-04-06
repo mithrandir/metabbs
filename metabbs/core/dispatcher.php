@@ -13,7 +13,7 @@ class Dispatcher {
 			array_shift($this->parts);
 		}
 
-		Dispatcher::regacy_path_filter($this->parts, $this->routes, $this->params);
+		Dispatcher::legacy_path_filter($this->parts, $this->routes, $this->params);
 		Dispatcher::board_path_filter($this->parts, $this->routes, $this->params);
 
 		if (count($this->parts) > 0) {
@@ -55,7 +55,7 @@ class Dispatcher {
 			$action = empty($routes['action']) ? null : $routes['action'];
 		}
 
-		Dispatcher::regacy_url_filter($this->parts, $routes, $params);
+		Dispatcher::legacy_url_filter($this->parts, $routes, $params);
 		Dispatcher::board_url_filter($this->parts, $routes, $params);
 
 		if (in_array($routes['action'], array('index','view')))
@@ -78,10 +78,10 @@ class Dispatcher {
 			}*/
 		}
 
-		return '/'.implode('/',$urls). ($params ? query_string_for($params):'');
+		return METABBS_BASE_PATH.implode('/',$urls). ($params ? query_string_for($params):'');
 	}
 
-	function regacy_path_filter(&$parts, &$routes, &$params) {
+	function legacy_path_filter(&$parts, &$routes, &$params) {
 		if ($routes['container'] == 'default') {
 			if ($parts[0] == 'board' and !is_numeric($parts[1])) {
 				if (count($parts) == 2) {
@@ -152,7 +152,7 @@ class Dispatcher {
 		}
 	}
 
-	function regacy_url_filter($parts, &$routes, &$params) {
+	function legacy_url_filter($parts, &$routes, &$params) {
 		if ($routes['container'] == 'default') {
 			if ($routes['controller'] == 'user' and is_numeric($params['id'])) {
 				$user = User::find($params['id']);
