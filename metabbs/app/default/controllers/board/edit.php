@@ -71,7 +71,7 @@ if (is_post()) {
 			}
 
 			define('SECURITY', 1);
-			include 'app/default/controllers/post/save.php';
+			include 'app/default/controllers/board/save.php';
 		}
 	}
 }
