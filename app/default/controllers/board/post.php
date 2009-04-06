@@ -57,7 +57,7 @@ if (is_post()) {
 			apply_filters('PostView', $preview);
 		} else {
 			define('SECURITY', 1);
-			include 'app/default/controllers/post/save.php';
+			include 'app/default/controllers/board/save.php';
 		}
 	}
 } else {
