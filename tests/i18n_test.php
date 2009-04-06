@@ -27,7 +27,7 @@ class I18NTest extends UnitTestCase {
 	}
 
 	function testLoadFromFile() {
-		$this->lang->load_from_file('fixtures/lang/test.php');
+		$this->lang->load_from_file('fixtures/core/language/test.php');
 		$this->assertEqual('안녕, 세상!', $this->lang->translate('Hello, world!'));
 		$this->assertEqual('안녕, world!', $this->lang->translate('Hello, %s!', array('world')));
 	}

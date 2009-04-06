@@ -20,6 +20,8 @@ if (!function_exists('rollback')) {
 }
 
 if (!file_exists('fixtures/.schema')) {
+	$conn = $__db;
+	include "../core/schema/uninstall.php";
 	include "../core/schema/schema.php";
 	run($__db);
 	touch('fixtures/.schema');

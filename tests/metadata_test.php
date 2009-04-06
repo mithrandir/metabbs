@@ -10,7 +10,6 @@ class MetaModel extends Model {
 class MetadataTest extends UnitTestCase {
 	function setUp() {
 		$this->metadata = new Metadata(Post::find(5));
-		$this->metadata2 = new Metadata(new MetaModel(array('id' => 123)));
 	}
 
 	function testLoad() {
@@ -19,19 +18,14 @@ class MetadataTest extends UnitTestCase {
 	}
 	
 	function testGet() {
-		$this->assertEqual('', $this->metadata->get('foo'));
-
-		$this->metadata->load();
 		$this->assertEqual('bar', $this->metadata->get('foo'));
 	}
 
 	function testSet() {
 		$this->metadata->set('edited', 'no');
 		$this->assertEqual('no', $this->metadata->get('edited'));
-		$this->metadata2->set('edited', 'hello');
 		$this->metadata->set('edited', 'yes');
 		$this->assertEqual('yes', $this->metadata->get('edited'));
-		$this->assertEqual('hello', $this->metadata2->get('edited'));
 	}
 
 	function testReset() {
