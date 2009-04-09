@@ -73,7 +73,7 @@ function openPlayer(id, url) {
 		<? include "_comment.php"; ?>
 	<? endforeach; ?>
 	</ol>
-
+<? if ($comment_readable): ?>
 	<? include "comment_form.php"; ?>
 
 	<script type="text/javascript">
@@ -82,6 +82,7 @@ function openPlayer(id, url) {
 		Event.stop(event);
 	});
 	</script>
+<? endif; ?>
 </div>
 <? endif; ?>
 </div>
