@@ -18,7 +18,8 @@
 	<?=check_box('board', 'always_show_comments', $board->get_attribute('always_show_comments', false))?> <label for="always_show_comments">읽기 권한이 없어도 댓글 내용은 보여줍니다.</label></dd>
 
 	<dt><?=label_tag("Attachment", 'board', 'perm_attachment')?></dt>
-	<dd><?=i('More than level %s', text_field('board', 'perm_attachment', $board->perm_attachment, 3))?> <?=check_box('board', 'restrict_attachment', $board->get_attribute('restrict_attachment', false))?> <label for="board_restrict_attachment"><?=i('Only for members')?></label></dd>
+	<dd><?=i('More than level %s', text_field('board', 'perm_attachment', $board->perm_attachment, 3))?> <?=check_box('board', 'restrict_attachment', $board->get_attribute('restrict_attachment', false))?> <label for="board_restrict_attachment"><?=i('Only for members')?></label>
+	<?=check_box('board', 'always_show_thumbnail', $board->get_attribute('always_show_thumbnail', false))?> <label for="always_show_thumbnail">읽기 권한이 없어도 썸네일은 보여줍니다.</label></dd>
 </dl>
 <p><input type="submit" value="OK" /></p>
 </form>
