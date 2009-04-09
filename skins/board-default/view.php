@@ -73,7 +73,7 @@ function openPlayer(id, url) {
 		<? include "_comment.php"; ?>
 	<? endforeach; ?>
 	</ol>
-<? if ($comment_readable): ?>
+<? if ($comment_writable): ?>
 	<? include "comment_form.php"; ?>
 
 	<script type="text/javascript">
