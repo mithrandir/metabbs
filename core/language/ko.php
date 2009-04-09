@@ -21,6 +21,7 @@ $lang['Use attachment'] = '파일 첨부 허용';
 $lang['Read'] = '읽기';
 $lang['Write'] = '쓰기';
 $lang['Comment'] = '댓글 달기';
+$lang['Attachment'] = '첨부파일 다운로드';
 $lang['Edit/Delete'] = '고치기/지우기';
 $lang['More than level %s'] = '레벨 %s 이상';
 $lang['Writer and more than level %s'] = '글쓴이 또는 레벨 %s 이상';

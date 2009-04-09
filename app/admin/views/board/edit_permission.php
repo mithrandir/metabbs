@@ -14,7 +14,11 @@
 	<dd><?=i('More than level %s', text_field('board', 'perm_write', $board->perm_write, 3))?> <?=check_box('board', 'restrict_write', $board->get_attribute('restrict_write', false))?> <label for="board_restrict_write"><?=i('Only for members')?></label></dd>
 	
 	<dt><?=label_tag("Comment", 'board', 'perm_comment')?></dt>
-	<dd><?=i('More than level %s', text_field('board', 'perm_comment', $board->perm_comment, 3))?> <?=check_box('board', 'restrict_comment', $board->get_attribute('restrict_comment', false))?> <label for="board_restrict_comment"><?=i('Only for members')?></label></dd>
+	<dd><?=i('More than level %s', text_field('board', 'perm_comment', $board->perm_comment, 3))?> <?=check_box('board', 'restrict_comment', $board->get_attribute('restrict_comment', false))?> <label for="board_always_show_comments"><?=i('Only for members')?></label>
+	<?=check_box('board', 'always_show_comments', $board->get_attribute('always_show_comments', false))?> <label for="always_show_comments">읽기 권한이 없어도 댓글 내용은 보여줍니다.</label></dd>
+
+	<dt><?=label_tag("Attachment", 'board', 'perm_attachment')?></dt>
+	<dd><?=i('More than level %s', text_field('board', 'perm_attachment', $board->perm_attachment, 3))?> <?=check_box('board', 'restrict_attachment', $board->get_attribute('restrict_attachment', false))?> <label for="board_restrict_attachment"><?=i('Only for members')?></label></dd>
 </dl>
 <p><input type="submit" value="OK" /></p>
 </form>

@@ -1,5 +1,5 @@
 <?php
-define('METABBS_DB_REVISION', 1369);
+define('METABBS_DB_REVISION', 1428);
 
 function run($conn) {
 	$t = new Table('board');
@@ -13,6 +13,7 @@ function run($conn) {
 	$t->column('perm_read', 'ushort');
 	$t->column('perm_write', 'ushort');
 	$t->column('perm_comment', 'ushort');
+	$t->column('perm_attachment', 'ushort');
 	$t->column('order_by', 'string', 60);
 	$t->column('header', 'string', 255);
 	$t->column('footer', 'string', 255);

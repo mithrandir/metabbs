@@ -33,7 +33,7 @@ function openPlayer(id, url) {
 			<div class="signature"><?=$signature?></div>
 			<? endif; ?>
 
-			<? if ($attachments): ?>
+			<? if ($attachments and $attachment_downable): ?>
 			<ul id="attachments">
 			<? foreach ($attachments as $attachment): ?>
 				<li>
@@ -66,6 +66,7 @@ function openPlayer(id, url) {
 </div>
 <? endif; ?>
 
+<? if ($commentable): ?>
 <div id="comments">
 	<ol id="comment-list">
 	<? foreach ($comments as $comment): ?>
@@ -82,6 +83,7 @@ function openPlayer(id, url) {
 	});
 	</script>
 </div>
+<? endif; ?>
 </div>
 </div>
 

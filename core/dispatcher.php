@@ -33,8 +33,6 @@ class Dispatcher {
 				}
 			}
 		}
-//		var_dump($this->params);
-//		var_dump($this->routes);
 	}
 
 	function url_for($controller = null, $action = null, $params = array(), $container = 'default') {

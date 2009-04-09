@@ -136,6 +136,9 @@ class Board extends Model {
 	function restrict_comment() {
 		return $this->get_attribute('restrict_comment', false);
 	}
+	function restrict_attachment() {
+		return $this->get_attribute('restrict_attachment', false);
+	}
 	function use_tag() {
 		return $this->get_attribute('use_tag', false);
 	}
