@@ -3,8 +3,8 @@ if (!$attachment->exists() || !$attachment->file_exists()) {
 	header('HTTP/1.1 404 Not Found');
 	print_notice(i('Attachment not found'), i("Attachment #%d doesn't exist.", $params['id']));
 }
-permission_required('attachment', Post::find($attachment->post_id));
 if (isset($_GET['thumb'])) {
+	permission_required('thumbnail', Post::find($attachment->post_id));
 	include 'core/thumbnail.php';
 	$orig_path = 'data/uploads/'.$attachment->id;
 	$ext = get_image_extension($orig_path);
@@ -15,6 +15,7 @@ if (isset($_GET['thumb'])) {
 		redirect_to(METABBS_BASE_PATH.$thumb_path);
 	}
 }
+permission_required('attachment', Post::find($attachment->post_id));
 $filename = 'data/uploads/' .$attachment->id;
 header('Content-Type: ' . $attachment->get_content_type());
 header('Content-Length: ' . filesize($filename));
