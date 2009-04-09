@@ -155,6 +155,10 @@ class User extends Model {
 				else
 					return true;
 			break;
+/*			case 'read_comment':
+				$board = $object->get_board();
+				return !$board->get_attribute('always_show_comments', false);
+			break;*/
 			case 'attachment':
 				if ($this->level < $board->perm_attachment)
 					return false;
@@ -234,6 +238,10 @@ class Guest extends Model
 				return $board->get_attribute('always_show_comments', false)
 					|| ($board->restrict_comment() && $board->is_member($this) && $this->level >= $board->perm_comment)
 					|| (!$board->restrict_comment() && $this->level >= $board->perm_comment);
+			break;
+			case 'read_comment':
+				$board = $object->get_board();
+				return $board->restrict_comment() || (!$board->restrict_comment() and !$board->get_attribute('always_show_comments', false) );
 			break;
 			case 'attachment':
 				$board = $object->get_board();
