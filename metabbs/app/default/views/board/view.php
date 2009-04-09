@@ -1,6 +1,7 @@
 <?php
 $template = $style->get_template('view');
 $template->set('attachments', $post->get_attachments());
+$template->set('attachment_downable', $account->has_perm('attachment', $post));
 $template->set('trackbacks', $post->get_trackbacks());
 $template->set('name', cookie_get('name'));
 

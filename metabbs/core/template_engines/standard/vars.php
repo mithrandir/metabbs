@@ -124,6 +124,7 @@ if (isset($comments)) {
 	}
 	$comments = flatten_comments($comments);
 }
+$comment_url = null;
 if (isset($post) && $post->exists() && $account->has_perm('comment', $post)) {
 	$comment_url = url_for($post, 'comment');
 }

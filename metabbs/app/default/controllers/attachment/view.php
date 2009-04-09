@@ -3,7 +3,7 @@ if (!$attachment->exists() || !$attachment->file_exists()) {
 	header('HTTP/1.1 404 Not Found');
 	print_notice(i('Attachment not found'), i("Attachment #%d doesn't exist.", $params['id']));
 }
-permission_required('read', Post::find($attachment->post_id));
+permission_required('attachment', Post::find($attachment->post_id));
 if (isset($_GET['thumb'])) {
 	include 'core/thumbnail.php';
 	$orig_path = 'data/uploads/'.$attachment->id;
