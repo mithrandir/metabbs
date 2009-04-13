@@ -69,17 +69,17 @@ class SimpleCaptcha extends Plugin {
 	}
 
 	function validate(&$post, &$error_messages) {
-		if (array_key_exists('recaptcha_challenge_field', $post) && !SimpleCaptcha::is_valid($post)) {
+		if (array_key_exists('simplecaptcha_challenge_field', $post) && !SimpleCaptcha::is_valid($post)) {
 			$error_messages->add(i('The CAPTCHA solution was incorrect'), 'captcha');
 		}
 	}
 
 	function is_valid($post) {
-		if (!empty($post['recaptcha_challenge_field'])) {
+		if (!empty($post['simplecaptcha_challenge_field'])) {
 			return false;
 		}
 
-		return PhpCaptcha::Validate($arg['recaptcha_challenge_field']);
+		return PhpCaptcha::Validate($post['simplecaptcha_challenge_field']);
 	}
 
 	function get_html() {
@@ -88,7 +88,7 @@ class SimpleCaptcha extends Plugin {
 		$flite_path = $config->get('flite_path');
 		$path = METABBS_BASE_URI;
 
-		$html = "<input type=\"text\" name=\"recaptcha_challenge_field\" id=\"recaptcha_challenge_field\" class=\"".marked_by_error_message('captcha', $error_messages)."\"/>\n";
+		$html = "<input type=\"text\" name=\"simplecaptcha_challenge_field\" id=\"simplecaptcha_challenge_field\" class=\"".marked_by_error_message('captcha', $error_messages)."\"/>\n";
 		$html .= "<img src=\"".$path."captcha/visual/\" width=\"120\" height=\"18\" alt=\"Visual CAPTCHA\" style=\"border:1px solid gray;\"/>\n";
 		if (!empty($flite_path))
 			$html .= "<a href=\"".$path."/captcha/audio/\">".i("Can't see the image? Click for audible version")."</a>\n";
