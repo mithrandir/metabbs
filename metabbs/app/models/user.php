@@ -172,8 +172,9 @@ class User extends Model {
 			case 'thumbnail':
 				$board = $object->get_board();
 				return $board->get_attribute('always_show_thumbnail', false)
-					|| ($board->restrict_attachment() && $board->is_member($this) && $this->level >= $board->perm_attachment)
-					|| (!$board->restrict_attachment() && $this->level >= $board->perm_attachment);
+					|| !$board->get_attribute('always_show_thumbnail', false) 
+					&& (($board->restrict_attachment() && $board->is_member($this) && $this->level >= $board->perm_attachment)
+						|| (!$board->restrict_attachment() && $this->level >= $board->perm_attachment));
 			break;
 		}
 	}
@@ -259,8 +260,9 @@ class Guest extends Model
 			case 'thumbnail':
 				$board = $object->get_board();
 				return $board->get_attribute('always_show_thumbnail', false)
-					|| ($board->restrict_attachment() && $board->is_member($this) && $this->level >= $board->perm_attachment)
-					|| (!$board->restrict_attachment() && $this->level >= $board->perm_attachment);
+					|| !$board->get_attribute('always_show_thumbnail', false) 
+					&& (($board->restrict_attachment() && $board->is_member($this) && $this->level >= $board->perm_attachment)
+						|| (!$board->restrict_attachment() && $this->level >= $board->perm_attachment));
 			break;
 		}
 	}
