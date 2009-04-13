@@ -171,8 +171,8 @@ class User extends Model {
 			break;
 			case 'thumbnail':
 				$board = $object->get_board();
-				return ($board->restrict_attachment())
-					|| (!$board->restrict_attachment() && $board->get_attribute('always_show_thumbnail', false) );
+				return !$board->restrict_attachment()
+					|| ($board->restrict_attachment() && $board->get_attribute('always_show_thumbnail', false) );
 			break;
 		}
 	}
@@ -257,8 +257,8 @@ class Guest extends Model
 			break;
 			case 'thumbnail':
 				$board = $object->get_board();
-				return ($board->restrict_attachment())
-					|| (!$board->restrict_attachment() && $board->get_attribute('always_show_thumbnail', false) );
+				return !$board->restrict_attachment()
+					|| ($board->restrict_attachment() && $board->get_attribute('always_show_thumbnail', false) );
 			break;
 		}
 	}
