@@ -100,4 +100,17 @@ if(!function_exists('scandir')) {
     }
 } 
 
+if(!function_exists('array_diff_key')){ 
+	function array_diff_key(){ 
+		$arrs = func_get_args(); 
+		$result = array_shift($arrs); 
+		foreach ($arrs as $array) { 
+			foreach ($result as $key => $v) { 
+				if (array_key_exists($key, $array))
+					unset($result[$key]); 
+			} 
+		} 
+		return $result; 
+	} 
+} 
 ?>
