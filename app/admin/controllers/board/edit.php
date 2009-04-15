@@ -46,6 +46,7 @@ if (is_post()) {
 		$board->set_attribute('restrict_access', $_POST['board']['restrict_access']);
 		$board->set_attribute('restrict_attachment', $_POST['board']['restrict_attachment']);
 		$board->set_attribute('always_show_comments', $_POST['board']['always_show_comments']);	
+		$board->set_attribute('always_show_thumbnail', $_POST['board']['always_show_thumbnail']);	
 	}
 	if ($sorting_changed) $board->reset_sort_keys();
 	if ($params['tab'] == 'category') {
