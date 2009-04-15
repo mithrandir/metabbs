@@ -4,7 +4,7 @@ function render_feed($title, $url, $description, $posts, $format) {
 		$post->permalink = full_url_for($post);
 	apply_filters_array('PostViewRSS', $posts);
 	feed_header();
-	include "app/views/feed/$format.php";
+	include "app/default/views/feed/$format.php";
 	exit;
 }
 
