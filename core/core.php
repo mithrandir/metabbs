@@ -17,25 +17,20 @@ requireCore('backends/' . $backend . '/backend');
 
 $__db = get_conn();
 set_table_prefix($config->get('prefix', 'meta_'));
-global $_requireModels;
-$_requireModels = array_merge($_requireModels, array(
-		'site',
-		'board',
-		'category',
-		'uncategorized_posts',
-		'post',
-		'post_finder',
-		'comment',	
-		'trackback',
-		'attachment',
-		'user',
-		'plugin',
-		'tag',
-		'tag_post'
-	));
-foreach($_requireModels as $name) {
-	require METABBS_DIR .'/app/models/'.$name.'.php';
-}
+
+requireModel('site');
+requireModel('board');
+requireModel('category');
+requireModel('uncategorized_posts');
+requireModel('post');
+requireModel('post_finder');
+requireModel('comment');
+requireModel('trackback');
+requireModel('attachment');
+requireModel('user');
+requireModel('plugin');
+requireModel('tag');
+requireModel('tag_post');
 
 requireCore('template');
 requireCore('account');
