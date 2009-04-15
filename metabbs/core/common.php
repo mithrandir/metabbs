@@ -21,22 +21,49 @@ if (!defined('METABBS_HOST_URL')) {
 
 ini_set('include_path', METABBS_DIR . PATH_SEPARATOR . ini_get('include_path'));
 
-require METABBS_DIR . '/core/compat.php';
-require METABBS_DIR . '/core/core.php';
-require METABBS_DIR . '/core/permission.php';
-require METABBS_DIR . '/core/request.php';
-require METABBS_DIR . '/core/i18n.php';
-require METABBS_DIR . '/core/cookie.php';
-require METABBS_DIR . '/core/tag_helper.php';
-require METABBS_DIR . '/core/plugin.php';
-require METABBS_DIR . '/core/metadata.php';
-require METABBS_DIR . '/core/trackback.php';
-require METABBS_DIR . '/core/theme.php';
-require METABBS_DIR . '/core/feed.php';
-require METABBS_DIR . '/core/validate.php';
-require METABBS_DIR . '/core/message.php';
-require METABBS_DIR . '/core/csrf.php';
+function requireCore($name) {
+	global $_requireCore;
+	if(!in_array($name,$_requireCore)) {
+		include_once (METABBS_DIR . "/core/$name.php");
+		array_push($_requireCore,$name);
+	}
+}
+function requireModel($name) {
+	global $_requireModels;
+	if(!in_array($name,$_requireModels)) {
+		include_once (METABBS_DIR . "/app/models/$name.php");
+		array_push($_requireModels,$name);
+	}
+}
+function requireExternel($name) {
+	global $_requireExternel;
+	if(!in_array($name,$_requireExternel)) {
+		include_once (METABBS_DIR . "/core/external/$name.php");
+		array_push($_requireExternel,$name);
+	}
+}
 
+$_requireCore = array(
+	'compat',
+	'core',
+	'permission',
+	'request',
+	'i18n',
+	'cookie',
+	'tag_helper',
+	'plugin',
+	'metadata',
+	'trackback',
+	'theme',
+	'feed',
+	'validate',
+	'message',
+	'csrf'
+);
+$_requireModels = $_requireExternel = array();
+foreach($_requireCore as $name) {
+	require METABBS_DIR .'/core/'.$name.'.php';
+}
 import_default_language();
 
 $session_dir = METABBS_DIR . '/data/session';
@@ -47,7 +74,7 @@ session_save_path($session_dir);
 session_start();
 
 $account = UserManager::get_user();
-if (!$account) { 
+if (!$account) {
 	$account = new Guest;
 	$guest = true;
 } else {
