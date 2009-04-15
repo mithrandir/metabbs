@@ -19,8 +19,6 @@ class ObjectCache {
 	}
 }
 
-$__cache = new ObjectCache;
-
 function find($model, $id) {
 	global $__cache;
 	$key = $model . '#' . $id;

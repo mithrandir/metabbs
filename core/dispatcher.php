@@ -205,6 +205,7 @@ class Dispatcher {
 }
 
 if (!defined('METABBS_BASE_URI')) {
+	global $config;
 	if ($config->get('force_fancy_url', false) ||
 			strpos($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']) !== 0) {
 		define('METABBS_BASE_URI', METABBS_BASE_PATH);

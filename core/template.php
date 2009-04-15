@@ -94,8 +94,8 @@ class Theme {
 	}
 }
 
-define('DEFAULT_VIEW', 0);
-define('ADMIN_VIEW', 1);
+//define('DEFAULT_VIEW', 0);
+//define('ADMIN_VIEW', 1);
 
 class Layout {
 	var $stylesheets = array();

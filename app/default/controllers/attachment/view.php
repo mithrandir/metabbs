@@ -5,7 +5,7 @@ if (!$attachment->exists() || !$attachment->file_exists()) {
 }
 if (isset($_GET['thumb'])) {
 	permission_required('thumbnail', Post::find($attachment->post_id));
-	include 'core/thumbnail.php';
+	requireCore('thumbnail');
 	$orig_path = 'data/uploads/'.$attachment->id;
 	$ext = get_image_extension($orig_path);
 	$thumb_path = 'data/thumb/'.$attachment->id.'-small.'.$ext;

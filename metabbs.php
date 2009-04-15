@@ -18,7 +18,7 @@ import_enabled_plugins();
 
 @include $dispatcher->get_container_path();
 @include $dispatcher->get_controller_path();
-$action_dir = 'app/controllers/' . $routes['controller'];
+//$action_dir = 'app/controllers/' . $routes['controller'];
 if (!run_custom_handler($routes['controller'], $routes['action'])) {
 	$found = @include $dispatcher->get_action_path();
 	if (!$found) {

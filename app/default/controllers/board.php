@@ -11,7 +11,7 @@ if (!empty($params['id'])) {
 		header('HTTP/1.1 404 Not Found');
 		print_notice(i('No board name'), i('Please append the board name.'));
 	}
-	require 'core/page.php';
+	requireCore('page');
 	$board = Board::find_by_name($params['board_name']);
 	if (!$board->exists()) {
 		header('HTTP/1.1 404 Not Found');
