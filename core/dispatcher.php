@@ -67,7 +67,7 @@ class Dispatcher {
 		$urls[1] = $routes['controller'];
 		if (isset($params['id'])) {
 			$urls[2] = $params['id'];
-			$params = array_diff_key($params, array('id' => null));
+			unset($params['id']);
 			if (isset($routes['action']) and !empty($routes['action']))
 				$urls[3] = $routes['action'];
 		} else {
@@ -82,11 +82,11 @@ class Dispatcher {
 		if ($routes['container'] == 'default') {
 			if ($parts[0] == 'board' and !is_numeric($parts[1])) {
 				if (count($parts) == 2) {
-					$parts[0] = $parts[1];
-					$parts = array_diff_key($parts, array(1 => null));
+					// board/{board_name} -> {board_name}
+					$parts = array($parts[1]);
 				} else if (count($parts) == 3) {
-					$parts[0] = $parts[2];
-					array_pop($parts);
+					// board/{action}/{board_name} -> {board_name}/{action}
+					$parts = array($parts[2], $parts[1]);
 				}
 			}
 
@@ -155,7 +155,6 @@ class Dispatcher {
 				$user = User::find($params['id']);
 				if ($user->exists()) {
 					$params['id'] = $user->user;
-//					$params = array_diff_key($params, array('id' => null));
 				}
 			}
 		}
@@ -165,7 +164,7 @@ class Dispatcher {
 		if ($routes['container'] == 'default') {	
 			if ($routes['controller'] == 'board' and isset($params['board_name'])) {
 				$routes['controller'] = $params['board_name'];
-				$params = array_diff_key($params, array('board_name' => null));
+				unset($routes['board_name']);
 			}
 		}
 	}
