@@ -1,6 +1,4 @@
 <?php
-$extra_attributes = array();
-
 class Attribute {
 	var $size = 50;
 
