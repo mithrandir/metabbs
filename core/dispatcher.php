@@ -164,7 +164,7 @@ class Dispatcher {
 		if ($routes['container'] == 'default') {	
 			if ($routes['controller'] == 'board' and isset($params['board_name'])) {
 				$routes['controller'] = $params['board_name'];
-				unset($routes['board_name']);
+				unset($params['board_name']);
 			}
 		}
 	}
