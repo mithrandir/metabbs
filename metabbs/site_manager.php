@@ -5,6 +5,7 @@ if (isset($_GET['redirect'])) { // backward compatibility
 }
 require_once(dirname(__FILE__).'/core/common.php');
 
+if (!isset($dispatcher)) $dispatcher = new Dispatcher;
 if (!isset($layout)) $layout = new Layout;
 import_enabled_plugins();
 apply_filters('LayoutAtSiteManager', $layout);
