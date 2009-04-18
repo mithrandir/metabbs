@@ -3,7 +3,9 @@ class Dispatcher {
 	var $parts;
 	var $routes;
 	var $params;
-	function Dispatcher($uri) {
+	function Dispatcher($uri = null) {
+		if (!$uri) return;
+
 		$this->parts = explode('/', trim($uri, '/ '));
 		$this->routes = array('container' => 'default', 'controller' =>  null, 'action' => null);
 		$this->params = Dispatcher::get_params(null, false, array('_GET', '_POST'));
@@ -66,7 +68,7 @@ class Dispatcher {
 			$urls[0] = $routes['container'];
 		$urls[1] = $routes['controller'];
 		if (isset($params['id'])) {
-			$urls[2] = $params['id'];
+			$urls[2] = urlencode($params['id']);
 			unset($params['id']);
 			if (isset($routes['action']) and !empty($routes['action']))
 				$urls[3] = $routes['action'];
