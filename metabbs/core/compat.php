@@ -100,6 +100,7 @@ if(!function_exists('scandir')) {
     }
 } 
 
+/*
 if(!function_exists('array_diff_key')){ 
 	function array_diff_key(){ 
 		$arrs = func_get_args(); 
@@ -113,4 +114,5 @@ if(!function_exists('array_diff_key')){
 		return $result; 
 	} 
 } 
+*/
 ?>
