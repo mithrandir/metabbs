@@ -19,9 +19,9 @@ class OpenID extends Plugin {
 			if (cookie_is_registered('openid') && $controller != 'openid') {
 				redirect_to(url_with_referer_for('openid', 'login').'&openid_identifier='.urlencode(cookie_get('openid')));
 			}
-			if ($controller != 'account' && $action != 'login') {
-				$layout->header .= openid_form();
-			}
+//			if ($controller != 'account' && $action != 'login') {
+//				$layout->header .= openid_form();
+//			}
 		}
 	}
 	function on_settings() {
