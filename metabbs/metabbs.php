@@ -1,8 +1,7 @@
 <?php
 require 'core/common.php';
-//require 'core/uri_parser.php';
 
-$dispatcher = new Dispatcher;
+$dispatcher = new Dispatcher($_SERVER['PATH_INFO']);
 $params = $dispatcher->params;
 $routes = $dispatcher->routes;
 if (!$dispatcher) {

@@ -3,8 +3,8 @@ class Dispatcher {
 	var $parts;
 	var $routes;
 	var $params;
-	function Dispatcher() {
-		$this->parts = explode('/', trim($_SERVER['PATH_INFO'], '/ '), 4);
+	function Dispatcher($uri) {
+		$this->parts = explode('/', trim($uri, '/ '));
 		$this->routes = array('container' => 'default', 'controller' =>  null, 'action' => null);
 		$this->params = Dispatcher::get_params(null, false, array('_GET', '_POST'));
 
@@ -21,15 +21,18 @@ class Dispatcher {
 			$this->routes['action'] = 'index';
 			if (count($this->parts) >= 2) {
 				if (is_numeric($this->parts[1])) {
+					// controller/id-number
+					// controller/id-number/action
 					$this->params['id'] = intval($this->parts[1]);
 					$this->routes['action'] = (count($this->parts) == 3) ? $this->parts[2] : 'view';
 				} else {
-/*					if (count($this->parts) == 3) {
-						$this->params['keyword'] = trim($this->parts[1]);
+					if (count($this->parts) >= 3) {
+						// controller/id-not-number/action
+						$this->params['id'] = $this->parts[1];
 						$this->routes['action'] = $this->parts[2];
-					} else {*/
+					} else
+						// controller/action
 						$this->routes['action'] = $this->parts[1];
-//					}
 				}
 			}
 		}
@@ -70,10 +73,6 @@ class Dispatcher {
 		} else {
 			if (isset($routes['action']) and !empty($routes['action']))
 				$urls[2] = $routes['action'];
-/*			if (isset($params['keyword']) and !empty($params['keyword'])) {
-				$urls[3] = $params['keyword'];
-				$params = array_diff_key($params, array('keyword' => null));
-			}*/
 		}
 
 		return METABBS_BASE_PATH.implode('/',$urls). ($params ? query_string_for($params):'');
