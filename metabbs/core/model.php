@@ -1,6 +1,4 @@
 <?php
-require_once dirname(__FILE__)."/../app/models/metadata.php";
-
 /**
  * 테이블 접미사를 지정한다.
  * @param $prefix 접미사

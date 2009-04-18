@@ -45,20 +45,7 @@ function requireExternel($name) {
 
 $_requireCore = array(
 	'compat',
-	'core',
-	'permission',
-	'request',
-	'i18n',
-	'cookie',
-	'tag_helper',
-	'plugin',
-	'metadata',
-	'trackback',
-	'theme',
-	'feed',
-	'validate',
-	'message',
-	'csrf'
+	'core'
 );
 $_requireModels = $_requireExternel = array();
 foreach($_requireCore as $name) {

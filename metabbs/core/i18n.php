@@ -1,10 +1,5 @@
 <?php
 /**
- * 원문 언어
- */
-define('SOURCE_LANGUAGE', 'en');
-
-/**
  * 언어 클래스
  */
 class Language {
