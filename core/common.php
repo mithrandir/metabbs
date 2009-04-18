@@ -35,9 +35,9 @@ function requireModel($name) {
 		array_push($_requireModels,$name);
 	}
 }
-function requireExternel($name) {
-	global $_requireExternel;
-	if(!in_array($name,$_requireExternel)) {
+function requireExternal($name) {
+	global $_requireExternal;
+	if(!in_array($name,$_requireExternal)) {
 		include_once (METABBS_DIR . "/core/external/$name.php");
 		array_push($_requireExternel,$name);
 	}
@@ -47,7 +47,7 @@ $_requireCore = array(
 	'compat',
 	'core'
 );
-$_requireModels = $_requireExternel = array();
+$_requireModels = $_requireExternal = array();
 foreach($_requireCore as $name) {
 	require METABBS_DIR .'/core/'.$name.'.php';
 }
