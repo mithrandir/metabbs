@@ -41,9 +41,9 @@
 	<dt><?=label_tag(i('Authentication'), 'settings', 'authentication')?></dt>
 	<dd>
 		<select name="settings[authentication]" id="settings_authentication">
-		<?=option_tag('1', i('Default Authentication'), $authentication == '1')?>
-		<?=option_tag('2', i('OpenID'), $authentication== '2')?>
-		<?=option_tag('3', i('Default Authentication + OpenID'), $authentication == '3')?>
+		<?=option_tag('1', i('Default Authentication'), $authentication == AUTH_DEFAULT)?>
+		<?=option_tag('2', i('OpenID'), $authentication == AUTH_OPENID)?>
+		<?=option_tag('3', i('Default Authentication + OpenID'), $authentication == (AUTH_DEFAULT | AUTH_OPENID))?>
 		</select>
 	</dd>
 </dl>

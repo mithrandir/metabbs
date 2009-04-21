@@ -107,13 +107,19 @@ function sendmail_utf8($from_email, $from_name, $to_email, $to_name, $subject, $
 	return mail($encoded_to_name, $encoded_subject, $message, $headers);	
 }
 
+// use these constants with bit operation.
+// AUTH_DEFAULT | AUTH_OPENID
+// if ($authentication & AUTH_OPENID) ...
+define('AUTH_DEFAULT', 1);
+define('AUTH_OPENID', 2);
+
 /**
  * 기본 인증 사용 여부
  * @return 사용하면 true, 안하면 false
  */
 function using_default_authentication() {
 	global $config;
-	return in_array($config->get('authentication', 1), array(1, 3));
+	return $config->get('authentication', 1) & AUTH_DEFAULT;
 }
 
 /**
@@ -122,7 +128,7 @@ function using_default_authentication() {
  */
 function using_openid() {
 	global $config;
-	return in_array($config->get('authentication', 1), array(2, 3));
+	return $config->get('authentication', 1) & AUTH_OPENID;
 }
 
 /**
