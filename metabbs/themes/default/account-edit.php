@@ -1,3 +1,5 @@
+<? include "_account_menu.php" ?>
+
 <h1><?=i('Account Edit')?></h1>
 
 <?=flash_message_box()?>
@@ -9,10 +11,12 @@
 	<label><?=i('User ID')?></label>
 	<?=$account->user?>
 </p>
+<? if (!$account->is_openid_account()): ?>
 <p>
 	<label><?=i('Password')?></label>
 	<input type="password" name="user[password]" class="ignore <?=marked_by_error_message('password', $error_messages)?>"/>
 </p>
+<? endif; ?>
 <p>
 	<label><?=i('Screen name')?><span class="star">*</span></label>
 	<input type="text" name="user[name]" value="<?=$account->name?>" />

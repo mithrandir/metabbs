@@ -13,6 +13,7 @@ if (is_post()) {
 	import_default_language(); // reload language data
 	$config->set('timezone', $settings['timezone']);
 	Timezone::set($settings['timezone']);
+	$config->set('authentication', $settings['authentication']);	
 	$config->set('force_fancy_url', $settings['force_fancy_url']);
 	if ($settings['plugin_extra_path'] &&
 			substr($settings['plugin_extra_path'], -1, 1) != '/')
@@ -24,6 +25,7 @@ if (is_post()) {
 }
 
 $default_language = $config->get('default_language', SOURCE_LANGUAGE);
+$authentication = $config->get('authentication', 1);
 $current_tz = Timezone::get();
 $current_theme = get_current_theme();
 $themes = get_themes();

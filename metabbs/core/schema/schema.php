@@ -1,5 +1,5 @@
 <?php
-define('METABBS_DB_REVISION', 1428);
+define('METABBS_DB_REVISION', 1455);
 
 function run($conn) {
 	$t = new Table('board');

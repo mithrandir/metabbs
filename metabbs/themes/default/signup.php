@@ -2,14 +2,14 @@
 
 <?=flash_message_box()?>
 <?=error_message_box($error_messages)?>
-<form method="post" onsubmit="return checkForm(this)" id="signup-form">
+<form method="post" id="signup-form">
 <fieldset>
 <h2>필수 정보</h2>
 <p>
 	<label><?=i('User ID')?><span class="star">*</span></label>
 	<input type="text" name="user[user]" value="<?=$account->user?>" class="<?=marked_by_error_message('user', $error_messages)?>"/>
 	<span id="notification"></span>
-	<input type="button" value="중복 확인" onclick="checkUserID(this.form['user[user]'])" />
+	<!--input type="button" value="중복 확인" onclick="checkUserID(this.form['user[user]'])" /-->
 </p>
 <p>
 	<label><?=i('Password')?><span class="star">*</span></label>

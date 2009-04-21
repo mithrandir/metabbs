@@ -36,7 +36,7 @@
 	background: transparent url(header.png) repeat-x;
 }
 #dialog form {
-	padding: 1em 1.5em;
+	margin: 1em;
 }
 #dialog-close {
 	float: right;
@@ -102,11 +102,16 @@
 	margin: 0;
 }
 
+#openid_identifier{
+	background: #fff url(/media/login-openid.gif) no-repeat 0 50%; padding-left: 18px;
+}
+
 #signup-form fieldset input.error,
 #signup-form fieldset textarea.error {
 	border: 2px solid red;
 }
 #login-form label.field,
+#openid-form label.field,
 #signup-form label,
 #account-edit-form label,
 #forget-password-form label,
@@ -117,6 +122,7 @@
 	font-weight: bold;
 }
 #login-form input.button,
+#openid-form input.button,
 #signup-form input.button,
 #account-edit-form input.button,
 #forget-password-form input.button,

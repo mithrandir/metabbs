@@ -108,12 +108,21 @@ function sendmail_utf8($from_email, $from_name, $to_email, $to_name, $subject, $
 }
 
 /**
+ * 기본 인증 사용 여부
+ * @return 사용하면 true, 안하면 false
+ */
+function using_default_authentication() {
+	global $config;
+	return in_array($config->get('authentication', 1), array(1, 3));
+}
+
+/**
  * OpenID 사용 여부
  * @return 사용하면 true, 안하면 false
  */
 function using_openid() {
 	global $config;
-	return $config->get('use_openid', false);
+	return in_array($config->get('authentication', 1), array(2, 3));
 }
 
 /**
