@@ -68,9 +68,41 @@ class User extends Model {
 	function is_admin() {
 		return $this->level == 255;
 	}
-	function valid() {
+	function validate_before_create(&$error_messages) {
+		if (strlen($this->user) < 5 or strlen($this->user) > 45)
+			$error_messages->add('User ID length must be longer than 5 and shorter than 45', 'user');
+
+		if (!Validate::identifier($this->user))
+			$error_messages->add('User ID must be composed of the characters \'a-zA-Z0-9_-\'', 'user');
+
+		if (in_array($this->user, array('account','openid','board','post','comment','attachment', 'user')))
+			$error_messages->add('User ID may not be some reserved words(account, user, openid.. etc.)', 'user');
+
 		$user = User::find_by_user($this->user);
-		return !$user->exists();
+		if ($user->exists())
+			$error_messages->add('User ID already exists', 'user');
+
+		if (strlen($this->password) < 5)
+			$error_messages->add('Password length must be longer than 5', 'password');
+
+		if ($this->password != $this->password_again)
+			$error_messages->add('Two password fields\' content must be same', 'password_again');
+
+		if (strlen($this->email) == 0)
+			$error_messages->add('Please enter a E-Mail address', 'email');
+			
+		if (strlen($this->email) > 255 && !Validate::email($this->email))
+			$error_messages->add('Please enter a valid E-Mail address', 'email');
+
+		if (!empty($this->url)) {
+			if (strlen($this->url) > 255)
+				$error_messages->add('Please enter a homepage address shorter than 255 characters', 'url');
+			if (!Validate::url($this->url))
+				$error_messages->add('Please enter a valid homepage address', 'url');
+		}
+	}
+	function validate_for_update(&$error_messages) {
+
 	}
 	function get_url() {
 		if (strpos($this->url, "http://") !== 0) {
@@ -84,6 +116,9 @@ class User extends Model {
 	}
 	function unset_token() {
 		$this->set_token('');
+	}
+	function is_openid_account() {
+		return $this->password == 'openid';
 	}
 	function has_perm($action, $object) {
 		if ($this->is_admin()) return true;
@@ -157,7 +192,7 @@ class User extends Model {
 			break;
 			case 'write_comment':
 				$board = $object->get_board();
-				return ($board->restrict_comment()) 
+				return ($board->restrict_comment())
 					|| (!$board->restrict_comment() and !$board->get_attribute('always_show_comments', false) );
 			break;
 			case 'attachment':
@@ -172,7 +207,7 @@ class User extends Model {
 			case 'thumbnail':
 				$board = $object->get_board();
 				return $board->get_attribute('always_show_thumbnail', false)
-					|| !$board->get_attribute('always_show_thumbnail', false) 
+					|| !$board->get_attribute('always_show_thumbnail', false)
 					&& (($board->restrict_attachment() && $board->is_member($this) && $this->level >= $board->perm_attachment)
 						|| (!$board->restrict_attachment() && $this->level >= $board->perm_attachment));
 			break;
@@ -213,7 +248,7 @@ class Guest extends Model
 					else
 						return false;
 				}
-				return ($board->restrict_access() && $board->is_member($this) && $this->level >= $board->perm_read) 
+				return ($board->restrict_access() && $board->is_member($this) && $this->level >= $board->perm_read)
 					|| (!$board->restrict_access() && $this->level >= $board->perm_read);
 
 			break;
@@ -249,7 +284,7 @@ class Guest extends Model
 			break;
 			case 'write_comment':
 				$board = $object->get_board();
-				return ($board->restrict_comment()) 
+				return ($board->restrict_comment())
 					|| (!$board->restrict_comment() and !$board->get_attribute('always_show_comments', false) );
 			break;
 			case 'attachment':
@@ -260,7 +295,7 @@ class Guest extends Model
 			case 'thumbnail':
 				$board = $object->get_board();
 				return $board->get_attribute('always_show_thumbnail', false)
-					|| !$board->get_attribute('always_show_thumbnail', false) 
+					|| !$board->get_attribute('always_show_thumbnail', false)
 					&& (($board->restrict_attachment() && $board->is_member($this) && $this->level >= $board->perm_attachment)
 						|| (!$board->restrict_attachment() && $this->level >= $board->perm_attachment));
 			break;

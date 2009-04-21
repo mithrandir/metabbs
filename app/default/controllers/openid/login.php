@@ -8,9 +8,9 @@ if (isset($_REQUEST['openid_identifier'])) {
 	if ($auth_request) {
 		$auth_request->addExtensionArg('sreg', 'required', 'nickname,email');
 //		$auth_request->addExtensionArg('sreg', 'optional', 'email');
-		redirect_to($auth_request->redirectURL(METABBS_HOST_URL . METABBS_BASE_PATH, full_url_for('openid', 'complete').'?url='.$_GET['url']));
+		redirect_to($auth_request->redirectURL(METABBS_HOST_URL . METABBS_BASE_PATH, full_url_for('openid', 'login_complete').'?url='.$_GET['url']));
 	} else {
-		$fail = true;
+		Flash::set('OpenID\'s not ready');
 	}
 } else {
 	// for backward compatibility

@@ -179,3 +179,9 @@ $lang['Thumbnail'] = '썸네일';
 $lang['Use Tag'] = '태그 사용';
 $lang['Use OpenID'] = 'OpenID 사용';
 $lang['Path of Extra Plugins'] = '추가 플러그인 경로';
+$lang['Authentication'] = '인증방법';
+$lang['Default Authentication'] = '기본 인증';
+$lang['OpenID'] = 'OpenID';
+$lang['Default Authentication + OpenID'] = '기본 인증 + OpenID';
+$lang['Transfer to Default Account'] = '기본 계정으로 전환';
+

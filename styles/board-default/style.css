@@ -275,21 +275,18 @@ input.button, button {
 }
 #comment-form,
 #reply-form,
-#edit-form,
-#login-form {
+#edit-form {
 	padding: 1.5em;
 }
 #comment-form label,
 #reply-form label,
-#edit-form label,
-#login-form lable {
+#edit-form label {
 	font-weight: bold;
 	margin-right: 0.5em;
 }
 #comment-form textarea,
 #reply-form textarea,
-#edit-form textarea,
-#login-form textarea {
+#edit-form textarea {
 	width: 95%;
 }
 

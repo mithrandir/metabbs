@@ -50,6 +50,7 @@ requireModel('trackback');
 requireModel('attachment');
 requireModel('tag');
 requireModel('tag_post');
+requireModel('openid');
 
 // core
 requireCore('template');

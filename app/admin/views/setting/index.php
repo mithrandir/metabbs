@@ -38,8 +38,14 @@
 		</select>
 	</dd>
 
-	<dt><?=label_tag(i('Use OpenID'), 'settings', 'use_openid')?></dt>
-	<dd><?=check_box('settings', 'use_openid', $config->get('use_openid', false))?></dd>
+	<dt><?=label_tag(i('Authentication'), 'settings', 'authentication')?></dt>
+	<dd>
+		<select name="settings[authentication]" id="settings_authentication">
+		<?=option_tag('1', i('Default Authentication'), $authentication == '1')?>
+		<?=option_tag('2', i('OpenID'), $authentication== '2')?>
+		<?=option_tag('3', i('Default Authentication + OpenID'), $authentication == '3')?>
+		</select>
+	</dd>
 </dl>
 
 <h2>고급 설정</h2>

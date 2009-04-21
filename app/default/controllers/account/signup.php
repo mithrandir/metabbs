@@ -1,43 +1,19 @@
 <?php
-if (is_xhr() && isset($_GET['user'])) {
-	$user = User::find_by_user($_GET['user']);
-	if ($user->exists()) {
-		echo '이미 사용중인 아이디입니다.';
-	} else {
-		echo '사용할 수 있는 아이디입니다.';
-	}
-	exit;
-}
-
 if (is_post()) {
 	$info = $_POST['user'];
 	apply_filters('ValidateAccountSignup', $_POST, $error_messages);
 
-	if (strlen($info['password']) < 5)
-		$error_messages->add('Password length must be longer than 5', 'password');
-	
-	if ($info['password'] != $info['password_again'])
-		$error_messages->add('Two password fields\' content must be same', 'password_again');
-
-	if (!empty($info['email']) && !Validate::email($info['email']))
-		$error_messages->add('Please enter a valid E-Mail address', 'email');
-
-	if (!empty($info['url']) && strlen($info['url']) > 255)
-		$error_messages->add('Please enter a homepage address shorter than 255 characters', 'url');
-
-	$account = new User($info);
-	$account->password = md5($account->password);
-	if (!$account->valid()) 
-		$error_messages->add('User ID already exists', 'user');
+	$user = new User($info);
+	$user->validate_before_create($error_messages);
 
 	if(!$error_messages->exists()) {
-		$account->create();
+		$user->password = md5($user->password);	
+		$user->create();
 		redirect_to(url_with_referer_for('account', 'login'));
 	} 
-	unset($account);
+	unset($user);
 	$account = new Guest($info);
 	$account->password = "";
-
 } else {
 	$account->name = '';
 }
