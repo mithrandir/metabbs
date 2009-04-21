@@ -1,5 +1,5 @@
 <?php
-define('METABBS_VERSION', '0.12-devel');
+define('METABBS_VERSION', '0.99-devel');
 // template
 define('DEFAULT_VIEW', 0);
 define('ADMIN_VIEW', 1);

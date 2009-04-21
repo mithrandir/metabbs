@@ -8,9 +8,6 @@
 	<dt><?=label_tag(i('Global footer'), 'settings', 'global_footer')?></dt>
 	<dd><?=text_field('settings', 'global_footer', $config->get('global_footer'), 30)?></dd>
 
-	<dt><?=label_tag(i('Base Path'), 'settings', 'base_path')?></dt>
-	<dd><?=text_field('settings', 'base_path', $config->get('base_path'), 30)?></dd>
-
 	<dt><?=label_tag(i('Site theme'), 'settings', 'theme')?></dt>
 	<dd>
 		<select name="settings[theme]" id="settings_theme">
@@ -40,10 +37,19 @@
 		<? } ?>
 		</select>
 	</dd>
+
+	<dt><?=label_tag(i('Use OpenID'), 'settings', 'use_openid')?></dt>
+	<dd><?=check_box('settings', 'use_openid', $config->get('use_openid', false))?></dd>
 </dl>
 
 <h2>고급 설정</h2>
 <p><?=check_box('settings', 'force_fancy_url', $config->get('force_fancy_url', false))?> <?=label_tag('Fancy URL 강제 적용', 'settings', 'force_fancy_url')?></p>
-<p>Path of Extra Plugins <input type="text" name="settings[plugin_extra_path]" size="30" value="<?=$config->get('plugin_extra_path')?>" /></p>
+<dl>
+	<dt><?=label_tag(i('Base Path'), 'settings', 'base_path')?></dt>
+	<dd><?=text_field('settings', 'base_path', $config->get('base_path'), 30)?></dd>
+
+	<dt><?=label_tag(i('Path of Extra Plugins'), 'settings', 'plugin_extra_path')?></dt>
+	<dd><input type="text" name="settings[plugin_extra_path]" size="30" value="<?=$config->get('plugin_extra_path')?>" /></dd>
+</dl>
 <p><input type="submit" value="OK" /></p>
 </form>

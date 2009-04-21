@@ -14,8 +14,10 @@
 </p>
 </form>
 
+<? if (using_openid()): ?>
 <form method="post" action="<?=url_with_referer_for('openid', 'login')?>" id="openid-form">
 <h2><?= i('OpenID Login')?></h2>
 <p><input type="text" name="openid_identifier" style="background: #fff url(<?=METABBS_BASE_PATH?>media/login-openid.gif) no-repeat 0 50%; padding-left: 18px;" /> <input type="submit" value="<?=i('Login')?>" /></p>
 <p><input type="checkbox" name="autologin" value="1" id="openid_autologin" /> <label for="openid_autologin"><?=i('Auto Login')?></label></p>
 </form>
+<? endif; ?>

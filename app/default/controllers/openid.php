@@ -1,4 +1,7 @@
 <?php
+if (!using_openid())
+	print_notice('OpenID support disabled.', 'This site does not allow you to login with OpenID.');
+
 if (!file_exists('/dev/urandom')) {
 	define('Auth_OpenID_RAND_SOURCE', NULL);
 }
