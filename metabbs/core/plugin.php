@@ -183,15 +183,22 @@ function get_plugins() {
 }
 
 function import_plugin($plugin, $dir = '') {
+	// to avoid class redeclaration
+	if (class_exists($plugin))
+		return;
+
 	if (!$dir) {
 		foreach (plugin_dirs() as $dir)
-			import_plugin($plugin, $dir);
+			if (import_plugin($plugin, $dir)) break;
 	} else {
 		if (file_exists("$dir$plugin.php")) {
 			include_once("$dir$plugin.php");
+			return true;
 		} else if (file_exists("$dir$plugin/plugin.php")) {
 			include_once("$dir$plugin/plugin.php");
+			return true;
 		}
+		return false;
 	}
 }
 

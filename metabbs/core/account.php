@@ -93,6 +93,7 @@ function login_required() {
 /**
  * utf8로 인코딩된 메일을 보낸다.
  */
+// XXX: mail.php 등으로 분리
 function sendmail_utf8($from_email, $from_name, $to_email, $to_name, $subject, $message, $charset = "UTF-8") {
 	$eol = "\r\n";
 	$encoded_from_name = empty($from_name) ? $from_email : "=?{$charset}?B?".base64_encode($from_name)."?= <{$from_email}>";
@@ -104,6 +105,15 @@ function sendmail_utf8($from_email, $from_name, $to_email, $to_name, $subject, $
 	$headers .= "Content-Type: text/html; charset=\"{$charset}\"".$eol;
 
 	return mail($encoded_to_name, $encoded_subject, $message, $headers);	
+}
+
+/**
+ * OpenID 사용 여부
+ * @return 사용하면 true, 안하면 false
+ */
+function using_openid() {
+	global $config;
+	return $config->get('use_openid', false);
 }
 
 /**
