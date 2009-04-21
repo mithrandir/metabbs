@@ -1,4 +1,4 @@
- <?php
+<?php
 if (isset($_REQUEST['openid_identifier'])) {
 	$openid = $_REQUEST['openid_identifier'];
 	if (isset($_POST['autologin'])) {
@@ -12,6 +12,8 @@ if (isset($_REQUEST['openid_identifier'])) {
 	} else {
 		$fail = true;
 	}
+} else {
+	// for backward compatibility
+	redirect_to(url_with_referer_for('account', 'login'));
 }
-exit;
 ?>
