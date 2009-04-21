@@ -9,7 +9,6 @@ if (is_post()) {
 	$config->set('use_forget_password', $settings['use_forget_password']);
 	$config->set('default_language', $settings['default_language']);
 	$config->set('always_use_default_language', $settings['always_use_default_language']);
-	$config->set('use_openid', $settings['use_openid']);
 	import_default_language(); // reload language data
 	$config->set('timezone', $settings['timezone']);
 	Timezone::set($settings['timezone']);
