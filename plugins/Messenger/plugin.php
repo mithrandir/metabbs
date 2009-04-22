@@ -34,7 +34,7 @@ function print_unread_messages($messages) {
 ?>
 <div id="message-box">
 <div class="message-actions">
-<a href="<?=url_for('message', 'read')?>all" onclick="markAllRead(this.href); return false">Mark all read</a> /
+<a href="<?=url_for('message', 'read', array('id'=>'all'))?>" onclick="markAllRead(this.href); return false">Mark all read</a> /
 <a href="#" onclick="$('message-box').hide()">Close</a>
 </div>
 <h1>You've got <span id="messages-count"><?=$messages_count?></span> message(s)</h1>
@@ -153,11 +153,11 @@ class Messenger extends Plugin {
 		ini_set("include_path", dirname(__FILE__) . PATH_SEPARATOR . ini_get("include_path"));
 	}
 	function action_read() {
-		global $id, $account;
-		if ($id == 'all') {
+		global $params, $account;
+		if ($params['id'] == 'all') {
 			Message::mark_all_read($account);
 		} else {
-			$message = Message::find($id);
+			$message = Message::find($params['id']);
 			if ($message->to == $account->id) {
 				$message->mark_as_read();
 			}
@@ -165,17 +165,17 @@ class Messenger extends Plugin {
 		}
 	}
 	function action_delete() {
-		global $id, $account;
-		$message = Message::find($id);
+		global $params, $account;
+		$message = Message::find($params['id']);
 		if ($message->to == $account->id)
 			$message->delete();
 		redirect_back();
 	}
 	function action_send_message() {
-		global $template, $id, $user, $account;
+		global $template, $params, $user, $account;
 		if ($account->is_guest())
 			access_denied();
-		$user = User::find($id);
+		$user = User::find($params['id']);
 		if (is_post()) {
 			$message = new Message;
 			$message->from = $account->id;
