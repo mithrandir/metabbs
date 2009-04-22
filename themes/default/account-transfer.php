@@ -1,15 +1,13 @@
-<? include "_account_menu.php" ?>
-
 <h1><?=i('Transfer to Default Account')?></h1>
 
 <?=flash_message_box()?>
 <?=error_message_box($error_messages)?>
-<form method="post" action="<?=url_with_referer_for('account', 'transfer', $params)?>" id="account-transfer-form">
+<form method="post" action="<?=url_with_referer_for('account', 'transfer', $params)?>" id="transfer-form">
 <fieldset>
 <h2>기본 정보</h2>
 <p>
 	<label><?=i('OpenID')?><span class="star">*</span></label>
-	
+	test
 </p>
 <p>
 	<label><?=i('User ID')?><span class="star">*</span></label>
