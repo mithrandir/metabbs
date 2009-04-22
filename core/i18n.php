@@ -1,4 +1,7 @@
 <?php
+
+define('SOURCE_LANGUAGE', 'en');
+
 /**
  * 언어 클래스
  */

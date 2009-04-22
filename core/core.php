@@ -1,17 +1,5 @@
 <?php
 define('METABBS_VERSION', '0.99-devel');
-// template
-define('DEFAULT_VIEW', 0);
-define('ADMIN_VIEW', 1);
-// permission
-define('ASK_PASSWORD', 2);
-// i18n;
-define('SOURCE_LANGUAGE', 'en');
-// plugin - Filter API
-define('META_FILTER_OVERWRITE', 1);		// 필터 충돌시 겹쳐쓴다.
-define('META_FILTER_PREPEND', 2);		// 필터 충돌시 앞에 쓴다.
-define('META_FILTER_APPEND', 3);		// 필터 충돌시 뒤에 쓴다.
-define('META_FILTER_CALLBACK', 4);		// 충돌시 콜백 함수를 호출한다.
 
 requireCore('config');
 $config = new Config(METABBS_DIR . '/metabbs.conf.php');
