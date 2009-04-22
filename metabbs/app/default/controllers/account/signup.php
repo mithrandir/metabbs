@@ -4,7 +4,7 @@ if (is_post()) {
 	apply_filters('ValidateAccountSignup', $_POST, $error_messages);
 
 	$user = new User($info);
-//	$user->validate_before_create($error_messages);
+	$user->validate_before_create($error_messages);
 
 	if(!$error_messages->exists()) {
 		$user->password = md5($user->password);	
