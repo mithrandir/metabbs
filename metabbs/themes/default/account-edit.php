@@ -49,7 +49,7 @@
 	<th>등록일</th>	
 	<th />
 </tr>
-<? foreach (Openid::find_by_user($account) as $openid): ?>
+<? foreach (Openid::find_all_by_user($account) as $openid): ?>
 <tr>
 	<td><?=$openid->openid?></td>
 	<td><?=date('Y-m-d H:i:s', $openid->created_at)?></td>
@@ -57,7 +57,7 @@
 </tr>
 <? endforeach; ?>
 </table>
-<form method="post" action="<?=url_for('openid', 'register', array('url'=>urlencode(url_for('account', 'edit'))))?>" id="openid-form">
+<form method="post" action="<?=url_with_referer_for('openid', 'register')?>" id="openid-form">
 <fieldset>
 <p><input type="text" name="openid_identifier" style="background: #fff url(<?=METABBS_BASE_PATH?>media/login-openid.gif) no-repeat 0 50%; padding-left: 18px;" /> <input type="submit" value="<?=i('Register')?>" /></p>
 </fieldset>

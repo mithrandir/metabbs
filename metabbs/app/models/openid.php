@@ -15,7 +15,7 @@ class Openid extends Model {
 	function find_by_openid($openid) {
 		return find_by('openid', 'openid', $openid);
 	}
-	function find_by_user($user) {
+	function find_all_by_user($user) {
 		if (!$user->exists()) return false;
 		return find_all('openid', "user_id=$user->id", "created_at");
 	}	
