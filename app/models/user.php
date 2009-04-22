@@ -101,8 +101,22 @@ class User extends Model {
 				$error_messages->add('Please enter a valid homepage address', 'url');
 		}
 	}
-	function validate_for_update(&$error_messages) {
+	function validate_before_update(&$error_messages) {
+		if (!empty($this->password) && strlen($this->password) < 5)
+			$error_messages->add('Password length must be longer than 5', 'password');
 
+		if (strlen($this->email) == 0)
+			$error_messages->add('Please enter a E-Mail address', 'email');
+			
+		if (strlen($this->email) > 255 || !Validate::email($this->email))
+			$error_messages->add('Please enter a valid E-Mail address', 'email');
+			
+		if (!empty($this->url)) {
+			if (strlen($this->url) > 255)
+				$error_messages->add('Please enter a homepage address shorter than 255 characters', 'url');
+			if (!Validate::url($this->url))
+				$error_messages->add('Please enter a valid homepage address', 'url');
+		}
 	}
 	function get_url() {
 		if (strpos($this->url, "http://") !== 0) {

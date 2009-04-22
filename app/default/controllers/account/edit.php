@@ -7,24 +7,15 @@ if (is_post()) {
 
 	$old_password = $account->password;	
 	$account->import($info);
-
-	// validate
-	if (!empty($account->password) && strlen($account->password) < 5)
-		$error_messages->add('Password length must be longer than 5', 'password');
-
-	if (!empty($account->email) && !Validate::email($account->email))
-		$error_messages->add('Please enter a valid E-Mail Address', 'email');
-
-	if (!empty($account->url) && strlen($account->url) > 255)
-		$error_messages->add('Please enter a homepage address shorter than 255 characters', 'url');	
+	$account->validate_before_update($error_messages);
 
 	if(!$error_messages->exists()) {
 		if (!$account->password)
 			$account->password = $old_password;
 		else
 			$account->password = md5($account->password);
-		Flash::set('Edit done');
 		$account->update();
+		Flash::set('Edit done');		
 		redirect_back();
 	} 
 }

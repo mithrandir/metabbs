@@ -4,7 +4,7 @@
 
 <?=flash_message_box()?>
 <?=error_message_box($error_messages)?>
-<form method="post" onsubmit="return checkForm(this)" action="<?=url_with_referer_for('account', 'edit', $params)?>" id="account-edit-form">
+<form method="post" action="<?=url_with_referer_for('account', 'edit', $params)?>" id="account-edit-form">
 <fieldset>
 <h2>기본 정보</h2>
 <p>
