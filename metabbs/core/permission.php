@@ -1,4 +1,6 @@
 <?php
+define('ASK_PASSWORD', 2);
+
 function permission_required($action, $object) {
 	global $account;
 	$result = $account->has_perm($action, $object);
