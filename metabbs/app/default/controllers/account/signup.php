@@ -1,7 +1,7 @@
 <?php
 if (is_post()) {
-	$info = $_POST['user'];
-	apply_filters('ValidateAccountSignup', $_POST, $error_messages);
+	$info = $params['user'];
+	apply_filters('ValidateAccountSignup', $params, $error_messages);
 
 	$user = new User($info);
 	$user->validate_before_create($error_messages);

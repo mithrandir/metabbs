@@ -116,7 +116,8 @@
 #account-edit-form label,
 #forget-password-form label,
 #reset-password-form label,
-#signup-form label {
+#signup-form label,
+#transfer-form label  {
 	width: 8em;
 	float: left;
 	font-weight: bold;
@@ -127,7 +128,8 @@
 #account-edit-form input.button,
 #forget-password-form input.button,
 #reset-password-form input.button,
-#signup-form input.button {
+#signup-form input.button,
+#transfer-form input.button {
 	float: none;
 	width: 81px;
 	height: 27px;
@@ -184,4 +186,27 @@ fieldset {
 	width: 20em;
 	padding: 0.5em;
 	margin-bottom: 1em;
+}
+
+#openids  {
+	width: 30em;
+	border-collapse: collapse;
+}
+#openids  td {
+	padding: 0.5em;
+	border-bottom: 1px solid #e8e8e8;
+}
+#openids  th {
+	padding: 0.5em;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+	background-color: #f4f4f4;
+}
+#openids tr.depth-1 td.title {
+	padding-left: 1.5em;
+}
+
+t#openids td.actions {
+	width: 16.5em;
+	color: #999;
 }

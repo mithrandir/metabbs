@@ -265,6 +265,12 @@ function url_with_referer_for($controller = null, $action = null, $params = arra
 	return $dispatcher->url_for($controller, $action, $params);
 }
 
+function full_url_with_referer_for($controller = null, $action = null, $params = array()) {
+	global $dispatcher;
+	$params['url'] = urlencode(isset($_GET['url']) ? $_GET['url'] : $_SERVER['REQUEST_URI']);	
+	return METABBS_HOST_URL.$dispatcher->url_for($controller, $action, $params);
+}
+
 function url_admin_for($controller = null, $action = null, $params = array()) {
 	global $dispatcher;
 	return $dispatcher->url_for($controller, $action, $params, 'admin');
