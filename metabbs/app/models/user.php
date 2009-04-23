@@ -118,6 +118,26 @@ class User extends Model {
 				$error_messages->add('Please enter a valid homepage address', 'url');
 		}
 	}
+	function validate_before_transfer(&$error_messages) {
+		if (strlen($this->user) < 5 or strlen($this->user) > 45)
+			$error_messages->add('User ID length must be longer than 5 and shorter than 45', 'user');
+
+		if (!Validate::identifier($this->user))
+			$error_messages->add('User ID must be composed of the characters \'a-zA-Z0-9_-\'', 'user');
+
+		if (in_array($this->user, array('account','openid','board','post','comment','attachment', 'user')))
+			$error_messages->add('User ID may not be some reserved words(account, user, openid.. etc.)', 'user');
+
+		$user = User::find_by_user($this->user);
+		if ($user->exists())
+			$error_messages->add('User ID already exists', 'user');
+
+		if (strlen($this->password) < 5)
+			$error_messages->add('Password length must be longer than 5', 'password');
+
+		if ($this->password != $this->password_again)
+			$error_messages->add('Two password fields\' content must be same', 'password_again');
+	}
 	function get_url() {
 		if (strpos($this->url, "http://") !== 0) {
 			return 'http://' . $this->url;
