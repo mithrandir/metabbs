@@ -11,6 +11,7 @@ if (isset($_REQUEST['openid_identifier']) and !empty($_REQUEST['openid_identifie
 		redirect_to($auth_request->redirectURL(METABBS_HOST_URL . METABBS_BASE_PATH, full_url_with_referer_for('openid', 'login_complete')));
 	} else {
 		Flash::set('OpenID\'s not ready');
+		redirect_to(url_with_referer_for('account', 'login'));		
 	}
 } else {
 	Flash::set('OpenID field is empty');
