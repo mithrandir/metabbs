@@ -43,6 +43,7 @@
 
 <? if (using_openid() && !$account->is_openid_account()): ?>
 <h2><?=i('OpenID')?></h2>
+<br />
 <table id="openids">
 <tr>
 	<th>OpenID</th>

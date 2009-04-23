@@ -31,6 +31,10 @@ class Openid extends Model {
 		$this->position = empty($max_position) ? 1 : $max_position + 1;
 		Model::create();
 	}
+	function delete() {
+		Model::delete();
+		$this->reset_position();
+	}	
 	function reset_position() {
 		$user = $this->get_user();
 		$openids = $this->db->fetchall("SELECT id FROM $this->table WHERE user_id={$user->id} ORDER BY position ASC");
