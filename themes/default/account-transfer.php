@@ -2,18 +2,16 @@
 
 <?=flash_message_box()?>
 <?=error_message_box($error_messages)?>
-<form method="post" action="<?=url_with_referer_for('account', 'transfer', $params)?>" id="transfer-form">
+<form method="post" action="<?=url_with_referer_for('account', 'transfer')?>" id="transfer-form">
 <fieldset>
 <h2>기본 정보</h2>
 <p>
 	<label><?=i('OpenID')?><span class="star">*</span></label>
-	test
+	<?= $account->user?>
 </p>
 <p>
 	<label><?=i('User ID')?><span class="star">*</span></label>
 	<input type="text" name="user[user]" value="<?=$user->user?>" class="<?=marked_by_error_message('user', $error_messages)?>"/>
-	<span id="notification"></span>
-	<input type="button" value="중복 확인" onclick="checkUserID(this.form['user[user]'])" />
 </p>
 <p>
 	<label><?=i('Password')?><span class="star">*</span></label>

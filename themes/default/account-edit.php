@@ -36,7 +36,7 @@
 </p>
 <p><input type="submit" value="<?=i('Edit Info')?>" class="button"/>
 <? if (isset($params['url']) && !empty($params['url'])): ?> <a href="<?=$params['url']?>" class="button dialog-close"><?=i('Cancel')?></a><? endif; ?>
-<? if ((using_openid() && $account->is_openid_account())): ?> <a href="<?=url_for('account', 'transfer', array('url'=>urlencode(url_for('account', 'edit'))))?>"><?=i('Transfer to Default Account')?></a><? endif; ?>
+<? if (using_openid() && $account->is_openid_account()): ?> <a href="<?=url_for('account', 'transfer', array('url'=>urlencode(url_with_referer_for('account', 'edit'))))?>"><?=i('Transfer to Default Account')?></a><? endif; ?>
 </p>
 </fieldset>
 </form>
