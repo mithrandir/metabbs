@@ -1,4 +1,6 @@
 <?php
+login_required();
+
 $response = $consumer->complete($_GET);
 
 if ($response->status == Auth_OpenID_SUCCESS) {
