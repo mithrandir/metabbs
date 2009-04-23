@@ -1,4 +1,6 @@
- <?php
+<?php
+login_required(); 
+ 
 if (isset($_REQUEST['openid_identifier']) and !empty($_REQUEST['openid_identifier'])) {
 	$openid = $_REQUEST['openid_identifier'];
 	if (isset($_POST['autologin'])) {
