@@ -84,6 +84,7 @@ class FeedEngine extends Plugin {
 			if (isset($_GET['feed-at-board']) && !empty($_GET['feed-at-board'])) {
 				$board = Board::find_by_name($_GET['feed-at-board']);
 				$board->set_attribute('feed-at-board', $board->get_attribute('feed-at-board') ? false : true);
+				Flash::set('수정했습니다');
 				redirect_to('?tab=general');
 			}
 			if (isset($_GET['feed-range']) && !empty($_GET['feed-range'])) {
@@ -94,6 +95,7 @@ class FeedEngine extends Plugin {
 					$feed_range = 0;
 
 				$board->set_attribute('feed-range', $feed_range);
+				Flash::set('수정했습니다');
 				redirect_to('?tab=general');
 			}
 
@@ -107,6 +109,7 @@ class FeedEngine extends Plugin {
 
 				$board = Board::find_by_name($_GET['collect-feed']);
 				FeedParser::collect_feeds_to_board($board);
+				Flash::set('수정했습니다');
 				redirect_to('?tab=general');
 			}
 			if (isset($_GET['feed-kind']) && !empty($_GET['feed-kind'])) {
@@ -117,12 +120,14 @@ class FeedEngine extends Plugin {
 					$feed_kind = 0;
 
 				$board->set_attribute('feed-kind', $feed_kind);
+				Flash::set('수정했습니다');
 				redirect_to('?tab=general');
 			}
 			if (isset($_GET['feed-tags']) && !empty($_GET['feed-tags'])) {
 				$board = Board::find_by_name($_GET['feed-tags']);
 				$tags = array_trim(explode(",",$_POST['value']));
 				$board->set_attribute('tags', implode(',', $tags));
+				Flash::set('수정했습니다');
 				redirect_to('?tab=general');
 			}
 		}
@@ -167,6 +172,7 @@ class FeedEngine extends Plugin {
 //				$feed->hide_posts();
 //				$feed->show_posts();
 				$feed->update();
+				Flash::set('수정했습니다');
 				redirect_to('?tab=feed');
 			}
 			if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
@@ -308,7 +314,7 @@ function edit(id, url) {
 				}
 ?>
 <tr>
-	<td class="name"><?=$board->get_title()?> <span class="url">/board/<?=$board->name?></span></td>
+	<td class="name"><?=$board->get_title()?> <span class="url"><?=url_for($board)?></span></td>
 	<td class="post_count"><?=Feed::get_all_post_count($board)?></td>
 	<td class="range"><? if($board->get_attribute('feed-at-board')) : ?><a href="?tab=general&feed-range=<?=$board->name?>"><?=$feed_range_msg?></a><? endif; ?></td>
 	<td class="kind"><? if($board->get_attribute('feed-at-board')) : ?><a href="?tab=general&feed-kind=<?=$board->name?>"><?=$feed_kind_msg?></a><? endif; ?></td>
