@@ -11,6 +11,11 @@ class FeedBoard extends Model {
 	function find($id) {
 		return find('feed_board', $id);
 	}
+	function find_by_feed_id_and_board_id($feed_id, $board_id) {
+		$db = get_conn();
+		$table = get_table_name('feed_board');
+		return $db->fetchrow("SELECT * FROM $table WHERE feed_id = ".$feed_id." and board_id = ".$board_id, 'FeedBoard');
+	}
 	function find_all() {
 		$db = get_conn();
 		$table = get_table_name('feed_board');

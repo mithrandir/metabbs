@@ -8,7 +8,7 @@ class FeedParser {
 
 	function FeedParser() {
 		ini_set("include_path", dirname(__FILE__) . PATH_SEPARATOR . ini_get("include_path"));
-		include_once METABBS_DIR . '/plugins/FeedEngine/simplepie.inc.php';
+		requireCoreofPlugin('FeedEngine', 'simplepie');
 
 		$this->sp = new SimplePie();
 		$this->sp->set_cache_location(METABBS_DIR ."/data/feed_cache");

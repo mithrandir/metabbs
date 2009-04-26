@@ -45,6 +45,7 @@ function find_first($model, $condition = '') {
 	$query = "SELECT * FROM $table";
 	if ($condition) $query .= " WHERE $condition";
 	$result = $__db->query($query);
+	$model = get_model_name($model);
 	return new $model($result->fetch());
 }
 
@@ -61,6 +62,7 @@ function find_all($model, $condition = '', $order = '', $limit = 0, $offset = NU
 	}
 	$result = $__db->query($query);
 	while ($row = $result->fetch()) {
+		$model = get_model_name($model);	
 		$list[] = new $model($row);
 	}
 	return $list;
