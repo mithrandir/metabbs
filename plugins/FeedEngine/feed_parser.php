@@ -1,7 +1,7 @@
 <?php
 class FeedParser {
 	var $sp;
-	var $supported_mimes = array('image/gif'=>'gif', 'image/png'=>'png', 'image/jpeg'=>'jpg');
+	var $supported_mimes = array('image/gif'=>'gif', 'image/png'=>'png', 'image/jpeg'=>'jpg', 'image/pjpeg'=>'jpg');
 	var $min_image_x = 130;
 	var $min_image_y = 130;
 	var $cache_duration = 3600;

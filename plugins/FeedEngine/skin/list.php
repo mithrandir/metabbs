@@ -3,15 +3,13 @@ function click_feed(url) {
 	new Ajax.Request( url, { method: 'get' });
 }
 </script>
+
+<h1 id="board-title"><?=$board->title?></h1>
+
 <div id="account-info">
-<? if ($guest): ?>
-<a href="<?=$link_login?>" class="dialog">로그인</a>
-<a href="<?=$link_signup?>">회원가입</a>
-<? else: ?>
-<a href="<?=$link_logout?>">로그아웃</a>
-<a href="<?=$link_account?>">정보 수정</a>
-<? if ($link_admin): ?><a href="<?=$link_admin?>">관리자 페이지</a><? endif; ?>
-<? endif; ?>
+<? foreach (get_account_control($account) as $account_link):?>
+<?= $account_link ?> 
+<? endforeach; ?>
 </div>
 
 <div id="board-info">
@@ -46,8 +44,9 @@ function click_feed(url) {
 
 	$tags = array();
 	if(!empty($post->tags)) {
-		foreach(explode(',', $post->tags) as $tag)
-			array_push($tags, "<a href=\"?tag=1&keyword=".urlencode($tag)."\">$tag</a>");
+		foreach($post->tags as $tag) {
+			array_push($tags, link_to($tag->name, $board, null, array('tag'=>1, 'keyword'=>urlencode($tag->name))));
+		}
 	}
 ?>
 	<div class="post">
@@ -58,12 +57,12 @@ function click_feed(url) {
 		<? if ($post->secret): ?><span class="secret">비공개</span> | <? endif; ?>
 		<a href="<?=$post->feed_link?>" onclick="window.open(this.href); return false;" title="<?=$post->title?>"><?=utf8_strcut($post->title, ($first_image->exists()?50:70))?></a></h2>
 		<p class="info <?=$first_image->exists() ? 'have_image':''?>">
-		<a href="<?=$feed->link?>" onclick="click_feed('/feedengine/feed/updateViews?board=<?=$board->name?>&post=<?=$post->id?>'); window.open(this.href); return false;"><?=$feed->title?></a>
+		<a href="<?=$feed->link?>" onclick="click_feed('<?=url_for('feedengine','update_views', array('id'=>$board->name, 'post'=> $post->id))?>'); window.open(this.href); return false;"><?=$feed->title?></a>
 		| <span class="date"><?=$post->date?></a></span>
 		| <span class="author"><?=$post->author?></span>
 		</p>
 		<p class="description <?=$first_image->exists() ? 'have_image':''?>"><?=utf8_strcut(strip_tags($post->body), ($first_image->exists()?250:300))?></p>
-		<? if($tagable && count($tags) > 0): ?>
+		<? if($taggable && count($tags) > 0): ?>
 		<p class="tags"><span>Tags : </span><?=implode(", ", $tags)?></p>
 		<? endif; ?>
 	</div>
@@ -85,7 +84,7 @@ function click_feed(url) {
 	<input type="checkbox" name="author" id="search_author" value="1" <?=$author_checked?> /> <label for="search_author">글쓴이</label> 
 	<input type="checkbox" name="title" id="search_title" value="1" <?=$title_checked?> /> <label for="search_title">제목</label> 
 	<input type="checkbox" name="body" id="search_body" value="1" <?=$body_checked?> /> <label for="search_body">내용</label> 
-<? if ($tagable): ?>
+<? if ($taggable): ?>
 	<input type="checkbox" name="tag" id="search_tag" value="1" <?=$tag_checked?> /> <label for="search_tag">태그</label> 
 <? endif; ?>
 	<input type="text" name="keyword" value="<?=$keyword?>" />
@@ -96,5 +95,5 @@ function click_feed(url) {
 <div id="update-box"></div>
 
 <script type="text/javascript">
-/*new Ajax.Updater('update-box', '<?=full_url_for("feedengine", "feed")."update?board=".$board->id?>', { method: 'get' });*/
+/* new Ajax.Updater('update-box', '<?=full_url_for('feedengine', 'update', array('id'=>$board->name))?>', { method: 'get' });*/
 </script>

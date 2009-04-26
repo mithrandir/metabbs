@@ -36,6 +36,8 @@ class FeedEngine extends Plugin {
 		add_filter('GetSearchParams', array(&$this, 'get_search_params'), 500);
 //		add_filter('PostList', array(&$this, 'post_list_filter'), 500);
 
+
+
 		add_admin_menu(url_admin_for('feedengine'), 'Feed Engine');
 	}
 
