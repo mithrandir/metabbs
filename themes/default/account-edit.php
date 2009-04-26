@@ -54,7 +54,7 @@
 <tr>
 	<td><?=$openid->openid?></td>
 	<td><?=date('Y-m-d H:i:s', $openid->created_at)?></td>
-	<td><a href="<?=url_for('openid','unregister',array('id'=>$openid->id));?>" onclick="if (confirm('삭제하시겠습니까?')) { var f = document.createElement('form');f.style.display = 'none';this.parentNode.appendChild(f);f.method = 'POST';f.action = this.href;f.submit();}return false;">삭제</a></td>
+	<td><?=link_delete_to(i('Delete'), 'openid', 'unregister', array('id'=>$openid->id)) ?></td>
 </tr>
 <? endforeach; ?>
 </table>

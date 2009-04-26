@@ -16,6 +16,10 @@ function get_table_name($model) {
 	return $GLOBALS['__db']->prefix . $model;
 }
 
+function get_model_name($model) {
+	return str_replace('_', '', $model);
+}
+
 /**
  * 모델 객체
  */

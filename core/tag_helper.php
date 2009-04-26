@@ -24,18 +24,28 @@ function link_text($link, $text = '', $options = array()) {
 function link_to($text, $controller, $action = null, $params = array()) {
 	return link_text(url_for($controller, $action, $params), $text);
 }
-function link_admin_to($text, $controller, $action = null, $params = array()) {
-	return link_text(url_admin_for($controller, $action, $params), $text);
-}
 function link_with_id_to($id, $text, $controller, $action = null, $params = array()) {
 	return link_text(url_for($controller, $action, $params), $text, array("id" => $id));
 }
 function link_with_dialog_to($text, $controller, $action = null, $params = array()) {
 	return link_text(url_for($controller, $action, $params), $text, array('onclick' => 'return confirm(\''.i('Are you sure?').'\')'));
 }
+function link_delete_to($text, $controller, $action = null, $params = array()) {
+	return link_text(url_for($controller, $action, $params), $text, array('onclick' => 'if (confirm(\''.i('Are you sure?').'\')) { var f = document.createElement(\'form\');f.style.display = \'none\';this.parentNode.appendChild(f);f.method = \'POST\';f.action = this.href;f.submit();}return false;'));
+}
+function link_admin_to($text, $controller, $action = null, $params = array()) {
+	return link_text(url_admin_for($controller, $action, $params), $text);
+}
+function link_admin_with_dialog_to($text, $controller, $action = null, $params = array()) {
+	return link_text(url_admin_for($controller, $action, $params), $text, array('onclick' => 'return confirm(\''.i('Are you sure?').'\')'));
+}
+function link_admin_delete_to($text, $controller, $action = null, $params = array()) {
+	return link_text(url_admin_for($controller, $action, $params), $text, array('onclick' => 'if (confirm(\''.i('Are you sure?').'\')) { var f = document.createElement(\'form\');f.style.display = \'none\';this.parentNode.appendChild(f);f.method = \'POST\';f.action = this.href;f.submit();}return false;'));
+}
 function link_list_tab($link, $name, $text) {
+	global $routes;
 	$anchor = link_text($link, $text);
-	return block_tag('li', $anchor, array('id' => "tab-$name", 'class' => $_GET['tab']==$name ? "selected" : null));
+	return block_tag('li', $anchor, array('id' => "tab-$name", 'class' => $routes['action']==$name ? "selected" : null));
 }
 function link_to_comments($post) {
 	$count = $post->get_comment_count();
