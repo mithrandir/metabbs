@@ -23,9 +23,8 @@
 	<td><input type="checkbox" name="user_id[<?=$user->id?>]" class="check" <? if ($user->id==$account->id) { ?>disabled="disabled" <? } ?> /></td>
 	<td class="name"><?=htmlspecialchars($user->name)?> <small>(<?=htmlspecialchars($user->user)?>)</small></td>
 	<td class="level"><?=$user->level?></td>
-	<td class="actions"><?=link_to(i('View'), $user)?><? if (!$user->is_admin()) { ?> | <a href="<?=url_admin_for($user, 'delete',array('page' => $page))?>" onclick="return confirm('<?=i('Are you sure?')?>')"><?=i('Delete user')?></a><? } ?><? if ($user->id != $account->id && !preg_match('@^http://@', $user->user)) { ?> | 
-	<? if ($user->get_attribute('pwresetcode')) { ?><a href="<?=url_admin_for($user, 'reset-password')?>">암호 초기화 상태</a>
-	<? } else { ?><a href="<?=url_admin_for($user, 'reset-password')?>" onclick="return confirm('<?=i('Are you sure?')?>')">암호 초기화</a><? } } ?></td>
+	<td class="actions"><?=link_to(i('View'), $user)?><? if (!$user->is_admin()) { ?> | <?=link_admin_to(i('Delete user'), $user, 'delete', array('page' => $page))?><? } ?><? if ($user->id != $account->id && !preg_match('@^http://@', $user->user)) { ?> |
+	<?= $user->get_attribute('pwresetcode') ? link_admin_to(i('Reset Password Status'), $user, 'reset-password') : link_admin_with_dialog_to(i('Reset Password'), $user, 'reset-password')?><? } ?></td>
 </tr>
 <? } ?>
 </table>

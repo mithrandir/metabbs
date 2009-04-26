@@ -162,6 +162,7 @@ $lang['More options'] = '추가 옵션';
 $lang['The CAPTCHA solution was incorrect'] = '입력하신 CAPTCHA정보가 일치하지 않습니다';
 $lang['Can\'t see the image? Click for audible version'] = '오디오로 듣기';
 $lang['Reset Password'] = '암호 초기화';
+$lang['Reset Password Status'] = '암호 초기화 상태';
 $lang['Forget Password'] = '암호 찾기';
 $lang['Use \'Forget Password\' Page'] = '\'암호 찾기\' 사용';
 $lang['Your account does not exist'] = '해당 계정이 존재하지 않습니다';
