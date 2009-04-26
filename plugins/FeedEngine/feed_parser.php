@@ -102,9 +102,9 @@ class FeedParser {
 				$feed = Feed::find_one_by_board_having_owner_in_random($board, $duration);
 				break;
 		}
-
-		if ($feed->exists() && !empty($feed->url) && $feed->active)
+		if ($feed->exists() && !empty($feed->url) && $feed->active) {
 			FeedParser::collect_feed_to_board($feed, $board);
+		}
 	}
 
 

@@ -61,13 +61,13 @@ class Feed extends Model {
 		$db = get_conn();
 		$table = get_table_name('feed');
 		$feed_board_table = get_table_name('feed_board');
-		return $db->fetchall("SELECT f.* FROM $table AS f INNER JOIN $feed_board_table AS fb ON f.id = fb.feed_id AND fb.board_id = $board->id WHERE f.updated_at <".(time() - $duration)." AND f.active > 0 ORDER BY f.updated_at ASC LIMIT 1", 'Feed');
+		return $db->fetchrow("SELECT f.* FROM $table AS f INNER JOIN $feed_board_table AS fb ON f.id = fb.feed_id AND fb.board_id = $board->id WHERE f.updated_at <".(time() - $duration)." AND f.active > 0 ORDER BY f.updated_at ASC LIMIT 1", 'Feed');
 	}
 	function find_one_by_board_having_owner_in_random($board, $duration) {
 		$db = get_conn();
 		$table = get_table_name('feed');
 		$feed_board_table = get_table_name('feed_board');
-		return $db->fetchall("SELECT f.* FROM $table AS f INNER JOIN $feed_board_table AS fb ON f.id = fb.feed_id AND fb.board_id = $board->id WHERE f.owner_id > 0 AND f.updated_at <".(time() - $duration)." AND f.active > 0 ORDER BY f.updated_at ASC LIMIT 1", 'Feed');
+		return $db->fetchrow("SELECT f.* FROM $table AS f INNER JOIN $feed_board_table AS fb ON f.id = fb.feed_id AND fb.board_id = $board->id WHERE f.owner_id > 0 AND f.updated_at <".(time() - $duration)." AND f.active > 0 ORDER BY f.updated_at ASC LIMIT 1", 'Feed');
 	}
 
 
