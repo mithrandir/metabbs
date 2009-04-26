@@ -17,21 +17,21 @@
 	(<?=$feed->url?><?= $feed->is_owner($account) ? ', '.i('Owner'):''?>) -
 	<a href="<?=url_for('feedengine','delete', array('id'=>$feed->id, 'url'=>urlencode($_SERVER['REQUEST_URI'])))?>" onclick="if (confirm('<?=i('Are you sure?')?>')) { var f = document.createElement('form');f.style.display = 'none';this.parentNode.appendChild(f);f.method = 'POST';f.action = this.href;f.submit();}return false;"><?=i('Delete')?></a>
 
-	<? if ($feed->is_active()): ?>
-	| <a href="<?=url_for('feedengine','collect', array('id'=>$feed->id, 'url'=>urlencode($_SERVER['REQUEST_URI'])))?>">피드 수집</a>
-	<? else: ?>
-		<? if (!$feed->is_owner($account)): ?>
-			<? if ($feed_user->get_attribute('trackback-key')): ?>
-			| <a href="<?=url_for('feedengine','unset_trackback_key', array('id'=>$feed->id, 'url'=>urlencode($_SERVER['REQUEST_URI'])))?>">트랙백 인증키 제거<a/>
-			<? else: ?>
-			| <a href="<?=url_for('feedengine','set_trackback_key', array('id'=>$feed->id, 'url'=>urlencode($_SERVER['REQUEST_URI'])))?>">트랙백 인증키 발급<a/>
-			<? endif; ?>
-		<? endif; ?>
-	<? endif; ?>
-
-
 	<? if ($feed->is_owner($account) && $feed->link != $account->url): ?>
 		| <a href="<?=url_for('feedengine','set_homepage', array('id'=>$feed->id, 'url'=>urlencode($_SERVER['REQUEST_URI'])))?>" >대표 홈페이지 선정</a>
+	<? endif; ?>
+	
+	<? if (!$feed->is_active()): ?>
+		<? if (!$feed->is_owner($account)): ?>
+			<? if ($feed_user->get_attribute('trackback-key')): ?>
+	| <a href="<?=url_for('feedengine','unset_trackback_key', array('id'=>$feed->id, 'url'=>urlencode($_SERVER['REQUEST_URI'])))?>">트랙백 인증키 제거<a/>
+			<? else: ?>
+	| <a href="<?=url_for('feedengine','set_trackback_key', array('id'=>$feed->id, 'url'=>urlencode($_SERVER['REQUEST_URI'])))?>">트랙백 인증키 발급<a/>
+			<? endif; ?>
+		<? endif; ?>
+	<? else: ?>
+	<!-- 게시판 별로 피드 수집 링크 -->
+	| <a href="<?=url_for('feedengine','collect', array('id'=>$feed->id, 'url'=>urlencode($_SERVER['REQUEST_URI'])))?>">피드 수집</a>	
 	<? endif; ?>
 
 	<? if (!$feed->is_active() && $feed_user->get_attribute('trackback-key')): ?>

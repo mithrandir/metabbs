@@ -16,9 +16,7 @@ if(empty($params['url']) || empty($params['key']) || strstr($feed->link, $parsed
 /*ob_start();
 echo "========================";
 var_dump($params['key']);
-//var_dump($_GET['user']);
 var_dump($feed_user->get_attribute('trackback-key'));
-//var_dump($_POST['user']);
 var_dump($params['url']);
 $content = ob_get_contents();
 ob_end_clean();
