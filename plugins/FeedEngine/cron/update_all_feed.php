@@ -41,6 +41,7 @@ import_default_language();
 $tz = $config->get('timezone');
 if ($tz) Timezone::set($tz);
 $account = new Guest;
+$dispatcher = new Dispatcher();
 import_enabled_plugins();
 
 echo "-- library loaded\n";
