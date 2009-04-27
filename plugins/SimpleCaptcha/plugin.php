@@ -56,7 +56,7 @@ class SimpleCaptcha extends Plugin {
 	</li>
 	<li>다음 코드를 /skins/XXX/comment_form.php 에 추가하세요.
 <pre style="border: 1px solid gray;"><code>&lt;? if (Plugin::is_enabled('SimpleCaptcha') && $guest 
-	&& (($controller == 'post' && $action == 'index') || ($controller == 'comment' && $action == 'reply'))): ?&gt;
+	&& (($routes['controller'] == 'board' && $routes['action'] == 'view') || ($routes['controller'] == 'comment' && $routes['action'] == 'reply'))): ?&gt;
 	&lt;p&gt;
 		&lt;label for="recaptcha_challenge_field"&gt;CAPTCHA&lt;/label&gt;
 		&lt;?= SimpleCaptcha::get_html() ?&gt;
@@ -75,7 +75,7 @@ class SimpleCaptcha extends Plugin {
 	}
 
 	function is_valid($post) {
-		if (!empty($post['simplecaptcha_challenge_field'])) {
+		if (empty($post['simplecaptcha_challenge_field'])) {
 			return false;
 		}
 
