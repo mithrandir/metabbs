@@ -156,7 +156,7 @@ class Dispatcher {
 			if ($routes['controller'] == 'user' and is_numeric($params['id'])) {
 				$user = User::find($params['id']);
 				if ($user->exists()) {
-					$params['id'] = $user->user;
+					$params['id'] = $user->is_openid_account() ? $user->id : $user->user;
 				}
 			}
 		}
