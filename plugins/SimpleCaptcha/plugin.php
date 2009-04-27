@@ -46,7 +46,7 @@ class SimpleCaptcha extends Plugin {
 	</li>
 	<li>다음 코드를 /skins/XXX/write.php 에 추가하세요.
 <pre style="border: 1px solid gray;"><code>&lt;? if (Plugin::is_enabled('SimpleCaptcha') && $guest 
-	&& ($controller == 'board' || $action == 'post')): ?&gt;
+	&& ($routes['controller'] == 'board' || $routes['action'] == 'post')): ?&gt;
 &lt;tr&gt;
 	&lt;th&gt;CAPTCHA&lt;/th&gt;
 	&lt;td class="captcha" colspan="3"&gt;&lt;?= SimpleCaptcha::get_html() ?&gt;&lt;/td&gt;
