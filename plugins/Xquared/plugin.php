@@ -4,15 +4,15 @@ class Xquared extends Plugin {
 	var $description = '글 입력창을 Xquared 위지윅 편집기로 바꿉니다.';
 
 	function on_init() {
-		global $controller, $action, $layout;
+		global $routes, $layout;
 		ini_set('include_path', dirname(__FILE__).PATH_SEPARATOR.ini_get('include_path'));
 
 		add_filter('PostList', array(&$this, 'format'), 500);
 		add_filter('PostView', array(&$this, 'format'), 500);
 		add_filter('PostViewRSS', array(&$this, 'format'), 500);
 
-		if(($controller == 'board' and $action == 'post') 
-			or ($controller == 'post' and $action == 'edit'))
+		if(($routes['controller'] == 'board' and $routes['action'] == 'post') 
+			or ($routes['controller'] == 'board' and $routes['action'] == 'edit'))
 			$this->enable_editor();
 	}
 
