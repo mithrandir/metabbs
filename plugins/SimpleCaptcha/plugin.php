@@ -89,9 +89,9 @@ class SimpleCaptcha extends Plugin {
 		$path = METABBS_BASE_URI;
 
 		$html = "<input type=\"text\" name=\"simplecaptcha_challenge_field\" id=\"simplecaptcha_challenge_field\" class=\"".marked_by_error_message('captcha', $error_messages)."\"/>\n";
-		$html .= "<img src=\"".$path."captcha/visual/\" width=\"120\" height=\"18\" alt=\"Visual CAPTCHA\" style=\"border:1px solid gray;\"/>\n";
+		$html .= "<img src=\"".full_url_for('captcha','visual')."\" width=\"120\" height=\"18\" alt=\"Visual CAPTCHA\" style=\"border:1px solid gray;\"/>\n";
 		if (!empty($flite_path))
-			$html .= "<a href=\"".$path."/captcha/audio/\">".i("Can't see the image? Click for audible version")."</a>\n";
+			$html .= "<a href=\"".full_url_for('captcha','audio')."\">".i("Can't see the image? Click for audible version")."</a>\n";
 
 		return $html;
 	}
