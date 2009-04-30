@@ -1,6 +1,11 @@
 <?php
 if (!empty($params['id'])) {
 	$post = Post::find($params['id']);
+	if ($post->moved_to) {
+		$_post = Post::find($post->moved_to);
+		redirect_to(url_for($_post));
+	}
+
 	$board = $post->get_board();
 	if ($params['board_name'] != $board->get_id()) {
 		header('HTTP/1.1 404 Not Found');
