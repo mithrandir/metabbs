@@ -1,20 +1,20 @@
 <?php
 permission_required('admin', $board);
 
-if (!$_POST['posts'])
+if (!$params['posts'])
 	redirect_back();
 
-if (isset($_POST['action'])) {
-	switch ($_POST['action']) {
+if (isset($params['action'])) {
+	switch ($params['action']) {
 		case 'hide':
-		foreach ($_POST['posts'] as $post_id) {
+		foreach ($params['posts'] as $post_id) {
 			$post = Post::find($post_id);
 			$post->secret = 1;
 			$post->update();
 		}
 		break;
 		case 'show':
-		foreach ($_POST['posts'] as $post_id) {
+		foreach ($params['posts'] as $post_id) {
 			$post = Post::find($post_id);
 			$post->secret = 0;
 			$post->update();
@@ -22,7 +22,7 @@ if (isset($_POST['action'])) {
 		break;
 		case 'delete':
 		include 'core/thumbnail.php';
-		foreach ($_POST['posts'] as $post_id) {
+		foreach ($params['posts'] as $post_id) {
 			$post = Post::find($post_id);
 			$attachments = $post->get_attachments();
 			foreach ($attachments as $attachment) {
@@ -38,17 +38,17 @@ if (isset($_POST['action'])) {
 		}
 		break;
 		case 'change-category':
-		foreach ($_POST['posts'] as $post_id) {
+		foreach ($params['posts'] as $post_id) {
 			$post = Post::find($post_id);
 			$post->category_id = $_POST['category'];
 			$post->update_category();
 		}
 		break;
 		case 'move':
-		$_board = new Board(array('id' => $_POST['board_id']));
-		foreach (array_reverse($_POST['posts']) as $post_id) {
+		$_board = new Board(array('id' => $params['board_id']));
+		foreach (array_reverse($params['posts']) as $post_id) {
 			$post = Post::find($post_id);
-			$post->move_to($_board, isset($_POST['track']));
+			$post->move_to($_board, isset($params['track']));
 		}
 		break;
 	}
