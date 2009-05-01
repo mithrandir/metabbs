@@ -18,11 +18,13 @@ if (is_post()) {
 					sendmail_utf8('metabbs@'.$_SERVER['SERVER_NAME'], "MetaBBS", $user->email, $user->name, 'MetaBBS - '.i("Reset Password"), $message);
 
 					Flash::set('Reset password was sent by e-mail');
+					redirect_back();
 				} else
 					$error_messages->add('Your account\'s Name is incorrect', 'name');
 			} else
 				$error_messages->add('Your e-mail account is empty');
-		}
+		} else
+			Flash::set('You already reset password');
 	} else
 		$error_messages->add('Your account does not exist', 'user');
 }
