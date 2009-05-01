@@ -27,7 +27,7 @@ function click_feed(url) {
 <? endif; ?>
 
 
-<form method="post" action="<?=$manage_url?>" id="posts">
+<form method="post" action="<?=url_with_referer_for($board, 'manage')?>" id="posts">
 	<h1 class="title"><span class="title-wrap"><? if ($admin): ?><input type="checkbox" onclick="toggleAll(this.form, this.checked)" /><? endif; ?>&nbsp;</span></h1>
 	<? foreach ($posts as $post): ?>
 <?
