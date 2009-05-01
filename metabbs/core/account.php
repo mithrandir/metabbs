@@ -196,6 +196,7 @@ class UserManager
 			cookie_unregister('user_id');
 			cookie_unregister('token');
 			$user->unset_token();
+			cookie_unregister('openid');
 			return true;
 		} else {
 			return false;

@@ -15,6 +15,11 @@ $view = DEFAULT_VIEW;
 
 import_enabled_plugins();
 
+if ($account->is_guest() && using_openid() && cookie_is_registered('openid')
+		&& $routes['controller'] != 'openid') {
+	redirect_to(url_with_referer_for('openid', 'login').'&openid_identifier='.urlencode(cookie_get('openid')));
+}
+
 @include $dispatcher->get_container_path();
 @include $dispatcher->get_controller_path();
 //$action_dir = 'app/controllers/' . $routes['controller'];
