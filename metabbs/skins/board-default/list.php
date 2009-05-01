@@ -37,8 +37,9 @@
 		<td class="author"><?=$post->author?></td>
 		<td class="title">
 			<? if ($post->category): ?><span class="category"><?=$post->category->name?></span><? endif; ?>
-			<? if ($post->secret): ?>비밀글<? endif; ?>
-			<a href="<?=$post->url?>" title="<?=$post->title?>"><?=utf8_strcut($post->title, 50)?></a>
+			<? if ($post->secret): ?><span class="secret"><?=i('Secret')?></span><? endif; ?>
+			<? if ($post->moved_to): ?><span class="moved"><?=i('Moved')?></span><? endif; ?>
+			<a href="<?=$post->url?>" title="<?=$post->title?>" class="title"><?=utf8_strcut($post->title, 50)?></a>
 			<? if ($post->comment_count): ?><span class="comment-count"><?=$post->comment_count?></span><? endif; ?>
 			<? if ($post->attachment_count): ?><span class="attachment-count"><?=$post->attachment_count?></span><? endif; ?>
 		</td>
