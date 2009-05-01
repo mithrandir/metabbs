@@ -16,8 +16,6 @@ if (is_post()) {
 		}
 		$post->delete();
 
-		$params = null;
-		apply_filters('BeforeRedirectAtDeletePost', $params, $board);
-		redirect_to(url_for($board, null, $params));
+		redirect_to(url_for($board, null, get_search_params()));
 	}
 }
