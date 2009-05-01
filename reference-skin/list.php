@@ -23,7 +23,7 @@
 </ul>
 <? endif; ?>
 
-<form method="post" action="<?=$manage_url?>">
+<form method="post" action="<?=url_with_referer_for($board, 'manage')?>">
 <table id="posts">
 	<thead>
 		<tr>

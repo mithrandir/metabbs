@@ -18,7 +18,7 @@
 </div>
 <? endif; ?>
 
-<form method="post" action="<?=$manage_url?>">
+<form method="post" action="<?=url_with_referer_for($board, 'manage')?>">
 <? if ($notices): ?>
 <ul id="notices">
 <? foreach ($notices as $notice): ?>

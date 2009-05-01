@@ -1,5 +1,5 @@
 <?php
-global $layout, $routes;
+global $layout, $routes, $params;
 
 if (isset($board)) {
 	$admin = $account->has_perm('admin', $board);
@@ -65,9 +65,6 @@ if (isset($categories)) {
 } else {
 	$categories = null;
 }
-$params = null;
-apply_filters('ManageURLAtStandardVars', $params, $board);
-$manage_url = url_for($board, 'manage', $params);
 
 $taggable = $board->use_tag();
 if ($this->view == 'view') {

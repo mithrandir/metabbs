@@ -1,10 +1,12 @@
 <?php
 permission_required('admin', $board);
 
-if (!$params['posts'])
+if (!$params['posts']) {
+	// flash message : 포스트를 선택하세요
 	redirect_back();
+}
 
-if (isset($params['action'])) {
+if (is_post() and isset($params['action'])) {
 	switch ($params['action']) {
 		case 'hide':
 		foreach ($params['posts'] as $post_id) {
@@ -21,7 +23,7 @@ if (isset($params['action'])) {
 		}
 		break;
 		case 'delete':
-		include 'core/thumbnail.php';
+		requireCore('thumbnail');
 		foreach ($params['posts'] as $post_id) {
 			$post = Post::find($post_id);
 			$attachments = $post->get_attachments();
@@ -51,9 +53,12 @@ if (isset($params['action'])) {
 			$post->move_to($_board, isset($params['track']));
 		}
 		break;
+		default:
+			// flash message : 행위를 정하지 않았습니다.
+			redirect_back();
+		break;
 	}
-	$params = null;
-	apply_filters('BeforeRedirectAtManagePosts', $params, $board);
-	redirect_to(url_for($board, null, $params));
+	// flash message : 처리되었습니다
+	redirect_back();
 }
 ?>
