@@ -1,4 +1,4 @@
-<form method="post" style="line-height: 1.5" id="manage">
+<form method="post" id="manage" action="<?=url_with_referer_for($board, 'manage')?>">
 <? foreach ($_POST['posts'] as $id) { ?>
 <input type="hidden" name="posts[]" value="<?=$id?>" />
 <? } ?>
@@ -41,5 +41,6 @@
 <br /><input type="checkbox" value="1" name="track" id="track" checked="checked" style="margin-left: 2em" /> <label for="track">글 옮길 때 흔적 남기기</a>
 </p>
 
-<p><input type="submit" value="확인" /></p>
+<p><input type="submit" value="<?=i('Submit')?>" class="button"/> 
+<? if (isset($params['url']) && !empty($params['url'])): ?> <a href="<?=$params['url']?>"><?=i('Cancel')?></a><? endif; ?></p>
 </form>
