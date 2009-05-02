@@ -91,6 +91,7 @@ ini_set('include_path', METABBS_DIR . PATH_SEPARATOR . ini_get('include_path'));
 
 require_once 'core/query.php';
 require_once 'core/model.php';
+require_once 'app/models/metadata.php';
 require_once 'core/config.php';
 $config = new Config('metabbs.conf.php');
 
@@ -258,7 +259,7 @@ if (!isset($_POST['config'])) {
 
 	$safe = true;
 
-	$admin_url = ($rewrite ? '' : 'metabbs.php/') . 'account/login/?url=../../admin/';
+	$admin_url = ($rewrite ? '' : 'metabbs.php/') . 'account/login?url=../admin';
 
 	echo "<h2>Installation Finished</h2>";
 	echo "<p>Thank you for installing MetaBBS. :-)</p>";
