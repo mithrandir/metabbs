@@ -39,6 +39,7 @@ requireModel('attachment');
 requireModel('tag');
 requireModel('tag_post');
 requireModel('openid');
+requireModel('trash');
 
 // core
 requireCore('template');

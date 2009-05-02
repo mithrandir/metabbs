@@ -18,6 +18,7 @@
 <ul id="nav">
 	<li><?=link_admin_to(i('Boards'), 'board')?></li>
 	<li><?=link_admin_to(i('Users'), 'user')?></li>
+	<li><?=link_admin_to(i('Trash Can'), 'trash')?></li>
 	<li><?=link_admin_to(i('Settings'), 'setting')?></li>
 	<li><?=link_admin_to(i('Plugins'), 'plugin')?></li>
 	<li><?=link_admin_to(i('Maintenance'), 'maintenance')?></li>
