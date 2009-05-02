@@ -32,7 +32,7 @@ class TrashCan {
 	function revert($id) {
 		$trash = find('trash', $id);
 		insert($trash->model, unserialize($trash->data));
-		$this->purge($id);
+		TrashCan::purge($id);
 	}
 
 	/**
@@ -51,5 +51,8 @@ class TrashCan {
 }
 
 class Trash extends Model {
-	var $model = 'trash';
+	function get_summary() {
+		$data = unserialize($this->data);
+		return "[$data[name]] " . utf8_strcut($data['body'], 100);
+	}
 }

@@ -267,3 +267,9 @@ h2 span {
 .install input {
 	font-size: 1.2em;
 }
+
+#trash { width: 100%; }
+#trash .type { width: 5em; }
+#trash .reason { width: 10em; }
+#trash .date { width: 10em; }
+#trash .actions { width: 10em; }
