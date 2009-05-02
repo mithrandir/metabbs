@@ -145,4 +145,9 @@ if ($this->view == 'reply')
 	$form_id = 'reply-form' . $comment->id . rand(0, 10);
 else if ($this->view == 'edit_comment')
 	$form_id = 'edit-form';
+
+$css = 'styles/'.$style->name.'/style.css';
+if (file_exists($css))
+	$layout->add_stylesheet($style_dir.'/style.css?'.filemtime($css));
+$layout->wrap("<div id=\"meta\">\n", "</div>\n");
 ?>

@@ -71,6 +71,7 @@ class Style {
 	}
 	function get_template($view) {
 		$template = $this->skin->get_template($view);
+		$template->set('style', $this);
 		$template->set('style_dir', $this->get_path());
 		return $template;
 	}
@@ -132,14 +133,14 @@ class Layout {
 }
 
 function get_header_path() {
-	global $view, $config;
-	$header_path = $view == ADMIN_VIEW ? 'media/admin_header.php' : $config->get('global_header', 'media/default_header.php');
+	global $routes, $config;
+	$header_path = "app/$routes[container]/views/header.php";
 	apply_filters('GetHeaderPath', $header_path);
 	return $header_path;
 }
 function get_footer_path() {
-	global $view, $config;
-	$footer_path = $view == ADMIN_VIEW ? 'media/admin_footer.php' : $config->get('global_footer', 'media/default_footer.php');
+	global $routes, $config;
+	$footer_path = "app/$routes[container]/views/footer.php";
 	apply_filters('GetFooterPath', $footer_path);
 	return $footer_path;
 }

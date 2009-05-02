@@ -33,7 +33,6 @@ if (is_post()) {
 		$board->set_attribute('use_tag', $_POST['board']['use_tag']);
 		$sorting_changed = $_board->order_by != $board->order_by;
 		if ($error_messages->exists()) {
-			$view = ADMIN_VIEW;
 			return;
 		}
 	}

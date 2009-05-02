@@ -30,34 +30,6 @@ if (!run_custom_handler($routes['controller'], $routes['action'])) {
 		print_notice(i('Page not found'), i('The requested URL was not found on this server.'));
 	}
 }
-if (isset($board)) {
-	$style = $board->get_style();
-	$style_dir = $style->get_path();
-	$_skin_dir = $style->skin->get_path();
-	$skin_dir = METABBS_BASE_PATH.$_skin_dir;
-} else {
-	$_skin_dir = 'skins/default';
-	$style_dir = METABBS_BASE_PATH.'styles/default';
-}
-
-if ($view == ADMIN_VIEW) {
-	$layout->add_stylesheet(METABBS_BASE_PATH . 'media/style.css');
-	$layout->add_javascript(METABBS_BASE_PATH . 'media/admin.js');
-	$layout->header = $layout->footer = '';
-} else {
-	if (isset($style)) {
-		$css = 'styles/'.$style->name.'/style.css';
-		if (file_exists($css))
-			$layout->add_stylesheet($style_dir.'/style.css?'.filemtime($css));
-		$layout->wrap("<div id=\"meta\">\n", "</div>\n");
-	} else {
-		$layout->wrap("<div id=\"meta\" class=\"theme-only\">\n", "</div>\n");
-	}
-	$css = 'themes/'.get_current_theme().'/style.css';
-	if (file_exists($css))
-		$layout->add_stylesheet(METABBS_BASE_PATH . $css);
-	$layout->add_javascript(METABBS_BASE_PATH . 'media/script.js');
-}
 
 ob_start();
 if (isset($template)) {
