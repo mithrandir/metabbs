@@ -9,7 +9,7 @@ if (is_post()) {
 			$comment->deleted_by = $comment->name;
 		else
 			$comment->deleted_by = $account->name;
-		$comment->delete();
+		TrashCan::put($comment, 'deleted by ' . $comment->deleted_by);
 
 		if (is_xhr()) {
 			$template = get_template($board, '_comment');
