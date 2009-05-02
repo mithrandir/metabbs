@@ -134,13 +134,13 @@ class Layout {
 
 function get_header_path() {
 	global $routes, $config;
-	$header_path = "app/$routes[container]/views/header.php";
+	$header_path = $config->get('global_header', "app/$routes[container]/views/header.php");
 	apply_filters('GetHeaderPath', $header_path);
 	return $header_path;
 }
 function get_footer_path() {
 	global $routes, $config;
-	$footer_path = "app/$routes[container]/views/footer.php";
+	$footer_path = $config->get('global_footer', "app/$routes[container]/views/footer.php");
 	apply_filters('GetFooterPath', $footer_path);
 	return $footer_path;
 }
