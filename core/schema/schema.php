@@ -1,5 +1,5 @@
 <?php
-define('METABBS_DB_REVISION', 1455);
+define('METABBS_DB_REVISION', 1497);
 
 function run($conn) {
 	$t = new Table('board');
@@ -132,6 +132,13 @@ function run($conn) {
 	$t->column('enabled', 'boolean');
 	$t->add_index('name');
 	$t->add_index('enabled');
+	$conn->add_table($t);
+
+	$t = new Table('trash');
+	$t->column('model', 'string', 255);
+	$t->column('data', 'text');
+	$t->column('reason', 'string', 255);
+	$t->column('created_at', 'timestamp');
 	$conn->add_table($t);
 }
 ?>
