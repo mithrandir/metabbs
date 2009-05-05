@@ -7,5 +7,5 @@ $comments = Site::get_latest_comments(20);
 apply_filters_array('CommentViewFeed', $comments);
 
 feed_header();
-include 'app/views/default/feed/comments.php';
+include 'app/default/views/feed/comments.php';
 exit;

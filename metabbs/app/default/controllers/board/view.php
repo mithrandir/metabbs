@@ -30,8 +30,8 @@ apply_filters('PostView', $post);
 
 $older_post = $post->get_older_post();
 $newer_post = $post->get_newer_post();
-if ($older_post) apply_filters('PostView', $older_post);
-if ($newer_post) apply_filters('PostView', $newer_post);
+if ($older_post->exists()) apply_filters('PostView', $older_post);
+if ($newer_post->exists()) apply_filters('PostView', $newer_post);
 
 $comments = $post->get_comments($style->skin->get_option('build_comment_tree', true));
 apply_filters_array('PostViewComment', $comments);
