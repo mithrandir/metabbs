@@ -134,13 +134,19 @@ class Layout {
 
 function get_header_path() {
 	global $routes, $config;
-	$header_path = $config->get('global_header', "app/$routes[container]/views/header.php");
+	if ($routes['container'] == 'admin')
+		$header_path = "app/admin/views/header.php";
+	else
+		$header_path = $config->get('global_header', "app/$routes[container]/views/header.php");
 	apply_filters('GetHeaderPath', $header_path);
 	return $header_path;
 }
 function get_footer_path() {
 	global $routes, $config;
-	$footer_path = $config->get('global_footer', "app/$routes[container]/views/footer.php");
+	if ($routes['container'] == 'admin')
+		$footer_path = "app/admin/views/footer.php";
+	else
+		$footer_path = $config->get('global_footer', "app/$routes[container]/views/footer.php");
 	apply_filters('GetFooterPath', $footer_path);
 	return $footer_path;
 }
