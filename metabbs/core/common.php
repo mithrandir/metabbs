@@ -43,14 +43,10 @@ function requireExternal($name) {
 	}
 }
 
-$_requireCore = array(
-	'compat',
-	'core'
-);
-$_requireModels = $_requireExternal = array();
-foreach($_requireCore as $name) {
-	require METABBS_DIR .'/core/'.$name.'.php';
-}
+$_requireCore = $_requireModels = $_requireExternal = array();
+require METABBS_DIR .'/core/compat.php';
+require METABBS_DIR .'/core/core.php';
+
 import_default_language();
 
 $session_dir = METABBS_DIR . '/data/session';
