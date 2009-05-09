@@ -19,16 +19,10 @@ function render_board_feed($board, $format) {
 			$board->get_feed_posts($board->posts_per_page), $format);
 }
 
-function str_trim($str) {
-	return str_replace('　', '', str_replace('%20', '', preg_replace("/([\r]|[\n]|[\s])+/", '', trim($str))));
-}
-
-function array_trim($items) {
-	$result = array();
-	foreach ($items as $key=>$value) {
-		if (strlen(str_trim($value)) > 0) {
-			$result[$key] = trim($value);
-		}
-	}
-	return $result;
+function array_trim($var) {
+    if (is_array($var))
+        return array_map("array_trim", $var);
+    if (is_string($var))
+        return trim($var);
+    return $var;
 }
