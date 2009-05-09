@@ -19,7 +19,7 @@ class Validate {
 	}
 	
 	function url($value) {
-		$domain = str_replace('http://', '', str_replace('https://', '', $value));
+		$domain = trim(str_replace('http://', '', str_replace('https://', '', $value)), '/');
 		return Validate::domain($domain); 
 	}
 }
