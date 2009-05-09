@@ -22,7 +22,6 @@ if ($account->is_guest() && using_openid() && cookie_is_registered('openid')
 
 @include $dispatcher->get_container_path();
 @include $dispatcher->get_controller_path();
-//$action_dir = 'app/controllers/' . $routes['controller'];
 if (!run_custom_handler($routes['controller'], $routes['action'])) {
 	$found = @include $dispatcher->get_action_path();
 	if (!$found) {
