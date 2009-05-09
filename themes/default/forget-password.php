@@ -1,10 +1,10 @@
-<h1><?=i('Forget Password')?></h1>
+<h1 class="account-title"><?=i('Forget Password')?></h1>
 
 <?=flash_message_box()?>
 <?=error_message_box($error_messages)?>
 
 <? if (!isset($user) || !$user->get_attribute('pwresetcode', false)) { ?>
-<form method="post" action="" id="forget-password-form">
+<form method="post" action="" id="forget-password-form" class="account-form">
 <p>
 	<label for="user" class="field"><?=i('User ID')?><span class="star">*</span></label>
 	<input type="text" name="user" id="user" value="<?=isset($params['user'])?$params['user']:''?>" class="<?=marked_by_error_message('user', $error_messages)?>"/>

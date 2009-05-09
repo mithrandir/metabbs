@@ -192,3 +192,5 @@ $lang['Reason'] = '이유';
 $lang['Purge'] = '완전히 삭제';
 $lang['Revert'] = '되돌리기';
 $lang['Clear all'] = '모두 삭제';
+$lang['Transfer'] = '전환';
+$lang['Register'] = '등록';

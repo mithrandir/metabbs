@@ -47,14 +47,14 @@
 	font-size: 14px;
 }
 
-#meta.theme-only #flash_message,
+/*#meta.theme-only #flash_message,*/
 #flash_message {
 	border: 1px solid green; 
 	padding: 7px; 
 	background: #9e9; 
 	color: green;
 }
-#meta.theme-only #error_messages,
+/*#meta.theme-only #error_messages,*/
 #error_messages {
 	border: 2px solid red;
 /*	padding: 7px;
@@ -62,7 +62,7 @@
 	margin-bottom: 20px;
 	background-color: #f0f0f0;
 }
-#meta.theme-only #error_messages h2,
+/*#meta.theme-only #error_messages h2,*/
 #error_messages h2 {
 	text-align: left;
 	font-weight: bold;
@@ -73,12 +73,12 @@
 	color: #fff;
 
 }
-#meta.theme-only #error_messages ul {
+/*#meta.theme-only*/ #error_messages ul {
 	padding: 1em;
 	margin: 0 1em;
 }
 
-#meta.theme-only #error_messages li,
+/*#meta.theme-only #error_messages li,*/
 #error_messages li {
 	font-size: 12px;
 	list-style: square;
@@ -88,7 +88,7 @@
 	border: 2px solid red;
 }
 
-#meta.theme-only {
+/*#meta.theme-only {
 	font-size: 13px;
 	font-family: Verdana, Arial, sans-serif;
 	margin: 2em;
@@ -100,13 +100,51 @@
 #meta.theme-only h2 {
 	font-size: 1.2em;
 	margin: 0;
-}
+}*/
 
 #openid_identifier{
 	background: #fff url(/media/login-openid.gif) no-repeat 0 50%; padding-left: 18px;
 }
 
-#signup-form fieldset input.error,
+.account-title {
+	font-family: Verdana,Tahoma,sans-serif;
+	font-size: 1.5em;
+	margin: 0 0 1em 0;
+}
+.account-form h2 {
+	font-size: 1.2em;
+	margin: 0;
+}
+.account-form fieldset input.error {
+	border: 2px solid red;
+}
+.account-form label.field {
+	width: 8em;
+	float: left;
+	font-weight: bold;
+	font-size: 13px;
+}
+.account-form input.button {
+	float: none;
+	width: 81px;
+	height: 27px;
+	background: url(button.png) no-repeat;
+	text-decoration: none;
+	padding: 4px 0;
+	text-align: center;
+	margin-right: 1em;
+	border: none;
+	cursor: pointer;
+	font-size: 1em;
+	font-weight: bold;
+}
+.account-form p,
+.account-form a {
+	color: black;
+	font-size: 13px;
+}
+
+/*#signup-form fieldset input.error,
 #signup-form fieldset textarea.error {
 	border: 2px solid red;
 }
@@ -122,7 +160,7 @@
 	float: left;
 	font-weight: bold;
 }
-#login-form input.button,
+#login-form input.button, 
 #openid-form input.button,
 #signup-form input.button,
 #account-edit-form input.button,
@@ -142,10 +180,10 @@
 	cursor: pointer;
 	font-size: 1em;
 	font-weight: bold;
-}
+}*/
 fieldset {
 	border: none;
-	margin: 0 0 1em 0;
+	margin: 1em 0;
 	padding: 0;
 }
 .star {
@@ -192,11 +230,11 @@ fieldset {
 	width: 30em;
 	border-collapse: collapse;
 }
-#openids  td {
+#openids td {
 	padding: 0.5em;
 	border-bottom: 1px solid #e8e8e8;
 }
-#openids  th {
+#openids th {
 	padding: 0.5em;
 	text-align: left;
 	border-bottom: 1px solid #ddd;
@@ -206,7 +244,11 @@ fieldset {
 	padding-left: 1.5em;
 }
 
-t#openids td.actions {
+#openids td.actions {
 	width: 16.5em;
 	color: #999;
+}
+#openids a {
+	color: black;
+	font-size: 13px;
 }
