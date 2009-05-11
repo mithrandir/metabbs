@@ -77,7 +77,7 @@
 <? if ($link_list): ?><a href="<?=$link_list?>">목록보기</a> <? endif; ?>
 <? if ($link_new_post): ?><a href="<?=$link_new_post?>">글쓰기</a> <? endif; ?>
 <? if ($link_edit): ?><a href="<?=$link_edit?>">고치기</a> <? endif; ?>
-<? if ($link_delete): ?><a href="<?=$link_delete?>">지우기</a> <? endif; ?>
+<? if ($link_delete): ?><a href="<?=$link_delete?>" class="dialog">지우기</a> <? endif; ?>
 </div>
 
 <script type="text/javascript">

@@ -21,6 +21,7 @@
 	<label class="field"><?=i('Password (again)')?><span class="star">*</span></label>
 	<input type="password" name="user[password_again]" class="<?=marked_by_error_message('password_again', $error_messages)?>"/>
 </p>
-<p><input type="submit" value="<?=i('Transfer')?>" class="button" /><? if (isset($_GET['url']) && !empty($_GET['url'])): ?> <a href="<?=$_GET['url']?>"><?=i('Cancel')?></a><? endif; ?></p></p>
+<p><input type="submit" value="<?=i('Transfer')?>" class="button" />
+<? if (isset($_GET['url']) && !empty($_GET['url'])): ?> <a href="<?=$_GET['url']?>"><?=i('Cancel')?></a><? endif; ?></p></p>
 </fieldset>
 </form>

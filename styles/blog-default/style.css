@@ -192,3 +192,18 @@ h1 {
 #blog-footer li {
 	line-height: 2.2;
 }
+#dialog .buttons {
+	margin-bottom: 1em;
+	overflow: hidden;
+	display: inline-block;
+}
+#delete-form {
+	text-align: center;
+}
+#delete-form .buttons {
+	width: 14.5em;
+	margin: 0 auto 1em auto;
+}
+#delete-form .button { 
+	float: left; 
+}

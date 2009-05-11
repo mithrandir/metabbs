@@ -13,7 +13,6 @@ function feed_header() {
 }
 
 function render_board_feed($board, $format) {
-	requireCore('cache');
 	$cache = new PageCache;
 	$cache->name = "feed_{$format}_{$board->name}";
 	if($cache->load()) { //If successful loads
