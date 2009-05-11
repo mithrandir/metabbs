@@ -1,5 +1,5 @@
 <? if ($comment_url): ?>
-	<form method="post" action="<?=$comment_url?>" id="<?=$form_id?>">
+	<form method="post" action="<?=$comment_url?>" id="<?=$form_id?>" class="comment-form">
 	<? if ($guest): ?>
 	<p>
 		<label for="comment_author">이름</label>
