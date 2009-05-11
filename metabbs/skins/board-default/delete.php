@@ -1,6 +1,6 @@
 <h1>글 삭제</h1>
 
-<form method="post" action="" id="delete-form">
+<form method="post" action="" id="delete-form" class="delete-form">
 <? if ($ask_password): ?>
 <p><label for="password">암호:</label> <input type="password" name="password" id="password" /></p>
 <? else: ?>

@@ -274,9 +274,9 @@ input.button, button {
 	font-weight: bold;
 }
 #comment-form,
-#reply-form,
-#edit-form {
-	padding: 1.5em;
+#reply-form/*,
+#edit-form*/ {
+	padding: 1em;
 }
 #comment-form label,
 #reply-form label,
@@ -369,6 +369,6 @@ input.button, button {
 	width: 14.5em;
 	margin: 0 auto 1em auto;
 }
-#delete-form .button { 
+#dialog .button { 
 	float: left; 
 }
