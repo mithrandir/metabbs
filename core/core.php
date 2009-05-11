@@ -58,5 +58,6 @@ requireCore('feed');
 requireCore('validate');
 requireCore('message');
 requireCore('csrf');
+requireCore('cache');
 requireCore('dispatcher');
 ?>
