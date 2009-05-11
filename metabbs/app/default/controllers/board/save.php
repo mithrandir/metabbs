@@ -39,6 +39,7 @@ if ($post->exists()) {
 	apply_filters('AfterAddPost', $post);
 }
 apply_filters('AfterPostSave', $post);
+purge_feed_cache_by_board($board);
 
 if (isset($attachments)) {
 	foreach ($attachments as $attachment) {
@@ -63,7 +64,6 @@ if (isset($_POST['trackback']) && isset($_POST['trackback']['to'])
 	send_trackback($_POST['trackback']);
 }
 
-$params = null;
 apply_filters('BeforeRedirectAtSavePost', $params, $post);
 redirect_to(url_for($post, null, $params));
 ?>

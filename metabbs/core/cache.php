@@ -1,7 +1,7 @@
 <?php
 //	Usage : 
 //	$cache = new PageCache;
-//	$cache->name = strtoupper('test');
+//	$cache->name = 'test';
 //	if($cache->load()) { //If successful loads
 //		return $cache->contents;
 //	}
@@ -90,5 +90,14 @@ class PageCache {
 		clearstatcache();
 		return (file_exists($this->cachedir."/page_cache/{$this->name}") && ((time() - filemtime($this->cachedir."/page_cache/{$this->name}")) < $this->lifetime));
 	}
+}
+
+function purge_feed_cache_by_board($board) {
+	$cache = new PageCache;
+	foreach(array('rss','atom') as $format) {
+		$cache->name = "feed_{$format}_{$board->name}";
+		$cache->purge();
+	}
+	unset($cache);
 }
 ?>
