@@ -15,6 +15,7 @@ if (is_post()) {
 			$attachment->delete();
 		}
 		$post->delete();
+		purge_feed_cache_by_board($board);
 
 		redirect_to(url_for($board, null, get_search_params()));
 	}
