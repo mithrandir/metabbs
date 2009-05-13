@@ -64,6 +64,7 @@ if (isset($_POST['trackback']) && isset($_POST['trackback']['to'])
 	send_trackback($_POST['trackback']);
 }
 
+$params = null;
 apply_filters('BeforeRedirectAtSavePost', $params, $post);
 redirect_to(url_for($post, null, $params));
 ?>
