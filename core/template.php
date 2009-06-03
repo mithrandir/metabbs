@@ -110,10 +110,16 @@ class Layout {
 		$this->add_meta('Generator', 'MetaBBS '.METABBS_VERSION);
 	}
 	function add_stylesheet($path) {
-		$this->add_link('stylesheet', 'text/css', $path);
+		if (!in_array($path, $this->stylesheets)) {
+			$this->add_link('stylesheet', 'text/css', $path);
+			array_push($this->stylesheets, $path);
+		}
 	}
 	function add_javascript($path) {
-		$this->head .= "<script type=\"text/javascript\" src=\"$path\"></script>\n";
+		if (!in_array($path, $this->javascripts)) {
+			$this->head .= "<script type=\"text/javascript\" src=\"$path\"></script>\n";
+			array_push($this->javascripts, $path);
+		}
 	}
 	function add_meta($name, $content) {
 		$this->head .= "<meta name=\"$name\" content=\"".htmlspecialchars($content)."\" />\n";
