@@ -92,12 +92,17 @@ function deleteComment(form, id, leaveEntry) {
 	submitButton.disable();
 	new Ajax.Request(form.action, {
 		parameters: Form.serialize(form),
-		onComplete: function (transport) {
+		onSuccess: function (transport) {
 			if (!leaveEntry)
 				$('comment_' + id).remove()
 			else
 				$('comment_' + id).replace(transport.responseText)
 			closeDialog()
+		},
+		onFailure: function () {
+			alert('암호가 틀렸습니다.')
+			var submitButton = Form.getSubmitButton(form);
+			submitButton.enable();
 		}
 	});
 }

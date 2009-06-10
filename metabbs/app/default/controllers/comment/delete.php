@@ -21,6 +21,9 @@ if (is_post()) {
 		} else {
 			redirect_to(url_for($post));
 		}
+	} else {
+		header('HTTP/1.1 403 Forbidden');
+		print_notice('Failed to delete', 'Wrong password');
 	}
 }
 
