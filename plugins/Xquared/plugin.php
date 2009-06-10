@@ -18,7 +18,7 @@ class Xquared extends Plugin {
 
 	function enable_editor() {
 		global $layout;
-		$xquared_version = '20090206';
+		$xquared_version = '20090512';
 		$xquared_path = 'xquared-'.$xquared_version;
 		$plugin_uri = METABBS_BASE_PATH.'plugins/Xquared/';
 
