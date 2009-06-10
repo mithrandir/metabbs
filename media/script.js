@@ -177,12 +177,17 @@ function editComment(form, id) {
 	var origMargin = $('comment_' + id).style.marginLeft
 	new Ajax.Request(form.action, {
 		parameters: Form.serialize(form),
-		onComplete: function (transport) {
+		onSuccess: function (transport) {
 			$('comment_' + id).replace(transport.responseText)
 			$('comment_' + id).style.marginLeft = origMargin
 
 			triggerDialogLinks()
 			closeDialog()
+		},
+		onFailure: function () {
+			alert('암호가 틀렸습니다.')
+			var submitButton = Form.getSubmitButton(form);
+			submitButton.enable();
 		}
 	});
 }
