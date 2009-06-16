@@ -1,18 +1,18 @@
 
 function loadXq() {
-	var xed_post = new xq.Editor('post_body');
-	xed_post.config.autoFocusOnInit = true;
-	xed_post.config.urlValidationMode = 'host_relative';
-	xed_post.config.changeCursorOnLink = true;
-	xed_post.config.imagePathForDefaultToolbar = XquaredPluginUri + '/images/toolbar/';
-	xed_post.config.imagePathForContent = XquaredPluginUri + '/images/content/';
-	xed_post.config.imagePathForDialog = XquaredPluginUri + '/images/dialogs/';
-	xed_post.config.imagePathForEmoticon = XquaredPluginUri + '/images/dialogs/emoticon/';
-	xed_post.config.contentCssList = [XquaredPluginUri + '/stylesheets/xq_contents.css'];
+	var xed = new xq.Editor('post_body');
+	xed.config.autoFocusOnInit = true;
+	xed.config.urlValidationMode = 'host_relative';
+	xed.config.changeCursorOnLink = true;
+	xed.config.imagePathForDefaultToolbar = XquaredPluginUri + '/images/toolbar/';
+	xed.config.imagePathForContent = XquaredPluginUri + '/images/content/';
+	xed.config.imagePathForDialog = XquaredPluginUri + '/images/dialogs/';
+	xed.config.imagePathForEmoticon = XquaredPluginUri + '/images/dialogs/emoticon/';
+	xed.config.contentCssList = [XquaredPluginUri + '/stylesheets/xq_contents.css'];
 
 /* absolute path patch for Xquared Client 20090206 : start */
 	if(xq.minorVersion == '20090206') {
-		xed_post.config.defaultToolbarButtonGroups = {
+		xed.config.defaultToolbarButtonGroups = {
 			"color": [
 				{className:"foregroundColor", title:"Foreground color", list:[
 					{style: {backgroundColor:"#ffd8d8"}, handler:"xed.handleForegroundColor('#ffd8d8')"},
@@ -183,15 +183,15 @@ function loadXq() {
 			]
 		};
 
-		xed_post.config.defaultToolbarButtonMap = [
-			xed_post.config.defaultToolbarButtonGroups.font,
-			xed_post.config.defaultToolbarButtonGroups.color,
-			xed_post.config.defaultToolbarButtonGroups.style,
-			xed_post.config.defaultToolbarButtonGroups.justification,
-			xed_post.config.defaultToolbarButtonGroups.indentation,
-			xed_post.config.defaultToolbarButtonGroups.block,
-			xed_post.config.defaultToolbarButtonGroups.link,
-			xed_post.config.defaultToolbarButtonGroups.insert,
+		xed.config.defaultToolbarButtonMap = [
+			xed.config.defaultToolbarButtonGroups.font,
+			xed.config.defaultToolbarButtonGroups.color,
+			xed.config.defaultToolbarButtonGroups.style,
+			xed.config.defaultToolbarButtonGroups.justification,
+			xed.config.defaultToolbarButtonGroups.indentation,
+			xed.config.defaultToolbarButtonGroups.block,
+			xed.config.defaultToolbarButtonGroups.link,
+			xed.config.defaultToolbarButtonGroups.insert,
 			[
 				{className:"html", title:"Edit source", handler:"xed.toggleSourceAndWysiwygMode()"}
 			],
@@ -224,13 +224,13 @@ function loadXq() {
 	}
 /* absolute path patch for Xquared Client 20090206 : end */
 
-	xed_post.addPlugin('Springnote');
-	xed_post.addPlugin('EditorResize');
-	xed_post.addPlugin('Macro');
-	xed_post.addPlugin('FlashMovieMacro');
-	xed_post.addPlugin('IFrameMacro');
-//	xed_post.addPlugin('JavascriptMacro');
-	xed_post.setEditMode('wysiwyg');
+	xed.addPlugin('Springnote');
+	xed.addPlugin('EditorResize');
+	xed.addPlugin('Macro');
+	xed.addPlugin('FlashMovieMacro');
+	xed.addPlugin('IFrameMacro');
+//	xed.addPlugin('JavascriptMacro');
+	xed.setEditMode('wysiwyg');
 
 	setPostAttribute(document.getElementById('post_body').form, 'format', 'xquared-html');
 }
