@@ -10,9 +10,10 @@ if (isset($_GET['search'])) {
 	redirect_to(query_string_for($_GET['search']));
 }
 
+$page = isset($post) ? $post->get_page() : get_requested_page();
 $finder = new PostFinder($board);
 $board->finder = $finder;
-$finder->set_page(get_requested_page());
+$finder->set_page($page);
 $finder->get_post_body = $style->skin->get_option('get_body_in_the_list', true);
 $finder->exclude_notice = $style->skin->get_option('exclude_notice');
 

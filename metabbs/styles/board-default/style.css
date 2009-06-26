@@ -18,6 +18,7 @@ form {
 #board-info {
 	float: left;
 	padding: 0.8em 0.5em;
+	clear: both;
 }
 .feed {
 	padding-left: 0.5em;
@@ -95,14 +96,14 @@ form {
 .here a {
 	font-weight: bold;
 }
-#meta-nav {
+.meta-nav {
 	padding: 0.8em 0.5em;
 	float: left;
 }
-#meta-nav .button, #meta-nav a, #meta-nav button {
+.meta-nav .button, .meta-nav a, .meta-nav button {
 	float: left;
 }
-#meta-nav a, a.button, input.button, button {
+.meta-nav a, a.button, input.button, button {
 	width: 81px;
 	height: 19px;
 	background: url(button.png) no-repeat;
@@ -112,7 +113,7 @@ form {
 	text-align: center;
 	margin-right: 1em;
 }
-#meta-nav a, a.button {
+.meta-nav a, a.button {
 	display: block;
 }
 input.button, button {

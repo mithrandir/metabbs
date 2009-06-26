@@ -35,4 +35,8 @@ if ($newer_post->exists()) apply_filters('PostView', $newer_post);
 
 $comments = $post->get_comments($style->skin->get_option('build_comment_tree', true));
 apply_filters_array('PostViewComment', $comments);
+
+$show_list = $board->get_attribute('show_list', false);
+if ($show_list)
+	include dirname(__FILE__) . '/index.php';
 ?>

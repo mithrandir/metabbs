@@ -88,7 +88,7 @@
 <? endif; ?>
 </div>
 
-<div id="meta-nav">
+<div class="meta-nav">
 	<button type="submit" name="action" value="save" class="save">
 		<? if ($editing): ?>고치기<? else: ?>글쓰기<? endif; ?>
 	</button>

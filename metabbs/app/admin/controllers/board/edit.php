@@ -31,6 +31,7 @@ if (is_post()) {
 			$error_messages->add("Board '$_board->name' already exists");
 		}
 		$board->set_attribute('use_tag', $_POST['board']['use_tag']);
+		$board->set_attribute('show_list', $_POST['board']['show_list']);
 		$sorting_changed = $_board->order_by != $board->order_by;
 		if ($error_messages->exists()) {
 			return;

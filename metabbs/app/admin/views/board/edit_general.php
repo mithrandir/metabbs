@@ -20,6 +20,8 @@
 	<dd><?=check_box('board', 'use_trackback', $board->use_trackback)?></dd>
 	<dt><?=label_tag("Use Tag", "board", "use_tag")?></dt>
 	<dd><?=check_box('board', 'use_tag', $board->use_tag())?></dd>
+	<dt><?=label_tag("Show list in the post view", "board", "show_list")?></dt>
+	<dd><?=check_box('board', 'show_list', $board->get_attribute('show_list', false))?></dd>
 </dl>
 <dl>
 	<dt><?=label_tag("Sorting", "board", "order_by")?></dt>
