@@ -88,13 +88,16 @@ function openPlayer(id, url) {
 </div>
 </div>
 
-<div id="meta-nav">
+<div class="meta-nav">
 <? if ($link_list): ?><a href="<?=$link_list?>">목록보기</a> <? endif; ?>
 <? if ($link_new_post): ?><a href="<?=$link_new_post?>">글쓰기</a> <? endif; ?>
 <? if ($link_edit): ?><a href="<?=$link_edit?>">고치기</a> <? endif; ?>
 <? if ($link_delete): ?><a href="<?=$link_delete?>" class="dialog">지우기</a> <? endif; ?>
 </div>
 
+<? if ($show_list): ?>
+<? include '_list.php'; ?>
+<? else: ?>
 <p id="neighbor-posts">
 <? if ($newer_post): ?>
 <a href="<?=$newer_post->url?>" title="<?=$newer_post->title?>">&larr; <?=utf8_strcut($newer_post->title, 20)?></a>
@@ -104,3 +107,4 @@ function openPlayer(id, url) {
 <a href="<?=$older_post->url?>" title="<?=$older_post->title?>"><?=utf8_strcut($older_post->title, 20)?> &rarr;</a>
 <? endif; ?>
 </p>
+<? endif; ?>

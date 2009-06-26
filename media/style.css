@@ -127,7 +127,12 @@ form table th {
 form p {
 	clear: both;
 }
+dl {
+	margin-bottom: 1em;
+	overflow: hidden;
+}
 dt {
+	clear: left;
 	float: left;
 	width: 10em;
 }

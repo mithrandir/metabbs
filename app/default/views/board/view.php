@@ -24,4 +24,9 @@ $template->set('link_edit', $account->has_perm('edit', $post) ? url_for($post, '
 $template->set('link_delete', $account->has_perm('delete', $post) ? url_for($post, 'delete', $params) : '');
 $template->set('comment_writable', $account->has_perm('write_comment', $post));
 $template->set('commentable', $account->has_perm('comment', $post));
+
+$template->set('show_list', $show_list);
+if ($show_list)
+	include dirname(__FILE__) . '/_list.php';
+
 $template->render();

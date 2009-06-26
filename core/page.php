@@ -7,16 +7,14 @@
  * @return 게시판 명과 페이지를 기준으로 링크를 만든다.
  * $text가 있는 경우에는 텍스트를 없는 경우엔 페이지 번호를 텍스트로 삼는다.
  */
-function link_to_page($page, $text = null) {
-	$params = get_search_params();
-	$params['page'] = $page;
-	return link_text(query_string_for($params), $text ? $text : $page);
+function link_to_page($page, $text = null, $board = null) {
+	return link_text(url_for_page($page, $board), $text ? $text : $page);
 }
 
-function url_for_page($page) {
+function url_for_page($page, $board = null) {
 	$params = get_search_params();
 	$params['page'] = $page;
-	return query_string_for($params);
+	return url_for($board, '', $params);
 }
 
 /**

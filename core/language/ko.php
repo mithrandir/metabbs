@@ -194,3 +194,4 @@ $lang['Revert'] = '되돌리기';
 $lang['Clear all'] = '모두 삭제';
 $lang['Transfer'] = '전환';
 $lang['Register'] = '등록';
+$lang['Show list in the post view'] = '글 읽을 때 목록 표시';
