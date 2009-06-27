@@ -119,6 +119,15 @@ function run($conn) {
 	$t->column('token', 'string', 32);
 	$conn->add_table($t);
 
+	$t = new Table('openid');
+	$t->column('openid', 'string', 255);
+	$t->column('position', 'integer');
+	$t->column('user_id', 'integer');	
+	$t->column('created_at', 'timestamp');
+	$t->add_index('openid');
+	$t->add_index('user_id');
+	$conn->add_table($t);
+
 	$t = new Table('category');
 	$t->column('board_id', 'integer');
 	$t->column('name', 'string', 45);
