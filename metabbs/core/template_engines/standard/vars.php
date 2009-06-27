@@ -146,6 +146,9 @@ if ($this->view == 'reply')
 else if ($this->view == 'edit_comment')
 	$form_id = 'edit-form';
 
+if (isset($board))
+	$link_rss = url_for($board, 'rss');
+
 $css = 'styles/'.$style->name.'/style.css';
 if (file_exists($css))
 	$layout->add_stylesheet($style_dir.'/style.css?'.filemtime($css));
