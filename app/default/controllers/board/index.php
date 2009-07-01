@@ -42,8 +42,8 @@ if ($board->use_category) {
 }
 $posts = $finder->get_posts();
 if ($style->skin->get_option('preload_attachments')) {
-	foreach ($posts as $n => $post) {
-		$posts[$n]->attachments = $post->get_attachments();
+	foreach ($posts as $n => $_post) {
+		$posts[$n]->attachments = $_post->get_attachments();
 	}
 }
 apply_filters_array('PostList', $posts);
