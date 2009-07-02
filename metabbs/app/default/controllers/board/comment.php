@@ -27,9 +27,6 @@ if (empty($comment->name))
 if (empty($comment->body))
 	$error_messages->add('Please enter the body', 'body');
 
-if ($account->is_guest() && strlen($comment->password) < 5)
-		$error_messages->add('Password length must be longer than 5', 'password');
-
 if(!$error_messages->exists()) {
 	$post->add_comment($comment);
 
