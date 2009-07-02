@@ -50,9 +50,6 @@ if (is_post()) {
 	if (empty($post->body))
 		$error_messages->add('Please enter the body', 'body');
 
-	if ($account->is_guest() && strlen($post->password) < 5)
-		$error_messages->add('Password length must be longer than 5', 'password');
-
 	if ($account->is_guest() && $post->password != md5($post_password))
 		$error_messages->add('Password fields\' content is not matched', 'password');
 
