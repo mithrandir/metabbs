@@ -141,7 +141,7 @@ class UserManager
 	 * @return 쿠키에 로그인 정보가 있는 경우 해당 사용자 객체를 반환 없는 경우 null 반환.
 	 */
 	function get_user() {
-		if (session_is_registered('user_id')) {
+		if (isset($_SESSION['user_id'])) {
 			$user = User::find($_SESSION['user_id']);
 			if ($user->exists()) return $user;
 		} else {

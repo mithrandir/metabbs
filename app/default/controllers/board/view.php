@@ -12,7 +12,7 @@ if (cookie_is_registered('seen_posts')) {
 	cookie_unregister('seen_posts');
 }
 
-if (!session_is_registered('seen_posts')) {
+if (!isset($_SESSION['seen_posts'])) {
 	$_SESSION['seen_posts'] = array();
 }
 
