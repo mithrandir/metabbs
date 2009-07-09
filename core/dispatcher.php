@@ -98,7 +98,7 @@ class Dispatcher {
 				$parts[0] = $board->name;
 			}
 
-			if ($parts[0] == 'user' and !is_numeric($parts[1])) {
+			if ($parts[0] == 'user'/* and !is_numeric($parts[1])*/) {
 				$user = User::find_by_user($parts[1]);
 				if ($user->exists())
 					$parts[1] = $user->get_id();
