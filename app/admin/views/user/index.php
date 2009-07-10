@@ -29,7 +29,7 @@
 <? } ?>
 </table>
 
-<? _print_pages($page, $users_count, 10); ?>
+<? _print_admin_pages($page, $users_count, 10); ?>
 
 <h3><?=i('Mass operation')?></h3>
 <ul id="operations">

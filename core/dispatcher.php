@@ -144,7 +144,8 @@ class Dispatcher {
 					$params['id'] = $routes['controller']->name;
 					$routes['controller'] = $routes['controller']->model;
 				} else {
-					$params['id'] = $routes['controller']->id;
+					if (isset($routes['controller']))
+						$params['id'] = $routes['controller']->id;
 					$routes['controller'] = $routes['controller']->model;
 				}
 			}
