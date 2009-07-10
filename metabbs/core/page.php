@@ -7,14 +7,24 @@
  * @return 게시판 명과 페이지를 기준으로 링크를 만든다.
  * $text가 있는 경우에는 텍스트를 없는 경우엔 페이지 번호를 텍스트로 삼는다.
  */
-function link_to_page($page, $text = null, $board = null) {
-	return link_text(url_for_page($page, $board), $text ? $text : $page);
+function link_to_page($page, $text = null, $controller = null) {
+	return link_text(url_for_page($page, $controller), $text ? $text : $page);
 }
 
-function url_for_page($page, $board = null) {
+function link_to_admin_page($page, $text = null, $controller = null) {
+	return link_text(url_admin_for_page($page, $controller), $text ? $text : $page);
+}
+
+function url_for_page($page, $controller = null) {
 	$params = get_search_params();
 	$params['page'] = $page;
-	return url_for($board, '', $params);
+	return url_for($controller, '', $params);
+}
+
+function url_admin_for_page($page, $controller = null) {
+	$params = get_search_params();
+	$params['page'] = $page;
+	return url_admin_for($controller, '', $params);
 }
 
 /**
@@ -57,6 +67,38 @@ function _print_pages($page, $count, $per_page, $padding = 2) {
 	}
 	if ($next_page <= $page_count) {
 		echo '<li class="next">'.link_to_page($next_page, '&rsaquo;').'</li>';
+	}
+	echo "</ul>";
+}
+
+function _print_admin_pages($page, $count, $per_page, $padding = 2) {
+	$page_count = $count ? ceil($count / $per_page) : 1;
+	$prev_page = $page - 1;
+	$next_page = $page + 1;
+	$page_group_start = $page - $padding;
+	if ($page_group_start < 1) $page_group_start = 1;
+	$page_group_end = $page + $padding;
+	if ($page_group_end > $page_count) $page_group_end = $page_count;
+	
+	echo '<ul id="pages">';
+	if ($prev_page > 0) {
+		echo '<li class="prev">'.link_to_admin_page($prev_page, '&lsaquo;').'</li>';
+	}
+	if ($page_group_start > 1) {
+		echo '<li>'.link_to_admin_page(1).'</li>';
+		if ($page_group_start > 2) echo '<li>...</li>';
+	}
+	for ($p = $page_group_start; $p <= $page_group_end; $p++) {
+		if ($p == $page) echo '<li class="here">';
+		else echo '<li>';
+		echo link_to_admin_page($p) . '</li>';
+	}
+	if ($page_group_end != $page_count) {
+		if ($page_group_end < ($page_count - 1)) echo '<li>...</li>';
+		echo '<li>'.link_to_admin_page($page_count).'</li>';
+	}
+	if ($next_page <= $page_count) {
+		echo '<li class="next">'.link_to_admin_page($next_page, '&rsaquo;').'</li>';
 	}
 	echo "</ul>";
 }
