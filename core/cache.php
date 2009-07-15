@@ -16,9 +16,9 @@
 
 class PageCache {
 	var $name, $contents;
-	protected $lifetime, $fp, $locked, $cachedir;
+	var $lifetime, $fp, $locked, $cachedir;
 
-	public function PageCache($cachedir = 'data') {
+	function PageCache($cachedir = 'data') {
 		$this->contents = null;
 		$this->cachedir = $cachedir;
 		if(!file_exists($this->cachedir."/page_cache")) {
@@ -27,7 +27,7 @@ class PageCache {
 		}
 	}
 
-	public function load($lifetime=300, $forceRefresh=false) {
+	function load($lifetime=300, $forceRefresh=false) {
 		global $config;
 
 		if (empty($this->name)) return false;
@@ -50,7 +50,7 @@ class PageCache {
 		return false;
 	}
 
-	public function update($writeTimestamp=true) {
+	function update($writeTimestamp=true) {
 		global $config;
 
 		if (empty($this->name)) return false;
@@ -67,7 +67,7 @@ class PageCache {
 		}
 	}
 	
-	public function purge() {
+	function purge() {
 		global $config;
 
 		if (empty($this->name)) return false;
@@ -80,13 +80,13 @@ class PageCache {
 		return true;
 	}
 
-	protected function unlock() {
+	function unlock() {
 		@flock($this->fp, LOCK_UN);
 		@fclose($this->fp);
 		$this->fp = $this->locked = false;
 	}
 
-	protected function isCacheValid() {
+	function isCacheValid() {
 		clearstatcache();
 		return (file_exists($this->cachedir."/page_cache/{$this->name}") && ((time() - filemtime($this->cachedir."/page_cache/{$this->name}")) < $this->lifetime));
 	}
