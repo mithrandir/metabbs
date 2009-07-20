@@ -11,11 +11,13 @@ if (is_post()) {
 			$feed->owner_id = 0;
 		}
 		$feed->update();
+		Flash::set('주인을 변경했습니다');
 		redirect_back();
 	} else if (isset($params['owner-name']) && is_numeric($params['owner-name'])) {
 		$feed = Feed::find($params['owner-name']);
 		$feed->owner_name = $params['value'];
 		$feed->update();
+		Flash::set('주인이름을 변경했습니다');
 		redirect_back();
 	} else if (isset($params['delete']) && is_numeric($params['delete'])) {
 		$feed = Feed::find($params['delete']);

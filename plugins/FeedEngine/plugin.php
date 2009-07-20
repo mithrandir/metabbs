@@ -28,8 +28,8 @@ class FeedEngine extends Plugin {
 	function on_init() {
 		ini_set("include_path", dirname(__FILE__) . PATH_SEPARATOR . ini_get("include_path"));
 
-		add_filter('PostFinderFields', array(&$this, 'post_fineder_fields_filter'), 257);
-		add_filter('PostFinderConditions', array(&$this, 'post_fineder_conditions_filter'), 257);
+		add_filter('PostFinderFields', array(&$this, 'post_finder_fields_filter'), 257);
+		add_filter('PostFinderConditions', array(&$this, 'post_finder_conditions_filter'), 257);
 		add_filter('PostDelete', array(&$this, 'post_delete_filter'), 257);
 		add_filter('UserDelete', array(&$this, 'user_delete_filter'), 257);
 		add_filter('PostViewRSS', array(&$this, 'post_view_rss_filter'), 500);
@@ -41,10 +41,10 @@ class FeedEngine extends Plugin {
 		add_admin_menu(url_admin_for('feedengine'), 'Feed Engine');
 	}
 
-	function post_fineder_fields_filter(&$fields) {
+	function post_finder_fields_filter(&$fields) {
 		$fields .= ", body, feed_id, feed_link, feed_fp ";
 	}
-	function post_fineder_conditions_filter(&$condtions, $board) {
+	function post_finder_conditions_filter(&$condtions, $board) {
 		global $account;
 		if($board->get_attribute('feed-at-board') && !$account->is_admin()) {
 			$condtions .= " AND secret = 0 ";
@@ -159,19 +159,6 @@ class FeedEngine extends Plugin {
 		mkdir('data/feed_log');
 		chmod('data/feed_cache', 0707);
 		chmod('data/feed_log', 0707);
-
-/*	중간 업데이트분
-		$conn = get_conn();
-		$conn->add_field('feed', 'owner_name', 'string', 255);
-		$conn->add_field('feed', 'active', 'ushort');
-
-		$t = new Table('feed_board');
-		$t->column('feed_id', 'integer');
-		$t->column('board_id', 'integer');
-		$t->column('created_at', 'timestamp');
-		$t->add_index('feed_id');
-		$t->add_index('board_id');
-		$conn->add_table($t);*/
 	}
 
 	function on_uninstall() {

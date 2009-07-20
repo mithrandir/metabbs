@@ -322,7 +322,7 @@ class FeedParser {
 				}
 			}
 		}
-		@array_shift($tags);	// first tags is category 
+//		@array_shift($tags);	// first tags is category 
 
 		$pub_date = $item->get_date('U');
 		$feed_fp = md5($author.$title.$description.$tags.$pub_date);
