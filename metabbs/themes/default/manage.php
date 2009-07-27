@@ -16,6 +16,10 @@
 
 <p><input type="radio" name="action" value="show" id="show_box" /> <label for="show_box">비밀글 풀기</label></p>
 
+<p><input type="radio" name="action" value="notice" id="notice_box" /> <label for="notice_box">공지글로 바꾸기</label></p>
+
+<p><input type="radio" name="action" value="unnotice" id="unnotice_box" /> <label for="unnotice_box">공지글 풀기</label></p>
+
 <p><input type="radio" name="action" value="delete" id="delete_box" /> <label for="delete_box">지우기</label></p>
 
 <? if ($board->use_category) { ?>
