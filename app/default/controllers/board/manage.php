@@ -2,7 +2,7 @@
 permission_required('admin', $board);
 
 if (!$params['posts']) {
-	// flash message : Æ÷½ºÆ®¸¦ ¼±ÅÃÇÏ¼¼¿ä
+	Flash::set('Please Select Posts');
 	redirect_back();
 }
 
@@ -19,6 +19,20 @@ if (is_post() and isset($params['action'])) {
 		foreach ($params['posts'] as $post_id) {
 			$post = Post::find($post_id);
 			$post->secret = 0;
+			$post->update();
+		}
+		break;
+		case 'notice':
+		foreach ($params['posts'] as $post_id) {
+			$post = Post::find($post_id);
+			$post->notice = 1;
+			$post->update();
+		}
+		break;
+		case 'unnotice':
+		foreach ($params['posts'] as $post_id) {
+			$post = Post::find($post_id);
+			$post->notice = 0;
 			$post->update();
 		}
 		break;
@@ -54,11 +68,11 @@ if (is_post() and isset($params['action'])) {
 		}
 		break;
 		default:
-			// flash message : ÇàÀ§¸¦ Á¤ÇÏÁö ¾Ê¾Ò½À´Ï´Ù.
+			// flash message : í–‰ìœ„ë¥¼ ì •í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.
 			redirect_back();
 		break;
 	}
-	// flash message : Ã³¸®µÇ¾ú½À´Ï´Ù
+	// flash message : ì²˜ë¦¬ë˜ì—ˆìŠµë‹ˆë‹¤
 	redirect_back();
 }
 ?>
