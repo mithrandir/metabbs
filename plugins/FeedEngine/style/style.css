@@ -40,7 +40,7 @@ form {
 #posts h1.title {
 	font-size: 1.1em;
 	background: url(header-left.png) no-repeat;
-	margin: 0 0 5px 0 !important;
+	margin: 0 !important;
 	overflow: hidden;
 }
 .title-wrap {
@@ -51,8 +51,9 @@ form {
 
 #posts div.post {
 	float: left;
-	margin-bottom: 10px;
+/*	margin-bottom: 10px;*/
 	border-bottom: 1px solid #eee;
+	padding-top: 10px;
 	padding-bottom: 10px;
 	width: 100%;
 }
@@ -110,6 +111,10 @@ form {
 	float: left;
 	border: 1px solid #eee;
 	margin-right: 10px;
+}
+
+#posts div.notice {
+	background-color: #f4f4f4;
 }
 
 /*

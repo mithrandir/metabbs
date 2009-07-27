@@ -55,6 +55,7 @@ function click_feed(url) {
 		<? endif; ?>
 		<h2 class="title <?=$first_image->exists() ? 'have_image':''?>"><? if ($admin): ?><input type="checkbox" name="posts[]" value="<?=$post->id?>" /> <? endif; ?>
 		<? if ($post->secret): ?><span class="secret"><?=i('Secret Post')?></span> | <? endif; ?>
+		<? if ($post->notice): ?><span class="notice"><?=i('Notice')?></span> | <? endif; ?>
 		<a href="<?=$post->feed_link?>" onclick="window.open(this.href); return false;" title="<?=$post->title?>"><?=utf8_strcut($post->title, ($first_image->exists()?50:70))?></a></h2>
 		<p class="info <?=$first_image->exists() ? 'have_image':''?>">
 		<a href="<?=$feed->link?>" onclick="click_feed('<?=url_for('feedengine','update_views', array('id'=>$board->name, 'post'=> $post->id))?>'); window.open(this.href); return false;"><?=$feed->title?></a>
