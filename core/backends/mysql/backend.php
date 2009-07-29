@@ -67,6 +67,7 @@ function &switch_on_conn($host, $user, $password, $dbname) {
 	global $config, $__db;
 
 	$__db->disconnect();
+	unset($__db);
 	$__db = new MySQLConnection;
 	$__db->connect($host, $user, $password);
 	$__db->selectdb($dbname);
@@ -81,6 +82,7 @@ function &switch_off_conn() {
 	global $__db;
 
 	$__db->disconnect();
+	unset($__db);
 	$__db = get_conn();
 	return $__db;
 }
