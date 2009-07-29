@@ -63,6 +63,28 @@ function &get_conn() {
 	return $__db;
 }
 
+function &switch_on_conn($host, $user, $password, $dbname) {
+	global $config, $__db;
+
+	$__db->disconnect();
+	$__db = new MySQLConnection;
+	$__db->connect($host, $user, $password);
+	$__db->selectdb($dbname);
+	if ($config->get('force_utf8') == '1') {
+		$__db->enable_utf8();
+	}
+
+	return $__db;
+}
+
+function &switch_off_conn() {
+	global $__db;
+
+	$__db->disconnect();
+	$__db = get_conn();
+	return $__db;
+}
+
 /**
  * MySQL 연결 클래스
  */
