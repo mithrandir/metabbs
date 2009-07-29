@@ -54,6 +54,8 @@ function &get_conn() {
 	global $config, $__db;
 	if (!isset($__db)) {
 		$__db = new MySQLConnection;
+	}
+	if (!$__db->connected()) {
 		$__db->connect($config->get('host'), $config->get('user'), $config->get('password'));
 		$__db->selectdb($config->get('dbname'));
 		if ($config->get('force_utf8') == '1') {
@@ -63,27 +65,29 @@ function &get_conn() {
 	return $__db;
 }
 
-function &switch_on_conn($host, $user, $password, $dbname) {
+function &switch_on_conn($host, $user, $password, $dbname, $prefix) {
 	global $config, $__db;
 
 	$__db->disconnect();
-	unset($__db);
-	$__db = new MySQLConnection;
 	$__db->connect($host, $user, $password);
 	$__db->selectdb($dbname);
 	if ($config->get('force_utf8') == '1') {
 		$__db->enable_utf8();
 	}
-
+	$__db->prefix = $prefix;
 	return $__db;
 }
 
 function &switch_off_conn() {
-	global $__db;
+	global $config, $__db;
 
 	$__db->disconnect();
-	unset($__db);
-	$__db = get_conn();
+	$__db->connect($config->get('host'), $config->get('user'), $config->get('password'));
+	$__db->selectdb($config->get('dbname'));
+	if ($config->get('force_utf8') == '1') {
+		$__db->enable_utf8();
+	}
+	$__db->prefix = $config->get('prefix', 'meta_');
 	return $__db;
 }
 
@@ -92,7 +96,7 @@ function &switch_off_conn() {
  */
 class MySQLConnection
 {
-	var $conn;
+	var $conn = false;
 	var $utf8 = false;
 	var $real_escape = true;
 	var $prefix;
@@ -100,6 +104,9 @@ class MySQLConnection
 	function connect($host, $user, $password) {
 		$this->conn = mysql_connect($host, $user, $password) or trigger_error(mysql_error(), E_USER_ERROR);
 		$this->real_escape = function_exists('mysql_real_escape_string') && mysql_real_escape_string('ㅋ') == 'ㅋ';
+	}
+	function connected() {
+		return $this->conn != false;
 	}
 	function disconnect() {
 		mysql_close($this->conn);
