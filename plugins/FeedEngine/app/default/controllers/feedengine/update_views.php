@@ -1,6 +1,7 @@
 <?php
-$board = Board::find_by_name($params['id']);
-$post = Post::find($params['post']);
+$post = Post::find($params['id']);
+$board = $post->get_board();
+
 if($board->exists() && $post->exists() && $board->get_attribute('feed-at-board')) {
 	// backward compatibility; #156
 	if (cookie_is_registered('seen_posts')) {
@@ -12,11 +13,14 @@ if($board->exists() && $post->exists() && $board->get_attribute('feed-at-board')
 	if (!session_is_registered('seen_posts')) {
 		$_SESSION['seen_posts'] = array();
 	}
-	
+
 	if (!in_array($post->id, $_SESSION['seen_posts'])) {
 		$post->update_view_count();
 		$_SESSION['seen_posts'][] = $post->id;
 	}
+}
+if (!is_xhr()) {
+	redirect_back();
 }
 exit;
 ?>
