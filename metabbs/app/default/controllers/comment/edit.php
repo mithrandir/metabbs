@@ -1,37 +1,46 @@
 <?php
-permission_required('edit', $comment);
+permission_required('comment', $post);
 
-$post = $comment->get_post();
+$_comment_edited = false;
 if (is_post()) {
-	if (!$account->is_guest() || $comment->password == md5($_POST['password'])) {
-		$comment->body = $_POST['body'];
-		$comment->update();
+	if (isset($params['comment'])) {
+		$params['comment'] = array(
+			'name' => @$params['comment']['author'],
+			'password' => @$params['comment']['password'],
+			'body' => $params['comment']['body']
+		);
+	}
+	$post_password = $params['comment']['password'];
+	unset($params['comment']['password']);
+	$comment->import($params['comment']);
 
-		if (!is_xhr())
-			redirect_to(url_for($post) . '#comment_' . $comment->id);
+	apply_filters('BeforeCommentUpdate', $comment, array('reply' => false));
+
+	if ($account->is_guest() && !empty($comment->name))
+		$error_messages->add('Please enter the name', 'author');
+
+	if (empty($comment->body))
+		$error_messages->add('Please enter the body', 'body');
+
+	if ($account->is_guest()) {
+		if (strlen($post_password) == 0)
+			$error_messages->add('Please enter the password', 'password');
 		else {
-			$board = $comment->get_board();
-			apply_filters('PostViewComment', $comment);
-			$template = get_template($board, '_comment');
-			$template->set('board', $board);
-			$template->set('comment', $comment);
-			$template->render_partial();
-			exit;
+			if ($comment->password != md5($post_password))
+				$error_messages->add('Please enter the valid password', 'password');
 		}
 	} else {
-		header('HTTP/1.1 403 Forbidden');
-		print_notice('Failed to edit', 'Wrong password');
+		if (!$account->is_admin() && $comment->user_id != $account->id)
+			$error_messages->add('Wrong User');
 	}
-} else {
-	$template = get_template($board, 'edit_comment');
-	$template->set('board', $board);
-	$template->set('comment', $comment);
-	$template->set('ask_password', $account->is_guest());
-	$template->set('link_cancel', url_for($post));
 
-	if (is_xhr()) {
-		$template->render_partial();
-		exit;
+	if(!$error_messages->exists()) {
+		$comment->update();
+		$_comment_edited = true;
+		if ($_comment_edited) {
+			apply_filters('AfterCommentUpdate', $comment, array('reply' => false));
+			cookie_register('name', $comment->name);
+		}
 	}
 }
 ?>

@@ -1,8 +1,22 @@
 <?php
-if (!$account->has_perm('delete', $comment))
-	access_denied();
+//if (!$account->has_perm('delete', $comment))
+//	access_denied();
+permission_required('delete', $comment);
 
-$post = $comment->get_post();
+$_comment_deleted = false;
+if (is_post()) {
+	if (!$account->is_guest() || $comment->password == md5($params['password'])) {
+		if ($account->is_guest())
+			$comment->deleted_by = $comment->name;
+		else
+			$comment->deleted_by = $account->name;
+		TrashCan::put($comment, 'deleted by ' . $comment->deleted_by);
+		$_comment_deleted = true;
+	}
+}
+
+
+/*$post = $comment->get_post();
 if (is_post()) {
 	if (!$account->is_guest() || $comment->password == md5($_POST['password'])) {
 		if ($account->is_guest())
@@ -36,5 +50,5 @@ $template->set('link_cancel', url_for($post));
 if (is_xhr()) {
 	$template->render_partial();
 	exit;
-}
+}*/
 ?>

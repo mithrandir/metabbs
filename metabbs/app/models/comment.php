@@ -5,6 +5,7 @@ class Comment extends Model {
 	var $parent = 0;
 	var $name;
 	var $body;
+	var $user_id;
 
 	function _init() {
 		$this->table = get_table_name('comment');
