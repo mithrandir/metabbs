@@ -1,67 +1,44 @@
 <?php
 permission_required('reply', $comment);
 
-if (is_post() && !isset($_POST['comment'])) {
-	$_POST['comment'] = array(
-		'name' => $_POST['author'],
-		'password' => $_POST['password'],
-		'body' => $_POST['body']
-	);
-}
-
+$_comment_replied = false;
 if (is_post()) {
-	$_comment = new Comment($_POST['comment']);
-	$_comment->user_id = $account->id;
-	$_comment->post_id = $comment->post_id;
-	$_comment->parent = $comment->id;
-	if (!$_comment->valid()) {
-		exit;
+	if (isset($params['comment'])) {
+		$params['comment'] = array(
+			'name' => @$params['comment']['author'],
+			'password' => @$params['comment']['password'],
+			'body' => $params['comment']['body']
+		);
 	}
+
+	$_comment = new Comment($params['comment']);
+	$_comment->parent = $comment->id;
 	if (!$account->is_guest()) {
+		$_comment->user_id = $account->id;
 		$_comment->name = $account->name;
 	} else {
 		cookie_register('name', $_comment->name);
 	}
-	$post = $comment->get_post();
-	apply_filters('PostComment', $_comment, array('reply' => TRUE));
-	apply_filters('ValidateCommentReply', $_POST, $error_messages);
 
-	if (empty($post->name))
+	apply_filters('ValidateCommentReply', $params, $error_messages);
+	apply_filters('BeforeCommentReply', $comment, array('reply' => false));
+
+	if ($account->is_guest() && !empty($_comment->name))
 		$error_messages->add('Please enter the name', 'author');
 
-	if (empty($post->body))
+	if (empty($_comment->body))
 		$error_messages->add('Please enter the body', 'body');
+
+	if ($account->is_guest() && strlen($post_password) == 0)
+			$error_messages->add('Please enter the password', 'password');
 
 	if(!$error_messages->exists()) {
 		$post->add_comment($_comment);
-
-		apply_filters('AfterPostComment', $comment, array('reply' => TRUE));
-
-		if (is_xhr()) {
-			apply_filters('PostViewComment', $_comment);
-			$template = get_template($board, '_comment');
-			$template->set('board', $board);
-			$template->set('error_messages', $error_messages);
-			$template->set('comment', $_comment);
-			$template->render_partial();
-			exit;
-		} else {
-			redirect_to(url_for($post));
+		$_comment_replied = true;
+		if ($_commen_comment_repliedt_edited) {
+			apply_filters('AfterCommentReply', $comment, array('reply' => false));
+			cookie_register('name', $comment->name);
 		}
-	}
-} else {
-	$post = $comment->get_post();
-
-	$template = get_template($board, 'reply');
-	$template->set('board', $board);
-	$template->set('error_messages', $error_messages);
-	$template->set('comment', $comment);
-	$template->set('name', cookie_get('name'));
-	$template->set('link_cancel', url_for($post));
-
-	if (is_xhr()) {
-		$template->render_partial();
-		exit;
 	}
 }
 ?>

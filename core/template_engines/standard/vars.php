@@ -67,6 +67,7 @@ if (isset($categories)) {
 }
 
 $taggable = $board->use_tag();
+$form_id = '';
 if ($this->view == 'view') {
 	$layout->add_meta('Author', htmlspecialchars(isset($post->name_orig) ? $post->name_orig : $post->name));
 	$form_id = 'comment-form';
@@ -121,7 +122,7 @@ if (isset($comments)) {
 	}
 	$comments = flatten_comments($comments);
 }
-$comment_url = null;
+/*$comment_url = null;
 if (isset($post) && $post->exists() && $account->has_perm('comment', $post)) {
 	$comment_url = url_for($post, 'comment');
 }
@@ -136,7 +137,7 @@ if ($routes['controller'] == 'comment') {
 if (isset($comment_url) && !isset($comment_author)) {
 	$comment_author = htmlspecialchars(cookie_get('name'));
 	$comment_body = "";
-}
+}*/
 if (!isset($signature)) $signature = '';
 if (!isset($link_cancel)) $link_cancel = '';
 if (isset($keyword)) $keyword = htmlspecialchars($keyword);
