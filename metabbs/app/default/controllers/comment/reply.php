@@ -20,25 +20,27 @@ if (is_post()) {
 		cookie_register('name', $_comment->name);
 	}
 
-	apply_filters('ValidateCommentReply', $params, $error_messages);
 	apply_filters('BeforeCommentReply', $comment, array('reply' => false));
+	apply_filters('ValidateCommentReply', $params, $error_messages);
 
-	if ($account->is_guest() && !empty($_comment->name))
+	if ($account->is_guest() && empty($_comment->name))
 		$error_messages->add('Please enter the name', 'author');
 
 	if (empty($_comment->body))
 		$error_messages->add('Please enter the body', 'body');
 
-	if ($account->is_guest() && strlen($post_password) == 0)
+	if ($account->is_guest() && strlen($_comment->password) == 0)
 			$error_messages->add('Please enter the password', 'password');
 
 	if(!$error_messages->exists()) {
 		$post->add_comment($_comment);
 		$_comment_replied = true;
-		if ($_commen_comment_repliedt_edited) {
-			apply_filters('AfterCommentReply', $comment, array('reply' => false));
-			cookie_register('name', $comment->name);
+		if ($_comment_replied) {
+			apply_filters('AfterCommentReply', $_comment, array('reply' => false));
+			cookie_register('name', $_comment->name);
 		}
 	}
+} else {
+	$_comment = new Comment();
 }
 ?>

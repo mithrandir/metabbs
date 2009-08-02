@@ -72,17 +72,17 @@ function modern_comment_filter(&$comment) {
 	global $account;
 	$comment->author = $comment->name;
 	$comment->date = date('Y-m-d H:i:s', $comment->created_at);
-	if ($account->has_perm('reply', $comment)) {
+	if ($account->is_guest() || (!$account->is_guest() && $account->has_perm('reply', $comment))) {
 		$comment->reply_url = url_for($comment, 'reply');
 	} else {
 		$comment->reply_url = null;
 	}
-	if ($account->has_perm('delete', $comment)) {
+	if ($account->is_guest() || (!$account->is_guest() && $account->has_perm('delete', $comment))) {
 		$comment->delete_url = url_for($comment, 'delete');
 	} else {
 		$comment->delete_url = null;
 	}
-	if ($account->has_perm('edit', $comment)) {
+	if ($account->is_guest() || (!$account->is_guest() && $account->has_perm('edit', $comment))) {
 		$comment->edit_url = url_for($comment, 'edit');
 	} else {
 		$comment->edit_url = null;

@@ -25,7 +25,9 @@ $template->set('link_delete', $account->has_perm('delete', $post) ? url_for($pos
 $template->set('comment_url', url_for($post, 'comment'));
 $template->set('comment_writable', $account->has_perm('write_comment', $post));
 $template->set('commentable', $account->has_perm('comment', $post));
-$template->set('comment', array('name'=>null, 'body'=>null));
+//$template->set('comment', array('name'=>null, 'body'=>null));
+$template->set('comment_author', null);
+$template->set('comment_body', null);
 $template->set('show_list', $show_list);
 if ($show_list)
 	include dirname(__FILE__) . '/_list.php';
