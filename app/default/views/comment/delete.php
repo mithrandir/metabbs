@@ -13,9 +13,10 @@ if($_comment_deleted) {
 		redirect_to(url_for($post));
 	}
 } else {
-	$template = get_template($board, 'delete');
+	$template = get_template($board, 'delete_comment');
 	$template->set('board', $board);
 	$template->set('comment', $comment);
+	$template->set('commentable', $account->has_perm('comment', $post));
 	$template->set('ask_password', $account->is_guest());
 	$template->set('link_cancel', url_for($post));
 	$template->render();

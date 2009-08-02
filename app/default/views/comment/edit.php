@@ -17,6 +17,7 @@ if($_comment_edited) {
 	$template = $style->get_template('edit_comment');
 	$template->set('board', $board);
 	$template->set('post', $post);
+	$template->set('comment_id', $comment->id);
 	$template->set('comment_url', url_for($comment, 'edit'));
 	$template->set('comment_writable', $account->has_perm('write_comment', $post));
 	$template->set('commentable', $account->has_perm('comment', $post));

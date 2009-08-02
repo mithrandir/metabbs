@@ -19,9 +19,9 @@ if (is_post()) {
 	$comment->post_id = $post->id;
 
 	apply_filters('BeforeCommentCreate', $comment, array('reply' => false));
-//	apply_filters('ValidateCommentCreate', $params, $error_messages);
+	apply_filters('ValidateCommentCreate', $params, $error_messages);
 
-	if (empty($comment->name))
+	if ($account->is_guest() && empty($comment->name))
 		$error_messages->add('Please enter the name', 'author');
 
 	if (empty($comment->body))

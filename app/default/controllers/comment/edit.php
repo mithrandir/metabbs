@@ -15,8 +15,9 @@ if (is_post()) {
 	$comment->import($params['comment']);
 
 	apply_filters('BeforeCommentUpdate', $comment, array('reply' => false));
+	apply_filters('ValidateCommentUpdate', $params, $error_messages);
 
-	if ($account->is_guest() && !empty($comment->name))
+	if ($account->is_guest() && empty($comment->name))
 		$error_messages->add('Please enter the name', 'author');
 
 	if (empty($comment->body))
