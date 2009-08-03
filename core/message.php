@@ -65,7 +65,7 @@ class Flash {
 
 function error_message_box($message, $title='Error Messages') {
 	ob_start();
-	if ($message->exists()) {
+	if (isset($message) && $message->exists()) {
 		echo "<div id=\"error_messages\">\n";
 		echo "<h2>".i($title)."</h2>\n";
 		echo "<ul>\n";
