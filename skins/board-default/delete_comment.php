@@ -1,5 +1,5 @@
 <? if ($commentable): ?>
-<h1>답글 삭제</h1>
+<h1><?=i('Delete Comment')?></h1>
 <? include "_delete_form.php"; ?>
 <? if (is_xhr()): ?>
 <script type="text/javascript">

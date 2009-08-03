@@ -1,3 +1,6 @@
+<?=flash_message_box()?>
+<?=error_message_box($error_messages)?>
+
 <form method="post" action="" id="delete-form" class="delete-form">
 <? if ($ask_password): ?>
 <p><label for="password">암호:</label> <input type="password" name="password" id="password" /></p>
