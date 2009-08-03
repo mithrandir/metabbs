@@ -74,8 +74,7 @@ function openPlayer(id, url) {
 	<? endforeach; ?>
 	</ol>
 <? if ($comment_writable): ?>
-	<? include "comment_form.php"; ?>
-
+<? include "_comment_form.php"; ?>
 <script type="text/javascript">
 Event.observe('comment-form', 'submit', function (event) {
 	addComment('comment-form', $$('#comments ol')[0])

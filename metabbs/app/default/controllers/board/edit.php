@@ -63,7 +63,7 @@ if (is_post()) {
 				foreach ($_POST['delete'] as $id) {
 					$attachment = Attachment::find($id);
 					$attachment->delete();
-					@unlink('data/uploads/'.$id);
+					@unlink(METABBS_DIR . '/data/uploads/'.$id);
 				}
 			}
 
