@@ -16,8 +16,8 @@ if (is_post()) {
 	Flash::set('피드가 삭제되었습니다');	
 }
 if(is_xhr()) {
-	include 'themes/'.get_current_theme().'/_homepage.php';
-	exit;
-} else
+	include 'themes/'.get_current_theme().'/_homepage.php';exit;
+} else {
 	redirect_back();
+}
 ?>

@@ -35,7 +35,7 @@
 	<? endif; ?>
 
 	<? if (!$feed->is_active() && $feed_user->get_attribute('trackback-key')): ?>
-		<br />트랙백 인증 주소 : <?=full_url_for('feedengine', 'owner', array('user'=>$account->id, 'id'=>$feed->id, 'key'=>$feed_user->get_attribute('trackback-key')))?>
+		<br />트랙백 인증 주소 : <?=full_url_for('feedengine', 'owner', array('user'=>$account->user, 'id'=>$feed->id, 'key'=>$feed_user->get_attribute('trackback-key')))?>
 	<? endif; ?>
 	</li>
 <? endforeach; ?>

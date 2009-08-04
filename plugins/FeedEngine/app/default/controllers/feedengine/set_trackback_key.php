@@ -10,8 +10,8 @@ if ($feed->exists()) {
 	}
 }
 if(is_xhr()) {
-	include 'themes/'.get_current_theme().'/_homepage.php';
-	exit;
-} else
+	include 'themes/'.get_current_theme().'/_homepage.php';exit;
+} else {
 	redirect_back();
+}
 ?>

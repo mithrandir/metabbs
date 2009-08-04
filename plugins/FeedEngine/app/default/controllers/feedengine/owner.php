@@ -1,6 +1,6 @@
 <?php
 $feed = Feed::find($params['id']);
-$user = User::find($params['user']);
+$user = User::find_by_user($params['user']);
 if (!$feed->exists() || !$user->exists()) {
 	header('HTTP/1.1 404 Not Found');
 	print_notice(i('Feed not found'), i("Feed #%d doesn't exist.", $params['id']));
