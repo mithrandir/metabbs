@@ -271,4 +271,9 @@ class Feed extends Model {
 		return true;
 	}
 }
+
+//foreach(Feed::find_all() as $feed) {
+//	$feed->url = trim($feed->url);
+//	$feed->update();
+//}
 ?>
