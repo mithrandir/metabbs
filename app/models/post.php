@@ -215,9 +215,9 @@ class Post extends Model {
 		apply_filters('PostDelete', $this);
 		Model::delete();
 	}
-	function update_view_count() {
-		$this->views++;
-		$this->db->execute("UPDATE $this->table SET views=views+1, created_at='$this->created_at' WHERE id=$this->id");
+	function update_view_count($point = 1) {
+		$this->views = $this->views + $point;
+		$this->db->execute("UPDATE $this->table SET views=views+{$point}, created_at='$this->created_at' WHERE id=$this->id");
 	}
 	function update_category() {
 		$this->db->execute("UPDATE $this->table SET category_id=$this->category_id WHERE id=$this->id");
