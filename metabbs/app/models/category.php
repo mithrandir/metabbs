@@ -11,7 +11,9 @@ class Category extends Model {
 	function find($id) {
 		return find('category', $id);
 	}
-	
+	function find_by_name($name) {
+		return find_by('category', 'name', $name);
+	}
 	function get_board() {
 		return find('board', $this->board_id);
 	}

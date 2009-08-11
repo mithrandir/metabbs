@@ -1,18 +1,24 @@
 <?php
-function requireCoreofPlugin($plugin, $name) {
-	global $_requireCore;
-	if(!in_array($name,$_requireCore)) {
-		include_once (METABBS_DIR . "/plugins/$plugin/$name.php");
-		array_push($_requireCore,$name);
+global $_requireCore, $_requireModels;
+if (!function_exists('requireCoreofPlugin')) {
+	function requireCoreofPlugin($plugin, $name) {
+		global $_requireCore;
+		if(!in_array($name,$_requireCore)) {
+			include_once (METABBS_DIR . "/plugins/$plugin/$name.php");
+			array_push($_requireCore,$name);
+		}
 	}
 }
-function requireModelofPlugin($plugin, $name) {
-	global $_requireModels;
-	if(!in_array($name,$_requireModels)) {
-		include_once (METABBS_DIR . "/plugins/$plugin/app/models/$name.php");
-		array_push($_requireModels,$name);
+if (!function_exists('requireModelofPlugin')) {
+	function requireModelofPlugin($plugin, $name) {
+		global $_requireModels;
+		if(!in_array($name,$_requireModels)) {
+			include_once (METABBS_DIR . "/plugins/$plugin/app/models/$name.php");
+			array_push($_requireModels,$name);
+		}
 	}
 }
+
 requireModelofPlugin('FeedEngine','feed');
 requireModelofPlugin('FeedEngine','feed_user');
 requireModelofPlugin('FeedEngine','feed_board');
@@ -45,20 +51,20 @@ class FeedEngine extends Plugin {
 		$fields .= ", body, feed_id, feed_link, feed_fp ";
 	}
 	function post_finder_conditions_filter(&$condtions, $board) {
-		global $account;
+		global $account, $params;
 		if($board->get_attribute('feed-at-board') && !$account->is_admin()) {
 			$condtions .= " AND secret = 0 ";
 		}
-		if (isset($_GET['group']) && $_GET['group']) {
-			$group = Group::find($_GET['group']);
+		if (isset($params['group']) && $params['group']) {
+			$group = Group::find_by_name($params['keyword']);
 			$condition = " 0";			
 			if($group->exists()) {
-				$result = $this->db->query("SELECT post_id FROM ".get_table_name('group_post')." WHERE group_id = $group->id");
+				$group_posts = GroupPost::find_all_by_group($group);
 				$ids = array();
-				if ($result->count()) {
-					while ($data = $result->fetch()) {
-						$ids[] = $data['post_id'];
-					}
+				if (count($group_posts) > 0) {
+					foreach($group_posts as $group_post)
+						$ids[] = $group_post->post_id;
+
 					$condition = " id IN (".implode(',', $ids).")";
 				}
 			}
