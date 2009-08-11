@@ -219,7 +219,7 @@ function query_string_for($params) {
 	$_params = array();
 
 	foreach ($params as $key => $value) {
-		$_params[] = "$key=$value";
+		$_params[] = "$key=".urlencode($value);
 	}
 	return '?' . implode('&', $_params);
 }
