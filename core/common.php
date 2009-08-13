@@ -42,8 +42,23 @@ function requireExternal($name) {
 		array_push($_requireExternel,$name);
 	}
 }
+function requireCoreofPlugin($plugin, $name) {
+	global $_requirePluginCore;
+	if(file_exists(METABBS_DIR . "/plugins/$plugin/core/$name.php") &&!in_array($plugin.'_'.$name,$_requireCore)) {
+		include_once (METABBS_DIR . "/plugins/$plugin/core/$name.php");
+		array_push($_requirePluginCore,$plugin.'_'.$name);
+	}
+}
+function requireModelofPlugin($plugin, $name) {
+	global $_requirePluginModels;
 
+	if(file_exists(METABBS_DIR . "/plugins/$plugin/app/models/$name.php") && !in_array($plugin.'_'.$name,$_requireModels)) {
+		include_once (METABBS_DIR . "/plugins/$plugin/app/models/$name.php");
+		array_push($_requirePluginModels,$plugin.'_'.$name);
+	}
+}
 $_requireCore = $_requireModels = $_requireExternal = array();
+$_requirePluginCore = $_requirePluginModels = array();;
 require METABBS_DIR .'/core/compat.php';
 require METABBS_DIR .'/core/core.php';
 

@@ -2,9 +2,7 @@
 require 'core/common.php';
 
 $dispatcher = new Dispatcher();
-
 import_enabled_plugins();
-
 $dispatcher->load($_SERVER['PATH_INFO']);
 $params = $dispatcher->params;
 $routes = $dispatcher->routes;
