@@ -1,7 +1,11 @@
 <?php
 require 'core/common.php';
 
-$dispatcher = new Dispatcher($_SERVER['PATH_INFO']);
+$dispatcher = new Dispatcher();
+
+import_enabled_plugins();
+
+$dispatcher->load($_SERVER['PATH_INFO']);
 $params = $dispatcher->params;
 $routes = $dispatcher->routes;
 if (!$dispatcher) {
@@ -12,8 +16,6 @@ $layout = new Layout;
 $layout->add_javascript(METABBS_BASE_PATH . 'media/prototype.js');
 $title = &$layout->title;
 $view = DEFAULT_VIEW;
-
-import_enabled_plugins();
 
 if ($account->is_guest() && using_openid() && cookie_is_registered('openid')
 		&& $routes['controller'] != 'openid') {
