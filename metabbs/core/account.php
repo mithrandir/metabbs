@@ -34,7 +34,9 @@ function link_to_account($text, $action, $id, $controller = null, $dialog = fals
  * @return 관리자 링크
  */
 function link_to_admin() {
-	return link_text(url_for('admin'), i('Admin'), array('id' => 'link-admin'));
+	$link_to_admin = link_text(url_for('admin'), i('Admin'), array('id' => 'link-admin'));
+	apply_filters('LinkToAdmin', $link_to_admin);
+	return $link_to_admin;
 }
 
 /**
