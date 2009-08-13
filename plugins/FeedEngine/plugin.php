@@ -1,24 +1,4 @@
 <?php
-global $_requireCore, $_requireModels;
-if (!function_exists('requireCoreofPlugin')) {
-	function requireCoreofPlugin($plugin, $name) {
-		global $_requireCore;
-		if(!in_array($name,$_requireCore)) {
-			include_once (METABBS_DIR . "/plugins/$plugin/$name.php");
-			array_push($_requireCore,$name);
-		}
-	}
-}
-if (!function_exists('requireModelofPlugin')) {
-	function requireModelofPlugin($plugin, $name) {
-		global $_requireModels;
-		if(!in_array($name,$_requireModels)) {
-			include_once (METABBS_DIR . "/plugins/$plugin/app/models/$name.php");
-			array_push($_requireModels,$name);
-		}
-	}
-}
-
 requireModelofPlugin('FeedEngine','feed');
 requireModelofPlugin('FeedEngine','feed_user');
 requireModelofPlugin('FeedEngine','feed_board');
@@ -41,8 +21,6 @@ class FeedEngine extends Plugin {
 		add_filter('PostViewRSS', array(&$this, 'post_view_rss_filter'), 500);
 		add_filter('GetSearchParams', array(&$this, 'get_search_params'), 500);
 //		add_filter('PostList', array(&$this, 'post_list_filter'), 500);
-
-
 
 		add_admin_menu(url_admin_for('feedengine'), 'Feed Engine');
 	}
