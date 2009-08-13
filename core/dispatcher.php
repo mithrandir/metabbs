@@ -3,14 +3,20 @@ class Dispatcher {
 	var $parts;
 	var $routes;
 	var $params;
-	function Dispatcher($uri = null) {
+	var $reserved_controllers = array('admin');
+
+	function Dispatcher() { }
+
+	function load($uri = null) {
 		if (!$uri) return;
+
+		apply_filters('BeforeDispatcherLoad', $this);
 
 		$this->parts = explode('/', trim($uri, '/ '));
 		$this->routes = array('container' => 'default', 'controller' =>  null, 'action' => null);
 		$this->params = Dispatcher::get_params(null, false, array('_GET', '_POST'));
 
-		if (in_array($this->parts[0], array('admin'))) {
+		if (in_array($this->parts[0], $this->reserved_controllers)) {
 			$this->routes['container'] = $this->parts[0];
 			array_shift($this->parts);
 		}
