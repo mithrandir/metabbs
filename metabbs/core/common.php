@@ -44,7 +44,7 @@ function requireExternal($name) {
 }
 function requireCoreofPlugin($plugin, $name) {
 	global $_requirePluginCore;
-	if(file_exists(METABBS_DIR . "/plugins/$plugin/core/$name.php") &&!in_array($plugin.'_'.$name,$_requireCore)) {
+	if(file_exists(METABBS_DIR . "/plugins/$plugin/core/$name.php") &&!in_array($plugin.'_'.$name,$_requirePluginCore)) {
 		include_once (METABBS_DIR . "/plugins/$plugin/core/$name.php");
 		array_push($_requirePluginCore,$plugin.'_'.$name);
 	}
@@ -52,7 +52,7 @@ function requireCoreofPlugin($plugin, $name) {
 function requireModelofPlugin($plugin, $name) {
 	global $_requirePluginModels;
 
-	if(file_exists(METABBS_DIR . "/plugins/$plugin/app/models/$name.php") && !in_array($plugin.'_'.$name,$_requireModels)) {
+	if(file_exists(METABBS_DIR . "/plugins/$plugin/app/models/$name.php") && !in_array($plugin.'_'.$name,$_requirePluginModels)) {
 		include_once (METABBS_DIR . "/plugins/$plugin/app/models/$name.php");
 		array_push($_requirePluginModels,$plugin.'_'.$name);
 	}
