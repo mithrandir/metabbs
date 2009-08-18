@@ -146,13 +146,13 @@ class Dispatcher {
 			}
 		} else {
 			if (!is_string($routes['controller'])) {
-				if ($routes['controller']->model == 'plugin') {
+				if (isset($routes['controller']->model) && $routes['controller']->model == 'plugin') {
 					$params['id'] = $routes['controller']->name;
 					$routes['controller'] = $routes['controller']->model;
 				} else {
 					if (isset($routes['controller']))
 						$params['id'] = $routes['controller']->id;
-					$routes['controller'] = $routes['controller']->model;
+					$routes['controller'] = isset($routes['controller']->model) ? $routes['controller']->model : null;
 				}
 			}
 		}
