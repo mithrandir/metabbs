@@ -26,6 +26,11 @@ class GroupPost extends Model {
 		foreach($group_posts as $group_post) 
 			$group_post->delete();
 	}
+	function delete_by_groups($group) {
+		$group_posts = GroupPost::find_all_by_group($group);
+		foreach($group_posts as $group_post) 
+			$group_post->delete();
+	}
 
 	function get_group() {
 		return Group::find($this->group_id);

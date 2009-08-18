@@ -13,7 +13,13 @@ if (is_post()) {
 		$group->update();
 		redirect_back();
 	}
-	
+	if (isset($params['change_tags']) && is_numeric($params['change_tags'])) {
+		$group = Group::find($params['change_tags']);
+		$tags = array_trim(explode(",",$params['value']));
+		$group->tags = implode(',',$tags);
+		$group->update();
+		redirect_back();
+	}
 	if (isset($params['delete']) && is_numeric($params['delete'])) {
 		$group = Group::find($params['delete']);
 		$group->delete();

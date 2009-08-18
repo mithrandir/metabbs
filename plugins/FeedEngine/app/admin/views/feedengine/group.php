@@ -14,8 +14,9 @@
 	<td class="board"><?=$board->name?> </td>
 	<td class="name"><?=$group->name?> <span id="group-<?=$group->id?>"></span></td>
 	<td class="post_count"><?=$group->get_post_count()?></td>
-	<td class="tags"><?=$group->tags?></td>
+	<td class="tags"><?=$group->tags?><span id="grouptags-<?=$group->id?>"></span></td>
 	<td><a href="<?=url_admin_for('feedengine','group', array('rename'=>$group->id))?>" onclick="edit('group-<?=$group->id?>', this.href); return false"><?=i('Rename')?></a>
+	| <a href="<?=url_admin_for('feedengine','group', array('change_tags'=>$group->id))?>" onclick="edit('grouptags-<?=$group->id?>', this.href); return false"><?=i('Change Tags')?></a>
 	| <?= $group->is_first() ? i('Move up') : link_admin_to(i('Move up'), 'feedengine','group', array('up'=>$group->id)) ?>
 	| <?= $group->is_last() ? i('Move down') : link_admin_to(i('Move down'), 'feedengine','group', array('down'=>$group->id)) ?>
 	| <?=link_admin_delete_to(i('Delete'), 'feedengine', 'group', array('delete' => $group->id))?>

@@ -15,7 +15,6 @@ if (is_post()) {
 	}
 	if (isset($params['delete']) && is_numeric($params['delete'])) {
 		$feed_board = FeedBoard::find($params['delete']);
-		var_dump($feed_board);
 		$feed_board->delete();
 		Flash::set('피드-게시판 관계를 삭제했습니다');
 		redirect_back();
