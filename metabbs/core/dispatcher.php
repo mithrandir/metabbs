@@ -140,7 +140,8 @@ class Dispatcher {
 				} else if ($routes['controller']->model == 'attachment') {
 					$params['id'] = $routes['controller']->get_id();
 				} else {
-					$params['id'] = $routes['controller']->id;
+					if (isset($routes['controller']) && isset($routes['controller']->id))
+						$params['id'] = $routes['controller']->id;
 				}
 				$routes['controller'] = $routes['controller']->model;
 			}
