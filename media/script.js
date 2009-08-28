@@ -77,10 +77,12 @@ function addComment(form, list) {
 		onFailure: function (transport) {
 			alert(transport.responseText);
 		},
-		onComplete: function (transport) {
+		onComplete: function (transport) { 
 			var submitButton = Form.getSubmitButton(form);
 			submitButton.enable();
-			$(form)['body'].value = '';
+			if (typeof $('comment_password') != "undefined")
+				$('comment_password').value = '';
+			$('comment_body').value = '';
 			triggerDialogLinks();
 		}
 	});
@@ -95,8 +97,10 @@ function deleteComment(form, id, leaveEntry) {
 		onSuccess: function (transport) {
 			if (!leaveEntry)
 				$('comment_' + id).remove()
-			else
+			else {
+				// recalDepth
 				$('comment_' + id).replace(transport.responseText)
+			}
 			closeDialog()
 		},
 		onFailure: function () {

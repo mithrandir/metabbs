@@ -23,7 +23,7 @@ if($_comment_replied) {
 	$template->set('comment_writable', $account->has_perm('write_comment', $post));
 	$template->set('commentable', $account->has_perm('comment', $post));
 	$template->set('comment_author', $_comment->name);
-	$template->set('comment_body', null);
+	$template->set('comment_body', $_comment->body);
 	$template->set('link_cancel', url_for($post, null, get_search_params()));
 	$template->set('error_messages', $error_messages);
 	$template->render();
