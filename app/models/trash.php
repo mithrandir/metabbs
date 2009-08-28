@@ -31,7 +31,12 @@ class TrashCan {
 	 */
 	function revert($id) {
 		$trash = find('trash', $id);
-		insert($trash->model, unserialize($trash->data));
+		$data = unserialize($trash->data);
+		$orig = find($trash->model, $data['id']);
+		if ($orig->exists())
+			update_all($trash->model, $data, 'id='.$data['id']);
+		else
+			insert($trash->model, $data);
 		TrashCan::purge($id);
 	}
 
