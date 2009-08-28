@@ -119,6 +119,12 @@ if (file_exists('metabbs.conf.php')) {
 	exit;
 }
 
+if (!ini_get('short_open_tag')) {
+	echo '<div class="flash fail">short_open_tag PHP 옵션이 켜져 있어야 사용할 수 있습니다.</div>';
+	print_footer();
+	exit;
+}
+
 if (!isset($_POST['config'])) {
 ?>
 	<form method="post" action="install.php?backend=<?=$backend?>">

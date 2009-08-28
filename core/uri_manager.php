@@ -1,4 +1,6 @@
 <?php
+// this file is deprecated!!!
+
 if (!defined('METABBS_BASE_URI')) {
 	if ($config->get('force_fancy_url', false) ||
 			strpos($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']) !== 0) {

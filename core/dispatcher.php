@@ -83,7 +83,7 @@ class Dispatcher {
 				$urls[2] = $routes['action'];
 		}
 
-		return METABBS_BASE_PATH.implode('/',$urls). ($params ? query_string_for($params):'');
+		return METABBS_BASE_URI.implode('/',$urls). ($params ? query_string_for($params):'');
 	}
 
 	function legacy_path_filter(&$parts, &$routes, &$params) {
@@ -214,8 +214,11 @@ class Dispatcher {
 
 if (!defined('METABBS_BASE_URI')) {
 	global $config;
+	function startswith($str, $prefix) {
+		return substr($str, 0, strlen($prefix)) == $prefix;
+	}
 	if ($config->get('force_fancy_url', false) ||
-			strpos($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']) !== 0) {
+			!startswith($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME'])) {
 		define('METABBS_BASE_URI', METABBS_BASE_PATH);
 	} else {
 		define('METABBS_BASE_URI', $_SERVER['SCRIPT_NAME'] . '/');
