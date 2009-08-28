@@ -80,7 +80,7 @@ function addComment(form, list) {
 		onComplete: function (transport) { 
 			var submitButton = Form.getSubmitButton(form);
 			submitButton.enable();
-			if (typeof $('comment_password') != "undefined")
+			if ($('comment_password') != null)
 				$('comment_password').value = '';
 			$('comment_body').value = '';
 			triggerDialogLinks();
