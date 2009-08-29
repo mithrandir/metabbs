@@ -14,7 +14,10 @@ if (is_post()) {
 	if (!$account->is_guest()) {
 		$comment->user_id = $account->id;
 		$comment->name = $account->name;
+	} else {
+		cookie_register('name', $comment->name);
 	}
+
 	$comment->post_id = $post->id;
 
 	apply_filters('BeforeCommentCreate', $comment, array('reply' => false));
@@ -22,8 +25,6 @@ if (is_post()) {
 
 	if ($account->is_guest() && empty($comment->name))
 		$error_messages->add('Please enter the name', 'author');
-	else
-		cookie_register('name', $comment->name);
 
 	if (empty($comment->body))
 		$error_messages->add('Please enter the body', 'body');
