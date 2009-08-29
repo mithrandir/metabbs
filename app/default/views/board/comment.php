@@ -1,16 +1,13 @@
 <?php
-if($_comment_added) {
-	if (is_xhr()) {
-		$template = get_template($board, '_comment');
-		apply_filters('PostViewComment', $comment);
-		$template->set('board', $board);
-		$template->set('comment', $comment);
-		$template->set('error_messages', $error_messages);
-		$template->render_partial();
-		exit;
-	} else {
-		redirect_to(url_for($post));
-	}
+// if the comment has been created, $comment->exists() == TRUE
+if ($comment->exists() && is_xhr()) {
+	$template = get_template($board, '_comment');
+	apply_filters('PostViewComment', $comment);
+	$template->set('board', $board);
+	$template->set('comment', $comment);
+	$template->set('error_messages', $error_messages);
+	$template->render_partial();
+	exit;
 } else {
 	$style = $board->get_style();
 	$template = $style->get_template('comment');

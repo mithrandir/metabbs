@@ -1,7 +1,6 @@
 <?php
 permission_required('comment', $post);
 
-$_comment_added = false;
 if (is_post()) {
 	if (isset($params['comment'])) {
 		$params['comment'] = array(
@@ -23,20 +22,20 @@ if (is_post()) {
 
 	if ($account->is_guest() && empty($comment->name))
 		$error_messages->add('Please enter the name', 'author');
+	else
+		cookie_register('name', $comment->name);
 
 	if (empty($comment->body))
 		$error_messages->add('Please enter the body', 'body');
 
-	if ($account->is_guest() && strlen($comment->password) == 0)
-			$error_messages->add('Please enter the password', 'password');
+	if ($account->is_guest() && empty($comment->password))
+		$error_messages->add('Please enter the password', 'password');
 
-	if(!$error_messages->exists()) {
+	if (!$error_messages->exists()) {
 		$post->add_comment($comment);
-		$_comment_added = true;
-		if ($_comment_added) {
-			apply_filters('AfterCommentCreate', $comment, array('reply' => false));
-			cookie_register('name', $comment->name);
-		}
+		apply_filters('AfterCommentCreate', $comment, array('reply' => false));
+		if (!is_xhr())
+			redirect_to(url_for($post));
 	}	
 }
 ?>
