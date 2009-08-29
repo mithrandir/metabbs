@@ -10,8 +10,8 @@ if (is_post()) {
 		if ($comment->password != md5($params['password']))
 			$error_messages->add('The Password does not matched', 'password');
 	} else {
-		if ($comment->user_id != $account->id) {
-			Flash::set('Invalid Owner');
+		if (!$account->is_admin() && $comment->user_id != $account->id) {
+			$error_messages->add('Invalid Owner');
 		}
 	}
 
