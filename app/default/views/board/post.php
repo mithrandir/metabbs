@@ -1,4 +1,6 @@
 <?php
+$title = htmlspecialchars(i('New Post') . ' - ' . $board->get_title());
+
 $template = get_template($board, 'write');
 $template->set('board', $board);
 $template->set('post', $post);
