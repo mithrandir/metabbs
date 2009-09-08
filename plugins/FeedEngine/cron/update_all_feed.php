@@ -30,8 +30,30 @@ function requireModel($name) {
 		array_push($_requireModels,$name);
 	}
 }
+function requireExternal($name) {
+	global $_requireExternal;
+	if(!in_array($name,$_requireExternal)) {
+		include_once (METABBS_DIR . "/core/external/$name.php");
+		array_push($_requireExternel,$name);
+	}
+}
+function requireCoreofPlugin($plugin, $name) {
+	global $_requirePluginCore;
+	if(file_exists(METABBS_DIR . "/plugins/$plugin/core/$name.php") &&!in_array($plugin.'_'.$name,$_requirePluginCore)) {
+		include_once (METABBS_DIR . "/plugins/$plugin/core/$name.php");
+		array_push($_requirePluginCore,$plugin.'_'.$name);
+	}
+}
+function requireModelofPlugin($plugin, $name) {
+	global $_requirePluginModels;
 
-$_requireCore = $_requireModels = array();
+	if(file_exists(METABBS_DIR . "/plugins/$plugin/app/models/$name.php") && !in_array($plugin.'_'.$name,$_requirePluginModels)) {
+		include_once (METABBS_DIR . "/plugins/$plugin/app/models/$name.php");
+		array_push($_requirePluginModels,$plugin.'_'.$name);
+	}
+}
+$_requireCore = $_requireModels = $_requireExternal = array();
+$_requirePluginCore = $_requirePluginModels = array();
 require METABBS_DIR . '/core/core.php';
 
 $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
