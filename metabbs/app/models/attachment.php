@@ -68,5 +68,26 @@ class Attachment extends Model {
 
 		return $options;
 	}
+	function create_thumbnail($force = false) {
+		$orig_path = $this->get_filename();
+		if (!file_exists($orig_path)) return false;
+
+		if ($this->is_image()) {
+			requireCore('thumbnail');
+			$ext = get_image_extension($orig_path);
+			$thumb_path = 'data/thumb/'.$this->id.'-small.'.$ext;
+
+			if($force) @unlink($thumb_path);
+
+			if (!file_exists($thumb_path) and create_thumbnail($orig_path, $thumb_path, $this->get_kind(), $this->get_options())) {
+				chmod($thumb_path, 0606);
+			}
+			return $thumb_path;
+		}
+		return false;
+	}
+	function get_thumbnail_url($full = false) {
+		return ($full ? METABBS_HOST_URL : ''). '/'. $this->create_thumbnail();	
+	}
 }
 ?>

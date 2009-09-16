@@ -95,9 +95,10 @@ function modern_attachment_filter(&$attachment) {
 	$attachment->url = htmlspecialchars(url_for($attachment));
 	$attachment->size = human_readable_size($attachment->get_size());
 	if ($attachment->is_image()) {
-		$attachment->thumbnail_url = url_for($attachment, null, array('thumb' => 1));
+		$attachment->thumbnail_url = $attachment->get_thumbnail_url(false);
 	} else {
 		$attachment->thumbnail_url = null;
 	}
+
 }
 ?>
