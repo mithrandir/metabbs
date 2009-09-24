@@ -70,18 +70,18 @@ class Feed extends Model {
 		return $db->fetchrow("SELECT f.* FROM $table AS f INNER JOIN $feed_board_table AS fb ON f.id = fb.feed_id AND fb.board_id = $board->id WHERE f.owner_id > 0 AND f.updated_at <".(time() - $duration)." AND f.active > 0 ORDER BY f.updated_at ASC LIMIT 1", 'Feed');
 	}
 
-
-
-
-
-
-
-
-/*	function find_all_in_activity() {
+	function find_all_in_activity($offset = 0, $limit = null, $order_by = 'id DESC') {
 		$db = get_conn();
 		$table = get_table_name('feed');
-		return $db->fetchall("SELECT * FROM $table WHERE owner_id >= 0", 'Feed');
+		return $db->fetchall("SELECT * FROM $table WHERE active = 1".($order_by ? " ORDER BY $order_by":'').($limit ? " LIMIT".($offset != 0 ? " $offset, ":'').' '.$limit : ''), 'Feed');
 	}
+
+
+
+
+
+
+/*
 	function find_all_by_feed_board_in_activity($board) {
 		$db = get_conn();
 		$table = get_table_name('feed');
