@@ -58,7 +58,7 @@ function requireModelofPlugin($plugin, $name) {
 	}
 }
 $_requireCore = $_requireModels = $_requireExternal = array();
-$_requirePluginCore = $_requirePluginModels = array();;
+$_requirePluginCore = $_requirePluginModels = array();
 require METABBS_DIR .'/core/compat.php';
 require METABBS_DIR .'/core/core.php';
 
