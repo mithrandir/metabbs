@@ -286,7 +286,7 @@ class FeedParser {
 		include_once METABBS_DIR .'/core/thumbnail.php';
 		$attachments = $post->get_attachments();
 		foreach ($attachments as $attachment) {
-			$ext = get_image_extension($attachment->get_filename());
+			$ext = get_image_extension($attachment->get_filepath(true));
 			$thumb_path = METABBS_DIR .'/data/thumb/'.$attachment->id.'-small.'.$ext;
 			if (file_exists($thumb_path)) {
 				@unlink($thumb_path);

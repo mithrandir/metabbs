@@ -42,12 +42,12 @@ if (is_post() and isset($params['action'])) {
 			$post = Post::find($post_id);
 			$attachments = $post->get_attachments();
 			foreach ($attachments as $attachment) {
-				$ext = get_image_extension($attachment->get_filename());
+				$ext = get_image_extension($attachment->get_filepath(true));
 				$thumb_path = 'data/thumb/'.$attachment->id.'-small.'.$ext;
 				if (file_exists($thumb_path)) {
 					@unlink($thumb_path);
 				}
-				@unlink($attachment->get_filename());
+				@unlink($attachment->get_filepath(true));
 				$attachment->delete();
 			}
 			$post->delete();

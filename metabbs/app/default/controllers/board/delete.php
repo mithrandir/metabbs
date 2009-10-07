@@ -18,7 +18,7 @@ if (is_post()) {
 	if (!$error_messages->exists()) {
 		$attachments = $post->get_attachments();
 		foreach ($attachments as $attachment) {
-			@unlink($attachment->get_filename());
+			@unlink($attachment->get_filepath(true));
 			if (file_exists(METABBS_DIR . '/data/thumb/'.$attachment->id.'.png')) {
 				@unlink(METABBS_DIR . '/data/thumb/'.$attachment->id.'.png');
 			}

@@ -27,6 +27,9 @@ class Attachment extends Model {
 	function get_filename() {
 		return 'data/uploads/' . $this->id;
 	}
+	function get_filepath($full = false) {
+		return ($full ? METABBS_HOST_URL . '/' : '') . 'data/uploads/' . $this->id;
+	}
 	function get_size() {
 		return $this->file_exists() ? filesize($this->get_filename()) : false;
 	}
