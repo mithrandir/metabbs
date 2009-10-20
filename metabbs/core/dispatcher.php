@@ -5,12 +5,13 @@ class Dispatcher {
 	var $params;
 	var $reserved_controllers = array('admin');
 
-	function Dispatcher() { }
-
+	function Dispatcher($reserved_controllers = null) { 
+		if (!empty($reserved_controllers))
+			$this->reserved_controllers = array_merge($this->reserved_controllers, $reserved_controllers);
+	}
+ 
 	function load($uri = null) {
 		if (!$uri) return;
-
-		apply_filters('BeforeDispatcherLoad', $this);
 
 		$this->parts = explode('/', trim($uri, '/ '));
 		$this->routes = array('container' => 'default', 'controller' =>  null, 'action' => null);

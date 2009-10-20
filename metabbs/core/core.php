@@ -3,6 +3,7 @@ define('METABBS_VERSION', '0.99-devel');
 
 requireCore('config');
 $config = new Config(METABBS_DIR . '/metabbs.conf.php');
+$reserved_containers = array_map(create_function('$s','return trim($s);'), explode(',',$config->get('reserved_containers')));
 
 $backend = $config->get('backend', 'mysql');
 if (!defined('METABBS_BASE_PATH')) {

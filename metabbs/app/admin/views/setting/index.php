@@ -56,6 +56,9 @@
 
 	<dt><?=label_tag(i('Path of Extra Plugins'), 'settings', 'plugin_extra_path')?></dt>
 	<dd><input type="text" name="settings[plugin_extra_path]" size="30" value="<?=$config->get('plugin_extra_path')?>" /></dd>
+
+	<dt><?=label_tag(i('Reserved Containers'), 'settings', 'reserved_containers')?></dt>
+	<dd>admin, <input type="text" name="settings[reserved_containers]" size="30" value="<?=$config->get('reserved_containers')?>" /></dd>
 </dl>
 <p><input type="submit" value="OK" /></p>
 </form>

@@ -18,6 +18,7 @@ if (is_post()) {
 			substr($settings['plugin_extra_path'], -1, 1) != '/')
 		$settings['plugin_extra_path'] .= '/';
 	$config->set('plugin_extra_path', $settings['plugin_extra_path']);
+	$config->set('reserved_containers', $settings['reserved_containers']);
 	$config->write_to_file();
 	Flash::set('Setting saved');
 	redirect_to(url_admin_for('setting'));	
