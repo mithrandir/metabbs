@@ -111,6 +111,10 @@ class FeedParser {
 	function collect_feed_to_board($feed, $board) {
 		$result = false;
 
+		$feedengine = new Config(METABBS_DIR . '/data/feedengine.php');
+		$feed_mode = $feedengine->get('feed_mode', 0);
+		unset($feedengine);
+
 		$fp = new FeedParser();
 		$fp->sp->set_feed_url($feed->url);
 		if ($fp->sp->init()) {
@@ -182,13 +186,15 @@ class FeedParser {
 						// 피드 태그 재설정
 						$post->arrange_tags_after_update();
 						
-						// 내용이 다를때 이전 이미지를 삭제하고 새로 추가
-						FeedParser::remove_images($post);
-						// 썸네일용 이미지 추가
-						FeedParser::add_images($post, $image_urls);
-						// 다채널 자동 그룹핑
-						if ($board->get_attribute('feed-kind') == 2) {
-							FeedParser::set_groups($board, $post);
+						if ($feed_mode == 0) {
+							// 내용이 다를때 이전 이미지를 삭제하고 새로 추가
+							FeedParser::remove_images($post);
+							// 썸네일용 이미지 추가
+							FeedParser::add_images($post, $image_urls);
+							// 다채널 자동 그룹핑
+							if ($board->get_attribute('feed-kind') == 2) {
+								FeedParser::set_groups($board, $post);
+							}
 						}
 					}
 				}

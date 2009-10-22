@@ -75,7 +75,31 @@ class FeedEngine extends Plugin {
 	}
 
 	function on_settings() {
+		$feedengine = new Config(METABBS_DIR . '/data/feedengine.php');
+
+		if (is_post()) {
+
+			$settings = $_POST['feedengine'];
+			$feedengine->set('feed_mode', $settings['feed_mode']);
+			$feedengine->write_to_file();
+			Flash::set('Setting saved');
+			redirect_back();
+		}
 ?>
+<h2><?=i('Settings')?></h2>
+
+<form method="post" action="?">
+<dl>
+	<dt><?=i('Feed Mode')?></dt>
+	<dd>
+		<?=check_box('feedengine', 'feed_mode', $feedengine->get('feed_mode', 0))?>
+		<?=label_tag('업데이트후 이미지, 태그, 자동그룹을 변경하지 않습니다', 'feedengine', 'feed_mode')?>
+	</dd>
+</dl>
+<p><input type="submit" value="OK" /></p>
+</form>
+
+
 <h2><?=i('Usages')?></h2>
 <?php
 	}
