@@ -26,7 +26,7 @@ class FeedParser {
 			}
 		}
 	}
-	function relate_feed_by_user ($url, $user, $set_trackback_key = false, $owner_id = null) {
+	function relate_feed_by_user($url, $user, $set_trackback_key = false, $owner_id = null) {
 		$result = false;
 
 		$fp = new FeedParser();
@@ -41,7 +41,7 @@ class FeedParser {
 				$feed->link = $fp->sp->get_link();
 				$feed->title = $fp->sp->get_title();
 				$feed->description = $fp->sp->get_description();
-				$feed->owner_id = -1;	// 기본 비활성화
+				$feed->owner_id = -1;
 				$feed->create();
 			}
 			if (!$feed->is_related($user)) {
@@ -294,6 +294,8 @@ class FeedParser {
 			@unlink($attachment->get_filename());
 			$attachment->delete();
 		}
+		$post->attachment_count = 0;
+		$post->update();
 	}
 	// kor_env
 	function arrange_item_at_kor_env($item, $feed) {
@@ -304,7 +306,7 @@ class FeedParser {
 			$author_name = $author->get_name();
 			$author_email = $author->get_email();
 			unset($author);
-			$author = empty($author_name) ? (empty($author_email) ? '':$author_email) : $author_email;
+			$author = empty($author_name) ? (empty($author_email) ? '':$author_email) : $author_name;
 		} else
 			$author = '';
 
@@ -325,7 +327,7 @@ class FeedParser {
 //		@array_shift($tags);	// first tags is category 
 
 		$pub_date = $item->get_date('U');
-		$feed_fp = md5($author.$title.$description.$tags.$pub_date);
+		$feed_fp = md5($author.$title.$description.serialize($tags).$pub_date);
 
 		$item = array();
 		$item['name'] = empty($author) ? (empty($feed->owner_name) ? i('No Author') : $feed->owner_name) : $author;

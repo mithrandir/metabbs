@@ -5,7 +5,6 @@ if (!$account->has_perm('delete', $post))
 $_post_deleted = false;
 if (is_post()) {
 	apply_filters('BeforePostDelete', $post);
-	// PostDelete üũ
 	if ($account->is_guest()) {
 		if ($post->password != md5($params['password']))
 			$error_messages->add('The Password does not matched', 'password');
@@ -27,7 +26,6 @@ if (is_post()) {
 		$post->delete();
 		$_post_deleted = true;
 		apply_filters('AfterPostDelete', $post);
-//		purge_feed_cache_by_board($board);
 
 		redirect_to(url_for($board, null, get_search_params()));
 	}
