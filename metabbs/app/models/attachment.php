@@ -90,7 +90,7 @@ class Attachment extends Model {
 		return false;
 	}
 	function get_thumbnail_url($full = false) {
-		return ($full ? METABBS_HOST_URL : ''). '/'. $this->create_thumbnail();	
+		return ($full ? METABBS_HOST_URL : ''). METABBS_BASE_PATH . $this->create_thumbnail();	
 	}
 }
 ?>
