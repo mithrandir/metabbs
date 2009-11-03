@@ -157,7 +157,7 @@ class FeedParser {
 					$post->arrange_tags_after_create();
 
 					// 소유자가 있으면 소유자 프로필내용으로 업데이트
-					if (!empty($feed->owner_id)) {
+					if (!empty($feed->owner_id) or $post->name == i('No Author')) {
 						$owner = User::find($feed->owner_id);
 						if($owner->exists()) {
 							$post->name = $owner->name;
@@ -338,7 +338,7 @@ class FeedParser {
 		$item = array();
 		$item['name'] = empty($author) ? (empty($feed->owner_name) ? i('No Author') : $feed->owner_name) : $author;
 		$item['password'] = '';
-		$item['title'] = empty($title) ? i('No Title') : $title;
+		$item['title'] = empty($title) ? i('No Title') : htmlspecialchars_decode($title);
 //		$item['body'] = empty($description) ? i('No Description') : $description;
 		$item['body'] = empty($description) ? '&nbsp;' : $description;
 		$item['tags'] = implode(",", $tags);
