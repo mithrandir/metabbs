@@ -172,25 +172,33 @@ form {
 	padding-right: 0.5em;
 	color: #999;
 }*/
-#page-list {
+.page-nav {
 	float: right;
 	padding: 0.5em;
 	font-size: 1.1em;
 }
-#page-list a {
+#pages {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	float: left;
+
+}
+#pages li{
+	float: left;
 	margin: 0 0.2em;
 }
 .here a {
 	font-weight: bold;
 }
-#meta-nav {
+.meta-nav {
 	padding: 0.8em 0.5em;
 	float: left;
 }
-#meta-nav .button, #meta-nav a, #meta-nav button {
+.meta-nav .button, #meta-nav a, #meta-nav button {
 	float: left;
 }
-#meta-nav a, a.button, input.button, button {
+.meta-nav a, a.button, input.button, button {
 	width: 81px;
 	height: 19px;
 	background: url(button.png) no-repeat;
@@ -200,7 +208,7 @@ form {
 	text-align: center;
 	margin-right: 1em;
 }
-#meta-nav a, a.button {
+.meta-nav a, a.button {
 	display: block;
 }
 input.button, button {
