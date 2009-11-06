@@ -312,7 +312,7 @@ class FeedParser {
 			$author_name = $author->get_name();
 			$author_email = $author->get_email();
 			unset($author);
-			$author = empty($author_name) ? (empty($author_email) ? '':$author_email) : $author_name;
+			$author = trim(empty($author_name) ? (empty($author_email) ? '':$author_email) : $author_name);
 		} else
 			$author = '';
 
@@ -336,7 +336,7 @@ class FeedParser {
 		$feed_fp = md5($author.$title.$description.serialize($tags).$pub_date);
 
 		$item = array();
-		$item['name'] = empty($feed->owner_name) ? (empty(trim($author)) ? i('No Author') : trim($author)) : $feed->owner_name;
+		$item['name'] = empty($feed->owner_name) ? (empty($author) ? i('No Author') : $author) : $feed->owner_name;
 		$item['password'] = '';
 		$item['title'] = empty($title) ? i('No Title') : $title;
 //		$item['body'] = empty($description) ? i('No Description') : $description;
