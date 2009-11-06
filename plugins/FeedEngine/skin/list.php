@@ -37,6 +37,7 @@ function click_feed(url) {
 		if ($attachment->is_image()) {
 			unset($first_image);
 			$first_image = $attachment;
+			modern_attachment_filter($first_image);
 			continue;
 		}
 	}
@@ -51,7 +52,7 @@ function click_feed(url) {
 ?>
 	<div class="post">
 		<? if($first_image->exists()): ?>
-		<img src="<?=url_for($first_image)?>?thumb" alt="<?=$post->title?>" class="thumbnail"/>
+		<img src="<?=$first_image->thumbnail_url?>" alt="<?=$post->title?>" class="thumbnail"/>
 		<? endif; ?>
 		<h2 class="title <?=$first_image->exists() ? 'have_image':''?>"><? if ($admin): ?><input type="checkbox" name="posts[]" value="<?=$post->id?>" /> <? endif; ?>
 		<? if ($post->secret): ?><span class="secret"><?=i('Secret Post')?></span> | <? endif; ?>
