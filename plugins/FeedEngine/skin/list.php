@@ -12,6 +12,8 @@ function click_feed(url) {
 <? endforeach; ?>
 </div>
 
+<?=flash_message_box()?>
+
 <div id="board-info">
 모두 <?=$post_count?>개의 글이 있습니다.
 <a href="<?=$link_rss?>" class="feed"><img src="<?=$skin_dir?>/feed.png" alt="RSS" /></a>
@@ -31,22 +33,16 @@ function click_feed(url) {
 	<h1 class="title"><span class="title-wrap"><? if ($admin): ?><input type="checkbox" onclick="toggleAll(this.form, this.checked)" /><? endif; ?>&nbsp;</span></h1>
 	<? foreach ($posts as $post): ?>
 <?
-	$attachments = $post->get_attachments();
-	$first_image = new Attachment;
-	foreach ($attachments as $attachment) {
-		if ($attachment->is_image()) {
-			unset($first_image);
-			$first_image = $attachment;
-			modern_attachment_filter($first_image);
-			continue;
-		}
-	}
+	$first_image = Attachment::get_first_image($post);
+	if ($first_image->exists())
+		modern_attachment_filter($first_image);
+
 	$feed = Feed::find($post->feed_id);
 
 	$tags = array();
 	if(!empty($post->tags)) {
 		foreach($post->tags as $tag) {
-			array_push($tags, link_to($tag->name, $board, null, array('tag'=>1, 'keyword'=>urlencode($tag->name))));
+			array_push($tags, link_to($tag->name, $board, null, array('tag'=>1, 'keyword'=>$tag->name)));
 		}
 	}
 ?>

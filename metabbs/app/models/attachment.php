@@ -11,6 +11,11 @@ class Attachment extends Model {
 		$table = get_table_name('attachment');
 		return $db->fetchrow("SELECT * FROM $table WHERE id=?", 'Attachment', array($id));
 	}
+	function get_first_image($post) {
+		$db = get_conn();
+		$table = get_table_name('attachment');
+		return $db->fetchrow("SELECT * FROM $table WHERE post_id=? AND type IN('image/jpeg', 'image/pjpeg', 'image/gif', 'image/png') LIMIT 1", 'Attachment', array($post->id));
+	}
 	function get_post() {
 		return Post::find($this->post_id);
 	}
