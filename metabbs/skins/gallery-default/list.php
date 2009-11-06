@@ -61,10 +61,20 @@
 </tr>
 </table>
 
-<div id="page-list">
-<? if ($link_prev_page): ?><a href="<?=$link_prev_page?>">&larr; 이전 페이지</a> <? endif; ?>
-<? foreach ($pages as $page): ?><?=$page?> <? endforeach; ?>
-<? if ($link_next_page): ?><a href="<?=$link_next_page?>">다음 페이지 &rarr;</a><? endif; ?>
+<div class="page-nav">
+<ul id="pages">
+<? foreach($pages as $page): ?>
+<? if ($page['name'] == 'padding'): ?>
+<li class="<?=$page['name']?>"><?=$page['text']?></li>
+<? elseif ($page['name'] == 'prev'):?>
+<li class="<?=$page['name']?>"><a href="<?=$page['url']?>">&larr; 이전 페이지</a></li>
+<? elseif ($page['name'] == 'next'):?>
+<li class="<?=$page['name']?>"><a href="<?=$page['url']?>">다음 페이지 &rarr;</a></li>
+<? else:?>
+<li class="<?=$page['name']?>"><a href="<?=$page['url']?>"><?=$page['text']?></a></li>
+<? endif; ?>
+<? endforeach; ?>
+</ul>
 </div>
 
 <div id="meta-nav" class="list">

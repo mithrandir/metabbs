@@ -35,27 +35,9 @@ $template->set('link_rss', url_for($board, 'rss'));
 $template->set('link_new_post', $account->has_perm('write', $board) ? url_for($board, 'post', get_search_params()) : null);
 $template->set('admin', $account->has_perm('admin', $board));
 
-$page_count = $matched_post_count ? ceil($matched_post_count / $board->posts_per_page) : 1;
-$prev_page = $page - 1;
-$next_page = $page + 1;
-$page_group_start = $page - 5;
-if ($page_group_start < 1) $page_group_start = 1;
-$page_group_end = $page + 5;
-if ($page_group_end > $page_count) $page_group_end = $page_count;
-
-$template->set('link_prev_page', $prev_page > 0 ? url_for_page($prev_page, $board) : null);
-$template->set('link_next_page', $next_page <= $page_count ? url_for_page($next_page, $board) : null);
-$pages = array();	
-if ($page_group_start > 1) {
-	$pages[] = link_to_page(1, null, $board);
-	if ($page_group_start > 2) $pages[] = '...';
-}
-for ($p = $page_group_start; $p <= $page_group_end; $p++) {
-	if ($p == $page) $pages[] = '<span class="here">'.link_to_page($p, null, $board).'</span>';
-	else $pages[] = link_to_page($p, null, $board);
-}
-if ($page_group_end != $page_count) {
-	if ($page_group_end < ($page_count - 1)) $pages[] = '...';
-	$pages[] = link_to_page($page_count, null, $board);
-}
+$page = get_requested_page();
+$count = $finder->get_post_count();
+$_pages = New Pages(null, $board);
+$pages = $_pages->get_pages($page, $count, $board->posts_per_page, 5);
 $template->set('pages', $pages);
+//$template->set('pages_nav',get_board_pages());

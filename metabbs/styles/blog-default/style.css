@@ -74,15 +74,16 @@ h1 {
 	margin-bottom: 1em;
 }
 
-#page-list {
+.page-nav {
 	margin-top: 1em;
 	font-size: 1.2em;
 	text-align: center;
 }
-#page-list a {
+.page-nav a {
 	margin: 0 0.2em;
 }
-.here a {
+
+a.here{
 	font-weight: bold;
 }
 

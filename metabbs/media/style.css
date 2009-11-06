@@ -194,8 +194,12 @@ div.preview-image:hover { border: 1px solid #7a0; }
 	background-color: #333;
 }
 
+#users .select {
+	width: 50px;
+}
+
 #users .name {
-	width: 200px;
+	width: 300px;
 }
 
 #users .level {

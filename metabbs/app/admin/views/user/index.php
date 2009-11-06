@@ -13,7 +13,7 @@
 <?=form_token_field()?>
 <table id="users">
 <tr>
-	<th><input type="checkbox" value="1" onchange="checkAll(this.form, this.checked)" /></th>
+	<th class="select"><input type="checkbox" value="1" onchange="checkAll(this.form, this.checked)" /></th>
 	<th class="name"><?=i('Name')?></th>
 	<th class="level"><?=i('Level')?></th>
 	<th class="actions"><?=i('Actions')?></th>
@@ -28,8 +28,7 @@
 </tr>
 <? } ?>
 </table>
-
-<? _print_admin_pages($page, $users_count, 10); ?>
+<?= get_pages($page, $users_count, 10, 4, 'user', 'admin');?>
 
 <h3><?=i('Mass operation')?></h3>
 <ul id="operations">

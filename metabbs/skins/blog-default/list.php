@@ -44,8 +44,16 @@
 </div>
 <? endforeach; ?>
 
-<div id="page-list">
-<? if ($link_prev_page): ?><a href="<?=$link_prev_page?>">&larr; 이전 페이지</a> <? endif; ?>
-<? foreach ($pages as $page): ?><?=$page?> <? endforeach; ?>
-<? if ($link_next_page): ?><a href="<?=$link_next_page?>">다음 페이지 &rarr;</a><? endif; ?>
+<div class="page-nav">
+<? foreach($pages as $page): ?>
+<? if ($page['name'] == 'padding'): ?>
+<?=$page['text']?>
+<? elseif ($page['name'] == 'prev'):?>
+<a href="<?=$page['url']?>" class="<?=$page['name']?>">&larr; 이전 페이지</a>
+<? elseif ($page['name'] == 'next'):?>
+<a href="<?=$page['url']?>" class="<?=$page['name']?>">다음 페이지 &rarr;</a>
+<? else:?>
+<a href="<?=$page['url']?>" class="<?=$page['name']?>"><?=$page['text']?></a>
+<? endif; ?>
+<? endforeach; ?>
 </div>
