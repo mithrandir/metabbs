@@ -107,7 +107,7 @@ form {
 	margin-left: 112px;
 }
 
-#posts div.post div.thumbnail {
+#posts div.post .thumbnail {
 	float: left;
 	border: 1px solid #eee;
 	margin-right: 10px;

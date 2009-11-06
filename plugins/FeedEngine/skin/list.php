@@ -51,7 +51,7 @@ function click_feed(url) {
 ?>
 	<div class="post">
 		<? if($first_image->exists()): ?>
-		<div class="thumbnail" style="background: transparent url(<?=url_for($first_image)?>?thumb) no-repeat scroll center center; width: 100px; height: 100px;" alt="<?=$post->title?>"></div>
+		<img src="<?=url_for($first_image)?>?thumb" alt="<?=$post->title?>" class="thumbnail"/>
 		<? endif; ?>
 		<h2 class="title <?=$first_image->exists() ? 'have_image':''?>"><? if ($admin): ?><input type="checkbox" name="posts[]" value="<?=$post->id?>" /> <? endif; ?>
 		<? if ($post->secret): ?><span class="secret"><?=i('Secret Post')?></span> | <? endif; ?>
