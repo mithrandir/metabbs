@@ -296,6 +296,13 @@ function url_admin_for($controller = null, $action = null, $params = null) {
 	return $dispatcher->url_for($controller, $action, $params, 'admin');
 }
 
+function url_admin_with_referer_for($controller = null, $action = null, $params = null) {
+	global $dispatcher;
+	$params = $dispatcher->get_params();
+	$params['url'] = isset($params['url']) ? $params['url'] : $_SERVER['REQUEST_URI'];
+	return $dispatcher->url_for($controller, $action, $params, 'admin');
+}
+
 function redirect_to($url) {
 	header('Location: ' . $url);
 	exit;

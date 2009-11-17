@@ -1,19 +1,29 @@
 <?php
 check_form_token();
-if (isset($_POST['mass_operation'])) {
-	$level = $_POST['level'];
-	foreach ($_POST['user_id'] as $params['id'] => $check) {
-		$user = User::find($params['id']);
-		switch ($_POST['mass_operation']) {
-		case 'level':
-			$user->level = $level;
-			$user->update();
-			break;
-		case 'delete':
-			$user->delete();
-			break;
+if (is_post()) {
+	if (isset($params['mass_operation'])) {
+		$level = $params['level'];
+		foreach ($params['user_id'] as $params['id'] => $check) {
+			$user = User::find($params['id']);
+			switch ($params['mass_operation']) {
+			case 'level':
+				$user->level = $level;
+				$user->update();
+				break;
+			case 'delete':
+				$user->delete();
+				break;
+			}
+		}
+		switch ($params['mass_operation']) {
+			case 'level':
+				Flash::set(i('Users\'s Level has been changed'));
+				break;
+			case 'delete':
+				Flash::set(i('Users has been deleted'));
+				break;
 		}
 	}
 }
-redirect_to(url_admin_for('user', null, array('page' => $_GET['page'])));
+redirect_back();
 ?>

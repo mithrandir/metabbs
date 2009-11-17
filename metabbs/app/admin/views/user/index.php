@@ -3,13 +3,13 @@
 <form method="get" action="<?=url_admin_for('user')?>">
 <p>
 <select name="key">
-	<?=option_tag('name', i('Name'), !isset($_GET['key']) || $_GET['key'] == 'name')?>
-	<?=option_tag('user', i('User ID'), isset($_GET['key']) && $_GET['key'] == 'user')?>
+	<?=option_tag('name', i('Name'), !isset($params['key']) || $params['key'] == 'name')?>
+	<?=option_tag('user', i('User ID'), isset($params['key']) && $params['key'] == 'user')?>
 </select>
-<input type="text" name="query" value="<?=isset($_GET['query']) ? $_GET['query'] : ''?>" /> <input type="submit" value="<?=i('Search')?>" /></p>
+<input type="text" name="query" value="<?=isset($params['query']) ? $params['query'] : ''?>" /> <input type="submit" value="<?=i('Search')?>" /></p>
 </form>
 
-<form method="post" action="<?=url_admin_for('user', 'edit', array('page' => $page))?>">
+<form method="post" action="<?=url_admin_with_referer_for('user', 'edit')?>">
 <?=form_token_field()?>
 <table id="users">
 <tr>
@@ -23,8 +23,8 @@
 	<td><input type="checkbox" name="user_id[<?=$user->id?>]" class="check" <? if ($user->id==$account->id) { ?>disabled="disabled" <? } ?> /></td>
 	<td class="name"><?=htmlspecialchars($user->name)?> <small>(<?=htmlspecialchars($user->user)?>)</small></td>
 	<td class="level"><?=$user->level?></td>
-	<td class="actions"><?=link_to(i('View'), $user)?><? if (!$user->is_admin()) { ?> | <?=link_admin_to(i('Delete user'), $user, 'delete', array('page' => $page))?><? } ?><? if ($user->id != $account->id && !preg_match('@^http://@', $user->user)) { ?> |
-	<?= $user->get_attribute('pwresetcode') ? link_admin_to(i('Reset Password Status'), $user, 'reset-password') : link_admin_with_dialog_to(i('Reset Password'), $user, 'reset-password')?><? } ?></td>
+	<td class="actions"><?=link_to(i('View'), $user)?><? if (!$user->is_admin()) { ?> | <?=link_admin_with_dialog_by_post_to(i('Delete user'), $user, 'delete', array('page' => $page))?><? } ?><? if ($user->id != $account->id && !preg_match('@^http://@', $user->user)) { ?> |
+	<?= $user->get_attribute('pwresetcode') ? link_admin_with_referer_to(i('Reset Password Status'), $user, 'reset-password') : link_admin_with_dialog_by_post_to(i('Reset Password'), $user, 'reset-password')?><? } ?></td>
 </tr>
 <? } ?>
 </table>
@@ -37,4 +37,5 @@
 </ul>
 <p><input type="submit" value="OK" /></p>
 </form>
+
 

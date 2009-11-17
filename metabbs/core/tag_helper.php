@@ -49,6 +49,9 @@ function link_with_dialog_by_post_to($text, $controller, $action = null, $params
 function link_admin_to($text, $controller, $action = null, $params = null, $options = null) {
 	return link_text(url_admin_for($controller, $action, $params), $text, $options);
 }
+function link_admin_with_referer_to($text, $controller, $action = null, $params = null, $options = null) {
+	return link_text(url_admin_with_referer_for($controller, $action, $params), $text, $options);
+}
 function link_admin_with_dialog_to($text, $controller, $action = null, $params = null, $options = null) {
 	if (is_null($options)) $options = array();
 	$options['onclick'] = 'return confirm(\''.i('Are you sure?').'\')';
