@@ -3,8 +3,8 @@ require 'core/common.php';
 
 $dispatcher = new Dispatcher($reserved_containers);
 $dispatcher->load($_SERVER['PATH_INFO']);
-$params = $dispatcher->params;
-$routes = $dispatcher->routes;
+$params = $dispatcher->get_params();
+$routes = $dispatcher->get_routes();
 if (!$dispatcher) {
 	print_notice('Requested URL is not valid.', 'Valid URL format is '.METABBS_HOST_URL.'/<em>controller</em>/<em>action</em><br />If you are administrator, go to <a href="/admin">administration page</a>');
 }

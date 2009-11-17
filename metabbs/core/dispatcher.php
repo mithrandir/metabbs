@@ -1,8 +1,8 @@
 <?php
 class Dispatcher {
-	var $parts;
-	var $routes;
-	var $params;
+	var $parts = array();
+	var $routes = array();
+	var $params = array();
 	var $reserved_controllers = array('admin');
 
 	function Dispatcher($reserved_controllers = null) { 
@@ -15,7 +15,7 @@ class Dispatcher {
 
 		$this->parts = explode('/', trim($uri, '/ '));
 		$this->routes = array('container' => 'default', 'controller' =>  null, 'action' => null);
-		$this->params = Dispatcher::get_params(null, false, array('_GET', '_POST'));
+		$this->params = Dispatcher::get_default_params(null, false, array('_GET', '_POST'));
 
 		if (in_array($this->parts[0], $this->reserved_controllers)) {
 			$this->routes['container'] = $this->parts[0];
@@ -47,7 +47,10 @@ class Dispatcher {
 		}
 	}
 
-	function url_for($controller = null, $action = null, $params = array(), $container = 'default') {
+	function url_for($controller = null, $action = null, $params = null, $container = null) {
+
+		if (is_null($params)) $params = array();
+		if (is_null($container)) $container = 'default';
 
 		$urls = array();
 		$routes = array(
@@ -131,7 +134,7 @@ class Dispatcher {
 
 	function default_url_filter($parts, &$routes, &$params) {
 		if ($routes['container'] == 'default') {
-			if (!is_string($routes['controller'])) {
+			if (isset($routes['controller']) && !is_string($routes['controller'])) {
 				if ($routes['controller']->model == 'post') {
 					$params['id'] = $routes['controller']->id;
 					$routes['controller'] = $routes['controller']->get_board();
@@ -193,7 +196,7 @@ class Dispatcher {
 		return 'app/'.$this->routes['container'].'/views/'.$this->routes['controller'].'/'.$this->routes['action'].'.php';
 	}
 
-	function get_params($defaults = null, $overwrite = false, $super_globals = array('_GET', '_POST', '_COOKIE'))
+	function get_default_params($defaults = null, $overwrite = false, $super_globals = array('_GET', '_POST', '_COOKIE'))
 	{
 		$ret = array();
 
@@ -210,6 +213,12 @@ class Dispatcher {
 			$_REQUEST = $ret;
 
 		return $ret;
+	}
+	function get_params() {
+		return $this->params;
+	}
+	function get_routes() {
+		return $this->routes;
 	}
 }
 
@@ -258,29 +267,31 @@ function get_search_params() {
 	return $params;
 }
 
-function url_for($controller = null, $action = null, $params = array()) {
+function url_for($controller = null, $action = null, $params = null) {
 	global $dispatcher;
 	return $dispatcher->url_for($controller, $action, $params);
 }
 
-function full_url_for($controller = null, $action = null, $params = array()) {
+function full_url_for($controller = null, $action = null, $params = null) {
 	global $dispatcher;
 	return METABBS_HOST_URL.$dispatcher->url_for($controller, $action, $params);
 }
 
-function url_with_referer_for($controller = null, $action = null, $params = array()) {
+function url_with_referer_for($controller = null, $action = null, $params = null) {
 	global $dispatcher;
-	$params['url'] = isset($_GET['url']) ? $_GET['url'] : $_SERVER['REQUEST_URI'];
+	$params = $dispatcher->get_params();
+	$params['url'] = isset($params['url']) ? $params['url'] : $_SERVER['REQUEST_URI'];
 	return $dispatcher->url_for($controller, $action, $params);
 }
 
-function full_url_with_referer_for($controller = null, $action = null, $params = array()) {
+function full_url_with_referer_for($controller = null, $action = null, $params = null) {
 	global $dispatcher;
-	$params['url'] = isset($_GET['url']) ? $_GET['url'] : $_SERVER['REQUEST_URI'];	
+	$params = $dispatcher->get_params();
+	$params['url'] = isset($params['url']) ? $params['url'] : $_SERVER['REQUEST_URI'];	
 	return METABBS_HOST_URL.$dispatcher->url_for($controller, $action, $params);
 }
 
-function url_admin_for($controller = null, $action = null, $params = array()) {
+function url_admin_for($controller = null, $action = null, $params = null) {
 	global $dispatcher;
 	return $dispatcher->url_for($controller, $action, $params, 'admin');
 }
@@ -291,8 +302,10 @@ function redirect_to($url) {
 }
 
 function redirect_back() {
-	if (isset($_GET['url'])) {
-		redirect_to(urldecode($_GET['url']));
+	global $dispatcher;
+	$params = $dispatcher->get_params();
+	if (isset($params['url'])) {
+		redirect_to(urldecode($params['url']));
 	} else {
 		redirect_to($_SERVER['HTTP_REFERER']);
 	}

@@ -14,7 +14,7 @@
 	<td><?=$board->name ?></td>
 	<td><?=$feed->link ?></td>
 	<td><?=$feed->url ?></td>
-	<td><?=link_admin_delete_to(i('Delete'), 'feedengine', 'board', array('delete' => $feed_board->id))?></td>
+	<td><?=link_admin_with_dialog_by_post_to(i('Delete'), 'feedengine', 'board', array('delete' => $feed_board->id))?></td>
 </tr>
 <? endforeach; ?>
 </table>

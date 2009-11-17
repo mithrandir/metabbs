@@ -1,3 +1,3 @@
 <?
-include 'app/views/admin/index.php';
+include 'app/admin/views/board/index.php';
 ?>

@@ -25,7 +25,7 @@
 	</td>
 	<td><a href="<?=url_admin_for('feedengine','feed', array('owner'=>$feed->id))?>" onclick="edit('owner-<?=$feed->id?>', this.href); return false"><?=i('Owner')?></a>
 	| <a href="<?=url_admin_for('feedengine','feed', array('owner-name'=>$feed->id))?>" onclick="edit('owner-name-<?=$feed->id?>', this.href); return false"><?=i('Owner Name')?></a>
-	| <?=link_admin_delete_to(i('Delete'), 'feedengine', 'feed', array('delete' => $feed->id))?>
+	| <?=link_admin_with_dialog_by_post_to(i('Delete'), 'feedengine', 'feed', array('delete' => $feed->id))?>
 </tr>
 <?php } ?>
 </table>

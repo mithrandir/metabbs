@@ -50,7 +50,7 @@
 <tr>
 	<td><?=$openid->openid?></td>
 	<td><?=date('Y-m-d H:i:s', $openid->created_at)?></td>
-	<td><?=link_delete_to(i('Delete'), 'openid', 'unregister', array('id'=>$openid->id)) ?></td>
+	<td><?=link_with_dialog_by_post_to(i('Delete'), 'openid', 'unregister', array('id'=>$openid->id)) ?></td>
 </tr>
 <? endforeach; ?>
 </table>

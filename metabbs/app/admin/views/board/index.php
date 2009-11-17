@@ -1,7 +1,5 @@
 <h2><?=i('Boards')?></h2>
 
-<?=flash_message_box()?>
-<?=error_message_box($error_messages)?>
 <table id="contents">
 <tr>
 	<th class="name"><?=i('Name')?></th>
@@ -18,14 +16,14 @@
 <h3><?=i('New Board')?></h3>
 <dl>
 	<dt><?=i('Name')?></dt>
-	<dd><input type="text" name="name" /></dd>
+	<dd><input type="text" name="name" value="<?=isset($params['name']) ? $params['name'] : ''?>" /></dd>
 	
 	<dt><?=i('Profile')?></dt>
 	<dd>
 		<select name="profile">
-			<option value="board">일반 게시판</option>
-			<option value="gallery">이미지 갤러리</option>
-			<option value="blog">블로그</option>
+			<option value="board" <?=isset($params['profile']) && $params['profile'] == 'board' ? 'selected="selected"' : ''?>>일반 게시판</option>
+			<option value="gallery" <?=isset($params['profile']) && $params['profile'] == 'gallery' ? 'selected="selected"' : ''?>>이미지 갤러리</option>
+			<option value="blog" <?=isset($params['profile']) && $params['profile'] == 'blog' ? 'selected="selected"' : ''?>>블로그</option>
 		</select>
 
 		<small>옵션 모음을 적용합니다.</small>

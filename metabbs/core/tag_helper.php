@@ -1,8 +1,9 @@
 <?php
-function block_tag($name, $content, $options = array()) {
+function block_tag($name, $content, $options = null) {
+	if (is_null($options)) $options = array();
 	$s = "<$name";
 	foreach ($options as $key => $value) {
-		if (isset($value)) $s .= " $key=\"$value\"";
+		if (isset($value) && !empty($value)) $s .= " $key=\"$value\"";
 	}
 	if (isset($content)) {
 		$s .= ">$content</$name>";
@@ -12,36 +13,58 @@ function block_tag($name, $content, $options = array()) {
 	return $s;
 }
 
-function inline_tag($name, $options = array()) {
+function inline_tag($name, $options = null) {
 	return block_tag($name, null, $options);
 }
 
-function link_text($link, $text = '', $options = array()) {
+function link_text($link, $text = '', $options = null) {
     if (!$text) $text = $link;
     $options['href'] = $link;
 	return block_tag('a', $text, $options);
 }
-function link_to($text, $controller, $action = null, $params = array()) {
-	return link_text(url_for($controller, $action, $params), $text);
+function link_to($text, $controller, $action = null, $params = null, $options = null) {
+	return link_text(url_for($controller, $action, $params), $text, $options);
 }
-function link_with_id_to($id, $text, $controller, $action = null, $params = array()) {
-	return link_text(url_for($controller, $action, $params), $text, array("id" => $id));
+function link_with_id_to($id, $text, $controller, $action = null, $params = null, $options = null) {
+	if (is_null($options)) $options = array();
+	$options['id'] = $id;
+	return link_text(url_for($controller, $action, $params), $text, $options);
 }
-function link_with_dialog_to($text, $controller, $action = null, $params = array()) {
-	return link_text(url_for($controller, $action, $params), $text, array('onclick' => 'return confirm(\''.i('Are you sure?').'\')'));
+function link_with_dialog_to($text, $controller, $action = null, $params = null, $options = null) {
+	if (is_null($options)) $options = array();
+	$options['onclick'] = 'return confirm(\''.i('Are you sure?').'\')';
+	return link_text(url_for($controller, $action, $params), $text, $options);
 }
-function link_delete_to($text, $controller, $action = null, $params = array()) {
-	return link_text(url_for($controller, $action, $params), $text, array('onclick' => 'if (confirm(\''.i('Are you sure?').'\')) { var f = document.createElement(\'form\');f.style.display = \'none\';this.parentNode.appendChild(f);f.method = \'POST\';f.action = this.href;f.submit();}return false;'));
+function link_by_post_to($text, $controller, $action = null, $params = null, $options = null) {
+	if (is_null($options)) $options = array();
+	$options['onclick'] = 'var f = document.createElement(\'form\');f.style.display = \'none\';this.parentNode.appendChild(f);f.method = \'POST\';f.action = this.href;f.submit();return false;';
+	return link_text(url_for($controller, $action, $params), $text, $options);
 }
-function link_admin_to($text, $controller, $action = null, $params = array()) {
-	return link_text(url_admin_for($controller, $action, $params), $text);
+function link_with_dialog_by_post_to($text, $controller, $action = null, $params = null, $options = null) {
+	if (is_null($options)) $options = array();
+	$options['onclick'] = 'if (confirm(\''.i('Are you sure?').'\')) { var f = document.createElement(\'form\');f.style.display = \'none\';this.parentNode.appendChild(f);f.method = \'POST\';f.action = this.href;f.submit();}return false;';
+	return link_text(url_for($controller, $action, $params), $text, $options);
 }
-function link_admin_with_dialog_to($text, $controller, $action = null, $params = array()) {
-	return link_text(url_admin_for($controller, $action, $params), $text, array('onclick' => 'return confirm(\''.i('Are you sure?').'\')'));
+
+function link_admin_to($text, $controller, $action = null, $params = null, $options = null) {
+	return link_text(url_admin_for($controller, $action, $params), $text, $options);
 }
-function link_admin_delete_to($text, $controller, $action = null, $params = array()) {
-	return link_text(url_admin_for($controller, $action, $params), $text, array('onclick' => 'if (confirm(\''.i('Are you sure?').'\')) { var f = document.createElement(\'form\');f.style.display = \'none\';this.parentNode.appendChild(f);f.method = \'POST\';f.action = this.href;f.submit();}return false;'));
+function link_admin_with_dialog_to($text, $controller, $action = null, $params = null, $options = null) {
+	if (is_null($options)) $options = array();
+	$options['onclick'] = 'return confirm(\''.i('Are you sure?').'\')';
+	return link_text(url_admin_for($controller, $action, $params), $text, $options);
 }
+function link_admin_by_post_to($text, $controller, $action = null, $params = null, $options = null) {
+	if (is_null($options)) $options = array();
+	$options['onclick'] = 'var f = document.createElement(\'form\');f.style.display = \'none\';this.parentNode.appendChild(f);f.method = \'POST\';f.action = this.href;f.submit();return false;';
+	return link_text(url_admin_for($controller, $action, $params), $text, $options);
+}
+function link_admin_with_dialog_by_post_to($text, $controller, $action = null, $params = null, $options = null) {
+	if (is_null($options)) $options = array();
+	$options['onclick'] = 'if (confirm(\''.i('Are you sure?').'\')) {var f = document.createElement(\'form\');f.style.display = \'none\';this.parentNode.appendChild(f);f.method = \'POST\';f.action = this.href;f.submit();}return false;';
+	return link_text(url_admin_for($controller, $action, $params), $text, $options);
+}
+
 function link_list_tab($link, $name, $text) {
 	global $routes;
 	$anchor = link_text($link, $text);
