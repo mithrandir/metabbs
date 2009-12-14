@@ -40,7 +40,7 @@ class Category extends Model {
 
 	function is_first() {
 		$board = $this->get_board();
-		$higher = $this->db->fetchrow("SELECT id, position FROM $this->table WHERE board_id = {$board->id} AND position <> 0 AND position < {$this->position} ORDER BY position DESC LIMIT 1");
+		$higher = $this->db->fetchrow("SELECT id FROM $this->table WHERE board_id = {$board->id} AND position <> 0 AND position < {$this->position} ORDER BY position DESC LIMIT 1");
 		return !$higher->exists();
 	}
 

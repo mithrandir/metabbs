@@ -16,6 +16,11 @@ function get_image_extension($path) {
 		return null;
 }
 
+function get_image_size($path) {
+	list($width, $height, $type) = getimagesize($path);
+	return array($width, $height);
+}
+
 function create_thumbnail($path, $dest, $kind = 0, $options = array('size'=>130)) {
 	if (!file_exists($dest)) {
 		ini_set('memory_limit', '-1');
