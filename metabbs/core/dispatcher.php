@@ -87,7 +87,7 @@ class Dispatcher {
 				$urls[2] = $routes['action'];
 		}
 
-		return METABBS_BASE_PATH.implode('/',$urls). ($params ? query_string_for($params):'');
+		return METABBS_BASE_URI.implode('/',$urls). ($params ? query_string_for($params):'');
 	}
 
 	function legacy_path_filter(&$parts, &$routes, &$params) {
@@ -273,22 +273,19 @@ function url_for($controller = null, $action = null, $params = null) {
 }
 
 function full_url_for($controller = null, $action = null, $params = null) {
-	global $dispatcher;
-	return METABBS_HOST_URL.$dispatcher->url_for($controller, $action, $params);
+	return METABBS_HOST_URL . url_for($controller, $action, $params);
 }
 
 function url_with_referer_for($controller = null, $action = null, $params = null) {
 	global $dispatcher;
 	$params = $dispatcher->get_params();
-	$params['url'] = isset($params['url']) ? $params['url'] : $_SERVER['REQUEST_URI'];
-	return $dispatcher->url_for($controller, $action, $params);
+	if (!isset($params['url']))
+		$params['url'] = $_SERVER['REQUEST_URI'];
+	return url_for($controller, $action, $params);
 }
 
 function full_url_with_referer_for($controller = null, $action = null, $params = null) {
-	global $dispatcher;
-	$params = $dispatcher->get_params();
-	$params['url'] = isset($params['url']) ? $params['url'] : $_SERVER['REQUEST_URI'];	
-	return METABBS_HOST_URL.$dispatcher->url_for($controller, $action, $params);
+	return METABBS_HOST_URL.url_with_referer_for($controller, $action, $params);
 }
 
 function url_admin_for($controller = null, $action = null, $params = null) {
