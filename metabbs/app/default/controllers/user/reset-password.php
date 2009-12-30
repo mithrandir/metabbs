@@ -7,7 +7,7 @@ if (!isset($params['code']) || !isset($params['id']) || empty($params['code']) |
 $user = User::find($params['id']);
 if ($user->exists()) {
 	$code = $user->get_attribute('pwresetcode');
-	if (!empty($code) && $params['code'] == $code) {
+	if (isset($code) && $params['code'] == $code) {
 		if (is_post()) {
 			if (strlen($_POST['password']) < 5)
 				$error_messages->add('Password length must be longer than 5', 'password');

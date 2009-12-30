@@ -44,7 +44,7 @@ class Comment extends Model {
 		return $count > 0;
 	}
 	function valid() {
-		return !empty($this->body);
+		return $this->body != '';
 	}
 	function delete() {
 		if ($this->has_child()) {

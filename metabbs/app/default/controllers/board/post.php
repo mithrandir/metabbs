@@ -38,13 +38,13 @@ if (is_post()) {
 
 	apply_filters('ValidatePostCreate', $_POST, $error_messages);
 
-	if (empty($post->name))
+	if ($post->name == '')
 		$error_messages->add('Please enter the name', 'author');
 
-	if (empty($post->title))
+	if ($post->title == '')
 		$error_messages->add('Please enter the title', 'title');
 
-	if (empty($post->body))
+	if ($post->body == '')
 		$error_messages->add('Please enter the body', 'body');
 
 	if(!$error_messages->exists()) {

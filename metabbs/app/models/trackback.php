@@ -20,7 +20,7 @@ class Trackback extends Model {
 		return $post->get_board();
 	}
 	function validate() {
-		return $this->valid && !empty($this->url);
+		return $this->valid && $this->url != '';
 	}
 }
 ?>

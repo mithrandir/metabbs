@@ -173,9 +173,9 @@ class Post extends Model {
 	function arrange_tags_after_create() {
 		$tags = array();
 
-		if (!empty($this->tags))
+		if ($this->tags != '')
 			foreach (array_trim(explode(',', $this->tags)) as $tag_name)
-				if (!empty($tag_name) && $this->add_tag_by_name($tag_name))
+				if ($tag_name != '' && $this->add_tag_by_name($tag_name))
 					array_push($tags, $this->db->escape($tag_name));
 
 		if (count($tags) > 0) {
@@ -188,18 +188,18 @@ class Post extends Model {
 		foreach ($this->get_tags() as $tag)
 			array_push($old_tags, $tag->name);
 	
-		$new_tags = empty($this->tags) ? array() : array_trim(explode(',', $this->tags));
+		$new_tags = $this->tags == '' ? array() : array_trim(explode(',', $this->tags));
 
-		$atags = empty($old_tags) ? $new_tags : (empty($new_tags) ? array() : array_diff($new_tags, $old_tags));
-		$dtags = empty($new_tags) ? $old_tags : (empty($old_tags) ? array() : array_diff($old_tags, $new_tags));
+		$atags = $old_tags == '' ? $new_tags : ($new_tags == '' ? array() : array_diff($new_tags, $old_tags));
+		$dtags = $new_tags == '' ? $old_tags : ($old_tags == '' ? array() : array_diff($old_tags, $new_tags));
 		$tags = array_intersect($old_tags, $new_tags);
 
 		foreach ($atags as $tag_name)
-			if (!empty($tag_name) && $this->add_tag_by_name($tag_name))
+			if ($tag_name != '' && $this->add_tag_by_name($tag_name))
 				array_push($tags, $this->db->escape($tag_name));
 
 		foreach ($dtags as $tag_name)
-			if (!empty($tag_name))
+			if ($tag_name != '')
 				$this->delete_tag_by_name($tag_name);
 		
 		if (count($tags) > 0) {
@@ -229,7 +229,7 @@ class Post extends Model {
 		return $this->db->fetchrow("SELECT * FROM $this->table WHERE board_id=$this->board_id AND (sort_key > $this->sort_key OR sort_key = $this->sort_key AND id < $this->id) ORDER BY sort_key, id DESC LIMIT 1", 'Post');
 	}
 	function valid() {
-		return !empty($this->name) && !empty($this->title) && !empty($this->body);
+		return $this->name != '' && $this->title != '' && $this->body != '';
 	}
 	function move_to($board, $track = true) {
 		$_id = $this->id;

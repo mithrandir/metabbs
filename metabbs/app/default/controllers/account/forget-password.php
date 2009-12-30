@@ -8,7 +8,7 @@ if (is_post()) {
 	$user = User::find_by_user($params['user']);
 	if ($user->exists()) {
 		if ($user->get_attribute('pwresetcode')) {
-			if (!empty($user->email)) {
+			if ($user->email != '') {
 				if ($user->name == trim($params['name'])) {
 					$code = md5(microtime() . uniqid(rand(), true));
 					$user->set_attribute('pwresetcode', $code);

@@ -25,7 +25,7 @@ if (is_post()) {
 	$sorting_changed = false;
 	if ($params['tab'] == 'general') {
 		$_board = new Board($_POST['board']);
-		if (empty($_board->name)) {
+		if ($_board->name == '') {
 			$error_messages->add("Board name is empty");
 		} else if ($_board->name != $board->name && !$_board->validate()) {
 			$error_messages->add("Board '$_board->name' already exists");
@@ -51,7 +51,7 @@ if (is_post()) {
 	if ($sorting_changed) $board->reset_sort_keys();
 	if ($params['tab'] == 'category') {
 		foreach ($_POST['categories'] as $_category) {
-			if (!empty($_category)) {
+			if ($_category != '') {
 				$board->add_category(new Category(array('name' => $_category)));
 			}
 		}

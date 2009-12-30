@@ -23,10 +23,10 @@ if (is_post()) {
 	apply_filters('BeforeCommentReply', $comment, array('reply' => false));
 	apply_filters('ValidateCommentReply', $params, $error_messages);
 
-	if ($account->is_guest() && empty($_comment->name))
+	if ($account->is_guest() && $_comment->name == '')
 		$error_messages->add('Please enter the name', 'author');
 
-	if (empty($_comment->body))
+	if ($_comment->body == '')
 		$error_messages->add('Please enter the body', 'body');
 
 	if ($account->is_guest() && strlen($_comment->password) == 0)

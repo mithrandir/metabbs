@@ -17,10 +17,10 @@ if (is_post()) {
 	apply_filters('BeforeCommentUpdate', $comment, array('reply' => false));
 	apply_filters('ValidateCommentUpdate', $params, $error_messages);
 
-	if ($account->is_guest() && empty($comment->name))
+	if ($account->is_guest() && $comment->name == '')
 		$error_messages->add('Please enter the name', 'author');
 
-	if (empty($comment->body))
+	if ($comment->body == '')
 		$error_messages->add('Please enter the body', 'body');
 
 	if ($account->is_guest()) {

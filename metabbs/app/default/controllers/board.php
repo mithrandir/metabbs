@@ -1,5 +1,5 @@
 <?php
-if (!empty($params['id'])) {
+if ($params['id']) {
 	$post = Post::find($params['id']);
 	if ($post->moved_to) {
 		$_post = Post::find($post->moved_to);

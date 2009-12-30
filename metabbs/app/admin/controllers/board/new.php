@@ -18,7 +18,7 @@ if (is_post()) {
 		)
 	);
 
-	if (empty($params['name']))
+	if (!isset($params['name']) || $params['name'] == '')
 		$error_messages->add(i('Board name is empty'));
 	else 
 		if (preg_match('/^([a-zA-Z0-9_\-]+)$/', $params['name']) == 0) 
