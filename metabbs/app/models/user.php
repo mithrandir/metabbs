@@ -303,7 +303,7 @@ class Guest extends Model
 				if (isset($object->secret) && $object->secret &&
 					$action == 'edit')
 					return ASK_PASSWORD;
-				else if (isset($object->user_id) && $object->user_id == 0)
+				else if (!isset($object->user_id) || $object->user_id == 0)
 					// edit 액션일 때는 고치기 폼에서 암호를 입력함.
 					return $action == 'edit' ? true : ASK_PASSWORD;
 				else

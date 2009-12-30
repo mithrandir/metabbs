@@ -1,4 +1,6 @@
 <?php
+$title = htmlspecialchars($post->title . ' - ' . $board->get_title());
+
 $template = $style->get_template('view');
 $template->set('attachments', $post->get_attachments());
 $template->set('attachment_downable', $account->has_perm('attachment', $post));
