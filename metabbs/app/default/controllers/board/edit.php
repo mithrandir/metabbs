@@ -6,17 +6,20 @@ if (is_post()) {
 		$_POST['post'] = @array(
 			'title' => $_POST['title'],
 			'category_id' => isset($_POST['category']) ? $_POST['category'] : 0,
-			//'notice' => isset($_POST['notice']) ? $_POST['notice'] : 0,
+			'notice' => isset($_POST['notice']) ? $_POST['notice'] : 0,
 			'secret' => isset($_POST['secret']) ? $_POST['secret'] : 0,
 			'body' => $_POST['body'],
 			'tags' => $_POST['tags']
 		);
-		$_POST['post']['notice'] = isset($_POST['notice']);
 		if (isset($_POST['author'])) {
 			$_POST['post']['name'] = $_POST['author'];
 			$_POST['post']['password'] = $_POST['password'];
 		}
 	}
+
+	if (!$account->has_perm('admin', $board))
+		unset($_POST['post']['notice']);
+
 	if (isset($_POST['post']['password'])) {
 		$_POST['_auth_password'] = $_POST['post']['password'];
 	}
