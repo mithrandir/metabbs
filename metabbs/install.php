@@ -1,5 +1,7 @@
 <?php
 if (isset($_GET['rewrite'])) die('REWRITE OK');
+if (!ini_get('short_open_tag'))
+	die('Please set short_open_tag=On');
 
 header("Content-Type: text/html; charset=UTF-8");
 
@@ -121,28 +123,10 @@ if (file_exists('metabbs.conf.php')) {
 
 if (!isset($_POST['config'])) {
 ?>
-	<form method="post" action="install.php?backend=<?=$backend?>">
-	<h2>데이터베이스 정보</h2>
-	<table>
-<? /* will not be supported in 0.9 series
-	<tr>
-		<>Backend</label>
-		<select name="backend" id="backend" onchange="location.replace('?backend='+this.value)">
-<?php
-		foreach (get_backends() as $b) {
-				$sel = ($b == $backend) ? ' selected="selected"' : '';
-				echo "<option value=\"$b\"$sel>$b</option>";
-		}
-?>
-				</select>
-				<span class="desc">어떤 방식으로 데이터를 저장할 것인지 선택합니다.</span>
-	</p>
-<?php
-	if (!is_supported()) {
-		fail('Your server doesn\'t support <em>' . $backend . '</em>');
-	} */
-	db_info_form();
-?>
+<form method="post" action="install.php">
+<h2>데이터베이스 정보</h2>
+<table>
+<?php db_info_form(); ?>
 </table>
 
 <h2>관리자 정보</h2>
@@ -191,15 +175,22 @@ if (!isset($_POST['config'])) {
 	if ($_POST['admin_name'] == '') {
 		fail('Admin name is empty');
 	}
-	if ($_POST['admin_password'] != $_POST['admin_password_verify']) {
-		fail('Please verify password');
+	if ($_POST['admin_password'] == '' ||
+		$_POST['admin_password'] != $_POST['admin_password_verify']) {
+		fail('Please verify admin password');
 	}
 
-	$dirs = array('data', 'data/uploads', 'data/session');
-	foreach ($dirs as $dir) {
-		mkdir($dir);
-		chmod($dir, 0707);
-	}
+	// import configurations
+	foreach ($_POST['config'] as $key => $value)
+		$config->set($key, $value);
+	$config->set('backend', $backend);
+	$config->set('base_path', $_POST['base_path']);
+	$config->set('revision', METABBS_DB_REVISION);
+
+	// test database connection
+	get_conn();
+
+
 
 	$safe = false;
 	function check_unexcepted_exit() {
@@ -214,18 +205,17 @@ if (!isset($_POST['config'])) {
 	}
 	register_shutdown_function('check_unexcepted_exit');
 
-	include 'core/schema/schema.php';
-
+	$dirs = array('data', 'data/uploads', 'data/session');
+	foreach ($dirs as $dir) {
+		mkdir($dir);
+		chmod($dir, 0707);
+	}
 	pass("Creating directories");
-	foreach ($_POST['config'] as $key => $value)
-		$config->set($key, $value);
-	$config->set('backend', $backend);
-	$config->set('base_path', $_POST['base_path']);
-	$config->set('revision', METABBS_DB_REVISION);
+
 	$config->write_to_file();
 	chmod('metabbs.conf.php', 0606);
-	
 	pass("Writing configuration to file");
+
 	$path = dirname($_SERVER['REQUEST_URI']);
 	$fp = fopen('.htaccess', 'w');
 	fwrite($fp, "RewriteEngine On\n");
@@ -241,13 +231,13 @@ if (!isset($_POST['config'])) {
 	fwrite($fp, str_replace('/url/to/metabbs/', $path, $htaccess));
 	fclose($fp);
 	chmod('.htaccess', 0606);
+	pass("Writing .htaccess (mod_rewrite: " . ($rewrite ? 'On' : 'Off') . ")");
 
-	pass("Initializing Database");
-	get_conn();
+	include 'core/schema/schema.php';
 	set_table_prefix($config->get('prefix', 'meta_'));
 	init_db();
+	pass("Initializing Database");
 
-	pass("Creating admin user");
 	require_once 'app/models/user.php';
 	require_once 'core/account.php';
 	$user = new User;
@@ -256,6 +246,7 @@ if (!isset($_POST['config'])) {
 	$user->password = md5($_POST['admin_password']);
 	$user->level = 255;
 	$user->create();
+	pass("Creating admin user");
 
 	$safe = true;
 
