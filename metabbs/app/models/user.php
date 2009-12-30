@@ -68,76 +68,69 @@ class User extends Model {
 	function is_admin() {
 		return $this->level == 255;
 	}
-	function validate_before_create(&$error_messages) {
+	function validate_username(&$err, $check_same = false) {
 		if (strlen($this->user) < 5 or strlen($this->user) > 45)
-			$error_messages->add('User ID length must be longer than 5 and shorter than 45', 'user');
+			$err->add('User ID length must be longer than 5 and shorter than 45', 'user');
 
-		if (!Validate::identifier($this->user))
-			$error_messages->add('User ID must be composed of the characters \'a-zA-Z0-9_-\'', 'user');
+		if ($this->user && !Validate::identifier($this->user))
+			$err->add('User ID must be composed of the characters \'a-zA-Z0-9_-\'', 'user');
 
 		if (in_array($this->user, array('account','openid','board','post','comment','attachment', 'user')))
-			$error_messages->add('User ID may not be some reserved words(account, user, openid.. etc.)', 'user');
+			$err->add('User ID should not be same with reserved words', 'user');
 
-		$user = User::find_by_user($this->user);
-		if ($user->exists())
-			$error_messages->add('User ID already exists', 'user');
-
-		if (strlen($this->password) < 5)
-			$error_messages->add('Password length must be longer than 5', 'password');
-
-		if ($this->password != $this->password_again)
-			$error_messages->add('Two password fields\' content must be same', 'password_again');
-
-		if (strlen($this->email) == 0)
-			$error_messages->add('Please enter a E-Mail address', 'email');
-			
-		if (strlen($this->email) > 255 && !Validate::email($this->email))
-			$error_messages->add('Please enter a valid E-Mail address', 'email');
-
-		if (!empty($this->url)) {
-			if (strlen($this->url) > 255)
-				$error_messages->add('Please enter a homepage address shorter than 255 characters', 'url');
-			if (!Validate::url($this->url))
-				$error_messages->add('Please enter a valid homepage address', 'url');
+		if ($check_same) {
+			$user = User::find_by_user($this->user);
+			if ($user->exists())
+				$err->add('User ID already exists', 'user');
 		}
 	}
-	function validate_before_update(&$error_messages) {
-		if (!empty($this->password) && strlen($this->password) < 5)
-			$error_messages->add('Password length must be longer than 5', 'password');
-
+	function validate_name(&$err) {
+		if ($this->name === '')
+			$err->add('Please enter your name', 'name');
+	}
+	function validate_email(&$err) {
 		if (strlen($this->email) == 0)
-			$error_messages->add('Please enter a E-Mail address', 'email');
+			$err->add('Please enter a E-Mail address', 'email');
 			
 		if (strlen($this->email) > 255 || !Validate::email($this->email))
-			$error_messages->add('Please enter a valid E-Mail address', 'email');
-			
-		if (!empty($this->url)) {
+			$err->add('Please enter a valid E-Mail address', 'email');
+	}
+	function validate_url(&$err) {
+		if (isset($this->url) && $this->url != '') {
 			if (strlen($this->url) > 255)
-				$error_messages->add('Please enter a homepage address shorter than 255 characters', 'url');
+				$err->add('Please enter a homepage address shorter than 255 characters', 'url');
 			if (!Validate::url($this->url))
-				$error_messages->add('Please enter a valid homepage address', 'url');
+				$err->add('Please enter a valid homepage address', 'url');
 		}
 	}
-	function validate_before_transfer(&$error_messages) {
-		if (strlen($this->user) < 5 or strlen($this->user) > 45)
-			$error_messages->add('User ID length must be longer than 5 and shorter than 45', 'user');
-
-		if (!Validate::identifier($this->user))
-			$error_messages->add('User ID must be composed of the characters \'a-zA-Z0-9_-\'', 'user');
-
-		if (in_array($this->user, array('account','openid','board','post','comment','attachment', 'user')))
-			$error_messages->add('User ID may not be some reserved words(account, user, openid.. etc.)', 'user');
-
-		$user = User::find_by_user($this->user);
-		if ($user->exists())
-			$error_messages->add('User ID already exists', 'user');
-
+	function validate_password(&$err) {
 		if (strlen($this->password) < 5)
-			$error_messages->add('Password length must be longer than 5', 'password');
+			$err->add('Password length must be longer than 5', 'password');
 
-		if ($this->password != $this->password_again)
-			$error_messages->add('Two password fields\' content must be same', 'password_again');
+		if (isset($this->password_again) && $this->password != $this->password_again)
+			$err->add('Two password fields\' content must be same', 'password_again');
 	}
+
+	function validate_before_create(&$error_messages) {
+		$this->validate_username($error_messages, true);
+		$this->validate_password($error_messages);
+		$this->validate_name($error_messages);
+		$this->validate_email($error_messages);
+		$this->validate_url($error_messages);
+	}
+	function validate_before_update(&$error_messages) {
+		if ($this->password)
+			$this->validate_password($error_messages);
+
+		$this->validate_name($error_messages);
+		$this->validate_email($error_messages);
+		$this->validate_url($error_messages);
+	}
+	function validate_before_transfer(&$error_messages) {
+		$this->validate_username($error_messages, true);
+		$this->validate_password($error_messages);
+	}
+
 	function get_url() {
 		if (strpos($this->url, "http://") !== 0) {
 			return 'http://' . $this->url;
