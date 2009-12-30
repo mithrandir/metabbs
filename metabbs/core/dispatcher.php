@@ -276,11 +276,11 @@ function full_url_for($controller = null, $action = null, $params = null) {
 	return METABBS_HOST_URL . url_for($controller, $action, $params);
 }
 
-function url_with_referer_for($controller = null, $action = null, $params = null) {
-	global $dispatcher;
-	$params = $dispatcher->get_params();
-	if (!isset($params['url']))
+function url_with_referer_for($controller = null, $action = null, $params = array()) {
+	if (!isset($_GET['url']))
 		$params['url'] = $_SERVER['REQUEST_URI'];
+	else
+		$params['url'] = $_GET['url'];
 	return url_for($controller, $action, $params);
 }
 
