@@ -1,6 +1,6 @@
 <?php
-if (!file_exists('app/controllers/'.$_GET['controller'].'/'.$_GET['action'].'.php')) {
-	exit;
-}
-$return_url = url_for($_GET['controller'], $_GET['action']).$_GET['id'];
+if (strpos($_GET['url'], METABBS_BASE_URI) !== 0)
+	die('insecure return URL');
+
+$return_url = $_GET['url'];
 ?>

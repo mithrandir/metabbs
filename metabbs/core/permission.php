@@ -17,10 +17,9 @@ function ask_password_of($object, $retry = false) {
 			ask_password_of($object, true);
 		}
 	} else {
-		global $routes, $params;
-		$params = array('controller' => $routes['controller'], 'action' => $routes['action'], 'id' => $params['id']);
+		$params = $_GET;
 		if ($retry) $params['retry'] = true;
-		redirect_to(url_for('auth', null, $params));
+		redirect_to(url_with_referer_for('auth', null, $params));
 	}
 }
 ?>
