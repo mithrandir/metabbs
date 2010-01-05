@@ -176,10 +176,10 @@ class Post extends Model {
 		if ($this->tags != '')
 			foreach (array_trim(explode(',', $this->tags)) as $tag_name)
 				if ($tag_name != '' && $this->add_tag_by_name($tag_name))
-					array_push($tags, $this->db->escape($tag_name));
+					array_push($tags, $tag_name);
 
 		if (count($tags) > 0) {
-			$this->db->execute("UPDATE $this->table SET tags='".implode(',', $tags)."', tag_count = ".count($tags)." WHERE id=$this->id");
+			$this->db->execute("UPDATE $this->table SET tags='".$this->db->escape(implode(',', $tags))."', tag_count = ".count($tags)." WHERE id=$this->id");
 		}
 	}
 	function arrange_tags_after_update() {
@@ -196,14 +196,14 @@ class Post extends Model {
 
 		foreach ($atags as $tag_name)
 			if ($tag_name != '' && $this->add_tag_by_name($tag_name))
-				array_push($tags, $this->db->escape($tag_name));
+				array_push($tags, $tag_name);
 
 		foreach ($dtags as $tag_name)
 			if ($tag_name != '')
 				$this->delete_tag_by_name($tag_name);
 		
 		if (count($tags) > 0) {
-			$this->db->execute("UPDATE $this->table SET tags='".implode(',', $tags)."', tag_count = ".count($tags)." WHERE id=$this->id");
+			$this->db->execute("UPDATE $this->table SET tags='".$this->db->escape(implode(',', $tags))."', tag_count = ".count($tags)." WHERE id=$this->id");
 		}
 	}
 	function delete() {
