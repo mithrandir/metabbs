@@ -20,6 +20,7 @@ class Board extends Model {
 		$this->post_table = get_table_name('post');
 		$this->comment_table = get_table_name('comment');
 		$this->category_table = get_table_name('category');
+		$this->category_rel = new OneToManyRelation($this, 'category');
 	}
 	function get_id() {
 		return $this->name;

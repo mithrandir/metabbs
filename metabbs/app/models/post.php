@@ -20,10 +20,11 @@ class Post extends Model {
 		$this->user_table = get_table_name('user');
 		$this->category_table = get_table_name('category');
 		$this->comment_table = get_table_name('comment');
-		$this->trackback_table = get_table_name('trackback');
 		$this->attachment_table = get_table_name('attachment');
 		$this->tag_table = get_table_name('tag');
 		$this->tag_post_table = get_table_name('tag_post');
+
+		$this->trackback_rel = new OneToManyRelation($this, 'trackback');
 	}
 	function find($id) {
 		return find('post', $id);
@@ -120,19 +121,23 @@ class Post extends Model {
 		$this->comment_count = $this->get_real_comment_count();
 		$this->db->execute("UPDATE $this->table SET comment_count=$this->comment_count WHERE id=$this->id");
 	}
+
+
+	// 트랙백 관련
+	function get_trackbacks() {
+		return $this->trackback_rel->all();
+	}
+	function add_trackback($trackback) {
+		$this->trackback_rel->add($trackback);
+	}
+	function get_trackback_count() {
+		return $this->trackback_rel->count();
+	}
+
+
 	function update_attachment_count() {
 		$this->attachment_count = $this->get_attachment_count();
 		$this->db->execute("UPDATE $this->table SET attachment_count=$this->attachment_count WHERE id=$this->id");
-	}
-	function get_trackbacks() {
-		return $this->db->fetchall("SELECT * FROM $this->trackback_table WHERE post_id=$this->id", 'Trackback');
-	}
-	function add_trackback($trackback) {
-		$trackback->post_id = $this->id;
-		$trackback->create();
-	}
-	function get_trackback_count() {
-		return $this->db->fetchone("SELECT COUNT(*) FROM $this->trackback_table WHERE post_id=$this->id");
 	}
 	function get_attachments() {
 		return $this->db->fetchall("SELECT * FROM $this->attachment_table WHERE post_id=$this->id", 'Attachment');
@@ -209,7 +214,7 @@ class Post extends Model {
 	function delete() {
 		$this->db->execute("DELETE FROM $this->table WHERE moved_to=$this->id");
 		$this->db->execute("DELETE FROM $this->comment_table WHERE post_id=$this->id");
-		$this->db->execute("DELETE FROM $this->trackback_table WHERE post_id=$this->id");
+		$this->trackback_rel->clear();
 		foreach($this->get_tags() as $tag)
 				$this->delete_tag_by_name($tag->name);
 		apply_filters('PostDelete', $this);
@@ -244,7 +249,7 @@ class Post extends Model {
 		else
 			$this->db->execute("DELETE FROM $this->table WHERE id=$_id");
 		$this->db->execute("UPDATE $this->comment_table SET post_id=$this->id WHERE post_id=$_id");
-		$this->db->execute("UPDATE $this->trackback_table SET post_id=$this->id WHERE post_id=$_id");
+		$this->trackback_rel->update(array('post_id' => $this->id));
 		$this->db->execute("UPDATE $this->attachment_table SET post_id=$this->id WHERE post_id=$_id");
 		$this->metadata->reload();
 		foreach ($attributes as $key => $value)
