@@ -12,3 +12,4 @@
 	</li>
 <?php } ?>
 </ul>
+<p><a href="<?=METABBS_BASE_PATH?>/message/all/delete" onclick="return confirm('<?=i('Are you sure?')?>')"><?=i('Delete All')?></a></p>

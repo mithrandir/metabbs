@@ -15,6 +15,9 @@ class Message extends Model {
 	function get_unread_messages_of($user) {
 		return find_all('message', "`to`=$user->id AND NOT `read`");
 	}
+	function delete_all($user) {
+		delete_all('message', "`to`=$user->id");
+	}
 	function mark_all_read($user) {
 		update_all('message', array('read' => 1), "`to`=$user->id");
 	}
@@ -166,9 +169,13 @@ class Messenger extends Plugin {
 	}
 	function action_delete() {
 		global $params, $account;
-		$message = Message::find($params['id']);
-		if ($message->to == $account->id)
-			$message->delete();
+		if ($params['id'] == 'all') {
+			Message::delete_all($account);
+		} else {
+			$message = Message::find($params['id']);
+			if ($message->to == $account->id)
+				$message->delete();
+		}
 		redirect_back();
 	}
 	function action_send_message() {
