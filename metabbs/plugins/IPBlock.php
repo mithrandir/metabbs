@@ -40,7 +40,7 @@ class IPBlock extends Plugin {
 			fclose($fp);
 		}
 		add_filter('AfterPostSave', array(&$this, 'record_ip'), 42);
-		add_filter('AfterPostComment', array(&$this, 'record_ip'), 42);
+		add_filter('AfterCommentCreate', array(&$this, 'record_ip'), 42);
 		add_filter('PostList', array(&$this, 'append_ip'), 5000);
 		add_filter('PostView', array(&$this, 'append_ip'), 5000);
 		add_filter('PostViewComment', array(&$this, 'append_ip'), 5000);
