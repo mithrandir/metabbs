@@ -65,7 +65,7 @@ class Attachment extends Model {
 
 			switch ($thumbnail_kind) {
 				case 4:
-					$options = array('width' => $thumbnail_width, 'width' => $thumbnail_height);
+					$options = array('width' => $thumbnail_width, 'height' => $thumbnail_height);
 					break;
 				default:
 					$options = array('size' => empty($thumbnail_size) ? 100 : $thumbnail_size);
