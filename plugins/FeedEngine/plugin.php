@@ -30,7 +30,7 @@ class FeedEngine extends Plugin {
 	}
 	function post_finder_conditions_filter(&$condtions, $board) {
 		global $account, $params;
-		if($board->get_attribute('feed-at-board') && !$account->is_admin()) {
+		if($board->get_attribute('feed-at-board') && !$account->has_perm('list', $board)) {
 			$condtions .= " AND secret = 0 ";
 		}
 		if (isset($params['group']) && $params['group']) {
