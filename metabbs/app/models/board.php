@@ -52,7 +52,7 @@ class Board extends Model {
 	}
 	function get_feed_posts($count) {
 		if (!$this->order_by) $this->order_by = 'id DESC';
-		return find_all('post', "board_id=$this->id AND NOT moved_to", $this->order_by, $count);
+		return find_all('post', "board_id=$this->id AND secret = 0 AND NOT moved_to", $this->order_by, $count);
 	}
 	function add_post(&$post) {
 		$post->board_id = $this->id;
