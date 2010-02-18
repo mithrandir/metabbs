@@ -51,6 +51,7 @@ if (is_post() and isset($params['action'])) {
 				$attachment->delete();
 			}
 			$post->delete();
+			apply_filters('AfterPostDelete', $post);
 		}
 		break;
 		case 'change-category':
