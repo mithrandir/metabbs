@@ -45,6 +45,7 @@
 		<p><a href="<?=$post->url?>"><img src="<?=$post->attachments[0]->thumbnail_url?>" alt="<?=$post->title?>" /></a></p>
 		<p>
 			<? if ($post->category): ?><span class="category"><?=$post->category->name?></span><? endif; ?>
+			<? if ($post->secret): ?><span class="secret"><?=i('Secret Post')?></span> |<? endif; ?>
 			<a href="<?=$post->url?>"><?=$post->title?></a>
 			<span class="comment-count"><?=$post->comment_count?></span>
 		</p>
