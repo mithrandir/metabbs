@@ -1,0 +1,11 @@
+# auto generated files while installing
+/metabbs/.htaccess
+/metabbs/metabbs.conf.php
+/metabbs/data/
+
+# Temporary files of vim
+.*.swp
+
+# Temporary files of emacs
+*~
+\#*#
